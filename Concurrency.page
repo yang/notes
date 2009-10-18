@@ -1502,7 +1502,3 @@ A View From Berkeley
     migration (hardware failures)
   - Rosenblum: OSes should be libraries linked by app atop thin VMM
   - VMs enable end apps to select only portion of OS capabilities needed
-
-<!--
-vim:et:ft=:sw=2:ts=2:nocin:nosi:ft=mkd
--->

@@ -1,5 +1,3 @@
-# vim:nocin:et:sw=2:ts=2
-
 - intel arch
   - iret: restores context; for returning from interrupt/exception handler
     - complex; pseudo-code spans pages in manual
@@ -277,5 +275,3 @@ x86
   - x86: 32 IRQLs
   - diff primarily due to type of interrupt controller of each CPU
   - each cpu can be running at a different IRQL
-
-vim: et sw=2 ts=2 ft=
