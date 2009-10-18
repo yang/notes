@@ -1,0 +1,59 @@
+vik singh: key engineer on yahoo boss
+
+Structured Querying of Web Text (Mike Cafarella)
+
+- ExDB: probabilistic DB for SQL-like queries over web text
+- data model: unary/binary predicates over objects
+- information extraction
+  - facts: uses an existing NLP system called TextRunner for extracting triples
+  - types: uses existing KnowItAll system, which tags PSO and constructs
+    predicates from phrases in well-formed sentences
+  - synonyms
+    - uses existing DIRT algo; compares degrees to which args of two preds
+      coincide
+    - eg: arg-pairs of preds `invented` and `has-invented` overlap strongly
+  - inclusion dependencies or _troponyms_: invented(x,y) \subset discovered(x,y)
+    - no concrete idea, but an enhanced DIRT will probably work
+  - functional dependencies: queries with negation
+    - best left for data mining research
+- query processing
+  - straightforward: series of joins, use top-$k$ algos
+  - projections: harder TODO
+- TODO
+  - rest of paper
+  - probabilistic query constraints
+
+yahoo labs: contextual and display ads team
+
+- key challenges
+  - scale
+  - data sparseness
+  - user privacy
+  - imprecisely defined objectives/metrics
+  - different train/test set distribuions
+- applied research areas in display ads
+  - targeting: inferring user interest from historical behavior
+  - contextual ads: serving contextually relevant (text) ads
+  - GD stone: next gen display ad serving platform
+  - categorization: ML approaches for categorizing queries, ads, pages
+- news direct display (NDD) optimization
+- techniques
+  - linear: log reg, NB, SVM
+  - non-linear: SVM (RBF), treenet, C5.0
+
+google adwords bidding
+
+- as an advertiser: how to figure place CPC bids
+  - conversion rate = # visitors who buy / # visitors
+  - max profitable cost per action (CPA) = $ profit from buy
+    - maybe your selling price - cost to you
+  - value per click = value per action * conversion rate
+    - this is what you should initially bid
+  - cost per click (CPC): actual cost from an auction; always < your max bid
+  - incremental cost per click (ICC) = cost of incremental clicks / number of
+    incremental clicks
+    - "incremental" means "additional," over the next-lower bid
+    - ICC = how much you're paying for each additional click over the
+      next-lower bid
+    - if value per click < ICC, lower bid; else, raise bid
+  - <http://googleblog.blogspot.com/2009/09/new-adwords-bidding-tutorial.html>

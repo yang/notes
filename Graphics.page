@@ -1,0 +1,47 @@
+- bitblt: perform boolean operation on same-sized rectangles in two images
+  (src, dst)
+- Bresenham's algorithm: line-drawing
+
+Software
+
+- NVIDIA Cg: high-level shading language (HLSL)
+- NVIDIA CUDA: GPGPU PL
+- OpenGL: graphics library
+- GLU: OpenGL Utility Library
+- GLUT: OpenGL Utility Toolkit; unmaintained, restrictive license
+- freeglut: OSS clone of the original GLUT
+- openglut: fork of freeglut that adds some more functionality
+- GLUI: OpenGL User Interface Library
+
+Graphics architecture (Angstrom group meeting, jrk@mit.edu, 4/24/08)
+
+- raytracing vs rasterization
+  - rasterization is best suit for doing primary visibility (calculating what's
+    visible)
+  - raytracing good for calculating scene lighting?
+- IO bandwidth: 50% texture input, 50% read-modify-write framebuffer,
+  negligible scene input
+- arbitrarily large amt of computation: color on each pixel, anti-aliasing
+- most money in game production goes into art
+  - artists mostly work with photos and Photoshop
+  - cost doubles every 2-3 years
+  - much more expensive than hardware
+  - no/very little procedural content generation
+  - programmers more expensive than artists, and more effort to produce
+    content-generating algos
+  - exceptions: Spore
+- graphics pipelines: how long are they?
+  - "Graphics Pipeline": directx and what points where you get to insert your
+    functions and what are fixed
+  - easily come up with 100 pipeline stages for parallelism
+- (geometry, textures) -> many vertex -> 1 rasterization -> many fragmentation
+  -> some framebuffer
+- general-purpose data-parallel cores for graphics (Intel's architecture) is the future
+- locality easy to achieve
+- NVIDIA CUDA lets you program more generally for GPUs
+  - used to bend over backwards by reducing problem to triangles and quads
+  - similar to Cell
+  - DX11 has general-purposes shader
+- Cell is painful
+- abstract model: asynchronous dataflow with kernels and queues
+- paper on same stuff from Sequoia folks

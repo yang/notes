@@ -1,0 +1,1107 @@
+Background
+==========
+
+- interruption vs preemption: like forced procedure call vs unavailable cpu
+
+- double fault: cpu encounters problem while trying to service a pending
+  interrupt/exception
+  - eg interrupt is triggered but segment in which interrupt handler resides is
+    invalid
+- triple fault: generated when double fault encounters fault
+
+- IOCTL: direct user-to-kernel-driver interface
+
+- time of check to time of use (TOCTTOU): race condition btwn checking a
+  condition and using the result of the check; problem is absence of atomicity
+
+Servers
+
+- reverse proxy: server-side (Varnish, Squid can be, mod_proxy)
+
+Virtual machines
+
+- _hypervisor_ aka _virtual machine monitor (VMM)_
+  - type 1: native/bare-metal; type 2: hosted
+- _paravirtualization_ involves changing the guest OS to use _monitor calls_
+  aka _hypercalls_ rather than incur a trap
+  - old idea, but Xen has been
+- research
+  - VM/370: seminal
+  - DAISY: dynamic compilation
+  - Fluke: nested processes
+
+Kernel architecture
+
+- microkernels
+  - L4
+- exokernel
+
+Concurrency
+===========
+
+Project Caroline: Platform as a Service (Bob Scheifler, CSAIL talk, 5/20/2008)
+
+- Bob: former undergrad under Liskov; substitution principle?; X windows
+  - "research project" at Sun = "not a product" (not as researchy as academia)
+- traditional applications : coding :: Internet services : coding, deploying,
+  operating
+- building a hosting platform for development and deployment of Internet
+  services
+  - utility scaling + secure isolation
+  - programmatic control of distributed compute, storage, network resources
+- target apps: Internet services, OS-indep HLLs, horizontally scalable
+- [lots of configuration code...presentation isn't very hot]
+
+Events Can Make Sense (Krohn et al USENIX 2007)
+
+- TODO
+- API
+  - events: cond vars
+  - rendezvous: channels
+  - event connectors: for timeouts/cancellation
+  - supports threads and blocking libs
+  - robust memory mgmt
+
+Lazy Asynchronous I/O For Event-Driven Servers (USENIX 2004)
+
+- API
+  - `laio_syscall()`:
+    - if syscall blocks, run in background, save a handle, return -1
+    - otherwise, return immediately
+  - `laio_gethandle()`: return handle to last background `laio_syscall()`
+  - `laio_poll()`: fill array with completed `laio_syscall()`s
+- vs.
+  - NBIO: NBIO may have partially completed
+    - e.g., read of 4096 may return immediately with 1024 bytes read
+    - app needs to handle the partially completed operation
+    - LAIO performs 1.3x slower than NBIO
+  - AIO: always returns a handle to the task, even if finished immediately
+    - AIO performs 5x slower than NBIO
+- implementation
+  - relies on kernel having scheduler activations (eg FreeBSD, but not in
+    Linux?)
+  - `laio_syscall()` saves current thread context and enables upcalls
+  - on block, kernel starts new thread and delivers upcall there into LAIO code
+  - upcall handler:
+    - saves blocked thread's handle as background handle (to be returned by
+      `laio_gethandle()`)
+    - steals blocked thread's stack and returns from `laio_syscall()` with -1
+
+Multiprocessor Support for Event-Driven Programs (Zeldovich's masters work, USENIX03)
+
+- simple idea: color events, same color means sequentially execute (in order of
+  scheduling)
+- color $n$ runs on proc $n \mod 3$ by default, though this can change via
+  work-stealing
+- main thread has `select()` loop
+  - first tries to select without blocking
+  - only if no other tasks waiting on queue, perform blocking select, with
+    non-0 timeout
+
+Compilers and OSs
+=================
+
+Compiler-based I/O prefetching for out-of-core applications (CMU 2001)
+
+- compiler provides info on future access patterns (w/o programmer burden)
+- OS supports nonbinding prefetch and release hints for managing IO
+- OS cooperates with run-time layer to accelerate perf by adapting to dynamic
+  behavior and minimizing prefetch overhead
+
+[compilers, multiprocessing]
+
+Compiler-directed page coloring for multiprocessors (Rosenblum TODO)
+
+Maximizing Multiprocessor Performance with the SUIF Compiler (Lam TODO)
+
+Languages and OSs
+=================
+
+Synthesis: An Efficient Implementation of Fundamental Operating System Services
+
+A principled approach to operating system construction in Haskell
+
+Browsers
+========
+
+native client
+
+- inner sandbox
+  - software fault isolation
+    - in general disassembly is unreliable: same instruction stream may be
+      entirely different if you jump to somewhere in the middle of it
+    - goal: get reliable disassembly; then, can prohibit certain instructions
+    - static validation of most calls/jumps
+    - once loaded, binary is not writable; also uses x86 segments to constrain
+      the executable instruction range
+    - locates instructions at address 0 so that indirect jumps need only be
+      prefixed by an `and` and not an `and;or`
+    - omit certain instructions: ret, int, syscall; use indirect jumps
+    - all indirect branch targets must be aligned; bitmask every target
+      address
+    - no code gen, mixed text/data, overlapping instrs
+  - x86 segments: hardware support -> faster
+    - original SFI: bitmask every load/store address
+    - caveat: need LDT; privileged instruction, vista 64 doesn't provide this;
+      confuses os an hardware exceptions
+- outer sandbox
+  - system call filter for untrusted modules
+  - redundant; defense in depth
+  - OS-dependent
+  - ptrace on linux, syscall ACLs on Windows
+- compile for native client with modified gcc (1000 lines patched)
+
+VMs
+===
+
+Virtualization (Mendel Rosenblum, Dertouzos Lecture, 2008-02-26)
+
+- basic features of virtualization: VM migration; view HW as pool; monitoring;
+  VM images; security
+
+General
+=======
+
+Systems Research Is Irrelevant (Pike)
+
+- really *OS Research*
+- most "innovation" from MS (compare 1990 and 2000)
+- invention replaced by observation; art is lost; too much focus on measurement
+- external interfacing makes OS-building too hard for a grad student
+- orthodoxy: narrow experience/software stack choice
+- somewhat rambling
+
+Gold and Fool's Gold: Successes, Failures, and Futures in Computer Systems
+Research (talk, Butler Lampson, 4/17/08)
+
+- Moore's Law and friends, over 10 years:
+  - processing: 100x
+  - storage: 1000x
+  - LAN BW: 100x
+  - WAN BW: 1000x
+  - display pixels: 10x
+  - overall: 30,000x better than Alto
+  - we're pissing away hardware resources, but that's OK, because engineering
+    is about being economical
+- what are computers good for?
+  - simulations, 1950+: nukes, proteins, etc.
+    - proteins folding: you know from the DNA the seq of amino acids, figure
+      out what the protein looks like
+  - communication (storage), 1980+: email, tickets, books, movies, Google,
+    Terraserver
+    - maps and pictures: Windows Live Local
+  - embodiment (physical world), 2010+: factories, cars, robots, smart dust
+    - Roomba vacuum
+      - sold for $200 in US
+      - the device had to be <$40 out of China
+      - computer had to be <20 cents; this meant 256 bytes RAM
+    - DARPA challenge
+- history: what worked? (* means Butler worked on it)
+  - worked:
+    - virtual memory
+      - address spaces
+    - *packet networking
+      - controversial; comm experts unanimously thought it wouldn't work, that
+        circuits are tried and true
+    - *objects/subtypes
+      - done some harm as well: inheritance destroys modularity
+    - RDB/SQL
+      - hierarchical navigational DBs were thought of as being more efficient
+      - big success for parallel computing, because SQL is high-level
+      - *transactions
+        - amazing; the only example in computing of "fairy dust"
+        - "Mort" can write this and everything will be fault-tolerant,
+          parallel, distributed
+    - *bitmaps and GUIs
+    - web
+    - algos
+      - when he was in school, only CFGs/parsing; things like complexity were
+        nascent
+  - not worked (yet):
+    - *capabilities
+      - idea: capabilities would help increase system robustness
+      - eventually, user would simply grant themselves full caps
+      - only good for short-term things
+    - *fancy type systems
+      - tension btwn types and logic
+      - harder and harder to express things
+      - spoke with Andrew on rendezvous derived from CSP: rendezvous is nice
+        for some programs, and that was the problem (couldn't handle anything
+        else)
+    - functional programming
+      - most conspicuous one, SQL, is successful
+      - "Real Programming in Functional Languages"
+        - describes Lampson's language Euclid as a functional language
+        - programming disciplines are unnatural; question is whether it's
+          effective
+        - haiku and karate: more like haiku (beauty rather than effective in a
+          brawl)
+    - *formal methods
+      - can write precise specs for any kind of digital system
+      - cannot prove that the implementation satisfies the spec
+      - after Intel's FP recall, they signed up for formal methods in a big way
+      - usu. just not cost-effective; too hard
+      - usu. better to "prove small theorems about big programs"
+        - type systems are good
+    - software engineering
+      - second system effect: problem is that you never hear about the first
+        systems!
+    - *RPC (except for Web)
+      - negative contribution
+      - larger latency
+      - much more unpredictable latency
+      - (independent) failure
+      - but Web was successful (eg form filling)
+    - *distributed computing
+      - only large computations or things with the right structure work (BOINC,
+        Map-Reduce)
+    - persistent objects
+      - object-oriented DBs or languages with persistent new
+      - you have a mess of objects
+    - *security
+      - Butler keeps coming back to this
+      - approach is impractical; must consider thresholds
+      - e.g. locks on homes only deter the casual teenager
+      - it's the chances of getting caught that deter would-be burglars
+    - RISC
+      - dominant arch is CISC with micro-arch
+      - [what about embedded devices, etc.?]
+  - maybe (better chances than "not worked")
+    - parallelism: now we really need it (multicore)
+      - thought we were done in 1980s, but turns out programmers can't use
+        locks
+      - map-reduce works, but that's not general-purpose
+    - garbage collection
+      - in C, it's harder to write non-performant programs
+    - interfaces and specifications
+    - reuse/components
+- failure of systems research
+  - we didn't invent the Web
+  - why not? too simple!
+    - old idea: implemented in 60s, but never tried
+    - wasteful: separate TCP conn, but fast enough
+    - flaky: but doesn't have to work
+  - denial: it doesn't scale
+    - but only from 100 to 100M
+- future: motherhood challenges
+  - correctness
+  - scaling
+  - parallelism
+  - reuse
+  - ...
+- Jim Gray's challenges (2003 50th anniversary issue of the ACM)
+  - Turing test: win the impersonation game 30% of the time
+  - hear and speak as well as a person: speech/text
+  - see and recognize
+  - remember what is seen and heard
+  - answer questions about a text corpus as well as a human expert. Then add
+    sounds, images.
+  - ... [seems to mostly be AI]
+- Grand Challenges ("gov, please give us money")
+  - reduce highway traffic deaths to zero ("wreckless driving")
+  - pure CS problem
+    - needs:
+      - computer vision
+      - world models for roads and vehicles
+      - dealing with uncertainty about sensor inputs, vehicle perf, changing
+        env
+      - dependability
+  - DARPA Grand Challenges a start
+    - MIT car:
+      - fusing data from all the different sensors
+      - assemble that together into some model of the world
+      - take terrain, impose grid, and let each sensor give its opinion on how
+        undesirable that grid is for the car (using a simple combining
+        function)
+      - planning: generate many rand trajectories and eval their
+        undesirabilities
+- what is dependability? (in this grand challenge)
+  - formally, the system meets its spec
+    - we have the theory, but it doesn't scale
+    - worse, we can't get the formal spec right
+      - though we can get partial specs right
+      - "sorry, can't find any more bugs."
+  - informally, that the user isn't surprised
+    - compare 1980 AT&T with cellphones
+    - how well does the market work for dependability?
+- how much dependability?
+  - how much do we have? varies
+    - market demand: evidence of market failure?
+    - almost any amount possible
+  - how much do we need? varies
+  - dependable vs. need
+- measuring dependability
+  - prob of failure
+  - cost of failure
+  - what's the budget? who gets fired?
+- dependability through redundancy?
+  - good in its place
+  - but need indep failures, which are hard to get for software (even harder
+    for specs)
+  - and need a way to combine results
+- dependable -> no catastrophes
+  - catastrophes must be very serious; realistic way to reduce aspirations
+  - must have a threat model of what can go wrong (probabilistic models)
+  - catastrophe examples:
+    - USS Yorktown: NT DB, ship couldn't run the engines
+    - Therac 25 and other med equipment
+    - loss of crypto keys
+    - destruction of big power xformers
+    - any computer-only catastrophes?
+  - misleading examples (non-catastrophes):
+    - avionics, nukes: many other things must work
+  - arch: have a "catastrophe mode" (vs. normal op)
+- security: must set reasonable goals, not perfection
+- dealing with uncertainty
+  - unavoidable in dealing with physical world or for natural UIs
+- conclusions for engineers
+  - understand Moore's law
+  - aim for mass markets; computers are everywhere
+  - learn how to deal with uncertainty
+  - learn how to avoid catastrophe
+
+Operating Systems
+=================
+
+CuriOS: Improving Reliability through Operating System Structure (UIUC, OSDI08,
+PDOS reading group 2008-11-12)
+
+- microkernel that introduces _protected objects_, which are equivalent to
+  servers (subsystems providing services, e.g. FS, net, scheduler, etc.) in
+  traditional microkernels, i.e. they each run in their own unprivileged
+  domains, except that
+  - their methods are executed within (hardware-supported) protection domains
+  - each PO has private heap and a private (lazily created) stack per thread
+  - their client-related state is in _server state regions_ (SSRs)
+    - these are in isolated regions of memory, mapped in for writing only when
+      that particular client makes a method call (thus the TLB is flushed
+      whenever we enter/exit a PO method)
+    - they survive across PO restarts so they provide persistence
+- on entering a protected method,
+  - map in private memory as read-write (multi-threaded, so multiple may be
+    mapped in)
+  - map in client's SSR as read-write
+  - map in rest of CuriOS (incl. other SSRs) as read-only
+  - switch to reduced-privilege execution mode (normally unprivileged; CuiK
+    messaging system runs fully privileged)
+- on exception, microreboot
+  - constructor arguments are saved
+  - PO is told of the existing SSRs, so that it may reconstruct internal state
+  - if multiple failures from microreboots, then really throw exception
+- summary
+  - the only difference is the per-client SSRs
+- question
+  - PeriodicTimerManager notifies clients via semaphore, but this is in the
+    client's SSR, which the client doesn't have access to...how?
+
+SQCK: A Declarative File System Checker (Wisc, OSDI08, PDOS reading group
+2008-11-12)
+
+- fsck is buggy
+- going after not just problems that journaling can fix, but also random
+  corruptions and only certain perf/sec problems
+- scanner -> loader -> db -> check/repair -> flusher
+- impl: mysql in .5gb ramdisk
+
+Hardware Enforcement of Application Security Policies Using Tagged Memory (PMG
+group reading 2008-10-23)
+
+- learned from discussion
+  - hardware tag support enables _discretionary access control_
+  - not really about IFC; used HiStar, which happened to provide IFC
+  - you can still subvert things on disk
+  - access control is in the security monitor
+  - probably all boils down to the fact that they don't have a FS
+- use the technique from Overshadow
+
+Corey: an operating system for many cores
+
+- two principal abstractions
+  - shares: explicit collections of kernel objects; these are the unit of
+    sharing
+  - kernel cores: dedicated to running kernel code
+  - address trees: let you control which page table entries are private
+    per-core
+- **Corey kernel design**
+  - kernel objects: shares, segments, address trees, pcores, and devices
+  - **metadata for objects**
+    - maintain one free page list per core
+    - when allocing obj, specify which core to alloc from
+    - kernel uses spinlocks and RW locks to synchronize access to objs
+  - **object naming**
+    - each obj has an obj ID (OID)
+    - avoid using a global table mapping OIDs to obj metadata addrs
+    - each core has some _shares_ that store these mappings, usu. 1 private and
+      $n$ global
+    - objs are ref-counted and GC'd; shares too, but they're ref'd from cores
+  - **memory mgmt**
+    - _segments_: represent physical memory
+      - by default only the allocing core can ref a seg, but can arrange it to
+        be shared by adding to a share
+    - _addr trees_ define addr space
+      - root addr tree contains table of addr mappings
+      - 2 types of addr mapping:
+        - VA to segs
+        - VA to internal addr trees, which in turn can only map VA to segs
+      - control over which part of a page table is private; can share internal
+        addr trees
+      - the conventional approach is to have either completely shared or
+        completely separate page tables
+  - **execution**
+    - _pcore_: represent physical cores
+    - by default no preemptive multiprogramming; use `pcore_set_interval()`
+  - **devices**
+    - iface similar to Xen's async IO rings and HiStar's network device iface
+    - use segment to comm with device
+    - libos has exclusive access to the device
+  - **kernel execution**
+    - this was the most confusing part of the paper
+    - kernel cores are cores that are dedicated to polling devices
+    - poll either real devices or pseudo "syscall devices", which means that
+      kernel is now invoking syscalls
+    - questions: how exactly does the system?
+- **standard libos**
+  - **cfork**: by default share nothing; COW the root addr tree
+  - **buffer cache**: lock-free tree of blocks
+    - writes are trickier
+      - full block write: alloc block and insert into tree
+      - partial block write:
+        - each block has a generation # & addr
+        - alloc a new block to replace the current (old) block
+        - copy the non-overwritten data from the current block to the new block
+          - record the generation # & addr
+        - write the overwriting data to the new block
+        - if generation # & addr are same, then replace the block in the tree
+        - otherwise, retry
+        - this is lock-free but not wait-free
+    - each core has own free blocks stack
+      - stack increases chance of getting a block that's hot in cache
+      - deallocing means pushing back to origin stack
+    - on writes, blocks alloc'd from per-core lock-free stack
+    - multi-variable read-write lock: zero-contention read-locking, more
+      expensive write-locking
+  - **network**: multiple stacks, virtualize over fewer cards
+    - requires some shared state; can be eliminated by using hardware virt of
+      network cards (configurable # of TX/RX buffers)
+- **applications**
+  - **mapreduce apps**
+  - **web server apps*
+
+Barrelfish Multikernel (andrew baumann, eth/msr cambridge)
+
+- [mostly same as sosp talk]
+- multicore and heterogeneity (NUMA)
+  - eg: niagara, opteron, nehalem all have very different archs (memory
+    hierarchies, interconnects)
+  - programmable NICs, GPUs, FPGAs (in CPU sockets) - helios
+  - even on single die: perf asymmetry among cores, streaming instrs,
+    virtualization support; eg ibm cell
+  - unlike hpc, can't optimize at design time; must adapt dynamically
+- traditionally: synchronized shared-memory kernel across all cores; anything
+  else is a device
+- proposal: structure as dist sys: explicit comm, HW-neutral, view state as
+  replicated
+- explicit message passing
+  - decouples system structure from intercore comm mechanism
+  - naturally supports heterogeneous cores (eg completely diff devices)
+  - better match for future HW: eg cheap msg passing (tilera), no
+    cache-coherence (intel 80-core polaris)
+  - async ("split-phase opertion"): decouple req/resp for concurrency
+- microbench: msg passing vs shared mem
+  - shared mem
+    - no locking
+    - cache coherence migrates modified cache lines
+      - cpu stalled 
+      - depends on data sizes (number of cache lines) & contention (number of cpu's)
+      - latency scales linearly with cache lines & #cpu's
+  - message passing
+    - synchronous rpc's
+    - ring buffer impl optimized for amd's hypertransport
+    - client latency is constant wrt cache lines
+    - actual cost of update at server: constant, tiny (this is why split-phase
+      matters; don't need to wait for anything)
+- HW agnosticism
+  - the only HW-specific parts: msg transports (highly optimized/specialized), CPU/device drivers
+  - late-binding protocol
+- view state as replicated
+  - required by msg-passing model
+- replication vs sharing
+  - sharing will be faster in some cases, eg HW threads on same core
+  - TODO
+  - view sharing as a local optimization
+  - supporting replication as scalability optimization vs. supporting sharing
+    as local performance optimization
+- barrelfish structure
+  - privileged user space "monitor" process mediates local operations on global state
+  - TODO
+  - URPC intercore (shared memory) msg transport on current x86 HW
+  - other facilities are user level services, like in microkernel/exokernel
+- non-orig ideas in barrelfish
+  - multiproc techniques
+    - minimize shared state (tornado, k42, corey)
+    - user-space RPC decoupled from IPIs (URPC)
+    - single-threaded non-preemptive kernel per core (k42)
+  - other ideas
+    - capabilities for all resource mgmt (sel4)
+    - upcall cpu dispatch (psyche, sched activations, k42)
+    - push policy into app domains (exokernel, nemesis)
+    - lots of information (infokernel)
+    - run drivers in own domains (ukernels, xen)
+    - edf as per-core cpu scheduler (RBED)
+    - specify device registers in a little language (devil)
+- apps: this slide viewer, web server, VMM running linux, spalsh-2, openmp,
+  sqlite, more...
+- how to eval?
+  - good baseline perf: comparable to existing systems on current HW
+  - scalability with cores
+    - URPC microbench: on current CC HW it's x00 cycles; comparable on more cores
+    - intercore perf (lat, tput) comparable to intracore in L4; not same objective (L4: isolation)
+    - case study: unmap (TLB shootdown) is typically a perf problem
+      - linux/windows: kernel sends IPIs, spin on shared ack count/event
+      - barrelfish: user request to local monitor domain, single-phase commit
+      - unicast: multiple channels (writer needs to write multi copies)
+      - broadcast: shared channels (readers contending? TODO)
+      - multicast: hierarchical; NUMA-aware tree
+  - adaptability to diff HW
+    - requires system knowledge
+      - system knowledge base; constraint logic programming
+      - port of "eclipse" constraint solver
+  - exploit msg passing for perf
+
+Xerox Parc Alto
+
+- An Open Operating System for a Single-User Machine
+- robust file system
+  - label each block with identifying metadata so that a block can be
+    identified on its own in a full disk scan (fsck); links, indexes are only
+    hints for speedier access
+  - unclear whether this is actually any more robust than other schemes (such
+    as replication)
+  - http://research.swtch.com/2008_02_01_archive.html
+- people
+  - Butler Lampson
+  - Luca Cardelli
+  - Rob Pike
+
+Generalized Filesystem Dependencies; Featherstitch (Kohler) *
+
+- user provides hints about file system operation dependencies to let FS work
+  more optimally
+
+Exokernel: An Operating System Architecture for Application-Level Resource Management (MIT 1995)
+
+- TODO
+- [Brewer's notes]
+
+Comparing and Evaluating epoll, select and poll Event Mechanisms
+
+- in certain cases (high load), epoll performs the same as select/poll
+  - because lots of epoll_ctl calls
+- when lots of idle conns, epoll wins
+- attempts to make things faster (epoll_ctlv) yield only small improvements
+
+Stupid File Systems Are Better (Lex Stein, 2006, HotOS X)
+
+- I totally did not get this paper
+
+MapJAX (James Cowling, RQE practice talk, 4/29/08)
+
+- intro
+  - AJAX programming difficulties
+    - explicit data transfer
+    - single thread, callback wevent-based
+    - good performance is hard (data transfer)
+  - proposal
+    - familiar programming model: remote objects, threads, locks
+    - high perf features: par for, caching/prefetching
+    - no new client-side software
+- programming model
+  - core language obj: key-value maps; bound to URL; read-only
+  - blocking access calls; non-preemptive threads
+- perf features
+  - par-for: guarantee that each one starts in order
+  - RLU lock: reserve, lock, unlock
+    - reserve: adds thread to queue, so that the threads get lock in order
+  - prefetching: user-defined prefetch policy
+  - par-for access: batching
+- implementation
+- sample apps
+- perf analysis
+  - Dummynet (a tool for emulating network conditions in FreeBSD, e.g. slow
+    Ethernets)
+
+Scheduler Activations (UW 1992)
+
+- **user-level threads: performance advantages and functionality limitations**
+  - perf of user threads inherently better than kernel threads, not artifact of
+    existing impls
+  - user threads are more flexible wrt programming models
+  - lack of system integration exhibited by user threads is not inherent, but
+    due to inadequate kernel support
+  - **the case for user-level thread mgmt**
+    - cost of accessing thread mgmt ops (kernel boundaries)
+    - cost of generality (eg many parallel apps use simple FIFO scheduling)
+    - user threads 34/37, kernel threads 948/441, unix procs 11300/1840
+  - **sources of poor integration in user-level threads built on the
+    traditional kernel interface**
+    - kernel threads block, resume, and are preempted without notification to
+      user level
+    - kernel threads scheduled obliviously wrt user thread state
+    - asd
+
+- misc
+  - aka M:N threading
+  - implemented then removed in NetBSD and FreeBSD
+  - seems to have significantly more complex impl in real world OS than 1:1
+    threading
+
+Managed
+=======
+
+Singularity
+
+- software-isolated processes (SIPs)
+- min scheduler: round-robin scheduler that also just switches to the receiver
+  process of a message from the sender who is blocked
+- sing#: extended version of spec# (extended version of c#)
+  - channels and contracts
+  - spec#: contracts/invariants, many statically checked (like ESC/java)
+  - low-level constructs for system software
+
+Windows
+=======
+
+NT kernel
+
+- orig by dave cutler (now working on azure)
+- ntoskrnl.exe: contains the kernel and the executive
+- uses unicode internally
+
+midori
+
+- headed by former billg technical assistant eric rudder
+
+Linux
+=====
+
+- `spin_lock`: memory barrier + busy wait on SMP, nop on UP (since kernel code
+  doesn't get preempted, except by interrupts)
+  - `spin_lock_irqsave`/`spin_lock_irqrestore`: additionally does `cli`/`sti`
+    to disable/enable interrupts respectively
+  - cannot call `schedule()` from within a spinlock, since the newly scheduled
+    code may again try to acquire the same lock, looping forever
+  - also cannot call blocking (sleeping) code
+  - also story changes when kernel preemption (`preempt`) is enabled
+
+- sempahores: sleeping locks; best for long hold times; safe to use where
+  spinlocks aren't (eg blocking code)
+  - `down_interruptible`/`down`: decrement (sleep-wait) on a sem
+- reader/writer locks
+- big kernel lock (BKL): 2.2, 2.4 tried to remove it; still exists, but minimal
+  use
+
+- _ticket spinlocks_: two counters (in same int), owner and next
+  - `atomic { n=next++; }; while (n!=owner); ++owner;`
+
+ext4 vs fsync
+
+- `rename` is used because it's atomic; established in posix std
+- however, system crashes are not at all specified by posix
+- ext4 may order metadata writes such that the rename is written but not the
+  contents of the new file
+- fsync: flushes memory to disk, prevents above scenario
+  - if crash after fsync, increases prob of new file vs. old file
+  - for max prob, fsync the containing directory
+  - ultimately no guarantees, since eg hw may have its own buffers and lie to
+    us, or fs may just not be robust, but it's as close as you can get
+  - but it's a prohibitively big perf hit; in ext3, implies system-wide flush
+- ext4: eventually patched but not sure how
+- mjg:
+
+  > It's simple. open(),write(),close(),rename() and open(),write(),fsync(),close(),rename(), are not semantically equivalent. One is "give me either the original data or the new data"[2]. The other is "always give me the new data". This is an important distinction. fsync() means that we've sent the data to the disk[3]. And, in general, that means that we've had to spin the disk up.
+
+- tso:
+
+  > First of all, the squence above exactly provides desired “atomicity without durability”.   It doesn’t guarantee which version of the file will appear in the event of an unexpected crash; if the application needs a guarantee that the new version of the file will be present after a crash, it’s necessary to fsync the containing directory.
+
+Ksplice (jbarnold, 2008)
+
+- patch running kernel for security updates
+  - must be changes that don't change data structure semantics
+  - a kernel dev needs to verify that it satisfies this property
+- challenges
+  - extraneous differences: pre and post objects will contain many differences
+    that are only tangentially related
+    - e.g., by default gcc compiles 1 .c to 1 .text section
+    - relative jumps within this section
+  - determining entry points: most C functions have one entry point, but asm
+    can have several
+  - resolving syms to kern addrs: use own mechanism for relocations rather than
+    kernel's to allow _post_ to reference (existing, unreplaced) local
+    functions and data structures
+  - handling ambiguous or missing syms
+  - finding safe time to update
+  - patching previously-patched kernel
+- process
+  - build and compare _pre_ and _post_ images (without and with patch)
+  - extract functions that differed
+  - ksplice kernel module
+  - use custom relocation rather than the kernel's built-in mechanisms
+  - _run_-_pre_ matching: one of the most complex parts of this work; I don't
+    understand it
+    - something about inserting trampolines
+  - wait till no thread's kernel stack contains a return address to modified
+    functions
+    - captures all procs and checks stacks; if no go, then sleep and retry; if
+      multiple failures, abort
+    - thus cannot upgrade _non-quiescent_ kernel functions (which are always on
+      the stack of some kernel thread)
+  - patching prev-patched kernel: almost exactly the same process
+- implementation
+  - generic "helper" kernel module loads pre object code and does run-pre
+    matching
+  - generic "primary" kernel module loads post object code and inserts
+    trampolines
+  - user space software that generates object files linked into kernel modules
+    in order to produce the ready-to-insert modules
+- conclusion
+  - most of this is a bunch of hackery
+  - impressive amount of detailed knowledge of low level details
+  - this is a paper/piece of software I should come back to some time just to
+    learn more about low-level systems hackery!
+
+- lguest: x86 VMM
+
+- kernprof
+- lockmeter: predecessor (2.4) to lockstat
+- lockstat
+  - /proc/lock_stats
+
+Athena (SIPB cluedump, Marc Horowitz, 2008-10-07)
+
+- Kerberos
+  - KDC stores users and passwords
+  - service and keytabs
+- hesiod: a directory service containing info about users, workstations,
+  printers, mailboxes, etc., run over the DNS protocol
+- mail
+  - mailhubs expand mailing lists, check spam, etc.
+- printing: LPRng-based infrastructure
+  - hesiod to locate printers (rather, *print servers*)
+  - KRB auth phased out
+- lockers: homedirs, software, etc.
+- moira: relational DB
+  - eg, hesiod is one "view" of moira
+  - clients: moira, blanche, stanley, listmaint, stella, web-listmaint, mrtest
+  - apps typically don't interact directly with moira; info is pushed out to
+    services (refresh or incrementally)
+  - somewhat similar to LDAP; has an LDAP interface that feeds Win machines
+- larvnet: gathers data used by cview
+  - user login info (busyd)
+  - printer info (lpq)
+- mkserv: customize newly installed workstation
+- remaining questions
+  - what are keytabs?
+  - what's larvnet/cview?
+  - what's LPRng?
+
+Structure of Linux (Geoffrey Thomas, SIPB cluedump, 2008-12-11)
+
+- <http://lxr.linux.no/>
+- procs are lightweight; threads are just special types of procs
+- 1:1 threading
+  - XXX what are those k procs?
+- CFS scheduler: balanced tree, where leftmost is next to be queued
+  - XXX leftmost next to be queued?
+  - XXX group scheduling?
+- operations structures: poor man's C++
+- kmalloc is wasteful; vmalloc for virtual memory
+- /proc
+  - filesystems
+  - pid
+- C macros: likely, unlikely
+- udev manages /dev
+- kernel build configurations translate into macro definitions
+
+File Systems
+============
+
+unix fast file system (FFS) (1984)
+
+- dramatically increased FS perf from unix FS (1978)
+- increased block size, improving BW
+- reduce num & len of seeks by colocating related data (eg same-file blocks on
+  same/nearby cylinder)
+- incorporate rotational disk positioning to reduce delays btwn accessing seq
+  blocks
+- bottlenecks
+  - synchronous file creation/deletion for recoverability
+    - alt solns: NVRAM, logging
+  - seek times btw IO reqs for diff files
+
+The Design and Implementation of a Log-Structured File System (mendel
+rosenblum, john ousterhout, 1991)
+
+- seminal LFS
+- speeds up (small) file writing, crash recovery
+- log is only struct on disk; contains indexing info for efficient reads
+  - FFS: inodes at fixed locs
+  - LFS: inodes written to log; inode map locates these
+    - inode map: divided into blocks written to log
+    - indirection: fixed checkpt region locates blocks
+- to maintain large free areas for writing, divide log into segments
+  - threading vs. copying: frag vs. cost (esp. for long-lived files)
+  - hybrid: segs must be copied before rewrite, but threaded internally
+  - try to group long-lived data together into segs
+  - seg size: large enough so xfer time >> seek time (allowing full disk BW)
+- segment cleaner compresses live info from heavily fragmented segments
+  - seg summary block: maps block to owning file
+  - this way, can update inode pointers
+  - can also determine liveness by checking inde ptrs
+  - optim: compare block version with file version
+- simple cleaner based on cost-benefit policy
+  - compared a few different policies
+  - maintain _segment usage table_: maps seg to (# live bytes, mod time)
+- recovery
+  - checkpt: log pos where all FS are consistent & complete; done periodically
+  - 2-phrase checkpointing
+    - write out all modified info (blocks, indir blocks, inodes, inode map,
+      segment usage table)
+    - write (fixed) checkpoint region containing addrs of all inode map blocks
+      & of seg usage table, plus time & pointer to last segment written (log
+      tail; in paper, called "head")
+  - actually 2 checkpt regions, in case of crash while writing region;
+    alternate btwn them (like double buffering)
+  - roll-fwd: recover data written since checkpt
+    - recover recently-written file data
+    - also adjusts utilizations in SUT
+- sim: outperforms FFS by OOM for small writes, matches/exceeds for large
+- even when cleaning, uses 70% of disk BW; FFS uses 5-10%
+- [notes from <http://lwn.net/Articles/353411/>]
+  - commentary
+
+    > In short, log-structured file systems performed relatively well as long as
+    > most of the segment cleaning - movement of live data out of a segment so it
+    > can be re-used - could be done in the background when the file system
+    > wasn't busy with "real" work. The first major follow-up paper on LFS [PDF]
+    > found performance of LFS degraded by up to 40% from the best case at
+    > real-world levels of disk utilization, memory-to-disk ratio, and file
+    > system traffic. In short, in the steady state the file system was spending
+    > a significant amount of disk access time cleaning segments - moving old
+    > data out of a segment so it could be used for new writes. This segment
+    > cleaning problem was the subject of active research for at least another
+    > decade, but none of the solutions could consistently beat state-of-the-art
+    > write-in-place file systems at practical levels of disk utilization. It's a
+    > little bit like comparing garbage collection to explicit reference counting
+    > for memory management; when memory usage is low and the occasional high
+    > latency hit is okay, the convenience of garbage collecting outweighs the
+    > performance benefits. But at "high" levels of disk utilization - as little
+    > as 50% - the cleaning cost and periodic high latencies waiting for space to
+    > be freed up become a problem.
+
+  - worst case: FS is X% full and every segment is X% full
+    - expected number of blocks to read to free up one block: ceil(1 / (1 - X))
+
+an implementation of a log-structured FS for unix (margo seltzer, 1993)
+
+- concerns with sprite LFS
+  - too much mem
+  - write reqs succeed even if insufficient space
+  - recovery doesn't verify consistency FS dir structure
+  - seg validation is HW dependent
+  - all FSs use single cleaner & single policy
+  - no perf numbers that measure cleaner overhead
+- engineered BSD-LFS
+
+PCMFS
+
+- byte-addressable persistent memory (BPM): eg phase-change memory (PCM)
+- HW: byte-addressability & fast random writes
+- traditional FSs: for atomic updates, need either journal or shadow-copy
+  - WAL: 2x writes; so costly, most FSs journal only metadata
+  - shadow paging: COW on actual data; bubbles up tree
+- propose _short-circuit shadow paging (SCSP)_
+  - layout: all structs are trees of 4K blocks
+  - in-place updates are atomic & efficient
+  - appends that don't grow beyond last block: just update the file length
+    afterward
+  - general operation: partial COW, no need to bubble all the way up
+- ordering
+  - writes may be reordered on way from cpu to mem
+  - barriers only guarantee inter-cpu comm, not writing back to DRAM
+  - one idea: flush entire cache at each barrier; slow
+  - propose _epoch barriers_ to allow SW to explicitly comm ordering
+    constraints to HW
+  - key invariant: when write issued to storage, all writes from prev epochs
+    must have already been committed back to persistent storage
+  - requires minor changes to several parts of PC arch
+- all ops but cross-dir moves never bubble up to (parent) inode
+
+DVCS
+====
+
+Git (SIPB Cluedump 2008/10/21)
+
+- DAG of commits, which point to other commits (parents) and trees (contents)
+- `gitk`: visualization tool
+- _ref_: mutable ptr to an object in the DAG (usu. a commit)
+  - branches (aka heads) and tags
+  - eg:
+
+      HEAD -> refs/heads/master
+      refs/heads/master -> commit ...
+      refs/heads/ftrace -> commit ...
+      refs/tags/v2.6.8  -> commit ...
+      refs/tags/v2.6.27 -> tag ...
+
+- consequences of git's model of recording series of trees
+  - it doesn't store patches/diffs, only version,version,version
+  - tracks hist of whole project not individual files, so try to have one proj
+    per repo
+  - doesn't track renames
+
+scripts.mit.edu (SIPB cluedump 08/10/28)
+
+- vos exa user.geofft   # volume id; basically per locker
+- getent passwd geofft  # user (locker) id
+- keytab: password in a file
+- hacked up afs client code:
+  - to support custom scripts auth rules
+  - to mark all files as exe (phasing out)
+- quilt: for applying patchsets
+- hacked up krb
+
+Sandboxing
+----------
+
+Xax (MSR)
+
+- mechanisms
+  - picoprocess: native-code execution abstraction that is secured via hardware
+    memory isolation and a narrow syscall interface, akin to streamlined
+    hardware VM
+  - PAL: provides an OS-indep ABI to xax picoprocesses
+  - hooks to existing browser mechanisms to provide aps with system services
+    (network, UI, storage) that respect browser security policies
+  - lightweight modifications to existing tool chains and code bases for
+    retargeting legacy code to the xax picoprocess env
+- goals and alternatives
+  - goals: security, OS indep, perf, and legacy support
+    - [they compare SF LOC of C/C++ vs. others; this disregards verbosity, the
+      projects themselves, etc.; may have been better to count number of
+      projects]
+  - alternatives
+    - existing web-app mechanisms
+      - js: slow; no legacy code
+      - activex: no sandboxing; only a way to package app for invoking via web;
+        windows only
+      - IL (flash/java/MSIL): no legacy code
+    - OS processes: not OS indep, insufficient sec
+      - can write interposing confinement layers, but that's hard
+      - xax goes opposite: start with no interface and add
+    - hardware vm's: big/complex, so slow dl, insecure, hard to write
+      - xax = extreme paravirt where guest os is removed
+      - reduces vmm also: no emulation of devices, mmu, cpu kernel mode
+- mechanisms
+  - picoprocess: VM without devices, MMU, CPU kernel mode
+    - alternatively, a highly restricted proc prevented from making kernel calls
+    - hardware-memory-isolated address space; strictly user-mode CPU
+    - xax monitor: browser plugin; picoprocess makes xaxcalls to this
+    - xaxcalls vary slightly among platforms to keep xax monitor simple
+  - platform abstraction layer (PAL) for OS indep
+    - PAL translates OS-indep ABI to OS-specific xaxcalls
+    - PAL runs inside picoprocess; untrusted; everything above ABI is remote
+    - only 9 calls in xax abi
+    - simple shim libxax that converts app dev toolchain's calling convention
+      into xax ABI calls into PAL
+  - services via browser mechanisms: same security policies
+    - picoprocess is web server; serves http requests
+  - lightweight code modification: 5 steps to addressing all porting issues
+    - TODO
+    - obliviously failing
+    - emulate syscall functionality internally
+      - eg fs: read from tar, write to ramdisk; also read from other files, eg
+        downloaded from server
+    - provide real syscall functionality via xaxcalls
+      - real backing functionality for remaining 137 syscalls (11 unique)
+- implementation
+  - monitor, boot block, PAL
+    - monitor is its own process; xaxcalls via shared mem
+    - boot block sets up shared mem, makes kernel call to revoke ability to make subsequent kernel calls, and continues into PAL (which loads/executes app)
+    - most xaxcalls implemented straightforwardly in similar way on both platforms
+  - linux: uses ptrace to intercept entry/exit of every syscall and xfer control to monitor
+    - monitor replaces syscall with effectless getpid
+    - syscalls also used by pal to signal a xaxcall; monitor checks if shared memory contains legit xaxcall id/args
+    - for alloc/free, replace syscall with mmap; this is because monitor can't alloc mem on behalf of child
+    - 3 syscalls (slow); also if monitor crashes then child can make syscalls
+      - fix by using kernel module
+  - windows: custom kernel module xaxdrv
+    - each windows thread has pointer to table of syscall handlers; xaxdrv replaces this
+      - in replacement table, if caller is kernel mode, then pass through preserving dispatcher's stack frame; else, xaxcall
+    - monitor can alloc/free on behalf of child
+    - easy to port to many windows; just change some pointer values
+    - could also have patched every entry in std syscall table, but discouraged since it affects every process i the system
+  - loaders: have elf and pe-coff loaders
+  - browser integration: local server appears as same origin; most URL requests go through to host but `/_xax/` refers to existing/new picoprocess
+- examples
+  - headline reader (audio) and 3D demo (10 fps) shows we can deliver rich content
+  - social network visualizer shows utility of leveraging existing graphviz legacy code
+  - ghostscript (pdf) and kaffe (jvm) shows this can replace browser plugins
+- evaluation
+  - performance: high xaxcall overhead; fast(er) as java; much faster than v8
+  - legacy: apps use 15 libs totaling 3.3M loc in 4 langs with minimal changes
+  - os-indep: linux & many windows
+  - security: trusted code base (TCB) less tha jvm/flash
+- related work
+  - TODO
+- limitations
+  - threading: need a new xaxcall for spawing & asynchronous signaling
+  - porting more mainstream C libs like glibc/MS is harder since they rely on
+    x86 segment registers to manage thread-local storage, which can't be
+    assigned in user mode, so must emulate or obviate this functionality
+  - port more interactive code: GUI libs with few deps (qt/embeded); blit frame
+    buffers; keyboard/mouse events catpure in js
+
+Petabytes on a budget: How to build cheap cloud storage (Backblaze blog post 2009)
+
+- 67 TB 4U servers for $7,867
+- major components
+  - 45 HDs $5400
+  - 4 SATA cards $175
+  - 2 PSUs $540
+  - custom case with 6 fans, 1 boot drive, 9 multiplier backplanes $758
+  - mobo/cpu $365
+  - 4 GB RAM $50
+- software: https, JFS, 3 RAID6 volumes
+  - IBM JFS is journaling file system...curious why they chose this
+
+storage
+
+- Electrically Erasable Programmable Read-Only Memory (eeprom)
+  - small amounts of data to be saved in computers and devices
+- flash: can only change 0 to 1; erasure must happen block at a time
+  - technically an eeprom, but larger block sizes, so better large-write perf,
+    and more economical
+  - nor flash
+    - similar to ram: execute in place (XIP), read-write
+    - typical block sizes: 64, 128, 256 KB
+    - greater write endurance than nand: 100K-1M cycles
+    - slow writes vs nand flash, but better random access
+  - nand flash: more like block device; in usb, mem cards, ssd
+    - typical block sizes
+      - 32 pg * 512 B/pg = 16 KB
+      - 64 pg * 2 KB/pg = 128 KB
+      - 64 pg * 4 KB/pg = 256 KB
+      - 128 pg * 4 KB/pg = 512 KB
+    - lesser write endurance: 10K-100K cycles
+    - higher densities/larger capacities at lower costs than nor
+    - faster erase, sequential write, sequential read than nor
+    - much faster at reading than writing; wear slows down writes a lot
+- phase change memory (pcm): samsung got a bunch of hype in 9/2009
+  - read: 100s of ns; write: ms
+  - OOM faster than flash, OOMs faster than disk
+  - actually a bunch of different non-NAND NVRAM techs that are
+    byte-addressable, including something from HP that sounded like 'mem
+    registers'
+  - mature tech?  cost/availability?  still very early, but results are
+    promising and should scale up to disks in size

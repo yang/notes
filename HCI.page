@@ -1,0 +1,17 @@
+Processing (Ben Fry's talk at CSAIL 5/16/08)
+
+- looks like a system for making slick "interactive animated visualization"
+- language gets rid of a lot of verbosity associated with straight java
+- make things accessible that aren't possible without programming
+- asdf
+
+touch, tabletop, and tangible blocks (patrick baudisch, msr, prof at hasso-plattner-institut)
+
+- a lot of prior work in trying to improve touch interfaces, incl. patrick's
+  work in beneath-the-table touch
+- aside: iphone corrects touches by a fixed vector
+- knowing the yaw and rotation each improve accuracy
+- from 15mm to 5mm buttons at 90% accuracy
+- use fingerprint
+
+reflow: recalculating positions when eg resizing a window

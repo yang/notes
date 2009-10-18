@@ -1,0 +1,12 @@
+VanGo
+
+- linear chain of filters (nesc modules)
+- configuration says where to partition
+- built on SNACK (Sensor Network Application Construction Kit)
+
+Lewis Girod, Sevan, Ryan
+
+- using wavescope to do audio processing
+- specifically, separate signal from noise, probably using clustering of
+  spectra (using euclidian distance of their frequencies)
+

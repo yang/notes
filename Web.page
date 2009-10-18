@@ -1,0 +1,36 @@
+mark pilgrim: google's html5 evangelist
+
+encodings:
+
+- url encoding: `user%40domain.com`, `hello%20world`
+- html encoding: `1 &lt; 2`
+- javascript escaping: eg for json
+- css escaping
+
+flash RTFMP
+
+- udp only (RTMP is the tcp-based one)
+- can make p2p connections using RTFMP server (eg adobe stratus) as rendezvous
+- server maintains list of potential peers that can be connected to
+  - server assigns temp uniq IDs to connections from SWFs
+  - other SWFs connected to server can subscribe to streams and events from
+    that ID once the bcasting SWF agrees to the connection
+  - if NetConnection to server is lost/closed, any peer connection is also
+    closed
+- server also assists in nat-t; supports TURN
+- in flash 10; see NetConection, NetStream objects
+- security
+  - privacy: 128-bit AES encryption; key negotiated with D-H
+  - auth: none, but provides secure nonces to aid with app-level auth
+  - only enables sending media from mic/cam to other flash player endpoints
+    that subscribe to media streams
+
+misc
+
+- `rel=nofollow`: indicates to search engine that a link should not influence
+  the target's ranking
+
+techniques
+
+- css spriting: combining multiple images into one (reducing requests) and
+  cutting pieces out using css

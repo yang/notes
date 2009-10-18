@@ -1,0 +1,419 @@
+immutability advantages
+
+- nice list of args for immutability from
+  <http://www.javapractices.com/topic/TopicAction.do?Id=29>
+
+  >  - are simple to construct, test, and use
+  >  - are automatically thread-safe and have no synchronization issues
+  >  - do not need a copy constructor
+  >  - do not need an implementation of clone
+  >  - allow hashCode to use lazy initialization, and to cache its return value
+  >  - do not need to be copied defensively when used as a field
+  >  - make good Map keys and Set elements (these objects must not change state
+  >    while in the collection)
+  >  - have their class invariant established once upon construction, and it never
+  >    needs to be checked again
+  >  - always have "failure atomicity" (a term used by Joshua Bloch) : if an
+  >    immutable object throws an exception, it's never left in an undesirable or
+  >    indeterminate state
+
+Optimizations
+
+- method specialization: compile several copies of a given procedure, each
+  customized for one receiver type, so that the type of the receiver is bound
+  at compile time
+  - used in Hotspot
+  - avoids dynamic dispatch
+  - can lead to code explosion; HotSpot only does this for certain things
+
+B programming language
+
+- basically C without types
+- everything was a word
+- anything can be dereferenced (everything is a pointer)
+- predecessor to C, inspired by BCPL
+
+Revisiting Coroutines (2004)
+
+- very nice organization and juxtaposition of coros and even continuations; a
+  good bookmark!
+- coroutines
+  - control transfer mechanism
+    - symmetric: single operation, `transferTo(some other coro)`
+      - tends to be more difficult to follow
+    - asymmetric: two operations, `resume("child" coro)` and `yield()`
+      - tends to yield more structured code
+  - first-class vs. restricted (Java iterators: use coro only from for loop)
+  - stackful vs. non-stackful (Python generators)
+- continuations
+  - multi-shot
+    - harder to implement and less performant because you must copy a
+      captured continuation before it is modified (before you call back into
+      it)
+  - one-shot
+    - implementation
+      - create a new stack segment and swap that in for the current one
+      - on call, replace with orig stack segment
+    - partial continuations aka subcontinuations TODO
+      - restricted but still useful for most apps
+- equivalence
+  - sym and asym coros can be implemented in terms of each other
+  - full coros equiv to one-shot continuations
+  - continuations implemented using coros more efficient than vice-versa,
+    since implementing coro using continuations means each time you transfer
+    control you must create a continuation (i.e., create a new stack segment)
+  - cooperative threading: similar to coros
+- apps: some high-quality examples, all straightfwd to understand
+  - producer-consumer, generators
+  - goal-oriented programming: logic programming, pattern matching
+  - cooperative multitasking
+  - exception handling
+- implemented asym coros for Lua
+
+Ada/SPARK
+
+- ada: orig lang
+  - gnat: ada compiler in gcc
+- akacore: company based on it
+  - gnat pro: better ada compiler; can emit JVM, .NET
+  - spark: lang based on ada; has formal verification
+  - gnatbench: IDE
+
+Erlang
+
+- example:
+
+  start() ->
+    pid = spawn(module, function [, args...])
+    pid ! {example, msg}
+    pid.
+
+- receiving: pattern-matching
+
+  msg_printer() ->
+    receive
+      exit ->
+        ...
+      {format, N} ->
+        ...
+        msg_printer()
+      MSG ->
+        ...
+        msg_printer()
+      after 10000 ->
+        ...
+        msg_printer()
+    end
+
+- receive doesn't necessary dequeue in order, but gets best match
+- OTP has things like process groups
+- features
+  - process monitoring: notify when a process dies
+  - hot code loading: load side by side, then switch
+  - distributed messaging
+  - impure functional, eg key value store
+  - interpreted or JIT
+- critiques
+  - you must always match all messages, otherwise throw exceptions
+  - FFI sucks
+
+Lisp
+
+- elisp
+  - dynamically scoped
+- clisp
+  - lexically scoped
+- scheme
+  - lexically scoped
+  - `fluid-let`: dynamic binding
+
+Extensible
+----------
+
+active libraries
+
+- <http://lambda-the-ultimate.org/node/1339>
+- problem: libraries encode a language of their own, but the compiler
+  doesn't/can't analyze (check/optimize) its use
+- libraries provide not just runtime but also extensions to the compiler
+  - compile-time functions that eg do static checking and optimizations
+- see also: meta-compilation of language abstractions
+  <http://lambda-the-ultimate.org/node/2019>
+
+Haskell
+-------
+
+Parallel Performance Tuning for Haskell (spj 09)
+
+- threadscope: nifty profiling viz tool that is esp. useful given haskell's
+  tricky combination of its evaluation machinery with its `par` abstraction,
+  plus the whole suite of combinators (including the mind-bending "strategies"
+  library) built on top of those.
+
+Asynchronous exceptions in Haskell
+
+- TODO: review this and take notes
+
+Scala
+-----
+
+PiLib: A Hosted language for Pi-Calculus Style Concurrency *
+
+- TODO: review this and take notes
+
+Aspects
+-------
+
+Verification for Aspects (Shmuel, CSAIL talk 08/18/08)
+
+- aspect: same piece of code (_advice_) applied at many different places (_join points_)
+  - set of join points is a _join cut_
+
+Dynamic Analysis
+----------------
+
+dhard (formerly dihard, umass)
+
+- randomized heap allocation that's very spaced out
+- run multiple replicas and compare their output
+
+Systems
+-------
+
+BitC
+
+Cyclone
+
+Nitro: A low-level functional programming language
+
+javascript monitoring & optimization (Joao, Ben Livshitz, MSR 09)
+
+- improve web app load times by segmenting and lazily loading
+- doloto training tool: like a wizard with 3 steps
+  - training: collect runtime profile
+  - clustering: group functions together
+  - rewriting: stub out unnecessary code
+- initial js size reduction: savings of 20-80%, usu. around 50%
+- limitations
+  - doloto caches transformed html; problem if dynamically generated
+  - clustering may actually increase download size, because functions may be clustered together from different js files, and html pages may reference only particular js files
+  - CDNs vs SOP: if the js and html are on a CDN, then the rewritten js references/does XHR to original site to get the cluster js; SOP disallows this
+  - synchronous on-demand loading instead of background loading; fairly difficult to prevent concurrent events from executing
+- released on 9/4/09 on devlabs; got good press coverage
+- something about js events and event handling and cancellable events
+
+automated end-to-end OS verif (Jean Yang, Chris Hawblitzel, MSR 09)
+
+- SeL4: verified L4; 10 yrs, 13 ppl, mathematicians; 600 lines ARM asm
+- compiled C# ukernel on top of trusted kernel
+- used verified boogiepl; translated to c/asm
+  - verified: thread ctx/switching, c-to-c#, c#-to-c, GC (prior work)
+  - trusted base: stack switching is 2 lines asm (20-30 lines spec), mem acccesses, devices
+- boogiecc translator translates verified boogiepl to generated c++/x86 (running on top of hand-impl trusted runtime)
+  - checks for valid treatment of regs in asm, valid reqs for c/c# interface procs
+- stack switches: ContinuationInvariant(stack ptr, instr ptr, stack base, stack lim, stack mem)
+  - source stack requires wrt dst stack before switch, and vice versa after switch
+- interface c/c#: c# needs to maintain stack, c needs to maintain heap
+
+Java
+----
+
+java 7
+
+- project jigsaw
+  - download footprint
+  - jmod package manager
+- da vinci project
+  - invokedynamic
+- more powerful hotswap
+
+maxine research vm
+
+- not quite as fast as hotspot
+- tracing jit
+- continuations: stack-tree implementation
+
+noop: google lang with built-in DI
+
+gwt
+
+- idea: sort functions to cluster similar ones together and yield higher
+  huffman compression ratios, in the spirit of the burrows-wheeler transform
+- implementation: sort by length then scan functions making best-so-far matches
+  using edit distance
+- other tricks:
+  - larger-base charset for var renames
+  - rename from bottom-up scopes to reuse vars
+  - stable ordering of renames (so always get f(a,b,c))
+
+Parallel Programming Languages
+------------------------------
+
+Sequoia
+
+X10
+
+ZPL
+
+Chapel
+
+
+
+- TODO crawl
+  - http://play.cs.berkeley.edu/wiki/cs294/fa07/index.php/Main_Page
+
+Dynamic Program Analysis
+------------------------
+
+MUVI (Shan Lu, UIUC, SOSP07) *
+
+AVIO (Shan Lu, UIUC, ASPLOS06) *
+
+- introduction
+  - most prev concurrency bug detection focuses on data races
+  - atomicity (serializability) violations are as important as data races
+  - TM will make atomicity more important than data races
+  - data races are not always bugs
+  - most prev techniques rely on specific sync semantics
+- AVIO idea
+  - exploit non-determinism
+  - assumes that the program mostly runs OK
+
+other work by Shan Lu
+
+Black-box Tracing and Safe Parallelism : Tools for a Concurrent World (John
+Jannotti, Computer Science/Brown University, CSAIL talk 2008-08-26)
+
+  After many years of predictions, developers must design for concurrency.
+  Nearly all general purpose computers sold today are multi-core, and many
+  applications are deployed as services running on clusters of cooperating
+  computers. We are developing two approaches to help developers keep pace with
+  these changes. 
+
+  First, we have created BorderPatrol to extract causal request traces from
+  heterogeneous concurrent systems. BorderPatrol monitors message passing
+  between unmodified applications in order to aid development and debugging by
+  producing a "distributed stack trace". We have used BorderPatrol to trace a
+  litany of applications - apache, thttpd, PostgreSQL, TurboGears, BIND and
+  notably Zeus, a closed-source event-driven web server. BorderPatrol obtains
+  precise traces for black-box systems that cannot be traced by any other
+  technique. 
+
+  While BorderPatrol aids in understanding and debugging existing systems, we
+  are also developing Elyze to aid in the creation of correct concurrent
+  applications in the first place. Elyze uses a conservative static analysis to
+  determine when code segments may safely run in parallel, and a custom runtime
+  scheduler that respects these constraints. The aim is to produce applications
+  that are safe by default. Elyze currently analyzes event-driven servers
+  written in C. For example, we have analyzed thttpd to extract previously
+  unavailable parallelism. We hope to generalize the approach to threaded
+  systems.
+
+- tracing
+  - replace syscalls with versions that yield one event/protocol request at a
+    time
+  - need to understand protocols
+- elyse
+  - determine coarse-grained parallelism
+  - alias analysis using CIL
+
+Debugging
+---------
+
+Beyond Time Travel Debugging (CSAIL talk, 2008-10-23)
+
+- system is called "Chronicle"
+- use valgrind for recording
+- visualization:
+  - time/space x/y axes; operations are on ranges of memory during instances of
+    time (so you have a bunch of vertical bars in the graph)
+  - issue spatial queries (eg what are the last operations that affected a
+    certain memory range)
+- techniques
+  - divide space into pages
+  - bunch up a consecutively written memory ranges into one continuous range
+
+      |       |
+       |  --> |
+        |     |
+
+    - detect this statically
+  - compression
+    - disk is slow
+    - low-level execution very repetitive, predictable, compressible
+    - preprocess data to improve compressibility: repetitive program behavior
+      -> repetitive input to compressor
+    - memory effect: (address, timestamp, data) -> (delta address, delta
+      timestamp, data)
+      - eg: memset(0) loop -> (4,k,0) each iteration
+    - 20:1 compression of memory effect list (zlib)
+  - register reconstruction
+    - coarse-grained recording
+    - divide time into epochs
+    - record register state at start of epoch
+    - record summary bitmap for regs changed in epoch
+    - record code blocks executed in epoch
+    - record register writes by each code block
+    - except for simple common cases like R := R + k
+    - compress delta tricks
+- system
+  - threads: valgrind, indexer, compression, compression, ...
+  - can utilize many cores, many disks
+  - balance by tuning compression speed vs. quality
+- numbers
+  - ff debug build startup + display web page
+    - dual core x86 laptop
+    - 1.2B instrs
+    - 885MB DB (.74 B/instr)
+    - 7.5 min (127X slowdown)
+    - valgrind itself: 5-10X slowdown
+  - CPU bottleneck with zlib max compression
+  - disk bottleneck with hand-rolled LZ compressor (faster compression, 4X
+    larger DB)
+- found 1 real ff memory bug with this
+- engineering: straightforward (spare time for 1-2 years, 3 months of solid
+  work)
+  - valgrind tool: 2600 lines
+  - indexer: 4900 lines
+  - query engine: 12900 lines
+  - 5000 for DWARF2: fetch debug info, evaluate variables, etc.
+- history based stack reconstruction
+  - stack memory hard to interpret (frame ptr/tail call opts), may be corrupt
+  - idea: determine for time T which function calls have occurred that have not
+    yet returned; this information is avail. in the history
+  - "call": execution of `CALL` instruction or jump to function entry
+  - "return": when the stack pointer's value > stack pointer's value on entry
+  - incredibly robust, incredibly simple to implement! with a bit of help from
+    the recorder
+  - much simpler than what gdb has to do to cope with gcc's optimizations
+- integration with VM replay
+  - 30% overhead for recording -> small DB -> applying multiple Chronicle
+    engines to it; stripe checkpoints over many machines, aggregate Chronicle
+    DBs
+  - key idea: you *can* replay with instrumentation without perturbing
+    execution
+  - VMWare is working on a tool for valgrind (no VM involved)
+- omniscient profiling
+  - fire timer/HW events during VM recording: do nothing
+  - replay under Chronicle: all info avail with *original timings*
+  - replay with subsystem simulation (cachegrind)
+    - validate sim results against captured hardware counters
+  - VM perturbation: can it be compensated for?
+- related work
+  - omniscient debugging (bil lewis)
+  - TOD (u of chile)
+  - nirvana (ms): record/replay debugger; probably in vs in few yrs
+  - TTVM (umchi): VM approach to record/replay at OS level
+  - time machine (green hills): seems to keep a rolling buffer of last million
+    instrs; hard to tell given the 
+  - VMWare VM replay, VMWare-RR
+- released on google code
+- others' questions
+  - support for other languages (high level debugging): eg GC can move objects
+    around, you want to track the logical object not a physical location
+    - you can do this from the history; may be easier by changing the runtime
+    - someone extended Chronicle to support JS execution display as well
+- questions
+  - how long have you been with moz?  what do you do there?
+  - what did you work on here with dnj?
+  - lots of researchy programming folks there?  do you publish papers

@@ -1,0 +1,7 @@
+disks
+
+- native command queueing (NCQ): a SATA tech that allows HD to internally
+  reorder operations
+  - also used in SSDs but for a reverse purpose: because the SSDs experience
+    latency in the CPU; this allows for a batch of operations to be issued
+  - obsoletes PATA tagged command queueing (TCQ), which was CPU intensive

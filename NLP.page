@@ -1,0 +1,41 @@
+term frequency inverse document frequency (TFIDF)
+
+- term frequency is num occurrences of term $t_i$ in doc $d_j$ over total num
+  words in $d_j$ (how prominent $t_i$ is in $d_j$):
+
+  \begin{equation}
+  tf_{i,j} = \frac{ n_{i,j} }{ \sum_k n_{k,j} }
+  \end{equation}
+
+- inverse document frequency is num docs over num docs with $t_i$ (more common
+  words are less important):
+
+  \begin{equation}
+  idf_i = \log \frac{ \abs{D} }{ \abs{ \set{ d : t_i \in d } } }
+  \end{equation}
+
+- tf-idf = tf * idf
+
+vector space model
+
+- represent text docs as vectors of identifiers
+- eg index terms: each dim corresponds to a term; some possible values are:
+  - bits indicating presence
+  - counts
+  - tf-idf
+- relevancy rankings: treat query as doc, find most cosine-similar doc
+- limitations
+  - long docs poorly represented, have poor similarity values (small scalar
+    product/numerator and large dimensionality/denominator)
+  - order information not preserved
+
+cosine similarity
+
+- intuitively, find angle between vector representations of docs
+- don't actually need to calc cosine; can just leave as is; ordering preserved
+- $-1$ means opposite, 0 means same, 1 means identical; in IR, components are
+  always non-neg, so range is [0,1]
+
+jaccard similarity/coefficient/index
+
+- simple: J(A,B) = |A \cap B| / |A \cup B|

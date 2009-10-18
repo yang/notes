@@ -1,0 +1,77 @@
+- case-based reasoning
+  - knowledge-based ai
+  - statistical ml
+
+Developing a self-driving car for the 2007 DARPA Urban Challenge (Seth Teller's
+Angstrom talk, 5/1/08)
+
+- 40 compute cores
+- many other teams performed human-assisted map annotation
+- Seth's team focused on going almost entirely from sensing
+- many other teams used much fewer cores
+- uses of sensing
+  - using vision for finding paint
+  - using active sensing for depth
+- stereo algos: reconstruct 3D from cameras
+  - recent stereo algos have a global component that is harder to parallelize
+- optical flow: estimating motion across time
+- groups
+  - planning & control: how to stay on the white dotted lines; one technical
+    focus
+  - perception: another technical focus
+  - working on the car
+  - software infrastructure: codebase, OS, etc.
+- power-bound
+  - also CPU-bound in the sense that they could process rawer images, at higher
+    rates, etc.
+  - also IO-bound; had 2 GigE and a CAN, all mostly utilized
+- Anant: near future will yield cameras that have encoders
+  - Seth: these are not as useful for vision research
+  - algos need to know gradients, for instance; what does MPEG do to gradients?
+- looked at GPUs
+  - programming models still painful
+  - form factor limits (1U blades)
+- didn't want DSPs either because they didn't know what algos they ultimately
+  wanted; everything was exploratory
+- Anant: suggest fifth team, on computation resources
+
+MACHINE LEARNING
+
+- variables
+  - visibility
+    - _hidden variables_, _latent variables_, _model parameters_, _hypothetical variables_
+    - _observable variables_, _manifest variables_
+  - causality
+    - _independent variable_, _predictor variable_, _regressor_, _controlled variable_, _manipulated variable_, _explanatory variable_
+    - _dependent variable_, _response variable_, _regressand_, _measured variable_, _responding variable_, _explained variable_, _outcome variable_
+  - TODO any diff btwn visibility/causality?
+
+- bayes vs frequentist
+  - TODO diff btwn | and ;?
+
+- models
+
+- data mining
+
+- collaborative filtering
+
+- analyses
+  - mathematical
+    - real analysis
+    - complex analysis
+  - statistical
+    - analysis of variance (ANOVA)
+    - time-series analysis
+  - latent variable model
+    - factor analysis
+    - latent trait analysis
+    - latent profile analysis
+    - latent class analysis
+  - PCA
+  - exploratory data analysis
+
+- resources
+  - http://videolectures.net/icmi05_bengio_tsmla/
+  - google video: machine learning
+
+vim:nocin:et:sw=2:ts=2

@@ -1,0 +1,174 @@
+- TODO: distinguish grammars from parsers more cleanly in these notes
+- compiler types
+  - recursive descent
+    - parses LL(k)
+    - simplest to hand-code; simply recursive functions that backtrack
+    - non-predictve; requires backtracking
+    - most embedded parser languages are this (e.g. haskell's parsec monadic
+      parser), unless the embedded language constructs the data structures fed
+      into a "more separate" parsing
+  - predictive grammars
+    - use $k$ tokens of lookahead to fully determine which production to use
+    - no backtracking needed
+- parsing types
+  - shift-reduce parsing: a type of bottom-up parsing
+- grammar types (hierarchy)
+  - bottom-up
+    - LR
+      - LR(0)
+      - SLR(1!)
+      - LALR(1)
+      - LR(1)
+      - LR(n)
+- grammar types (details)
+  - general
+    - first L means left-to-right scanning
+    - second L/R means left-to-right/right-to-left derivation
+      (leftmost/rightmost)
+    - (k) = k-token lookahead
+  - LL(k) aka top-down
+    - produces leftmost derivation top-down
+    - LL(1): need to examine 1 token to determine which rule to apply
+    - animation: http://www.cs.wm.edu/~noonan/animations/llparse.html
+    - ANTLR
+    - LL is a subset of LR
+  - LR(k)
+    - k is the number of tokens to lookahead at the end of a rule
+    - produces rightmost derivation in reverse bottom-up TODO
+    - don't get used much; internal tables tend to get too big
+    - handles left-recursion
+  - LALR(k)
+    - YACC
+  - SLR(k)
+    - LR(0) + followsets TODO
+  - GLR aka generalized LR
+    - handles nondeterministic and ambiguous grammars by returning *all*
+      possible interpretations
+- grammar forms
+  - Backus-Naur Form (BNF): TODO
+  - Extended BNF (EBNF): TODO
+- determining ambiguity: uncomputable
+  - LR (and thus LL) grammars are always non-ambiguous
+  - unsure: LR parsers can identify certain non-ambiguous grammars, but they
+    have this gray area where they can't tell whether the grammar is ambiguous
+  - but at least GLR can notify you of this when it happens
+- parsing expression grammar (PEG)
+  - packrat parsers
+    - memoizing parsers; use much more space TODO how much?
+    - linear time (unlike GLR)
+  - no ambiguity because alternative productions are ordered
+    - that's also a downside: can't tell when you have ambiguous grammar
+- code generation
+  - division is slow integer operation
+    - gcc (among others) uses trickery involving non-div instrs, but only works
+      for constant divisors
+    - <http://research.swtch.com/2008/01/division-via-multiplication.html>
+- superoptimizers: exhaustively search for *truly optimal* generated code
+  sequence
+
+Tools
+
+- parser generators
+  - lex/yacc: old and busted; LALR
+  - flex/bison: new hotness; LALR
+    - generates C
+    - flex includes flex++ for C++
+  - javacc: most popular for java
+  - alex/happy: haskell
+  - ANTLR: LL(k) parser generator
+- edsl parsers
+  - parsec: haskell
+  - scala
+
+Grammars
+
+- terminals: loosely, can be used interchangeably with "token"
+- non-terminals
+- start symbol
+- productions
+
+Derivations
+
+- sequence of production steps proving that a string belongs in the language
+- 2 choices at each step:
+  - which nonterminal to expand? leftmost vs. rightmost
+  - which production to use for that nonterminal?
+- e.g.
+  - grammar: E -> (E) | -E | id | E+E
+  - a derivation: E => -E => -(E) => -(id)
+  - leftmost derivation: E => E+E => id+E => id+id
+  - rightmost derivation: E => E+E => E+id => id+id
+
+Grammar transformations
+
+- eliminating ambiguity
+- eliminating left recursion
+- left factoring: gets you a grammar suitable for top-down parsing
+
+Top-down parsing
+
+- recursive descent: requires backtracking
+- LL: predictive, with $k$ tokens of lookahead
+  - tables of FIRST and FOLLOW sets
+- top-down parsing during left-to-right scan constructs a leftmost derivation
+
+Bottom-up parsing
+
+- shift-reduce parsers
+- recursive-ascent: implementation technique for bottom-up (LR) parsers
+  - practical benefit: flexible in that it allows for parameterized recursion
+    (eg for error recovery)
+- LR: largest class of grammars for which shift-reduce parser can be built
+  - shift-reduce conflicts; ambiguous grammar cannot be LR
+  - LR parsing is attractive because
+    - it can recognize almost all CFGs
+    - LR parser can detect a syntactic error ASAP on left-to-right scan
+    - most general nonbacktracking shift-reduce parsing method known, but
+      efficient
+    - main drawback is difficulty of implementation
+- bottom-up parsing during left-to-right scan constructs a rightmost derivation
+  in reverse
+- LALR: lookahead LR
+  - more compact than LR, like SLR
+  - more general than SLR
+- Excerpts from <http://www.devincook.com/GOLDParser/articles/glossary.htm>
+  - LALR Parsing, or “Lookahead LR parsing”, is a variant of LR Parsing that
+    combines different “configurations” to limit the size of the parse tables.
+    As a result, the algorithm is slightly less powerful than the LR Parsing.
+    Grammars that can be parsed by a LR parser, might be found to be
+    “ambiguous” by LALR. However, this is very rarely the case and real-world
+    examples are few.The number of states eliminated by LALR are sometimes
+    huge. The C programming language, for instance, has over 10,000 LR states.
+    LALR drops this number to slightly more than 200.
+  - LL Parsing, or Left-to-right Left-derivative parsing, refers to a class of parsers that analyze text using a top-down algorithm. 
+
+    LL Parsers have the advantage of being very simple in the design - at least conceptually. Unlike LR Parsers, the system does not need to generate tables ahead of time. Instead, only a set of rules and lookahead data is needed.
+
+    However, LL Parsers are not as powerful as LR parsers. Rules cannot have
+    left-recursion since it causes problems with the recursive decent algorithm.
+    In addition, LL Parsers are known as memory intensive and slow. Both of these
+    are due to the "search" nature of the algorithm. Optimization is possible,
+    but the complexity of the LL Parser runtime engine increases dramatically.
+  - LR Parsing, or Left-to-right Right-derivative parsing, uses tables to determine when a rule is complete and when additional tokens are needed to be read from the source. Unlike LL Parsing, the LR Parser does very little "thinking" at runtime. All decisions are based on the content of the parse tables. As a result, LR Parsing is faster and more memory efficient than LL Parsing.
+
+    The construction of these tables where all the "thinking" takes place. LR parser generators, such as YACC and GOLD, construct these tables by analyzing the grammar and determining all the possible "states" the system can be in when parsing. 
+
+    Each state represents a point in the parse process where a number of tokens have been read from the source and rules are in different states of completion. Each production in a state of completion is called a "configuration" and each state is really a configuration set.
+
+    LR parse tables can be huge, and, as a result, often a variant of LR Parsing is used. For more information, please see theLALR Algorithm page.
+  - A Reduce-Reduce Conflict is a caused when a grammar allows two or more different rules to be reduced at the same time, for the same token. When this happens, the grammar becomes ambiguous since a program can be interpreted more than one way.
+
+    For instance, assume you have the following grammar:<S> ::= <A> | <B>
+
+    <A> ::= Identifier
+    <B> ::= Identifier
+
+
+    When the system reads an identifier, it cannot determine if it has completed <A> or<B>. 
+
+    When a LALR parser generator is analyzing a grammar and constructing the parse tables, these conflicts are located immediately.
+  - The Shift-Reduce Conflict is the most common type of conflict found in grammars. It is caused when the grammar allows a rule to be reduced  for particular token, but, at the same time, allowing another rule to be shifted for that same token.
+
+    As a result, the grammar is ambiguous since a program can be interpreted more than one way.
+
+    This error is often caused by recursive grammar definitions where the system cannot determine when one rule is complete and another is just started. The Builder documentation contains an example of the common if-then-else grammar problem and how to fit it.

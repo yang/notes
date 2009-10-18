@@ -1,0 +1,1508 @@
+Background
+----------
+
+- annoying to do performant multiprocessor programming
+  - on tile64, singly cached shared memory means that all accesses to that
+    memory need to go through the owning tile; can't do this remotely
+  - writes/msg-passing (non-blocking) may be faster than reads
+  - cross-platform programming
+  - on linux, can't specify where to place things (stack, text, heap, etc.)
+    - only from within a thread
+    - same for tile64 memory:thread ownership
+
+<http://pdos.csail.mit.edu/~sbw/papers/>
+
+Parallelism
+
+- ILP, task par, data par
+- Amdahl's law: sublinear speedup
+  - though cache aggregation can actually lead to superlinear speedup
+- Flynn's taxonomy
+  - (S:single, M:multi, I:instr, D:data, P:program)
+  - SISD (usual CPU), SIMD (GPUs), MIMD (you are here)
+  - MIMD subtypes: SPMD (most common parallelism), MPMD
+
+Architecture
+
+- chips hit the _power wall_; higher clock frequency leads to hotter cores
+  - Patterson: power wall, memory wall, ILP wall -> serial performance wall
+- fundamental differences from distributed systems
+  - tightly coupled failures
+  - communication timing over buses, interconnects is much more predictable,
+    *synchronous*, etc.
+- _symmetric multiprocessor (SMP)_
+  - _multi-core_ processor aka _chip-level multiprocessor (CMP)_: on a single
+    _integrated circuit (IC)_ aka _die_
+- _network on chip (NOC)_ vs buses
+- memory hierarchy
+  - _non-uniform mem arch (NUMA)_
+    - separate mem per proc
+    - early supercomputers traditionally focus on providing high-speed mem
+      access
+    - _cache-coherent NUMA (ccNUMA)_: large inter-proc comm overhead
+      - OS support: avoid scheduling/locking algos that make unfriendly
+        accesses
+    - for architects: investigate whether prediction has been used for
+      cache-coherence
+  - _cache-only mem arch (COMA)_
+- parallelism
+  - _coherence_: wrt single datum
+  - _consistency_: across separate things
+  - _cache coherency_
+    - _false sharing_: adjacent writes by different cores can steal cache
+      lines between each other
+    - CC mechanisms
+      - central directory
+        - scales better; ccNUMA tend to use this
+      - _bus snooping_/_bus sniffing_: watch memory access addrs
+        - invalidate own copy if others write
+        - bus/full-mesh does not scale
+      - _snarfing_: snoop on both addr and data
+        - update own copy write away
+    - coherence models: MSI, MESI, MOSI, MOESI, write-once, ...
+      - M modified E exclusive S shared I invalid O owned
+      - eg MSI 
+  - related: DSM coherence protocols
+- misc
+  - _systolic array_ (Kung, CEL 78)
+    - pipe network arrangement of data processing units (DPUs)
+    - dual of von Neumann
+- IO channels/pins
+- [chip multiprocessor watch from
+  View](http://view.eecs.berkeley.edu/wiki/Chip_Multi_Processor_Watch)
+- TODO faults
+  - _single event upset (SEU)_
+  - [Tolerating SEUs on RAW](http://64.233.169.104/search?q=cache:GgbORDp_xcMJ:www.east.isi.edu/~mfrench/Singh-FT-Raw-1.pdf+raw+architecture+fault-tolerance&hl=en&ct=clnk&cd=1&gl=us&client=opera)
+
+Contemporary Architecture
+
+- _HyperTransport_: standard bidirectional point-to-point DDR link
+  - used in various electronics
+  - _dual date rate (DDR)_: sends data on both rising and falling edge of clock
+  - abbrev often confused with HyperThreading
+- _QuickPath_: Intel's point-to-point CPU interconnect; their answer to HT
+- Opteron
+  - _Barcelona_: the current (11/17/2007) architecture
+    - up to 4-way
+    - per-core L1 (64K) L2 (512K), shared L3 (2M)
+  - _Direct Connect_: the IO architecture
+    - connection among CPUs: proprietary extension of 2 HT interfaces
+    - integrated memory controller
+    - HT connection to high-perf IO subsystem
+    - crossbar switch between L3 and mem/IO
+  - scales better than Xeon?
+- Core Duo (32-bit), Core 2 Duo (32-bit), Core 2 Quad
+- Xeon
+  - two common buses: more vulnerable to congestion
+  - separate memory controller
+- Cell
+  - _Power Processor Element (PPE)_: 2-way Power chip, the "controller"
+  - multiple _Synergistic Processing Elements (SPE)_, each with local storage
+  - PS2: 8 SPEs with 256K local storage
+  - difficult to program; must explicitly move memory
+- resources
+  - [diagrams](http://www.realworldtech.com/page.cfm?ArticleID=RWT051607033728&p=2)
+  - [diagrams](http://www.tgdaily.com/index.php?option=com_content&task=blogsection&id=18&Itemid=41&slideshow=20061201)
+
+Transactions
+
+- TM: don't worry about failures, persistence (vs. DB xacts - need recovery)
+
+Speculation: two different meanings
+
+- optimistic concurrency control: speculate that we can safely parallelize
+- prediction, eg Speculator file system, branch prediction
+
+Pessimistic concurrency control
+
+- mutex locks
+- most RDBMSs use 2PL: phase 1 acquire, phase 2 release
+  - non-strict: phase 2 can start at any time
+  - strict: release write locks after xact ends
+  - strong
+- problems with locking
+  - usability: not composable; lock ordering; reasoning difficulty
+  - conservative: reduces possibilities for parallelism
+  - overhead; slow
+  - priority inversion
+    - solutions: priority ceiling (?), priority inheritance
+  - convoys: multiple threads of same priority repeatedly contend for lock
+  - failure-intolerant (eg if node goes down, no waking)
+  - preemption-intolerant (eg page faults)
+  - deadlock, livelock
+    - livelock still problem with other schemes (eg OCC)
+
+Optimistic concurrency control
+
+- suited for low contention
+- challenges: performance (hardware), IO, lots more....
+
+- conflict detection
+  - read-write, write-read, write-write
+  - lazy: detect at end
+  - eager: detect on conflict; less wasted work
+
+- version management
+  - lazy, aka write buffers
+    - old values in place, new values elsewhere
+    - commits slower than aborts
+    - most HTM use this; also DBs with OCC
+    - two subclasses
+      - eager commits: merge speculative state back into main memory before
+        passing commit token to next head
+      - lazy commits: pass token immediately; lazily merge state (eg
+        on-demand); staleness is always clear
+  - eager, aka undo logs
+    - old values put in undo log, new values in place
+    - common commits fast; aborts slower
+    - most RDBMSs use this, but for *recovery*, not isolation
+
+- used in TM and SpMT
+
+Transactional Memory
+
+- primitives: atomic, retry, abort
+
+- number of uncommitted transactions per processor
+  - single-transaction (SingleT): can't switch among xacts, so blocks when xact
+    is stalled on another (potentially long-running) head xact
+  - multi-transaction (MultiT)
+    - single-version: when two xacts on same proc each need own version of a
+      speculative state, the later one must stall
+    - multi-version: no such restriction
+
+- contention management
+  - various policies; can consider conflict type (ww/rw), time, contention, ...
+
+- interaction with non-xact code
+  - weak atomicity: xacts *not* atomic wrt non-xact code
+  - strong atomicity: xacts are atomic wrt non-xact code
+  - STM mostly weak, HTM mostly strong, due to varying costs
+
+- cannot always perform straightforward translation to transactions
+  - eg: the following (legal) barrier code will deadlock when converted to
+    xacts
+
+    a=0; b=0;
+    T1: lock(o1) { while (!a); b=1; }
+    T2: lock(o2) { a=1; while (!b); }
+
+  - determining when translation is safe is still open question
+  - obviously, you would never write code from scratch that does this; the
+    legacy code *expects* a,b to change, whereas when using xacts, you expect
+    values to not change
+
+- open-nested transactions: screwed-up semantics
+  - but: see Jim's paper on ownership typing TODO
+
+- HTMs
+  - limited amount of speculative state
+  - virtualization: support overflows
+  - still in exploration
+
+Speculative Multi-Threading
+
+- speculative multithreading (SpMT), aka thread-level speculation (TLS)
+- spawn a task per call
+- lots of work: explored by SUIF, Sable, CMU DBs, ...
+- not much work on prediction (understandably hard)
+- TODO crawl: explicit speculation, programming models with explicit prediction
+
+Bugs
+
+- data races: two accesses (at least one of which is a write) from diff
+  threads to same mem location execute without proper synchronization
+  - not always bugs
+    - barrier synchronization: `lock(y) { x += 1; }; ...; while (x != n);`
+    - flag synchronization: `x = true; ...; while (!x); x = false;`
+- atomicity violations: things that should be part of the same atomic block
+  aren't
+
+Serializability and linearizability
+
+- serializability aka atomicity
+  - history: ordering of operations (aka schedules, orderings)
+  - history equivalence: final states are identical given any initial states
+  - serializability: history has equivalent serial history
+  - deciding history equivalence: tractable
+  - deciding history serializability: NP complete (many possible interleavings)
+- linearizability (aka sequential consistency or atomic consistency)
+  - history: ordering of operations on object
+  - sequential history: one in which each invocation is followed by a response
+  - linearizability: history has equivalent sequential history
+  - two distinct properites: locality and non-blocking ???
+- serializability vs. linearizability
+  - get at the same thing, but incomparable
+  - linearizabilty does not address operations on more than one object, which
+    serializability does
+  - serializability does not require consistency of the partial and total
+    orders, which linearizability does ???
+- [great ref with
+  examples](http://www.cs.rochester.edu/~scott/458/notes/10-fault_tolerance)
+
+Consistency TODO
+
+- refs
+  - <http://cs.gmu.edu/cne/modules/dsm/green/memcohe.html>
+  - <http://en.wikipedia.org/wiki/Consistency_model>
+- strict consistency
+- sequential consistency
+- release consistency
+  - acquire/release pairs
+  - eager release consistency: broadcast state changes on release
+  - lazy release consistency: broadcast state changes on-demand (on the acquire
+    for a release)
+    - couple with write notices/write diffs to send minimal amt. of data
+- causal consistency
+- eventual consistency
+- weak consistency
+
+View and conflict serializability
+
+- all conflict ser scheds are view ser (conflict ser implies view ser)
+- determining view serializability is NP complete
+- so in practice, DBMSs restrict scheds to only conflict ser scheds
+
+Multi-Granularity Locking
+
+- example granularity hierarchy: DB, table, page, tuple
+- idea of intention locking: must intention-lock all ancestors in granularity
+  heirarchy
+  - equivalent to just having locks at the leafs of the hierarchy
+  - e.g.: you have an X on a tuple and want an S on the table (should conflict)
+    - you don't have to search all the tuple locks to see if there's an X
+    - instead just observe that there's an IX on the table already
+- _intention locks_
+  - IS: intend to get S on finer granularity
+  - IX: intend to get X on finer granularity
+  - SIX: S + IX, shared but intend to get X on fine granularity
+- protocol
+  - to get IS/S, must have IS/IX on parents
+  - to get X/IX/SIX, must have IX/SIX on parents
+  - release in bottom-up order
+- _lock escalation_: dynamically ask for coarser-grained locks when too many
+  low-level locks acquired
+  - example: when reading tuples, may first try to use IS and get S on
+    individual tuples; once we decide we're reading a lot of tuples, then
+    upgrade IS to S
+
+compatible?  IS   IX   SIX  S    X
+-----------  ---  ---  ---  ---  ---
+IS           y    y    y    y
+IX           y    y
+SIX          y
+S            y              y
+X
+
+Isolation levels
+
+isolation level       dirty read  nonrep read  phantom read
+--------------------- ----------  -----------  ------------
+read uncommitted      possible    possible     possible
+read committed        impossible  possible     possible
+repeatable read       impossible  impossible   possible
+snapshot/ser          impossible  impossible   impossible
+
+- TODO: understand relationships with the 2PLs
+- undesirable phenomena
+  - _dirty read_: read an uncommitted value (which may be rolled back)
+  - _nonrepeatable read_: read committed values, but multiple reads may each
+    return different values (if multiple other updates were committing)
+  - _phantom read_: when reading sets of values twice, second set different
+    from first (a more general nonrepeatable read)
+- implementing isolation levels
+  - read uncommitted: no read locks
+  - read committed: read locks, but acquired/released around each read
+  - repeatable read: read locks, acquired on read and held for xact duration
+  - snapshot: read locks on *predicates* rather than values; acquired at xact
+    start
+- _snapshot isolation_
+  - weaker than serializable because write skews can happen
+  - oracle's and postgresql's "serializable" is in fact snapshot isolation
+  - _write skew_: two transactions read a value each, then change the other's
+    value, but neither sees the result of the other's update
+    - example: `A=B=0; T1: B=A-1 & T2: A=B-1` violates invariant `A>=0 &&
+      B>=0`
+    - postgresql doc's example: two classes miss each other
+      - `insert into r (x,class) values
+        ((select sum(x) from r where class = 1), 2)`
+      - `insert into r (x,class) values
+        ((select sum(x) from r where class = 2), 1)`
+
+OCC Techniques TODO
+
+- read-versioning
+
+Lock-free and wait-free algorithms
+
+- difficult; focus on primitive data structures, eg non-blocking queues/stacks
+- memory management: eg lock-free mallocs, concurrent GCs
+- wait-free subset of lock-free subset of obstruction-free
+- lock-/wait-free: fault-tolerant, nobody can die with a lock
+- _universal_ synchronization primitives: powerful enough to implement any
+  lock-/wait-free data structure (Herlihy)
+
+Low-level hardware primitives
+
+- test and set: non-universal (proved cannot implement lock-/wait-free algos
+  with only read+write+TAS), can only implement _2-consensus_ (?)
+- compare and swap: universal
+- _load-linked + store-conditional (LL/SC)_: store only if no changes since
+  load; also universal
+- _multi-word compare and swap (MCAS)_
+  - good primitive, can be HTM-implemented
+
+Memory model
+
+- example 1
+  - initially, all 0; `x=1; r0=x | y=1; r1=y`; actually `r0`, `r1` can end up 0
+  - due to write buffer; stores may not have made it to visible memory or
+    coherent cache
+  - no _sequential consistency_
+  - outcome determined by hardware, thread libs, compiler; but even if thread
+    libs and compiler work as expected, most hardware still allows this to
+    happen
+- example: independent reads, independent writes (IRIW)
+  - `x=1 | y=1 | r1=x (1); fence; r2=y (0); | r3=y; (1) fence; r4=x; (0)`
+  - thread 3 proves `x` was set first; thread 4 proves `y` was set first
+  - this outcome is still possible because (e.g.) threads 1, 3 can be on same
+    chip, and threads 2, 4 can be on same chip, so they see each other's
+    effects at different times
+  - but what more can we do? already inserted `fence` in btwn each instr
+  - TODO understand this better
+- Intel, AMD published better descriptions about sequential consistency only in
+  late 2007
+- fence instructions give us sequential consistency when we need it
+  - gcc: `__sync_synchronize()`
+- [ref](http://www.youtube.com/watch?v=mrvAqvtWYb4)
+
+Techniques
+
+- cache blocking
+
+Programming models
+
+- [parallel programming model watch from
+  View](http://view.eecs.berkeley.edu/wiki/Parallel_Programming_Model_Watch)
+
+Means of communication
+
+- Dataflow variables. The dataflow variable is a shared variable which only set
+  once, but read from many times. Setting can be limited to a particular
+  thread, or any thread might be able to set it--but only the first will
+  succeed. (Subsequent threads that might try to set it to the same value might
+  also "succeed"). Reads prior to the set may block or fail. See PVR's
+  excellent book for more on this style of concurrency.
+- Message queues. A message queue is a FIFO data structure that in the
+  concurrent case, is generally owned by a particular process--other processes
+  can post messages on it. Messages are generally copied from one process's
+  memory space to another, though on a shared-memory machine, shared memory
+  might be used under the hood (if data is immutable, a reference is generally
+  indistinguishable from a copy). Message queues can be implemented "on top of"
+  dataflow variables, above.
+- Mailbox. Mailboxes, as in Erlang, are essentially message queues with extra
+  processing on the read end which permit nifty things like out-of-order reads.
+  All the fancy stuff occurs in the context of the reading process.
+- Object spaces, or tuple spaces. A form of shared memory which is
+  "safe"--essentially a big blackbord of objects from which processes can
+  concurrently read and write. Implementations exist for both shared-memory
+  architectures (which is easy) and networks (which is harder).
+- From http://lambda-the-ultimate.org/node/2653
+
+Formal concurrency models
+
+- petri nets
+  - models control flow, not data flow, thus not composable
+  - another problem: simultaneous action
+- actor model
+  - models dataflow
+  - directly address processes (rather than channels)
+- process calculi
+  - named (sync/async) channels, anon processes, par, seq, reductions
+  - guarded choice
+    - requires two-phase commit to choose
+    - issues: starvation, livelock, efficiency
+  - major types
+    - calculus of communicating systems (CCS)
+      - continues as pi calculus
+    - concurrent sequential processes (CSP)
+    - algebra of communicating process (ACP)
+- join calculus
+  - basically, queues + pattern matching
+- TODO bisimulation
+
+Misc hardware
+
+- Flash storage
+  - inherently small; parallelize multiple storage units
+  - parallelism exhibits non-sequential IO
+  - downsides: cost, writes
+- (dynamically) reconfigurable computing
+  - anti machine: data-stream-based anti machine
+
+Nitty gritty programming
+
+- Most hardware platforms have 64-bit atomic operations; (ref: from sbw, from
+  some amd manual)
+- Linux
+  - `sched_setaffinity`: pin thread to a core
+  - libnuma: pin memory
+
+Acronyms TODO remove (incomplete) or automate
+
+- DSM: distributed shared memory
+- HTM: hardware TM
+- OCC: optimistic concurrency control
+- RTS: run-time system
+- STM: software TM
+- TM: transactional memory
+
+still need to finish crawling:
+
+- [6.975 Multicore Menace](http://stellar.mit.edu/S/course/6/fa07/6.975)
+- [Parallel and Distributed Systems](http://www.cs.rochester.edu/~scott/458/)
+- [CS 194-2 Parallel Programming](http://www.cs.berkeley.edu/~mhoemmen/cs194/)
+
+Tools
+-----
+
+DELITE
+
+- Scala DSL library of parallel operators, a la PLINQ
+- Long-term research angle includes an executor that schedules for locality
+- <http://ppl.stanford.edu/>
+
+Others
+
+- Parallel FX: .NET parallelism library
+- PLINQ: built on Parallel FX
+- [Portable Linux Processor Affinity (PLPA)](http://www.open-mpi.org/projects/plpa/)
+- [Open-MPI](http://www.open-mpi.org/)
+- [GCC OpenMP](http://gcc.gnu.org/projects/gomp/)
+
+Transactional Memory Systems
+----------------------------
+
+McRT-STM: a high performance software transactional memory system for a
+multi-core runtime (Stanford)
+
+- evaluates STM design tradeoffs
+- reader-version 2-3 OOMs faster than reader-lock: to use locks, must perform
+  writes, leads to cache effects
+- undo-logging < 1 OOM faster than writer-buffering: writer-buffering
+  searches for last-written value
+- object-based and cache-line locking are comparable
+- object-based: compiler can gen code to acquire whole obj; harder in
+  cache-line schemes
+  - small objects in size-segregated heap, large objects in separate heap; tx
+    for former only, too coarsed-grained with latter
+- keep as ref for performance numbers
+
+LogTM (Wisc)
+
+- eager versioning (undo logging), eager conflict detection
+- transaction log
+  - per-thread linear virtual address space
+  - filled by hardware, read by software
+- eager conflict detection using 'directory'
+  - per-processor read/write bits
+  - requesting processor issues coherence request to directory
+  - directory forward to other processors
+  - responding processors detect conflicts using local r/w bits, informs
+    requesting processor of conflict
+
+Subtleties of Transactional Memory Atomicity Semantics (UPenn)
+
+- basically, TM has some subtle tricky issues
+- interesting read; keep as ref for problems with TM
+
+Tradeoffs in Buffering Memory State for Thread-Level Speculation in
+Multiprocessors (UIUC)
+
+- arch main memory (lazy, eager commits) vs future main memory
+- singleT vs multiT+singleVersion vs multiT+multiVersion
+- performance conclusion are murky, only that FMM (eager versioning) wins
+- performance: multi-task, multi-version > multi-task, single-version >
+  single-task
+- lazy commits tends to be faster than eager commits
+- multiVersion tends to be faster than singleVersion -- why?
+- keep as ref for taxonomy and for perf comparison
+
+Memory-mapped transactions (Sukha 05)
+
+- perform xacts on mem-mapped file data
+
+Other systems
+
+- MIT UTM
+- MIT LTM
+- Intel/Brown VTM
+- Herlihy/Moss TM
+- Stanford TCC
+- VTM, HASTM, PTM, HyTM, RTM, MetaTM
+
+Distributed Speculation
+-----------------------
+
+Speculative Execution in a Distributed File System (UMich)
+
+- don't just wait for the result of a remote request for data; simply predict
+  the cached value, and run with it as far as possible without leaking the
+  speculation (no IO "externalization")
+- Speculator system adds Linux kernel support for speculation
+  - TODO how is this done?
+- 2x performance SpecNFS over NFS improvement in LAN, OOM in WAN
+- Blue File System: full consistency semantics + synchronous IO safety
+  - can outperform DFSs with weaker consistency/safety
+- awesome
+
+to crawl:
+
+- Lightweight Distributed Selective Re-Execution and its Implications for
+  Value Speculation
+- Hardware Support for Data Dependence Speculation in Distributed
+  Shared-Memory Multiprocessors Via Cache-block Reconciliation
+- Distributed Models of Thread-Level Speculation
+- Speculations: Providing Fault-tolerance and Recoverability in Distributed
+  Environments
+
+Operating Systems & VMs
+-----------------------
+
+QoS Policy and Architecture for Cache/Memory in CMP Platforms (Intel, Stanford)
+
+- problem: cache thrashing, etc. can have serious impact
+- idea: use QOS for contention mgmt (inevitable as we move to NOC)
+  - two priorities, high and low; assigned by users (or system)
+- modified Linux and Xen to support QOS
+  - each core ("tile") has _control register_ containing current thread
+    priority and some history about thread behavior
+  - (OS) threads need to keep QOS bits and control register bit
+- _Dynamic Quality Monitor (DQM)_: special hardware unit
+  - monitors thread, records usage info in _QOS Resource Table (QRT)_
+  - compares thread's resource usage to priority; enforce QOS
+  - QOS-aware mem unit: higher priority mem requests can cut in line
+  - QOS-aware cache: mark cache lines with priority; maintain counters to cap
+    low-priority entries; evict those first if too many
+- results
+  - 20-30% fewer cache misses per instr
+  - 10-20% perf improvement for high-priority threads (in the Linux system)
+- resources
+  - [slides](http://csl.stanford.edu/~christos/publications/2006.qos.dascmp.slides.pdf)
+- misc commentary
+  - this doesn't seem necessarily specific to [SC]MPs, but simultaneous sharing
+    exacerbates things; there is apparently a bunch of prior work on QOS in
+    architecture, with a lot of attn on real-time systems
+  - reminds me of the paper on SUIF+OS cooperation (hints for
+    prefetches/releases), which isn't about multiprocessors at all
+  - POWER5 had hardware to enforce priority-based resource utilization
+
+Disco VMM (Stanford)
+
+- changing OSes to use these is hard
+- what if app needs more resources than what commodity OSes can provide? two
+  options:
+  - make a small change to OS to be able to share mem across VMs
+    - [would apps have to be designed with this peculiar model in mind for this
+      to be effective? NFS seems to do fine, but need to better understand how
+      the network sharing works to answer this]
+  - apps that don't need full OS can use a lightweight OS that *does* scale
+    - [but then you don't get a full OS]
+- challenges
+  - execution overhead
+  - memory is replicated
+  - VMMs lack info to make good policy decisions on resource management
+    - eg don't know when an OS is no longer using a page
+    - eg don't know which instruction stream is important for scheduling
+  - comm/sharing across machines is as cumbersome as on separate physical
+    machines
+- interface
+  - processor
+    - emulates MIPS R10000 instrs, MMU, trap architecture
+    - extends arch to support efficient access to some processor functions
+      - eg toggling interrupts can be done using loads/stores to special addrs
+      - enables OSes tuned for Disco to reduce trap emulation overheads
+  - physical mem
+    - dynamic page migration and replication to export nearly UMA
+  - IO: virtualizes disks, network devices
+    - virt disks configurable for different sharing and persistence models
+    - provides special net interface to handle large transfer sizes without
+      frag
+- implementation
+  - 13K LOC; 72K footprint; small so replicate on all stores
+  - attn to: NUMA mem placement, cache-aware data structures, interprocessor
+    comm patterns
+  - no data structures with poor cache behavior, eg linked lists
+  - few locks; wait-free sync using LL/SC; interproc comm for eg TLB
+    shootdowns, posting interrupts to given VCPU
+  - virtual CPUs: real CPUs time-shared by OSes
+    - each virtual CPU has process table entry (saved regs, etc)
+    - physical CPU modes
+      - kernel mode: Disco
+      - supervisor mode: OS; can use protected _supervisor segment_ of addr
+        space but no privileged instrs or physical mem
+      - user mode: otherwise
+  - virtual physical memory
+    - maintain _physical-to-machine_ addr map (pmap)
+    - intercept TLB operations; further mem references through this TLB mapping
+      have no overhead (TLB: VM -> MM)
+      - _pmap_:  physical page -> pre-computed TLB entry + backmaps (for taking
+        away pages from CPU TODO)
+      - merge protection bits with orig entry before inserting into TLB
+  - NUMA mem mgmt (replication, migration)
+    - FLASH counts cache misses to each page; use these counters
+    - to migrate/replicate, must touch TLBs (TLB "shootdowns")
+  - virtual IO
+    - custom device drivers rather than emulate PIO
+    - intercept DMA addrs, maintain DMA map
+  - COW disks (section is very unclear)
+    - start with same root disk containing kernel, apps, etc.
+    - share machine mem means DMA can be a single map update
+    - disk writes logged
+    - [note: not actually for persistent disks]
+  - virtual network interface doesn't impose MTU and lets data be shared (via
+    DMA map)
+- commodity OS: SGI IRIX
+  - minor changes, mostly to HAL (privileged instrs changed to special mem ops)
+  - problem: virtual CPUs (supervisor mode) cannot efficiently access KSEG0, an
+    unmapped space which bypasses TLB (seems to be MIPS-specific)
+    - kernel code/data resides here; had to relink to a mapped portion
+  - custom device drivers: simple, since working with idealized device
+  - tweaked network subsystem to behave well for remapping technique
+  - page zeroing must be done anyway for security; hints to do it in Disco
+- implemented SPLASHOS, a specialized bare-metal OS
+- simulation on SimOS
+  - used simplified model of FLASH (OOM faster to sim); short workloads
+  - uniprocessor execution time overheads: 16% for IO intensive workloads, 3%
+    for CPU intensive workloads (due to misses)
+    - Disco has more misses due to mapped kernel code/data
+    - kernel time shortened by Disco page initialization and second-level TLB
+  - mem overhead (pmake workload, 8 CPUs)
+    - lots can be shared, even over NFS
+    - kernel private data not shareable, but is small
+  - scalability (pmake, radix, 8 CPUs): pmake 40% faster on 8 VMs
+    - IRIX is NUMA-unaware, suffers from high overheads in synchronization
+      (semaphores) and memory system
+    - VM has more sync overhead (slower, leads to more semaphore contention)
+    - partitioning scales well, even with NFS, with single server serving 8
+      disks
+  - dynamic page placement and migration/replication: 37% improvement
+- misc commentary
+  - note that FLASH is an multichip not CMP, hence they introduce fault
+    containment in Cellular Disco
+
+Cellular Disco (Stanford)
+
+- what Disco lacked
+  - (static) hardware partitioning has fault containment
+  - OSes have fine-grained resource mgmt mechanisms/policies
+- fault containment: similar to Hive, but can assume Disco code correct
+- CPU load balancing
+  - idle balancer (local view)
+    - check neighboring run queues (intra-cell only)
+    - VCPU migration cost: 37us to 1.5ms
+      - cache and node mem affinity: >8ms
+    - backoff
+    - fast, local
+  - periodic balancer (global view)
+    - check for disparity in _load tree_
+    - cost: affinity loss, fault dependencies (if moving across containment
+      boundaries)
+- mem load balancing
+  - each VM has allocation prefs
+  - borrow mem based on:
+    - combined alloc prefs of VMs
+    - mem availability on other cells
+    - mem usage
+  - loan if enough mem available
+- performance results on prototype 32-CPU SGI Origin 2000 system
+  - ~0% overhead, contained all faults
+  - as well as single OS
+  - much better than static hardware partitioning
+- resources
+  - [slides](http://www.sigops.org/sosp99/slides/kernel/govil.ppt)
+
+Hive (Stanford)
+
+- summary: fault containment, resource sharing, single system image
+- each kernel _cell_ runs modified IRIX; hardware nodes partitioned into cells
+- fault containment vs. fault tolerance: in former, partial failures allowed
+- fault containment (confine to cell)
+  - hardware: CPU halt, mem range failure [are these real problems?]
+  - software: randomly corrupt OS structures [what is this supposed to model?]
+- fault containment arch
+  - messages are RPCs; sanity check all RPCs
+  - remote reads: reader protects self
+  - remote writes: use FLASH hardware firewall to only allow remote writes to
+    pages owned by processes that span cells
+    - pessimistic: on detecting cell failure, discard *all pages writeable by
+      that cell*
+  - Byzantine failures: heuristics to detect; distributed consensus to reboot
+    cell
+- resource sharing arch
+  - mem sharing
+    - _logical-level_: eg global file buffer cache, shared mem
+    - _physical-level_: share free page frames
+  - CPU sharing: can span and migrate tasks
+  - Wax: centralized user-level resource allocation policy maker
+    - migration, replication
+- SimOS simulating FLASH
+  - 0-11% slowdown vs. 4-way IRIX
+  - more scalable than NUMA-unaware SMP kernels
+- misc commentary
+  - much more work than Disco, hence Disco
+  - unclear whether this effort ever "finished"
+  - led to Cellular IRIX?
+
+TxLinux (UTexas)
+
+- HTM: making kernel concurrency easier
+- MetaTM primitives: xbegin, xend, xrestart, xgettxid
+  - xpush, xpop: save/restore xact (for interrupt handlers)
+  - informing xacts: xbegin returns status (first time? retry? why retry?)
+- critical sections: defy xact (?)
+- locks + xacts must cooperate
+  - why
+    - legacy code, IO, page faults (?)
+    - flexibility: switch to locks for high-contention sections
+  - how
+    - cxspinlocks: acquisition via contention manager
+    - `cx_optimistic`: attempt xact, roll back to lock on needed (IO); if
+      always needed, default to lock
+    - `cx_exclusive`: acquire lock via contention manager (use xcas)
+    - `cx_end`: release
+- hardware simulation using Simics: 16,32 CPUs
+  - usu. 1-2% speedups
+- passing thread priorities to contention manager removes all priority
+  inversion for negligible (1%) perf cost
+
+libnuma
+
+- Novell's API for managing NUMA policies
+- by regular kernel hacker Andi Kleen of SuSE Labs
+- policies
+  - default (local), bind (fail if exhaust), interleave (bandwidth), preferred
+    (fall back on others)
+- also `numactl` controls processes externally
+- ref: <http://www.novell.com/collateral/4621437/4621437.pdf>
+
+NUMA Linux
+
+- doesn't seem to be much active work on NUMA-aware scheduler; current attn is
+  on CFS and rivals
+- [NUMA Linux](http://lse.sourceforge.net/numa/): heavily outdated
+  - scheduler: locate processes as close to the memory they access as possible
+    - 2.4: single runqueue design couldn't scale (wrt not just number of CPUs but
+      even number of tasks)
+    - there was a bunch of work in 2002-2003 on various NUMA-aware multi-queue
+      (MQ) schedulers
+    - O(1) scheduler: runqueue per CPU; not NUMA aware
+      - pretty much stopped work on NUMA-aware schedulers
+    - O(1) load balancing extensions
+      - keep process on same node (stationary)
+      - spawn on least loaded nodes
+  - discontigmem
+  - locking primitives
+  - userspace APIs
+  - multipath IO
+
+Linux Scalability for Large NUMA Systems
+----------------------------------------
+
+- <http://oss.sgi.com/projects/numa/Linux_Scalability_for_Large_NUMA_OLS2003.pdf>
+- TODO
+
+Hurricane
+
+- scalable, _hierarchical clusters_ of resources
+- replicate system services and data boejcts to increase locality, increase
+  concurrency, avoid centralization
+
+Simulators
+----------
+
+Simics
+
+- trade off speed for precision
+- extensible through C API
+- machine model
+
+SimOS (Stanford)
+
+- trade off speed for precision
+- used for FLASH, Hive, Disco, etc.
+
+Architecture
+------------
+
+Azul Systems
+
+- Vega 2: 48-core custom CPU, 64-bit, 768-core-total multi-chip SMP, 768 GB mem
+- Java support: eg hardware-assisted pauseless GC, replacing locks with OCC
+
+TRIPS (The Tera-op, Reliable, Intelligently adaptive Processing System)
+
+- dataflow graph execution
+- direct instruction communication
+- compiler produces 128-instr hyperblocks
+  - large hyperblock execution
+  - predicated execution: TODO
+  - physical placement onto ALUs
+- ref: <http://www.cs.utexas.edu/users/cart/trips/publications/computer04.pdf>
+
+RAW/Tilera CMP (Agarwal, MIT)
+
+- TILE64 product pitched at embedded market (network processing, HD media
+  encoding)
+- RAW pioneers idea of tile + processor/cache + switched routing + mesh network
+- buses inefficient wrt perf and power (see this already in Opteron vs Xeon)
+- this is starting to bring us into the HPC domain
+- how big should a core be?
+  - KILL: kill if less than linear
+  - as soon as core performance starts dropping off from being a linear function
+    of core size, stop growing
+- caches
+  - each tile has L1 (16K), L2 (64K); L2s form a distributed L3 (4M)
+  - caches are coherent; eg can run SMP Linux
+- "Hardwall" protection/virtualization technology
+  - memory-based protection/virtualization no longer works when using direct IO
+    interfaces/messaging
+  - Hardwall partitions tiles up protected groups; disallow comm between groups
+- power: 30x perf per watt over 3GHz Xeon
+- misc details
+  - MIPS-derived VLIW ISA
+  - 90nm process, 600-900MHz, 32-bit, 2 ALUs, no FPU
+  - 10,000 for $435
+- RAW: Raw Architecture Workstation; expose wire delay to programmer
+  - akin to RISC philosophy: let compilers manage complexity
+  - one cycle for data to move between tiles; compiler can statically schedule
+    ops among ALUs
+  - can write to special regs that directly send results of ALUs into another
+    tile's ALU
+- memory performance details, from discussions with Hank and Wentzlaff
+  - architecture
+    - tile64 has 4 memory controllers, each with 8 memory banks
+    - 3 connections to each memory controller (tiles 1-3, 6-8, 57-59, 62-64)
+    - high bandwidth memory access: memory controllers each support up to
+      64 outstanding memory requests
+  - locality policies
+    - tiles allocate on the memory controller that is the fewest hops away (and
+      has enough space)
+    - a running process that hasn't spawned any threads (and only such a
+      process) is eligible for automatic mirgation
+    - libnuma, sched both work on tile-linux
+  - programming for performance
+    - mesh itself can become congested
+    - can get pretty far using straightforward approaches (with either shared
+      mem or ilib)
+    - very complicated; lots of places things can go wrong
+    - understanding performance is an ongoing open problem throughout tilera
+    - slow software TLB miss handler, so for large data, use large pages (mmap)
+  - memory sharing policies
+    - uncached
+    - singly cached, coherent
+      - everything goes through an owning tile
+      - writes are non-blocking, so communication by writing may be more
+        performant than communication by reading
+    - multiply cached, non-coherent
+      - manage coherency yourself
+      - basically, avoid overlapping cache lines
+    - multiply cached, read-only
+    - write from one tile and read from many tiles: supported only by hardware,
+      not yet in tile-linux, still somewhat buggy
+  - misc
+    - optimization guide: not very useful
+- programming
+  - tooling
+    - Eclipse plugin for selecting "spatial views" (grid views)
+    - modified gdb: aggregate control/state, breakpoint all related processes
+    - profiler: collective/aggregated stats
+  - model
+    - incrementally exploit parallelism in C apps
+    - iLib: lightweight sockets-like API for stream programming
+- resources
+  - [ArsTechnica article](http://arstechnica.com/articles/paedia/cpu/MIT-startup-raises-multicore-bar-with-new-64-core-CPU.ars)
+
+Software-Based Instruction Caching for the RAW (Miller)
+
+- use software to manage the i-cache
+- extended basic blocks: muliple exit points
+- TODO
+
+Terascale (Intel)
+
+- 80-core, FP-centric
+- _through silicon via (TSV)_ interconnect
+- large core counts
+
+Merrimac stream processor (Dally, Stanford)
+
+- comm is expensive (power, latency, heat)
+- stream processor ideas
+  - one control unit, 100s of FPUs
+  - deep reg hierarchy for high local bandwidth
+  - stream: seq of data objs
+  - expose data parallelism to utilize FPUs and work while waiting for memory
+  - expose multiple levels of locality
+    - short term producer-consumer locality (LRF)
+    - long term producer-consumer locality (SRF)
+    - cannot be exploited by caches: no reuse, no spatial locality
+- Merrimac
+  - 1 scalar core, 16 arith clusters ea. with 4 64-bit multiply-accumulate FPUs
+  - execute on same VLIW instr
+  - local register file (LRF) per FPU
+  - stream register file (SRF) per cluster
+- programming model: series of computational _kernels_ processing stream
+  elements
+- memory: stream instructions for stride access, scatter/gather
+- interconnection network: "fat tree"
+
+FLASH SMP (Stanford)
+
+- TODO
+- collection of nodes, each with CPU, mem, IO
+- high-perf scalable interconnect
+- directory for cache coherency
+- MIPS R10000 ISA
+
+Speculative Lock Elision (SLE)
+
+- micro-architectural technique for dynamically removing unnecessary
+  lock-induced serialization
+- misspeculation due to inter-thread data conflicts detected using existing
+  cache mechanisms; rollback used for recovery
+
+TODO
+
+- NUMA Linux
+- [Stanford EE392C (Chip Multiprocessors & Polymorphic Processors) Reading
+List](http://www.stanford.edu/class/ee392c/list.html)
+
+Databases
+---------
+
+Concurrency Control and Recovery (MJF 97)
+
+- book chapter; solid overview/ref
+- serializability
+  - conflict serializability: most widely used, since it's efficient to
+    detect/enforce
+  - view serializability: less restrictive (allows more schedules), but
+    impractical to implement
+- buffer management policies (steal/force)
+- recovery logging (undo/redo), WAL, checkpoints
+- 2PL, S/X locks, hierarchical locking
+- isolation levels: read committed, read uncommitted, repeatable read,
+  serializable
+- recovery difficult, ARIES
+- alternatives not in paper
+  - OCC typically unused because it is only suitable when resources are
+    abundant
+  - MVCC, aka snapshot isolation, keeps previous versions so that read-only
+    xacts can access older versions; commonly implemented
+
+On Optimistic Methods for Concurrency Control (Kung, CMU)
+
+- seminal paper argues for OCC and against locks
+- two versions of validation: serial and parallel
+  - presents application in B-tree insertion and performance analysis
+- keep as ref for details on validation
+- no story for recovery!
+- resources:
+  [1](http://swig.stanford.edu/pub/summaries/database/optimistic_concurrency.html)
+  [2](http://www.cse.scu.edu/~jholliday/COEN317S06/OptimisticCC.ppt)
+
+The serializability of concurrent database updates (Papadimitriou 86)
+
+- seminal paper on serializability
+
+"Applying Thread-Level Speculation to Database Transactions." [Chris
+Colohan, CMU 06](http://colohan.com/)
+
+- goal: use parallelism to reduce _latency_; achieved in 4-way sim by 46-66%
+  for 3/5 tpc-c xacts
+
+- user divides transaction up into 'epochs', which are run in separate threads
+  (called epochs to differentiate from explicit threads in the transaction)
+
+- asks for changes to software, hardware; also proposes a new software
+  engineering approach (in this case, iteratively optimize the dbms to remove
+  dependencies for tls parallelism)
+
+- epochs restart on violation; hardware creates sub-epochs to tolerate
+  violations
+
+- hardware detects RAW conflicts as they occur; large speculative changes are
+  buffered; lot of discussion about hardware changes
+
+- modified bdb; ran tcpcc; simulated harware
+
+- some technique details
+  - delay operations until non-spec (locks, resource release)
+  - escape spec: resource allocation
+  - traditional par: mem alloc, buf pool, err chks, false sharing
+
+- speculative xacts can interact with non-spec xacts TODO details
+
+- TODO crawl refs
+
+Sagas (molina & salem 87): technique for intra-transaction parallelism that
+doesn't require modifying DBMS
+
+- context: long-running xacts that can be broken up = sagas
+- useful for reducing contention, esp with more common shorter xacts
+- issues: how to implement, but also how to change dbms/xacts to make them more
+  feasible to obtain in first place
+- composed of several DBMS-visible xacts
+- "compensating xacts" needed to undo individual xacts (not always possible to
+  get back consistency)
+
+TP monitors
+
+- evolved from work on sagas
+- important in 3-tier archs that use load-balancing
+- allow some xacts to execute in parallel
+
+Transaction chopping (Shasha 95)
+
+- static analysis of data dependencies -> conservative 'chopping'
+  into smaller xacts (more concurrency)
+
+Intra-transaction parallelism in the mapping of an object model to a relational
+multi-processor system
+
+- ORM using replication and view materialization for fast reads
+- ITP by decomposition into shorter parallel relational ops
+
+Parallel Database Systems (dewitt gray 92)
+
+- pipeline (task) parallelism/dataflow model, data parallelism/partitioning
+- perf: shared mem < shared disk < shared nothing
+  - shared mem: "interference" (access contention) bottleneck
+  - shared-nothing for linear speedup, linear scaleup
+    - obviously would be nice, but no discussion on what conditions are
+      suitable for this!
+- problems: startup, interference, skew
+- data partitioning: cluster related data together
+  - range partitioning is simple but has data skew (if non-uniform
+    distribution)
+- parallel operators
+- systems: Teradata, Tandem, Gamma, Super Database Computer, Bubba, ...
+
+StagedDB (Stavros, Anastassia, CMU)
+
+- STEPS: improve perf of cache-resident code for OLTP
+  - share data among concurrent queries by breaking queries up into stages
+  - added STEPS to Shore
+- QPipe query engine monitors queries for shareable results, then dispatches
+  the results to the appropriate queries
+  - eg different selections can share same scan
+  - built on BDB
+
+[Encapsulation of Parallelism in the Volcano Query Processing
+System](http://portal.acm.org/citation.cfm?id=98720)
+
+("case for shared nothing architecture" stonebraker (86))[http://db.cs.berkeley.edu/papers/hpts85-nothing.pdf]
+
+Other
+
+- Wisconsin Multiscalar & Trace Processor
+- CMU STAMPede
+
+Programming
+-----------
+
+Cilk (CEL MIT 95)
+
+- C language extensions and runtime
+- primitives: spawn, sync
+  - cactus stack (this sounds vacuous -- doesn't seem necessary to change
+    anything about the stacks)
+  - clearly does not support *C*! explicit `sync` is the first hint. zero data
+    synchronization, zero speculation
+  - 'spawn' = 2-6x proc call, so "scales down" to single-processor
+  - supports `malloc`
+  - vs. futures?
+- theory (actually pretty obvious!)
+  - theorem from '68: greedy scheduling achieves
+    time to run on P processors is upper-bounded by
+    (time to run on 1 processor)/P + (time length of critical path)
+  - corollary: greedy scheduler achieves &le; 2(optimal)
+  - corollary: near-perfect speedup when P much smaller than
+    (time to run on 1 processor) / (time length of critical path)
+- scheduling
+  - each processor has work deque; spawns push onto this
+  - once depleted, steal from other end of another deque
+  - load balancing: always maintain busy leaves; protects against space
+    exhaustion by letting a thread continually spawn work (a non-leaf thread)
+- misc
+  - inlets: separate accumulator threads; seems completely uninteresting and
+    unnecessary
+  - aborts: to support "breaks", use `abort` to terminate other children (use
+    from within inlets, add other code)
+  - speculation in alpha-beta pruning of minimax adversarial game search trees:
+    "young brothers wait" -- in an optimal (best-order first) game tree,
+    either 1 child is searched, or all are searched
+  - more recently: include page faults as measure of locality
+  - nondeterminator tool: finds data races in program executions
+  - JCilk: adds exception handling; compiled via jgo (gcj with goto)
+- implementation: cilk2c translator + cilk rts
+  - fast (serial) and slow (parallel) version of each cilk procedure
+  - default to fast, switch to slow if thread is stolen (restores stack vars)
+
+Jade (Rinard)
+
+- did not process this in any detail
+- annotate with data usage information
+- tasks interact with shared objects
+- compiler uses this to relax program's sequential order
+- cons
+  - identify tasks to parallelize
+  - cannot express algos requiring bi-directional comm
+  - assumes single addr space
+
+StreamIt (MIT)
+
+- filters, pipelines, splitjoin, feedbackloop
+- comm over infinite FIFO
+- static-rate (isochronous) streams
+- nicely *statically* parallelizable. 3 compilation steps:
+  - partitioning: merge/split filters to get N load-balanced filters
+    - aka fusion and fission
+    - subtle issues; eg, a peeking filter can introduce state upstream
+      (affecting data parallelism transparency)
+  - layout: use simulated annealing algo and a communication cost function to
+    arrange filters on processors
+  - scheduling: map FIFO to hardware comm network
+- targets RAW arch
+- cons
+  - restricted prog model: isochronous streams, no interleaving sends/receives
+  - compiler: highly hardware specific
+- future directions
+  - DMA achieves high utilization
+    - experimented on Cell, which has things like 2D transformations;
+      transformations too limited
+    - interested in more complex transformations, eg varying strides
+  - analytical model for understandign/predicting performance behavior (on
+    various archs)
+
+Deterministic Multithreading (Marek MIT)
+
+- apps
+  - aside: CAD tools tend to yield non-deterministic results (but can be
+    seeded)
+- deterministic locking framework
+  - deterministic lock acquisition ordering
+  - use pseudo-time rather than real-time; ensure that pseudo-time is not too
+    far off from real-time
+  - currently, pseudo-time is number of stores, using perf counters; actually
+    deterministic
+  - lots of comm overhead (70%); might be improved by new hardware features
+
+Orca (Kaashoek)
+
+- data model: shared monitors with system-determined distribution/replication
+- parallelism: declare/fork processes (ie tasks)
+  - pass objs by ref (`shared`) or by val (`value`)
+  - no lightweight threads
+- condition synchronization: similar to guards in process/join calculi
+  - operations have guards; block until any are true, then execute 1
+- RTS: read locally, write globally
+- high level of abstraction means hard to control perf
+
+[Lampson's slides
+(06)](http://research.microsoft.com/users/blampson/Slides/LazyAndSpeculative.ppt)
+
+[Sable (05)](http://www.sable.mcgill.ca/)
+
+- sw-only approach: JVM with method-level TLS (and other features)
+- speculative versions of side-effectful bytecodes (25%); spec terminates on
+  unsafe ops
+- threads fork at all callsites, joined on returns (forking heuristics
+  implemented but unused)
+- design/techniques
+  - return value prediction
+  - heap buffering in open-addressing hashtables; on join, validate reads, commit writes
+  - stack buffering separate (straightfwd)
+  - alloc objs speculatively
+- eval
+  - thread terminations mostly due to "signal from parent" (dependence violation??)
+  - many correct specs, bunch of incorrect predictions, fewer dependence violations
+  - 1-2x speedup
+
+Evaluating MapReduce for Multi-core and Multiprocessor Systems (Stanford)
+
+- _Phoenix_: simplified MR built on C++ & pthreads for shared mem systems (both
+  CMP & SMP)
+- features/characteristics
+  - load balancing scheduler, pointer passing, buffer mgmt
+  - still "materialize" between map & reduce
+  - set input chunk size to cache size to balance between overhead and locality
+  - fault tolerance/recovery: fail-stop; straightfwd
+    - detection: worker time-out normalized by other times on similar tasks
+    - recovery: restart/re-assign tasks; there are some details on buffer mgmt
+    - future work: faults in scheduler, cross-node mem corruption (sandboxing)
+- experiments: 8 apps [including "enterprise computing": word count], 8-core
+  Sparc CMP, 24-chip Sparc SMP
+  - [unmentioned: no disk; all datasets were small enough to fit in mem]
+  - always compared speedup vs. sequential version
+  - perf/scalability
+    - 4 workers/core
+    - frequently sublinear speedup; sometimes scaling on SMP -> *slowdown*
+    - mat-mult superlinear due to cache agg
+    - `map` dominates; short `reduce`/`merge` -> bandwidth saturation
+  - pthreads vs Phoenix: the one that better fits the app performs better, due
+    to issues unrelated to Phoenix per se, but more to restrictions of MR
+- related: MapReduce for the Cell B.E. Architecture (Wisc)
+- resources
+  - [talk](http://video.google.com/videoplay?docid=5795534100478091031)
+  - [slides](http://csl.stanford.edu/~christos/publications/2007.cmp_mapreduce.hpca.slides.pdf)
+  - [code](http://csl.stanford.edu/~christos/sw/phoenix/) (Solaris only)
+
+The Problem With Threads (Lee, Cal 06)
+
+- threads are wildly nondeterministic; trying to prune nondeterminism
+- instead, start with deterministic primitives; explicit and judicious
+  introduction of nondet
+- anecdote: his Ptolemy project had a major sleeper bug
+- possible models
+  - Kahn process networks (PN)
+  - synchronous/reactive (SR)
+  - discrete events (DE)
+- seeing as how all attempts to remove threads remain esoteric, promotes
+  coordination languages *orthogonal* to current languages
+- what about concern: interleaving (with IO) for efficiency?
+
+Unified Parallel C (UPC)
+
+- `MYTHREAD`, `upc_forall`, `upc_barrier`
+- GCC UPC
+
+Vivek Sarkar
+
+- projects
+  - @stanford: SISAL (single assignment)
+    - cons: haskell-like syntax
+  - jikes rvm
+  - @ibm: tools, X10
+  - @rice: jabanero
+- collaborators
+  - Kathy Yelick
+
+X10
+
+- TODO
+- JVM language; an extended subset of Java 1.4
+  - removed/changed
+    - no threads, synchronized, etc.
+    - X10 arrays replace Java arrays
+  - added TODO
+    - async, finish, atomic, future, force, foreach, ateach, clocks
+    - distribution: points, distributions
+    - X10 arrays: multidim distributed arrays, array reductions, array
+      initializers
+    - serial constructs: nullable, const, extern, value types
+- partitioned global address space TODO
+- parent-child relationships for tasks (supposed to reduce cycles/deadlocks)
+  TODO
+- talks
+  - shared memory
+  - messaging
+  - threads
+    - granularity (partitioning)
+  - locality
+    - data and computing mappings
+    - colocation
+    - affinity
+- places
+  - flat set, disjoint
+  - `async(<place>) <stmt>; ...; finish { <stmt> }`
+  - or: hierarchical
+
+Java semi-automatic parallelization (Danny Dig)
+
+- select code to parallelize and a transformation from the IDE
+- tool checks whether the xform is safe and performs the changes
+- eg: uphold class invariants and determine smallest critical sections
+
+Other
+
+- Cache-Conscious Structure Layout
+- [A Comparative Evaluation of Parallel Garbage Collector Implementations](http://www.research.ibm.com/people/d/dfb/papers/Attanasio01Comparative.pdf)
+- http://web.yl.is.s.u-tokyo.ac.jp/gc/
+- [http://www.cs.rug.nl/~wim/mechver/garbage_collection/index.html]
+- parallel garbage-collection
+- Ptolemy project
+- Sequoia (Dally, Stanford)
+- BrookGPU (Stanford)
+- Chapel
+- Fortress
+- Titanium
+- Berkeley UPC
+- Borealis
+- Intel TBB
+- Ease, Carnap
+- In search of speculative thread-level parallelism
+- Dynamic Multithreading (DMT)
+- Stanford Hydra
+- Sun MAJC
+- goog: speculative multi-threading, thread-level speculation
+- Mojave, Caltech: Distributed Speculation
+- Data-Demultiplexing
+
+Parallel Computing, Supercomputing, HPC
+---------------------------------------
+
+[BFS for cell](http://www.ddj.com/hpc-high-performance-computing/197801624)
+
+- I could only find this DDJ article, not the IEEE one
+
+MPI
+
+- de facto std in computer clusters
+- comm protocol provides synchronization and comm primitives
+  - eg point-to-point send/receive, gathering/reduction, barriers, meta-level
+    stuff (process management), choosing topologies
+- does not address increasing internal/fine-grained concurrency (multi-core)
+- does not provide fault tolerance
+- low-level, difficult to use
+
+PVM
+
+- more suited for a heterogeneous collection of computers than MPI
+- deals with failures with transparency (notifications)
+- VM concept provides set of dynamic resource manager/process control functions
+
+OpenMP
+
+- for shared memory multiprocessing (fine-grained)
+  - seen together with (complements) MPI
+  - vs. using (eg) pthreads
+- simply sprinkle compiler directives (C PP pragmas)
+  - spawn threads, synchronization primitives, copying, reduction
+  - work-sharing (eg data-parallel `for`)
+  - memory protection (private/shared regions & vars)
+- pros
+  - simplicity: auto data layout, decomposition; typically no changes to
+    serial code
+  - incrementally add parallelism
+- cons
+  - no numa awareness
+  - no error handling
+
+TODO
+
+- Futexes (what pthreads are implemented on)
+- [PM2](http://runtime.futurs.inria.fr/pm2/)
+- Thinking Machines
+
+Program Analysis
+----------------
+
+MUVI (UIUC SOSP 07)
+
+- statically infer multi-variable access correlations using some heuristics
+  with rel. simple data mining theory/techniques
+- detect inconsistent updates and multi-var concurrency bugs
+- OK false positive rate, found a number of real bugs
+
+Massively Parallel/Distributed Programming Models
+-------------------------------------------------
+
+Space-time programming/computing (Sussman, Project MAC 05)
+
+- Amorphous Medium Language (AML)
+- "statistical computing"; natural fault tolerance
+- space (and time) are explicit: useful for exploiting locality in space
+  and time
+- very pie-in-sky, but seems like a natural direction to head toward
+- see region streams/Regiment, GHT
+
+[Spatial logics](http://lucacardelli.name/SpatialLogics.htm)
+
+[SpatialViews](http://www.cs.rutgers.edu/spatialviews/)
+
+OS related
+----------
+
+  * K42/Tornado
+    Gamsa-Tornado.pdf
+    Appavoo-K42.pdf
+    Krieger-HFS.pdf
+
+  * Xen
+    Barham-Xen.pdf
+
+  * McRT
+    Saha-CMPScalability.pdf
+
+  * TxLinux/MetaTM
+    Rossbach-TxLinux.pdf
+    Ramadan-MetaTM_TxLinux.pdf
+
+  * MapReduce
+    Ranger-MapReduce_SMP.pdf
+    He-MR_Mars.pdf
+
+  * Scheduling
+    Tam-ThreadClustering.pdf
+
+  * OLS large scale NUMAs
+    Gough-LinuxScalability.pdf
+    Sarma-SelectedLinuxScaling.pdf
+    Bryant-ExtremeLinuxScaling.pdf
+
+  * Berkeley Parallel Computing Research
+    http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html
+
+  * RCU
+    McKenney-RCU_OLS.pdf
+
+  * Memory Allocation
+    Mckenney-ParallelMemAlloc.pdf
+
+  * MP Web Server
+    Veal-MP_WebServer.pdf
+
+HW related
+----------
+
+  * Synchronization State Buffer
+    Zhu-SynchStateBuf.pdf
+
+  * HyperTransport & Torrenza
+
+  * Wisconsin Multifacet Project
+    (http://www.cs.wisc.edu/multifacet/papers/)
+
+  * HTM
+    Herlihy-HTM.pdf
+    Performance pathologies in HTM?
+
+Misc
+----
+
+A View From Berkeley
+
+- lots of other material, but only covering systems perspectives here
+- rely less on compilers, more on autotuners
+  - compilers hard to enhance
+  - search-based autotuners gaining popularity for scientific code
+    - optimize library kernels by generating many and testing perf on target
+      platform
+  - may apply to parallelism, but search space much larger
+    - for given problem, many possible par algos, data layouts
+    - perhaps decouple the problems, incorporate *perf models*
+      - characterize system using perf tests, plug these into perf models
+- deconstructing OS support (somewhat disconnected)
+  - increasing need of protection in embedded computing (eg cell phones)
+  - traditional OSes: too large/brittle to support radical innovation and have
+    a lot of particular support for legacy apps
+  - VMs popular due to protection (attacks), isolation (software failures),
+    migration (hardware failures)
+  - Rosenblum: OSes should be libraries linked by app atop thin VMM
+  - VMs enable end apps to select only portion of OS capabilities needed
+
+<!--
+vim:et:ft=:sw=2:ts=2:nocin:nosi:ft=mkd
+-->

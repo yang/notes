@@ -1,0 +1,27 @@
+- classes
+  - #P ???
+    - #P-complete
+      - counting reductions
+      - contains some easy P problems
+    - eg: dnf-sat, 2sat, permanent of a matrix, number of perfect matchings for a bipartite graph
+
+On Non-Computable Functions (Tibor Rado 1962)
+
+- used TMs
+- $\Sigma(n)$: max length of computation by a TM of size $n$
+  - aka the _Busy Beaver function_
+- $S(n)$: max length of computation by a TM of size $n$ that eventually stops
+- _Busy Beaver game_: try to make TMs of a given size that ran for as long as
+  possible (but stopped)
+- led to a slew of papers about busy beavers
+  - favorite pastime: compute $\Sigma(n), S(n)$ by hand
+    - requires analyzing all TMs of given size to figure out whether it stops
+    - if so, how long it runs, and what number it prints
+- [article](http://research.swtch.com/2008/04/bigger-programs-are-better-not-best.html)
+
+Computer Studies of Turing Machine Problems (Rado, Shen Lin, 1965)
+
+- computer analyzez easy machines; hard ones by hand
+- proved $\Sigma(1) = 1, S(1) = 1, \Sigma(2) = 4, S(2) = 6$
+- Lin's PhD thesis: $\Sigma(3) = 6, S(3) = 21$
+- Allen Brady, 1983: $\Sigma(4) = 13, S(4) = 107$

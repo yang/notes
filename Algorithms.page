@@ -1,0 +1,99 @@
+in-place quicksort (c.a.r. hoare)
+
+- select a pivot, possibly doing so using sampling
+- rather than building lists less/equal/greater, walk the list from both ends
+  and swap as necessary (to construct sublists in-place)
+
+hash tables
+
+- direct chaining: list per bucket; optional move-to-front heuristic
+- linear scanning aka open addressing: try other slots
+  - try $h$, $h+1$, $h+2$, ...
+  - try $h_1$, $h_2$, $h_3$, ...
+
+hash functions
+
+- _rotating hashes_: for open addressing, avoid computing a bunch of different
+  hash functions; just compute one long hash value and apply sliding window on
+  it to get a bunch of shorter hash values
+
+prime sieve
+
+  given n, return all primes up through n
+  isprime = [true] * n
+  for i in [2..n]
+    for j in [2i, 3i, ..., n]
+      isprime[j] = false
+  return [ i for i in [2..n] where isprime[i] ]
+
+gcd
+
+  more concise (yay mod operator):
+  gcd(a,b) =
+    if b = 0, a
+    else,     gcd(a, b % a)
+
+  explicit:
+  gcd(a,b) =
+    if b = 0, a
+    if a < b, gcd(b, a)      // swap
+    else,     gcd(a, b % a)
+
+dynamic programming
+===================
+
+dynamic time-warping
+
+edit distance
+
+- levenshtein distance: the standard way of measuring distance
+- hamming distance: considers only substitutions in same-length strings
+
+compression
+===========
+
+- huffman coding
+  - variable length coding: more freq symbols given shorter codes
+- LZ77
+  - sliding window compression, replacing strings with backrefs
+    ((length,offset) pairs)
+  - strings must be within window size apart
+- LZ78: like LZ77 but looking forward as well; less popular
+- lempel-ziv-welch (LZW): patent-encumbered modification of LZ78
+- deflate
+  - intended to be patent-unencumbered replacement for LZW
+  - LZ77 then huffman coding, but uses one huffman tree for char literals and
+    length codes, and another for backwards offsets
+- zip
+  - permits multiple compression algos, but deflate dominant
+  - can take collections of files, but compresses each individually, so can't
+    exploit redundancy across files
+- gzip compression: deflate; compresses single files (freq. tar)
+- LZMA: lempel-ziv markov chain
+  - used in 7z
+- burrows-wheeler transform (BWT)
+  - sort all rotations of a string (padded with start and end) and take last
+    col
+  - reversible: last col gives all chars; sort to get first col; last and first
+    give all pairs of successive chars
+- prediction by partial matching (PPM)
+
+[On Reducing the Size of Compressed Javascript (by up to 20%)](http://timepedia.blogspot.com/2009/08/on-reducing-size-of-compressed.html)
+
+- browser only supports gzip; implementing lzma/ppm in js too slow
+- gzip = LZ77 + huffman; huffman uses separate huffman tree for backwards
+  offset
+  - arrange for the backwards offsets to be the same
+- sort functions to cluster by similarity, eg tf-idf, edit distance
+  - impl: use edit distance, then recursively combine best-matching pairs
+- other tricks:
+  - larger-base charset for var renames
+  - rename from bottom-up scopes to reuse vars
+  - stable ordering of renames (so always get f(a,b,c))
+
+FFT
+
+- FFT on columns
+- multiply by twiddle factors
+- FFT on rows
+- transposes
