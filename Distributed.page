@@ -1,6 +1,16 @@
 Background
 ==========
 
+industry
+
+- cloudera
+  - consulting/training services
+  - products: hadoop distro, desktop gui, squool for rdbms import/export
+  - people
+    - doug cutting: hadoop/nutch/lucene founder; yahoo
+    - mike cafarella
+    - jeff hammerbacher: facebook data team; hive
+
 - consistency
   - strict: timestamp everything; impractical
   - sequential: some total ordering that's consistent with the local orderings
