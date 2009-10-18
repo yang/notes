@@ -1,6 +1,6 @@
 - classes
-  - #P ???
-    - #P-complete
+  - \#P ???
+    - \#P-complete
       - counting reductions
       - contains some easy P problems
     - eg: dnf-sat, 2sat, permanent of a matrix, number of perfect matchings for a bipartite graph
