@@ -1,0 +1,385 @@
+% Research Projects
+% Yang Zhang
+
+- key
+  - QUESTION: means a question that Sam may be able to help answer
+  - TODO: means not done yet (not necessarily that I'll follow up on these,
+    though)
+
+H-Store Recovery and Elasticity
+-------------------------------
+
+H-Store
+
+- distributed transaction manager is exciting and central to H-Store
+- H-Store as a whole easy to believe in and is not a marginal project
+- recovery/elasticity could make for interesting demos
+
+Recovery
+
+- recovery: based on [HARBOR]
+  - HARBOR's approach:
+    - asynchronous disk checkpointing
+    - query snapshots for updates since failure
+    - query current data for final updates since start of recovery
+    - generally: snapshot isolation/time travel minimizes impact on
+      availability
+  - obvious strategies
+    - network-only: recover entirely from replicas (network BW > disk BW, but
+      interference with ongoing transaction processing)
+    - hybrid network and disk: similar to HARBOR, but taking snapshots is
+      hard/expensive
+    - disk-only: same as ARIES
+- thought process
+  - assumptions
+    - high update rate
+    - updates distributed uniformly at random
+    - so all pages are quickly touched
+    - assuming that all updates are applied in same order on each replica; is
+      this valid?
+  - stupid algo
+    - regularly flush page snapshots to disk (asyncly)
+      - use COW to take snapshots/avoid blocking
+      - COW lasts only for duration of flush; no copy might be nec
+      - if update during flush is likely, then just make eager copy
+    - recover by seeing which pages are touched and grab latest from replicas
+    - but all pages are out of date (useless)
+    - so you'd need to transfer entire state from other machines, a long op
+      - to avoid interrupting other replicas, transfer snapshots
+      - simultaneously stream in new updates and apply them after getting state
+  - consider logging
+    - concerned only with redo logging (to prevent lost updates)
+    - volatile undo logging: we need this anyway to be able to undo xacts
+      - so one log for both purposes
+      - redo log should generally dictate length
+      - xacts are short, so undos don't stick around
+    - non-vol undo logging: for buffer frame steals that swap dirty pages to
+      disk
+    - but we have no disk, and no such thing as dirty pages on replicas
+  - algo v1: assuming identical update ordering (see above assumption)
+    - LSN: log seq num
+    - an update is a lower-level concept than query updates, transactions,
+      commits
+    - we log all updates; hence we log undo operations as well
+    - each page has pageLSN of latest touching update
+    - minLSN is the min pageLSN
+    - in normal operation, do regular flushing as above
+    - on recovery, ask others for log of all updates following minLSN
+      - let these be the _redo updates_
+    - simultaneously stream in new updates that have been submitted to this
+      partition
+      - note that these updates are higher-level updates
+      - let these be the _new updates_
+      - let minNewLSN be the LSN of the first new update
+      - ensure that you've obtained redo updates up through minNewLSN - 1
+      - apply new updates after redo updates
+      - skip updates to pages older than its pageLSN (or just re-apply them if
+        log records log idempotent ops, e.g. "after" images)
+    - never quiesces the system
+  - truncating logs
+    - when any one replica fails at minLSN, others better have logs starting at
+      or before minLSN
+      - if replica is dead for long time, start flushing logs to disk
+      - alternatively, give up on logs that grow too large, and have the
+        recovering node discard and fetch all state (no logs involved)
+    - also may want to flush to disk anyway to minimize memory storage
+      requirements
+    - normal operation: keep others informed of your minLSN regularly (e.g. as
+      you flush each page)
+      - each replica can then truncate up to min of all received minLSNs
+  - vs. HARBOR, which maintains no logs
+    - however, historical queries effectively "generate the log"
+    - minLSN = HWM
+    - time-travel + historical queries seem to be mainly useful for working
+      with non-replicas (containing different logical partitions of objects;
+      i.e. multiple _recovery objects_ and _recovery buddies_ per object)
+    - also, this may be faster if many tuples is inserted then deleted during
+      the downtime (not sure if HARBOR does this, but can modify query to
+      ignore such tuples)
+    - different assumptions
+      - HARBOR has abundant storage capacity (disk), so can afford to keep
+        history
+      - overhead & complexity in snapshotting and maintaining segments
+      - QUESTION: did HARBOR also consider using logging? what were the main
+        reasons for current design?
+    - QUESTION: why perform final updates? why not wait for the highest epoch
+      to expire, and stream in queries from coord, then apply them after
+      recovery, rather than introducing quiescing?
+    - must synchronously advance timestamps (with coord)
+- another version of algo
+  - round-robin full-database snapshotting among the replicas
+    - enables xact logging
+- decision tree
+  - for multi-partition xacts: seq good enough?
+    - yes: h-store default
+    - no: pre-order or post-order?
+      - pre-order: speculation (of success vs. failure, not ordering)
+      - post-order: pessimistic or optimistic concurrency control?
+        - pessimistic: distributed locking
+        - optimistic: distributed read sets and write sets
+  - unclear which of pre-order, pessimistic, optimistic is better
+- QUESTION: how to evaluate performance?
+  - it's possible the recovering node may never catch up if transactions are
+    being processed at maximum (resource-saturating) throughput
+  - possibility: how much slower is the system's peak throughput
+- TODO look at
+  - [Paxos made live](http://labs.google.com/papers/paxos_made_live.html):
+    snapshots in section 5.5, which may be useful to think about the interface
+    between the replication system and the database
+- other thoughts
+  - Sam thinks this is the most concrete idea so far
+
+Elasticity
+
+- elasticity: seamlessly add/remove nodes into the system while minimizing
+  impact on availability
+- may be closely related to recovery
+- how much churn?
+  - Google-style incremental growth and frequent recovery
+  - pay-as-you-go services encourage dynamically resizing (perhaps
+    substantially) throughout the day
+- other thoughts
+  - elasticity slightly more exciting than recovery
+
+[HARBOR]: http://people.csail.mit.edu/edmond/research/harbor.html
+
+H-Store distributed transaction manager: transaction consistency among replicas
+XXX ADDRESS TODOS
+
+- high-level picture
+  - distributed xact mgr
+    - Coordinator (perhaps a library on each client, like JDBC) interacts with
+      DB Master Executor
+      - Coord sends xact blobs to ME
+      - ME inspects xact, identifies partitions to Coord
+      - Coord dispatches queries to partitions
+      - within each partition, master waits to hear from majority of nodes (incl. self)
+      - Coord sends results to the ME; ME processes them
+      - single-partition xacts commit immediately while in the partition
+        - Coord failures don't matter; partition exclusively holds the state of
+          the xact
+      - multi-partition xacts require Commit Log servers
+        - ME notifies Coord of commit/abort
+        - Coord records results to the cluster of Commit Log servers
+        - these are to deal with Coord failure (only relevant in the case of
+          multi-partition xacts, since single-partition xacts commit
+          immediately)
+        - actual xact state is recorded here among the servers (also using
+          consensus/master-slave hybrid)
+    - partitions use hybrid strategy
+      - use paxos consensus to decide on master lease
+      - master-slave replication
+    - recovery and elasticity deeply intertwined with distributed xact mgr
+    - open question: wide-area replication vs. relaxed consistency in the event
+      of site failures
+      - how much does wide-area replication actually hurt throughput?
+    - open question: symmetric vs. asymmetric sites?
+    - to conserve resources/reduce cost of availability
+      - ship logs to dest nodes; they only store, no computations required
+      - what about chain-replication?
+  - one problem with elasticity: re-balancing
+
+- _primary/backup replication_ aka _master/slave replication_
+  - operation
+    - primary server receives all requests and broadcasts them to backup
+      replicas
+    - after master receives acks from majority of replicas, ack client
+  - properties
+    - master orders all requests, solving the ordering problem
+    - handling master failures is harder
+    - if network partitions or behaves arbitrarily, need to either use
+      consensus or totally ordered broadcast
+- consensus (Paxos)
+  - tolerates only $\lfloor {\frac{n-1}{2}} \rfloor$ failures
+  - so, on partition, only one partition can continue operation
+  - strong consistency and partition tolerance, but sacrifices availability
+- hybrid primary/backup with consensus
+  - use paxos to decide who gets the master lease
+  - advantage: within a primary/backup group, more failures can be tolerated
+  - disadvantage: master must stay alive, or need to re-lease
+  - used by GFS and BigTable
+- totally ordered broadcast
+  - deliver msgs to a group of processes in the same order
+  - shown to be equiv. to consensus, if strong consistency is required
+  - with weaker semantics, other solutions possible
+    - there exists an algo that allows group to continue functioning even in case of partition
+    - leads to _fork consistency_, where each partition works on its own copy of the data
+    - merging forked copies is hard, slow
+      - how to handle conflicting transactions?
+- distributing transactions
+  - single partition, read-only: any replica; attach last xact ID
+  - single partition, read-write: all replicas
+  - one-shot, no aborts: TODO cannot parse: "order components of xact relative
+    to overlapping multiple partition xacts"
+  - general transactions
+    - if aborts are possible, use traditional concurrency control; slows down
+      all xacts in that partition
+    - 2PC required to agree on committed/aborted state of each xact
+    - batching may reduce time spent in this mode
+- centralized global coord: TODO don't grok
+- _viewstamped replication_: TODO
+
+Alternative Data Stores
+-----------------------
+
+Eddie Kohler and Robert Morris want to create a data store that is simpler (and
+hopefully more usable) than a conventional DBMS.
+
+- hot area: Dynamo, HP SOSP 2008, etc.
+- "ACID unnecessary"...but what semantics do you want?
+- probably a key-value store with get()/put() interface, a la BerkeleyDB
+- one concrete idea: a simple log storage system
+  - every so often, collect/compress/sort/optimize into a nicer data structure
+  - log is the only place where recent updates are stored
+  - also don't worry about durability
+- other thoughts
+  - very amorphous
+  - not terribly excited about disk
+- TODO: related work, think about a more concrete premise
+
+Object Database
+
+- something in the context of H-Store?
+- QUESTION: what exactly are the performance issues with ORMs?
+- other thoughts
+  - I like hacking on my stupid personal object database system
+
+How to make OLTP and OLAP co-exist?
+
+- original problem: Pawan had problems running OLAP queries on web app DB
+- solution: use a DBMS with weaker consistency (e.g. snapshot isolation). duh
+  - HARBOR applies this principle, in a sense
+
+Multicore Database Projects
+---------------------------
+
+Build a multicore OLAP system (i.e. relational [Phoenix])
+
+- Phoenix ignores I/O
+- you can try to attach enough disks until you saturate the CPU, but...
+  - today it's all about horizontal scaling with *commodity hardware*
+    - cabinets with disk arrays are dead because they're disproportionately
+      more expensive, harder to replace, etc.
+    - also, high-profile success stories (Google, etc.) advocate scaling out
+      with commodity
+  - one way to spin this project: "we reduce your entire data warehouse onto
+    a single chip (well, system)!"
+    - one question is whether people will buy this, or stick to their cheap
+      commodity guns
+    - QUESTION: exactly how much more TCO are disk array systems, really?
+  - what are the stats? what's the I/O bandwidth limit? how many disks?
+    - [maxhd]: "the fastest modern desktop hard drives transfer data at a
+      maximum of about 120 MB/s"
+    - [dbcol]: "Despite capacities and transfer rates increasing by factors
+      or 10,000 and 100 respectively, typical drive ETB has actually
+      decreased by a factor of 100."
+    - [tilera]: "Up to 50 Gbps of I/O bandwidth"
+      - 50,000Mbps / 120Mbps = 416 disks, so more than enough I/O bandwidth
+      - this is a minimum; with anything less than perfectly sequential
+        access, must attach even more
+  - QUESTION: is OLAP ultimately bound by disk capacity or disk bandwidth?
+    - i.e., do people add more (smaller) disks/systems to decrease their
+      query times? or is the number of disks/systems entirely dictated by
+      capacity?
+  - TODO: what have people done already in multiprocessor/multicore OLAP?
+    - certainly, big DBMS vendors must already have multiprocessor operators in
+      their products, no? then need to have a different story
+- what about using distributed main memory as storage?
+  - esp. with the arrival of 10gigE, much faster than disks
+    - 50 GB/s IO bandwidth, so 50GB/(10Gb/8)=40 10gigE network cards
+    - TILE64 already have dual XAUI
+  - but: OLAP generally deals with large data warehouses, so making memory the
+    capacity bottleneck is not cost-effective (I assume warehouses are large)
+- other issues
+  - research nugget? many of the tricks we've been discussing tend to be highly
+    hardware specific
+  - saturating the I/O bandwidth still doesn't mean anything; CPUs can still
+    sit idle, which means no scalability
+  - who knows what the architecture of tomorrow really will be? the stats
+    quoted above (e.g., bandwidth) can vary substantially from architecture to
+    architecture
+  - people seem less excited about OLAP in general (parallel processing is
+    somehow slightly sexier, esp. if it requires high availability, a la
+    Map-Reduce)
+  - this should really just be a C-Store sub-project, which would make this
+    a marginal project
+
+[Phoenix]: http://csl.stanford.edu/~christos/sw/phoenix/
+[dbcol]: http://www.databasecolumn.com/2007/09/disk-trends.html
+[maxhd]: http://en.wikipedia.org/wiki/Serial_ATA#cite_note-Tom_Terabyte-Battle-1
+[tilera]: http://www.tilera.com/products/processors.php
+
+Speculatively execute transactions in multiple orders
+
+- premise so far
+  - can't always partition transactions cleanly among tiles; this is for when
+    working with shared memory
+- this is aimed at improving the performance of workloads that involve multiple
+  concurrent transactions where there's blocking due to pess. concurrency
+  control
+  - so this won't do for strictly OLTP workloads
+    - queries are too short and selective
+    - so no H-Store
+  - context must be either mixed OLTP/OLAP or strict OLAP
+  - strict OLAP: multiple large datasets probably makes things harder
+- TODO: need to figure out a more concrete premise
+  - it sounds from the premise above that we were thinking of H-Store, but its
+    OLTP queries are short
+  - so a conventional RDBMS? C-Store?
+- reservations
+  - where would this be usable? need to cluster data enough such that they are
+    not in the same tile but in the same host...
+  - speculation comes at a cost (undo or redo, pick one); doubtful whether
+    gains offset costs
+  - (related to above point) wasteful: people will want to do other things on
+    their multicore systems
+  - marginal project
+
+Speculative prediction
+
+- no idea here
+- no idea about domains/applications either
+- maybe a related question is what the analogous general programming model look
+  like
+
+Safe File-Sharing
+-----------------
+
+Start with social networks as a trust network to avoid getting caught by the
+*AA. XXX FINISH
+
+- general guiding principles
+  - want to find a lot of files
+  - onion routing is slow; expected(min(xs)) is a decreasing function of |xs|
+  - swarming is fast; this is another reason to want to maximize the number of
+    files present
+- users publish pubkey to profile to restrict the scope of file searches
+- is *searching* hard? indexing seems hard...
+  - supernode selection in an expander graph such that every span-$r$ subgraph
+    contains at least one supernode
+- meet halfway by also doing partial dissemination, particularly of rare files
+- plausible denialibility: clique swarms
+- TODO: see also intel research's work on random walks in social networks
+- TODO: related/background work search!
+
+Distributed Programming Models
+------------------------------
+
+- harder than concurrent programming models, which itself is far from solved
+- focus on expression problem and/or program synthesis?
+- related work
+  - process calculi
+  - orchestration languages: orc
+    - address issues like cancellation
+  - awesome and underrated: P2
+  - the pragmatic: mace, erlang, etc.
+  - stream processing: Dryad, MapReduce, Borealis, maybe WaveScript
+  - unknown: MPD, Acute
+  - parallel PL:
+    - X10
+    - Chapel
+    - Fortress
+    - Titanium
+    - Ease, Carnap
+  - marginally: Mozart (aspects, mobile agents)
+  - <http://portal.acm.org/citation.cfm?id=800174.809772>

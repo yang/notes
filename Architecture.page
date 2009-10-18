@@ -1,0 +1,281 @@
+# vim:nocin:et:sw=2:ts=2
+
+- intel arch
+  - iret: restores context; for returning from interrupt/exception handler
+    - complex; pseudo-code spans pages in manual
+    - 2 stages: pre-commit, post-commit (commit = privilege level change)
+    - from <http://www.cr0.org/misc/CVE-2009-2793.txt>
+
+      > IF new mode != 64-Bit Mode
+      >   THEN
+      >     IF tempEIP is not within code segment limits
+      >       THEN #GP(0); FI;
+      >     EIP <- tempEIP;
+      >   ELSE (* new mode = 64-bit mode *)
+      >     IF tempRIP is non-canonical
+      >       THEN #GP(0); FI;
+      >     RIP <- tempRIP;
+      > FI;
+      > CS <- tempCS;  // This is the commit point (privilege switch)
+      > EFLAGS (CF, PF, AF, ZF, SF, TF, DF, OF, NT) <- tempEFLAGS;
+
+disks
+
+- native command queueing (NCQ): a SATA tech that allows HD to internally
+  reorder operations
+  - also used in SSDs but for a reverse purpose: because the SSDs experience
+    latency in the CPU; this allows for a batch of operations to be issued
+  - obsoletes PATA tagged command queueing (TCQ), which was CPU intensive
+- extensible firmware interface (EFI)
+  - intel's proposal to replace PC BIOS, one of few remaining parts of orig IBM PC
+
+- BIOS: de facto standard in defining a firmware interface
+  - performs bootstrapping: identify, test, initialize system devices like display card, HDD
+  - stored on chip
+
+- hard disk layout
+  - MBR: 512 B
+    - 0-445: boot loader (eg GRUB)
+    - 446-511: partition table
+
+- programmable interrupt controller (PIC): device that allows pri level to be
+  assigned to its interrupt outputs
+  - when device has multiple interrupt outputs to assert, it will assert them
+    in order of relative pri
+  - common modes: hard pris, rotating pris, cascading pris
+  - PICs typically have common set of registers
+    - interrupt request register (IRR): which ints are pending acks; typically
+      can't directly access this
+    - in-service register (ISR): which ints acked but waiting for end of
+      interrupt (EOI)
+    - interrupt mask register (IMR): which ints to be ignored/unacked
+  - interrupts may be edge triggered or level triggered
+
+- intel 8259
+  - 8259, 8259A, 8259B
+  - acts as multiplexer: combines multiple interrupt input sources into a
+    single interrupt output to interrupt a single device
+
+- advanced programmable interrupt controller (APIC)
+  - replaces intel 8259A in newer x86s
+  - local APIC (LAPIC): one per cpu
+    - in orig systems, LAPICs and IO APICs connected by dedicated APIC bus
+    - newer systems use system bus for comm btwn all APIC components
+    - manages all external interrupts for cpu
+    - accepts & generates inter-processor interrupts (IPIs) btwn LAPICs
+    - support up to 224 usable IRQ vectors from IO APIC; 0-31 reserved for x86
+      exception handling
+  - IO APIC; one per peripheral bus
+    - contain redirection table, used to route interrupts from peripheral buses
+      to 1+ LAPICs
+
+- _instruction-level parallelism (ILP)_
+- hardware multithreading: applies to superscalar processors
+  - _simultaneous multithreading (SMT)_: multiple threads can execute in parallel in each pipeline stage
+    - eg _HyperThreading (HT)_, Intel's successor to super-threading
+  - _temporal multithreading_ aka _super-threading_: one thread at a time per pipeline stage
+    - eg _super-threading_, but only with granularity of cycles
+- pins
+- standard
+  - CPU
+  - _northbridge_ aka _memory controller hub (MCH)_: Intel moving on-chip (TODO only heard this at mtg)
+  - _front-side bus (FSB)_: connects CPU and northbridge
+  - back-side bus: TODO
+  - southbridge aka _IO controller hub (ICH)_: TODO
+  - [WP](http://en.wikipedia.org/wiki/Northbridge_(computing))
+- _memory management unit (MMU)_: handles CPU mem accesses
+  - translates virt addrs to phys addrs
+  - mem protection
+  - cache control
+  - bus arbitration
+  - divide virt addr space into pages
+  - _translation lookaside buffer (TLB)_: cache of _page table entries (PTE)_
+    for translating _virtual page numbers (VPN)_ to _phys page numbers (PPN)_
+    - PTE also has: dirty bit, accessed bit (LRU), process protection
+      (user/supervisor), cached
+    - on miss, a slower mechanism, eg software, is used
+    - if VPN has no PPN, signal _page fault_ to OS
+      - if legal VPN, OS can find spare RAM or page in from disk
+      - if no RAM left, evict mem page to disk
+      - if no TLB left, evict PTE
+  - x86 MMU is extremely complex (for compatibility)
+
+- caches
+  - inclusive: lower-level cache included in higher-level cache; unique data
+    limited to higher-level cache
+  - exclusive: lower-level cache and higher-level cache include unique data;
+    capacity is sum of caches
+    - makes more sense when there are multiple lower-level caches, since
+      associativity spells potential conflicts in the higher-level cache
+  - <http://www.amd.com/us-en/Processors/SellAMDProducts/0,,30_177_4458_4513%5E1413%5E2128,00.html>
+
+- _hardware scout_ aka _run-ahead scout_: on cache miss, continue with loads in
+  the same instr stream
+  - performs prefetches during cache misses
+  - exploits _memory-level parallelism (MLP)_
+
+- fat camp
+- lean camp
+
+- speed demons: try to get as many raw cycles out
+- brainiacs: try to get as much work done per cycle
+
+- data structures
+  - linked lists have poor cache properties, eg traversal is non-sequential
+- _cache-oblivious_ algo: exploit cache without knowing cache size as explicit
+  param
+  - eg cache-oblivious linked lists
+  - coined by CEL
+
+- IO
+  - _programmed input/output (PIO)_
+    - method of transferring data between CPU and peripheral (network adapter,
+      storage device, etc.)
+  - _direct memory access (DMA)_
+
+- virtualization
+  - Intel Virtualization Technology (IVT)
+    - TODO
+  - AMD Virtualization (AMD-V)
+    - TODO
+
+- GPU
+  - NVIDIA CUDA
+  - Apple OpenCL: now supported by NVIDIA
+  - MS DirectCompute: in DX11
+
+- _standard performance evaluation corporation (SPEC)_
+  - TODO
+
+- Cray
+
+- AMD
+  - Opteron (Barcelona)
+    - exclusive caches (L1/L2, L2/L3)
+      - <http://209.85.165.104/search?q=cache:1EE4_L4_B0EJ:www.amd.com/us-en/assets/content_type/white_papers_and_tech_docs/23932.pdf+inclusive+%7C+exclusive+cache+opteron&hl=en&ct=clnk&cd=1&gl=us&client=opera>
+      - <http://www.anandtech.com/IT/showdoc.aspx?i=3162&p=2>
+
+- Intel
+  - Clovertown
+
+- Sun
+  - Niagara
+    - 8 core, 32 thread
+    - simple 5-stage cores with very few stalls
+    - coarse-grained hyperthreading: all functional units must be operating on
+      same thread
+    - switch after every instr, rather than run till stall
+  - UltraSPARC T2 Plus: multi-socket UltraSPARC T2
+    - full cross bar between cores' L2 and memory
+    - 8 mem banks
+    - coherence units
+    - fully buffered DIMMs
+    - 65nm process
+
+- IBM
+  - POWER5
+    - OOO execution
+  - POWER6
+    - 5 GHz
+    - 2 to 4 thread
+    - released 4/10/08
+    - in-order execution
+    - fine-grained hypethreading: all functional units can operate on different threads
+
+- DDR3: fully buffered DIMM
+
+internet-scale service infrastructure efficiency
+talk at ISCA (international symposium on system architecture) 2009
+by james hamilton
+
+- enterprise vs. internet-scale datacenters
+  - enterprise: largest cost = ppl; ~100:1 machine:ppl
+    - consolidate onto fewer, larger systems; large sans for storage, large
+    routers for networking
+  - internet-scale: largest cost = server & storage hw
+    - then cooling, power dist, power
+    - networking varies from very low to dominant
+    - ppl < 10%, often < 5%; >1000:1 machine:ppl
+  - optimize for work-per-$ or work-per-joule
+- costs
+  - assumptions:
+    - facility: ~$200M for 15MW facility (15-yr amort)
+    - servers: ~$2K * 50,000 (3-yr amort)
+    - server draws 80% max power when running at 30% utilization
+    - commercial power: ~$0.07/kWhr
+  - monthly costs: $3M servers, $1.3M power/cooling, $1M power, $.2M other
+  - power related costs trending flat or up; server costs trending down
+- PUE (power usage effectiveness) = total facility power / it equip power
+- DCiE (data center infrastructure efficiency) = it equip power / total
+  facility power * 100%
+- power: 59% equip, 8% power xmission/switching, 33% cooling (high)
+- cooling: all air cooling using ACs, outside air
+  - IO: 5W-25W, 50C-60C
+  - CPU: 40W-200W, 60C-70C
+  - mem: 3W-20W, 85C-105C
+  - HD: 7W-25W, 50C-60C
+  - cloudrack C2: 40C
+- servers
+  - 1983-2007: seq BW 110X, rand 2X; rand growth 10% of seq; disk seq BW
+    lagging DRAM/CPU; 15-150 days to rand read 1TB
+  - techniques
+    - sequentialize workloads
+    - redundant/denormalized data
+    - distributed memory (network) faster
+    - better distribution of hot data among cold data
+    - partition hot/cold data onto SSDs/HDDs
+
+a scalable data center network architecture
+amin vahdat, ucsd
+
+- typical topology: 2- or 3-tier tree (here is 3); 3 supports ~25K hosts
+  - 1G end-of-rack (edge) switches, 48-288 ports, 10G uplinks
+  - 10G end-of-row (aggregation) switches, 32-128 ports
+  - 10G core switches connected via mesh
+  - oversubscribed by 2.5 (400Mbps) or 8:1 (125Mbps)
+  - ms is oversubscribed at core by 240x
+- want to achieve "full bisection bandwidth"
+- use a special instance of a clos topology (telecom technology) called a
+  _fat-tree_
+  - 16 hosts across 4 pods, 4 per pod, pods are connected at the top
+  - can scale down; to oversubscribe by 2x, just use half as many switches per
+    pod
+  - simple regular structure
+  - using 48-port switches, support 27K hosts
+  - key challenge: scheduling (NP hard)
+    - rough idea: have a centralized scheduler that inspects "elephant" flows
+      and places them using heuristics
+- portland: nice features like vm migration without ip renewal, etc
+- question: relation to monsoon networks?
+
+hardware can make data center software simpler and more robust
+james larus
+icsa 09
+
+- heterogeneity
+  - helios: heterogeneous multiprocessing with satellite kernels (sosp09)
+  - resource allocation and scheduling are huge problems
+- monsoon network: provably hotspot free for any admissible traffic matrix
+  - software can now ignore network topology (for bandwidth)
+- use pcm for reliable message transport (messages eventually processed)
+
+TODO
+
+- specint
+
+x86
+
+- <http://www.intel.com/products/processor/manuals/>
+- PAE: physical address extension
+  - with OS support, allows system to use >4GB (up to 64GB) physical mem
+  - a process can still only map 4GB in address space at a time though
+- IRQs
+  - older: intel 8259; newer: intel apic
+  - view on windows using device manager or `msinfo32`
+  - view on linux using `/proc/interrupts` or `procinfo`
+  - IA64/AMD64: 16 IRQLs
+  - x86: 32 IRQLs
+  - diff primarily due to type of interrupt controller of each CPU
+  - each cpu can be running at a different IRQL
+
+vim: et sw=2 ts=2 ft=

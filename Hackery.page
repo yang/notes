@@ -1,0 +1,1204 @@
+- common C defines
+  - <http://www.woodtennis.com/win2unix.html>
+
+      #ifdef _WIN32 windows dependant code or header filess ... #endif
+      #ifdef _WINAPI windows API dependant code or header files ... #endif
+      #ifdef _ISAPI windows Internet Server API code or header files ... #endif
+      #define __cplusplus c++ specific code
+      #ifdef _ cplusplus extern "C" { // ((Start all the declarations for "C" s/w ...)) #endif
+      #ifdef _ cplusplus } // ((End all the declarations for "C" s/w ...)) #endif
+      #undef __cplusplus c++ specific code
+      #define EC_SUCCESS 0 maps unix error code to NT version ...
+      #define EC_ACCESS EACCES maps unix error code to NT version ...
+      #define _Win_DLL dll object needed only by windows NT apps
+      #undef _Win_DLL dll object needed only by windows NT apps #endif
+      #ifdef _Win_DLL dll objects not needed for unix programs ... #endif
+      #ifdef _KERNEL_PROVIDED_DLL_ // kernel exports dll's for application
+      # define _ KERNEL _DLLSPEC_ __declspec(dllexport) // kernel code exports dll's
+      #else
+      # define _ KERNEL _DLLSPEC_ __declspec(dllimport) // applications import dll's
+      #endif // _KERNEL_PROVIDED_DLL_
+      Other recommended define usage include machine/compiler : _MSDOC, _MACOS, _HP, _SUN, _LINUX, _SOLARIS, etc ... inorder to make the same source as portable as possible
+      Avoid using COM/DCOM use CORBA or even better SOAP & XML to do distributed objects & marshalling
+
+- i18n
+  - Unicode
+    - 1.0 is 16 bits
+    - 2.0 is 21 bits
+  - ASCII: 7 bits
+  - ISO/IEC 8859-1 aka Latin-1: superset of ASCII; 191 chars
+  - ISO-8859-1: superset of ISO/IECS 8859-1
+    - combines with ISO 6429 control chars ("C0 and C1 control chars")
+    - assigns control chars to 00-1F, 7F, 80-9F
+  - Windows-1252: superset of ISO/IEC 8859-1
+    - assigns 80-9F displayable chars (not control chars)
+  - UTF-8: superset of ASCII; everything else -> multibyte
+  - <http://intertwingly.net/stories/2004/04/14/i18n.html>
+
+- x86 calling conventions
+  - <http://unixwiz.net/techtips/win32-callconv.html>
+  - <http://en.wikipedia.org/wiki/X86_calling_conventions>
+  - windows and non-windows
+    - cdecl/intel ABI
+      - args pushed in right-to-left order
+      - return values in eax
+      - eax, ecx, edx avail for use within function
+      - stack cleaned up by caller (esp incremented by caller)
+      - MS compilers prefix these function names with underscore
+      - main/wmain, variadic (even if declared otherwise), higher-order
+        functions
+  - windows
+    - stdcall
+      - stack cleaned up by callee; no need to add cleanup to every callsite
+      - windows api uses this; see WINAPI macro
+      - can't handle variadic functions like printf
+      - MS compilers prefix these function names with underscore and suffix
+        them with `@` and number of bytes of params
+      - WinMain
+    - (MS) fastcall
+      - uses registers
+      - MS compilers prefix these with `@`, suffix with `@` and param byte
+        count
+  - non-windows
+    - syscall
+      - eax, ecx, edx not preserved
+      - size of param list passed in %al
+      - caller cleanup
+    - optlink: TODO
+    - MS x64: uses R registers; supercedes all 32-bit conventions
+    - amd64 ABI: uses R registers
+
+- uuid/guid (syn): based on mac (ieee 802) addr, so can get unique numbers
+  without any communication
+
+- mocks vs stubs (vs fakes)
+  - all called test doubles
+  - fake: working implementations, but have shortcuts that make them unsuitable
+    for production (e.g. in-memory database)
+  - stub: provide canned answers to calls made during test; may also record
+    info
+  - mock: objects pre-programmed with expectations which form a specification
+    of the calls they are expected to receive
+
+- networking
+  - linux doesn't have a dns cache by default; need to install nsc for that
+
+- linux power mgmt
+  - acpid: delivers ACPI events; see /etc/acpi/
+  - put to sleep: echo -n mem > /sys/power/state
+
+- xdr vs. asn.1
+
+- net lib
+  - getsockname getpeername
+  - inet_ntoa inet_aton
+
+- even-lesser-known Linux syscalls
+  - splice
+  - tee
+  - vmsplice
+
+- lesser-known Linux syscalls
+  - mprotect
+  - mmap
+  - shmat shmget shm...
+
+- Hotspot
+
+  - From <http://java.sun.com/products/hotspot/whitepaper.html>
+
+    > In the Java HotSpot VM, no handles are used by Java code. Object
+    > references are implemented as direct pointers. This provides C-speed
+    > access to instance variables. When an object is relocated during memory
+    > reclamation, the garbage collector is responsible for finding and
+    > updating all references to the object in place.
+
+  - raw pointers not too bad to update since you must traverse all objects
+    anyway
+
+    - they probably use the mark word to redirect to the new location
+
+  - GC: generational; parallel young
+
+  - objects copied in DFS; this clusters related objects together
+
+  - Each object has special first word for synchronization, marking, hashing
+
+    > First word of each object is the _mark word_
+    >
+    > Used for synchronization and GC
+    >
+    > Also caches hashcode, if previously computed
+
+  - from <http://www.ibm.com/developerworks/java/library/j-benchmark1.html>
+    - blocks need to execute 1500 (client) or 10000 (server) times before
+      they're JITed
+      - compile whole method
+      - on-stack replacement: can replace with compiled method in middle of a
+        call to it (eg if loops in main)
+        - however, code quality suboptimal: can't do loop-hoisting,
+          array-bounds check elimination, or loop unrolling
+        - only way to defeat this: move tight loops into their own methods
+    - code can be deoptimized if assumptions made during JIT no longer hold
+      - eg class loading that invalidates monomorphic call transformations
+      - eg uncommon traps: only the most common code path is compiled (like in
+        tracing JIT?), but turns out to be uncommon
+    - dead code elimination
+    - memory optimizations
+      - hoisting heap values into registers
+      - stack allocation
+      - object eplosion
+
+- alignment
+
+  - `posix_memalign`: useful for aligning to cache line sizes
+
+- sockets
+
+  - on linux, default: SO_RCVBUF = 87380, SO_SNDBUF = 16384
+
+- non-blocking IO quirks
+
+  - sockets that are accepted from a non-blocking listener are blocking
+
+  - EAGAIN == EWOULDBLOCK == 11
+
+  - From select(2):
+
+    > Under Linux, select() may report a socket file descriptor as "ready for
+    > reading", while nevertheless a subsequent read blocks.  This could for
+    > example happen when data has arrived but upon exam‐ ination has wrong
+    > checksum and is discarded.  There may be other circumstances in which a
+    > file descriptor is spuriously reported as ready.  Thus it may be safer to
+    > use O_NONBLOCK on sockets that should not block.
+
+  - From [section 13.2 of the
+    manual](http://www.gnu.org/software/libc/manual/html_node/I_002fO-Primitives.html#I_002fO-Primitives):
+
+    > EAGAIN
+    >
+    > Normally, when no input is immediately available, read waits for some
+    > input. But if the O_NONBLOCK flag is set for the file (see File Status
+    > Flags), read returns immediately without reading any data, and reports
+    > this error.
+
+- listen actually accepts connections (based on the backlog argument)
+  - accept just takes one of the already-accepted connections
+
+- inotify: Linux's filesystem change notification facility
+  - obsoletes dnotify
+  - difficult for efficient (real-time) detection due to coarse granularity
+    (directory level)
+
+- tcp wrapper (TCP_WRAPPERS)
+  - libwrap: just the library
+  - openssh's sshd uses libwrap
+
+- /dev/shm/: tmpfs (in-memory)
+
+- strace more comprehensive than ltrace
+
+- Collada DAE files: standard 3D model interchange format established by the
+  Khronos group (established at SIGGRAPH 06 to maintain OpenGL)
+
+- status of AIO
+
+  - From <http://davmac.org/davpage/linux/async-io.html>:
+
+    > A more subtle problem with non-blocking I/O is that it generally doesn't
+    > work with regular files (this is true on linux, even when files are
+    > opened with O_DIRECT; possibly not on other operating systems). That is,
+    > opening a regular file in non-blocking mode has no effect for regular
+    > files: a read will always actually read some of the file, even if the
+    > program blocks in order to do so. In some cases this may not be
+    > important, seeing as file I/O is generally fast enough so as to not cause
+    > long blocking periods (so long as the file is local and not on a network,
+    > or a slow medium). However, it is a general weakness of the technique.
+    >
+    > ...
+    >
+    > The select() function is documented in the libc manual. As noted, a file
+    > descriptor for a regular file is considered ready for reading if it's not
+    > at end-of-file and is always considered ready for writing (the man page
+    > for select in the Linux manpages neglects to mention both these facts).
+    > As with non-blocking I/O, select is no solution for regular files (which
+    > may be on a network or slow media).
+
+  - From <http://www.mail-archive.com/libevent-users@monkey.org/msg01226.html>:
+
+    > I wouldn't expect AIO to knock your socks off on Linux (and certainly not
+    > *BSDs). Kernel support doesn't exist for AIO operating through the disk
+    > buffer cache. Linux only supports AIO for direct I/O, which is extremely
+    > sensitive to myriad system and usage scenarios. Otherwise, it's _still_
+    > emulated w/ threads (in glibc, I think).
+
+  - From Linux System Programming:
+
+    > Linux only supports aio on files opened with the O_DIRECT flag.
+
+- samba/smb
+  - new way of sharing doesn't modify /etc/samba/... but instead modifies
+    /var/lib/samba/...
+    - shares are in /var/lib/samba/usershares/
+  - can either use smbpasswd to maintain a set of users, or uncomment the
+    `security = user` line in smb.conf
+  - smbd can be controlled using e.g. `smbcontrol smbd [reload-conf | shutdown
+    | ...]`
+  - in recent ubuntu, nautilus has gui for sharing
+
+- posix asynchronous i/o (AIO) different from non-blocking IO (NBIO)
+  - NBIO can be done on network conns
+  - AIO can be done on disk files, but only reads and writes
+  - see also: LAIO
+
+- Duff's device: a way to unroll loop
+  - idea be used to implement (very limited) coroutines
+
+- [Functional Pearl: Power Series, Power
+  Serious](http://www.cs.dartmouth.edu/~doug/pearl.ps.gz)
+  - power series for math ($e^x$, $\sin x$, $\cos x$, derivatives, integrals,
+    and more)
+
+- An Efficient Representation for Sparse Sets
+  - maintain a packed list of members and a sparse indexing array
+  - sparse array does not need to initialize memory
+
+- byte ordering
+  - [freebsd's byte order ops](http://www.freebsd.org/cgi/man.cgi?query=byteorder&sektion=9)
+  - [glib's byte order macros](http://library.gnome.org/devel/glib/unstable/glib-Byte-Order-Macros.html)
+
+- cooperative threading and coroutines for c/c++
+  - st <http://state-threads.sourceforge.net/>
+    - high performance
+    - uses longjmp/setjmp
+    - no extraneous features
+    - timeouts on IO
+    - no pthread interop
+    - verified that it works with gprof, gdb; doesn't work with valgrind
+  - Pth
+    - compat with pthreads
+    - uses longjmp/setjmp
+    - TODO pthread interop?
+  - libtask
+    - no users, sparse documentation
+    - no timeouts on IO
+    - small and simple
+    - uses getcontext/setcontext
+    - no pthread interop
+  - tame
+    - each tamed function call results in a malloc to save state
+    - nice in the sense that you can compose multiple events
+    - pthread interop
+  - boost.coroutine
+    - TODO pthread interop?
+    - glitchy, not ready
+    - uses longjmp/setjmp
+    - does not hide asio behind a synchronous interface, but instead TODO
+    - has a wait() that can wait for multiple tasks, but there is a note that
+      this is not a general-purpose demuxer, and is only suitable for things
+      like setting timeouts on an asio operation
+      - TODO understand the above better
+  - capriccio
+    - TODO
+
+- c/c++
+  - macros
+    - __STDC_FORMAT_MACROS
+    - __STDC_CONSTANT_MACROS
+    - __STDC_LIMIT_MACROS
+    - uint_least*_t
+    - uint_fast*_t
+  - reference rules
+    - const T&: binds to anything
+    - T&: binds to non-const lvalues
+    - const T&&: binds to anything
+    - T&&: binds to non-const lvalues and rvalues
+  - lvalues: addressable/reference-able; named; can be modified
+  - rvalues: const-reference-able; moveable in c++0x
+  - volatile vs. atomic
+    - src: <http://www.ddj.com/hpc-high-performance-computing/212701484>
+    - volatile: unoptimized; "unusual memory"
+      - not atomic
+      - ordinary memory optimizations: some: loads may still be reordered
+        across volatile load/store
+      - special operation optimizations: none
+    - atomic: "ordered atomic"
+      - all-or-nothing stores (`volatile` in Java/.NET)
+      - ordinary memory optimizations: some: loads can be moved down across an
+        atomic load or up across an atomic store
+      - special operation optimizations: some, eg combining adjacent stores to
+        same location
+  - macros: <http://bytes.com/forum/thread521533.html>
+  - lvalues and rvalues: <http://www.devx.com/tips/Tip/5696>
+  - `sizeof wchar_t == 4`
+  - no way to use anything but default ctor in array
+    - i.e., none of this: new vector<int>(256)[10];
+  - "Each name that contains a double underscore (_ _) or begins with an
+    underscore followed by an uppercase letter (2.11) is reserved to the
+    implementation for any use." [ref](http://www.thescripts.com/forum/thread171648.html)
+  - all *_t type names are reserved by posix;
+    [ref](http://www.opengroup.org/onlinepubs/009695399/xrat/xsh_chap02.html#tag_03_02_12)
+  - stateful allocators are not allowed by the standard (which seems to make
+    them useless), but most impls waive this part
+    [ref](http://www.velocityreviews.com/forums/t280576-idea-for-custom-threadsafe-stl-allocator.html)
+  - lexical cast: to/from strings
+  - dtors reverse order of ctors
+  - casting through unions gets around strict aliasing
+
+- bugs
+  - precedence: `for (int i = 0; i < multimode ? nnodes : 1; i++)`
+
+- javascript implementations
+  - started evaluating the engines in trying to run the JS beautifier
+  - tamarin
+    - JIT engine donated by Adobe to Mozilla
+    - used in Flash 9
+    - written in C++
+    - separate compiler (`asc`) and executor (`avmplus`)
+    - the `shell` module contains a number of system/IO facilities
+      (`toplevel.as`)
+    - "Tamarin was designed to do better with type annotations than without.
+      This is why SpiderMonkey actually wins some of those benchmarks against
+      Tamarin on untyped code. Our work with SpiderMonkey and Tamarin now in
+      the ActionMonkey project aims to make it fast for untyped code as well."
+  - rhino
+    - written in Java
+  - spidermonkey
+    - written in C++
+    - `help()`
+    - `load()` includes javascript files
+    - `readline()` doesn't really work that great, since it 
+    - `arguments` for command-line args
+  - es4
+    - reference implementation of ECMAScript 4 (Javascript 2)
+    - written in SML
+    - very slow; it actually times out when running the beautifier (I get
+      "Alarm Clock")
+
+- c++
+  - `#define public private` trick may allow you to access private variables
+  - `extern "C"`: preserves C calling convetions and name (non-)manging
+
+- g++
+  - warnings
+    - `-Wall -Wextra -Werror -Woverloaded-virtual -Wconversion -Wpointer-arith
+      -Wcast-qual -Wcast-align -Wwrite-strings -Wno-sign-compare
+      -Wno-unused-parameter -Wold-style-cast`
+    - `-Wshadow`: This warns when you hide a variable by defining one in a
+      narrower scope.
+    - `-Weffc++`: This warns about things found in the "Effective C++" books.
+      Some are useful, but many are not.
+
+- java
+  - initial heap size = 1/64 phy, max heap size = 1/4 phy (cap 1gb)
+  - System.out, System.err are PrintStreams that by default auto-flush; they
+    don't use C standard streams
+  - unsigned comparison: (i < j) ^ (i < 0) ^ (j < 0)
+  - annotations
+    - GuardedBy("this"): document thread-safety
+  - TODO: does volatile make guarantees about the atomicity of say 64-bit wide
+    values?
+  - volatile: ordered atomic types
+    - like c++0x atomic
+    - commonly used for flags
+    - also more efficient than AtomicReference when instantiating many of
+      something; use in conjunction with Atomic*FieldUpdater
+    - accessing these creates a memory barrier, effectively synchronizing all
+      cached copies of variables with main memory
+    - enables correct double-checked locking
+    - these are atomics; from
+      <http://stackoverflow.com/questions/967124/java-seems-to-support-volatile-fields-of-type-long-while-c-does-not-what-are>
+      > When a double or long in Java is volatile, §17.7 of the Java Language
+      > Specification requires that they are read and written atomically. When
+      > they are not volatile, they can be written in multiple operations. This
+      > can result, for example, in the upper 32 bits of a long containing a
+      > new value, while the lower 32 bits still contain the old value.
+  - atomic field updaters
+
+- reentrancy
+  - aka "purity"; output depends only on inputs (and static constants); no
+    static state is changed (no side effects)
+  - an interrupt handler is reentrant if it reenables interrupts early on
+  - implies thread safety
+
+- thread safety
+  - ways to realize:
+    - reentrancy: state is private per caller (eg on stack)
+    - mutual exclusion: can update static state, but serialize accesses
+    - thread-local storage: each thread has private copy of statics
+    - atomic operations: using special atomic machine instructions; lock-free
+      - aka linearizability
+
+- c/c++ libs
+  - raise
+  - sigaction
+  - backtrace
+  - backtrace_symbols_fd
+
+- c
+  - the declaration `f()` is not the same as the declaration and prototype
+    `f(void)`
+  - printf flags
+    - %td: ptrdiff_t
+    - %zd: size_t
+  - `random()` is "supposed to be more random" than `rand()` (though mostly the
+    same these days)
+
+- c/c++ tools
+  - lzz
+    - doxygen can't parse (eg) lazy classes
+    - lzz can't copy comments into gen files
+
+- sql
+  - recursive queries are not in pgsql, are in db2, maybe sql server
+    - on the roadmap for pgsql:
+      http://archives.postgresql.org/pgsql-hackers/2007-11/msg01083.php
+  - select into is dead; long live create table as
+
+- gcc
+  - -march, -mtune, -mcpu:
+
+    > On x86 and x86-64 CPUs, -march will generate code specifically for that
+    > CPU using all its available instruction sets and the correct ABI; it will
+    > have no backwards compatibility for older/different CPUs. If you don't
+    > need to execute code on anything other than the system you're running
+    > Gentoo on, continue to use -march. You should only consider using -mtune
+    > when you need to generate code for older CPUs such as i386 and i486.
+    > -mtune produces more generic code than -march; though it will tune code
+    > for a certain CPU, it doesn't take into account available instruction
+    > sets and ABI. Don't use -mcpu on x86 or x86-64 systems, as it is
+    > deprecated for those arches.
+
+  - `-march=native`: new option since gcc at least 4.3.2
+
+  - __attribute__: general metadata attached to funcs, vars, etc.
+  - __inline__: force inline
+    - XXX: same as always_inline?
+    - `static __inline __attribute__((always_inline, no_instrument_function))`
+
+- ld
+  - `-l` order matters: dependents before dependencies (e.g. `-l` should follow
+    sources)
+
+- compilation
+  - multilibs: multiple versions of libraries for different target options (for
+    same general architecture)
+    - eg: -m32, -msoft-float
+  - `gcc -print-multi-lib`
+
+- matlab
+  - useful vectorization idioms
+    - repmat(reshape())
+
+- make
+  - `:=` means immediate expansion; `=` is like function definition
+  - automatically removes intermediate files at the end
+    - eg, I had: `%.cpp: %.lzz`; make removed the cpp
+    - [more info](http://www.gnu.org/software/autoconf/manual/make/Chained-Rules.html)
+
+- image conversions
+  - convert doesn't deal well with svg
+  - svg to *: inkscape
+
+- bibtex
+  - multiple authors must be joined with "and": "Yang Zhang and Sam Madden"
+  - {} serves many purposes
+    - outer structure (obvious)
+    - quotes around attribute values, same as ""
+    - grouping within attributes, eg "John {von Neumann}"
+
+- tex/latex
+  - \gdef: \global \def
+  - TODO
+    - how do labels work?
+    - how do def/let/setbox compare?
+    - when can i use = sign?
+  - fonts
+    - taxonomy
+      - bitmap fonts
+        - type 3: eg, dvips converts to type 3 the metafont bitmaps of knuth's
+          original "computer modern"
+      - outline fonts: chars are sets of bezier curves
+        - type 1 (postscript)
+          - defined using actual postscript, but a restricted subset
+          - most modern tex systems default to type 1
+            ([source](http://www.tug.org/pracjourn/2005-2/asknelly/))
+          - examples
+            - orig. adobe fonts: times, palatino
+            - type 1 computer modern, avail. in the BaKoMa font collection
+            - more exotic: sabon
+        - truetype
+        - opentype
+          - marriage of type 1 and truetype
+          - advanced typographic features
+          - supports unicode
+    - both pdf and ps can embed type 3
+    - some sources say tex uses type 3 (bmp) fonts by default; others say
+      recent latex don't default to type-3
+    - TODO difference btwn fonts, font encodings, etc.
+    - `OT1`: original LaTeX font encoding
+      - defaults to CM font
+    - `T1`: new LaTeX font encoding
+      - defaults to EC font (same as CM but with more glyphs)
+    - use `ae`, `aecompl`
+      ((source)[http://dsanta.users.ch/resources/type1.html])
+    - `ae` auto-sets fontenc to T1
+    - force usage of type 1/truetype (scalable) fonts
+      - to use Computer Modern (CM)/Extended Encoding (EC), add::
+        \usepackage[T1]{fontenc}
+        \usepackage{ae,aecompl}
+        ::
+      - to use standard PS fonts::
+        \usepackage[T1]{fontenc}
+        \usepackage{pslatex}
+        ::
+  - quirks
+    - verbatim doesn't work within... ([source](http://www.tex.ac.uk/cgi-bin/texfaq2html?label=verbwithin))
+  - latex new font selection system (NFSS)
+    - primitives: fontencoding, fontfamily, fontseries, fontshape, fontsize,
+      selectfont
+    - attributes
+      - series: textmd, textbf
+      - family: textrm, textsf, texttt
+        - texttt: only hyphenated where allowed with \-
+      - shape: textup, textit, textsl, textsc, textnormal
+    - mathrm: upright font, math spacing
+    - [source](http://www.cl.cam.ac.uk/~rf10/pstex/latexcommands.htm)
+  - modes
+    - paragraph: wrapping
+    - math
+    - left-to-right (LR): no wrapping
+  - boxes
+    - mbox: LR mode; auto width
+      - vs \text in math: \text sizes better (eg if your text is subscript,
+        \text will be smaller, \mbox will be inflated)
+        - [ref](http://en.wikibooks.org/wiki/LaTeX/Mathematics#Introducing_text_and_dots_in_formulas)
+      - \text provided by amsmath
+    - fbox: mbox + frame
+    - makebox: mbox + specify width, text placement
+    - parbox
+    - others: sbox, framebox, dashbox, hbox
+  - general programming
+    - dtx files: literate sources; stripped before deployment
+    - def: late expansion (function definition)
+    - newcommand: safe def (no clobbering)
+    - let: immediate expansion; no args
+  - dimensions
+    - use setlength on eg baselineskip, parindent, etc
+    - skips (baselineskip, parskip) consist of 3 numbers: amount,
+      shrinkability, stretchability
+    - use renewcommand for baselinestretch; can't use setlength because it's
+      not a dimensional quantity
+    - relax: stop consuming into an expression (eg don't consume following plus
+      or minus)
+  - `rubber`
+    - may need to manually activate modules eg `-m bibtex`, if (say) somewhere
+      before that the scanner encounters `\end{document}` wrapped in a
+      never-satisfied `\if`
+  - math
+    - `DeclareMathOperator` gives the right superscript/subscript behavior
+      - `operatorname` is the anonymous version of this
+  - graphics
+    - `epsfig`: superset of `graphicx`
+    - [source](http://www.tex.ac.uk/cgi-bin/texfaq2html?label=impgraph)
+  - layout
+    - `figure*`, `table*`: float across columns
+    - `fullpage`: simple way to use full page layout (instead of the highly
+      narrow default)
+
+- ps/pdf
+  - conversion to pdf
+    - `epstopdf` (texlive)
+    - `ps2pdf -dPDFSETTINGS=/prepress`: a bundle of settings that optimize for
+      publishing (i.e., highest-quality); eg embed fonts, prevent downsampling
+      of EPS images
+      - `-d` sets a setting to a value, `-s` sets to a string
+      - alternatively, specify these options in `GS_OPTIONS`; this is useful
+        when `ps2pdf` is indirectly invoked, e.g. via `rubber`
+      - other settings include `/default`, `/screen` (low-res), and `/printer`
+  - conversion to ps
+    - `pdf2ps` (gs): ignores the PDF MediaBox and finds tightest BoundingBox
+      - [source](http://silas.psfc.mit.edu/elec_fig/#tth_sEc3)
+    - `convert` (imagemagick): identical (by default) to pdf2ps, since im uses
+      gs
+    - `pdftops` (xpdf): seems to yield higher quality by default, but not sure
+      why, or whether it's perfect
+  - misc tools
+    - `pdfinfo` (xpdf)
+  - _Document Structuring Conventions (DSC)_: all those standard comments you
+    see are part of this thing, established by Adobe
+  - `dvips` and `dvipdfm`
+
+- haskell
+  - profiling and threading not support
+  - for profiling, need to specify ghc-opts: -auto-all (or else specify your
+    own "cost-centers" using those `scc` annotations)
+  - TODO space leaks
+
+- profilers
+  - gprof *can* handle multi-threaded apps, but doesn't play well with
+    `-lprofile`
+  - gprof requires `-pg` to be sent to both linker and compiler
+  - TODO: how does gprof work, exactly?  it seems to have a sampling part for
+    profiling (finding where % time is spent), but also an instrumenting part
+    for setting up the stack traces for profiling and for counts
+  - google perftools cpu profiler does not like x86_64 (google for issues)
+
+- posix
+  - IEEE Std 1003.1 aka POSIX.1
+  - processes
+    - a process that has exited, but whose parent has not called
+      `wait()`/`waitpid()` on it, is a _zombie_
+      - unless the parent explicitly ignores `SIGCHLD`
+    - pid's can be reused, but running and zombie pid's are unique (`kill`'s
+      semantics demand it)
+    - pid 0: idle task, never exits; pid 1: `init` task (calls `wait`
+      periodically to sweep up zombies)
+    - _orphan_ processes are adopted by `init`
+  - exit codes
+    - mod 256
+    - convention: 0 = success, 1 = failure, >=128 = subprocess failure
+    - 139 = seg fault = 128 + (11=sigsegv); however, bash's "Segmentation fault" is *not*
+      determined by this
+    - wait(2) gives you other info, eg whether program crashed (presumably bash
+      uses that)
+    - no way to capture shell's "Segmentation fault" message to a file, AFAIK
+
+- system
+  - threading
+    - NTPL: modern threading system for Linux
+    - LinuxThreads: separate processes per thread; doesn't follow POSIX semantics in various ways (eg signals)
+  - _scheduler activations_: N:M mapping of user to kernel threads (vs. 1:1 or N:1)
+  - _aio_: TODO
+  - `epoll`: TODO
+  - _futex_: fast user-space mutex
+    - single atomic instr (eg CAS)
+    - kernel involved only on contention
+    - TODO is this used anywhere?
+
+- automake
+  - `SUBDIRS` order matters
+
+- libtool
+  - PIC, ranlib, shared+static, convenience libs
+  - should always use libtool/`LTLIBRARIES`
+
+- build systems
+  - autotools
+    - the king; should try to at least get a taste of this
+    - ultra-portable: essentially contains a DB of platform APIs and known
+      incompatibilities (eg autoscan will warn about utime() usage)
+    - total nightmare, esp. ultimately requiring you to write portable shell
+      scripts (for autoconf)
+    - ideally, a higher level tool can generate autotools inputs
+    - build site has minimal requirements (vs. cmake which requires cmake,
+      etc.)
+  - cmake
+    - many capabilities
+    - butt-ugly
+    - used by KDE; won over scons
+  - boost.build
+    - C++ only, its own scripting language (jam)
+    - simple usage has pleasant, minimal syntax
+    - seems to have good design
+    - clear semantics/language concepts
+  - scons
+    - the simple glue approach
+  - waf
+    - a step backwards
+
+- note-taking
+  - wyneken
+    - simple tool for writing notes in latex extended with bbcode tags
+    - extracts tags, flags
+    - [article](http://www.linux.com/feature/116343)
+
+- website analytics
+  - performancing metrics
+    - basic (free) package has lots of overlap with google analytics
+    - action-tracking (of individual users)
+  - quantcast: not sure, but i recall stats aren't so interesting
+
+- gnuplot
+  - must exit or `set output ...` or `unset output` to flush incomplete output
+    files (eg pdfs may be incomplete)
+  - use `set term ... size SIZE` to set the canvas size (see `help canvas`)
+  - linetypes TODO
+
+- downloading media
+  - google: intitle:"index of" [whatever you're looking for]
+
+- apache
+  - .htaccess
+    - reloaded on each access, which is bad for perf
+    - generally not so bad for security
+    - AllowOverride Options doesn't actually enable everything
+      - eg "Option SymLinksIfOwnerMatch not allowed here"
+
+- ruby
+  - must require 'rubygems' first
+  - #ruby-talk better than #ruby
+
+- boost.serialization
+  - binary format is quite verbose, has a lot of boilerplate overhead
+    - serializing a single int takes 43 bytes; long long takes 47
+  - still can't wrap my head around the "stream error" exceptions it throws
+    - tricky to use stringbuf, stringstream, etc. properly
+    - issues: ios_base::binary?  can't work with stringstream(string(...))?
+
+- boost.test
+  - you need to include `boost/test/included/unit_test_framework.hpp`
+
+- mime types
+  - RFC 2045, RFC 2046, RFC 2047, RFC 4288, RFC 4289 and RFC 2049
+  - rfc1524: A User Agent Configuration Mechanism For Multimedia Mail Format Information
+  - xdg-utils, like xdg-open
+
+- luajit: tracing vm for lua
+  - LJ1: faster than V8 by quite a bit, and smaller to boot
+  - LJ2: approaches C speeds
+
+- freedesktop: formerly known as the x desktop group (XDG)
+
+- linux
+  - `top`: shows 100% per core; procs exceeding this only show up as 99.9 as
+    there's only so much char space
+  - use `make V=1` to see the gcc commands (verbose)
+  - `/proc/sys/fs/binfmt_misc`: register different ways to run different binary
+    formats
+  - `ulimit` can only lower not raise for non-root; root can raise;
+    `/etc/security/limits.conf` can set global cap for non-roots
+
+- type coercion: implicit type conversion
+
+- dwarf: the debug info format used by gcc/gdb/etc
+
+- sipb-mp3
+
+- zephyr
+  - You have to mkdir ~/zlog first; barnowl will not create the directory for you.
+  - .anyone is your buddy list.
+  - .zephyr.subs is your class/instance subscription list.
+  - `znol` tells you who on your buddy list is online
+    - if this gives you "znol: No such file or directory while getting
+      WindowGram port" then try `zwgc -ttymode`
+  - `zwrite` lets you send messages
+  - when starting to send a message you'll get a ping from that person (this
+    doesn't seem to show up in barnowl by default)
+
+- ssh
+  - ProxyCommand: the command to use to connect to the remote sshd (instead of
+    plain ssh)
+    - example given in man page is nc to connect via an http proxy
+    - see also `corkscrew` which enables connecting via http proxy
+      - not yet sure what corkscrew's value-add is
+
+- shell scripting
+  - `pidof`: Linux-specific; use `pgrep` instead
+
+- amazon ec2
+  - `ec2-api-tools`
+    - `ec2-describe-images -o self -o amazon`: list AMIs owned by me or amazon
+    - `ec2-add-keypair <pairname>`: create a keypair named `<pairname>` (amazon
+      registers this); stored the key into a file so that you can use it from
+      `ssh`
+    - `ec2-run-instances <ami> -k <pairname> -t m1.large`: start a large
+      instance using the AMI `<ami>` and the keypair `<pairname>`
+    - `ec2-describe-instances <inst>`: show status
+    - `ec2-authorize default -p 22`: open port 22
+    - `ec2-get-console-output <inst>`
+  - `ec2-ami-tools`
+    - `scp -i ... <pk> <cert> <inst>:/mnt`
+    - `ec2-bundle-vol -d /mnt -k /mnt/<pk> -c /mnt/<cert> -u <acct> -r
+      [i386|x86_64] -p sampleimage`: run on remote host; outputs to `/mnt/`
+    - `ec2-upload-bundle -b <bucket> -m /mnt/<manifest> -a <access> -s
+      <secret>`
+    - `ec2-register <bucket>/<manifest>`: returns AMI ID
+
+- svn
+  - `svn log -rHEAD:1 ...`: really show all log entries; default range is
+    BASE:1, which means since last svn update
+  - `svn cat -r 1 https://project.com/file.txt@HEAD`: cat the file that is
+    currently named `/file.txt`, but as of revision 1 (regardless of whatever
+    name it had back then).  1 is the _operative revision_, and `HEAD` is the
+    `peg revision`.
+  - `BASE`: the revision of the working copy (local copy without modification);
+    cannot be used on URLs
+  - `COMMITTED`: the last revision in which the given item changed; cannot be
+    used on URLs
+  - `PREV`: `COMMITTED - 1`
+
+- fences/barriers
+  - mb()/barrier() in Linux kernel
+
+- css
+  - nice header style:
+
+      h1 {
+        font-family: arial; /* or sans-serif */
+        font-weight: normal;
+        letter-spacing: -3px;
+        text-transform: uppercase;
+      }
+
+- posix calls
+  - difftime
+
+- windows usage
+  - networking
+    - lmhosts, hosts, etc. all in \system32\drivers\etc
+    - ipconfig /flushdns
+
+- windows app dev
+  - UNC paths: C:\blah, \\host\blah, and \\?\C:\blah or \\?\UNC\host\blah
+  - command line
+    - compiler: `cl`
+      - just produce obj: `cl /c app.cpp`
+      - `/Zl`: no C runtime (CRT) library (eg libcmt.lib, libcpmtd.lib, etc.)
+    - linker: `link`
+      - eg `link app.obj ws2_32.lib`
+      - if no CRT, must specify WinMain-like function with `/entry:`
+    - CRT vs Windows API
+      - main vs WinMain
+      - compiler intrinsics: eg abs, memset are compiler-produced with pragma
+        - `#pragma intrinsic(abs, memset)
+    - `dumpbin`: useful disassembler and pecoff parser
+  - dll search order: depends on whether safe dll search mode is enabled
+    - enabled: $(dirname $0):system32:windows:.:PATH
+    - disabled: $(dirname $0):.:system32:windows:PATH
+  - unicode
+    - `TEXT`/`_T`, `UNICODE`: for windows functions
+    - `_TEXT`, `_UNICODE`: for CRT functions (`_tcslen`)
+    - `MultiByteToWideChar` (ANSI/UTF-8 to UTF-16) and `WideCharToMultiByte`
+    - `?` is used for non-translatable chars
+    - <http://msdn.microsoft.com/en-us/library/cc500316.aspx>
+  - atomics
+    - functions `Interlocked*`: eg `InterlockedIncrement64`
+  - cross-platform
+    - mingw: set of headers written to be used by gnu toolchain to produce
+      windows binaries
+      - for use on either posix or windows
+      - packages
+        - mingw-runtime: default CRT (msvcrt) headers and import libs
+        - w32api: windows api headers and import libs
+        - windows-native apps: gcc, gdb, make, binutils, misc utils
+    - msys: windows-native sh
+  - portabel executable (PE) format
+    - based on unix COFF
+    - .NET exe's extend PE's
+  - have just one instance of program running at a time by trying to create a
+    named Monitor either under Local\ or Global\
+  - can have 0-thread procs
+  - processes
+    - priority is inherited iff parent is < normal class (below normal/idle)
+
+- windows kernel dev
+  - hooks
+    - PsSetCreateProcessNotifyRoutine
+  - debugging
+    - virtual pc: use the virtual com port
+      - run this on the target machine in an admin cmd; `bcdedit` is a program
+        that edits boot settings, which in older systems was specified in a
+        file `boot.ini`:
+
+          bcdedit -debug on
+          bcdedit -dbgsettings serial debugport:1 baudrate:115200
+
+      - in the vm settings, configure the com port to map to named pipe
+        `\\.\pipe\<pipe name>`
+
+      - reboot the target
+
+      - prepare the environment variables for windbg to be able to
+        automatically fetch symbols and sources (not sure what the syntax here
+        means but `\\symbols\symbols` is a microsoft-internal symbol server)
+
+          set _NT_SOURCE_PATH=SRV*;
+          set _NT_SYMBOL_PATH=srv*c:\syms*\\symbols\symbols
+
+      - connect to vm on a remote machine (same as args to kd; if local machine
+        use `.` for `vpc_host_machine`):
+
+          windbg -k com:port=\\<vpc_host_machine>\pipe\<pipe name>,pipe,resets=0,reconnect
+
+        - `resets=0`: required for VPC; use `2` for a competing VM product
+        - `reconnect`: does 2 things
+          - if named pipe is not found on target, wait for it
+          - if pipe disconnects, wait for reconnect
+
+    - windbg: gui
+      - used to be for user mode only while kd for kernel; now all unified into
+        windbg
+      - hit ctrl-break to break the target
+      - commands/examples
+        - `bp nt!NtReadFile`: set a breakpoint in driver `NtReadFile` of driver
+          `nt`
+        - `g`: continue
+        - `??`: evaluate a (C++) expression
+    - ntsd: cui
+      - kd: doesn't exist anymore; used to be kernel debugger
+    - KeBreakinBreakpoint
+  - debug printing
+    - `DbgPrint`/`KdPrint`: same as `DbgPrintEx(component=DPFLTR_DEFAULT_ID,
+      level=DPFLTR_INFO_LEVEL, ...)`
+    - get a component mask (dword) via windbg: `dd KD_DEFAULT_MASK` (default 0)
+    - set the level to accept info: `ed KD_DEFAULT_MASK 8`
+  - <http://www.adp-gmbh.ch/win/misc/writing_devicedriver.html>
+  - development models
+    - windows driver model (WDM)
+    - windows driver foundation (WDF)
+      - kernel mode driver foundation (KMDF)
+      - user mode driver foundation (UMDF)
+  - required functions
+    - DriverEntry
+    - AddDevice
+    - Dispatch* (eg DispatchCreate)
+    - Unload
+  - build
+  - `CONTAINING_RECORD(addr, type, field)`: contains the addr, type, and field
+    - useful for `LIST_ENTRY`
+  - `LIST_ENTRY`: an entry in a doubly linked list
+    - use this by including it into your struct, e.g.: `LIST_ENTRY`
+    - use `CONTAINING_RECORD` to get the containing struct given a list entry
+  - lookaside lists: adaptive memory pool for allocating/freeing fixed size
+    blocks
+    - if can't alloc from/free into the pool, go through normal heap mgr
+    - pool grows/shrinks adaptively
+  - communicating with user mode: IRP, local sockets, ETW providers
+  - oacr/prefast
+    - experience:
+      - Misuse of length parameter in call to 'strncat'. Pass the number of
+        remaining characters, not the buffer size of 'metaLabel'.
+  - threads
+    - priorities
+      - 1-15: _dynamic_ priorities; kernel can boost/drop this temporarily to
+        increase system tput (but never boosted to real-time)
+        - boosted when it completes an IO req, waits for event/semaphore, or
+          starves; also, some situations when threads in GUI or foreground
+        - drivers can specify boost in `IoCompleteRequest` and `KeSetEvent`,
+          `KePulseEvent`, `KeReleaseSemaphore`
+      - 16-31: _real-time_ priorities; never changes
+      - _base priority_: inherited from process's base priority
+      - _current priority_: priority at any given time
+      - kernel-mode driver running in context of user thread: base pri = pri of
+        user process
+    - contexts
+      - permissions: eg driver routine called from user mode context can call
+        `Zw*` routine in kernel context
+      - for driver routines, context depends on device type, driver position in
+        device stack, and other activities in system
+      - eg dispatch routines run in context of requesting thread, but might
+        queue IO op for processing by lower level drivers
+      - some routines run in system thread context; have addr space of system
+        process and security rights of OS itself
+    - instead of calling `PsCreateSystemThread`, borrow a system thread from
+      pool shared by all drivers
+      - `IoQueueWorkItem(...IO_WORKITEM...)`
+      - 3 queues: delayed, critical, hypercritical
+      - run at `IRQL_PASSIVE_LEVEL`
+      - using up too much time or too many workers can deadlock the system
+    - refs: <http://msdn.microsoft.com/en-us/library/ms810029.aspx>
+  - interrupt request level (IRQL): hardware pri
+    - low to high: passive, apc, dispatch, cmc, device interrupt (dirql), pc
+      profile, synch, clock, clock2, IPI, power, high
+    - all threads run at IRQL < DISPATCH_LEVEL
+    - thread scheduler itself ("dispatcher") runs at DISPATCH_LEVEL
+    - hence any thread running at/above DISPATCH_LEVEL has exclusive use of cpu
+    - DISPATCH_LEVEL interrupts are masked off on the cpu, so thread scheduler
+      cannot schedule any other thread
+    - for shared memory synchronization, drivers should use a lock that raises
+      the IRQL to the highest level at which any code that accesses the data
+      can run
+      - eg use spin lock to protect data that can be accessed at
+        IRQL=DISPATCH_LEVEL
+    - cpu-specific IRQLs
+      - DISPATCH_LEVEL
+      - DIRQL
+      - HIGHEST_LEVEL
+    - thread-specific IRQLs
+      - PASSIVE_LEVEL: normal operating state; use thread scheduling pris
+        - threads are both preemptible and interruptible
+      - PASSIVE_LEVEL in critical region:
+        - use `KeEnterCriticalRegion`/`KeLeaveCriticalRegion`
+      - APC_LEVEL: most commonly associated with paging IO
+    - only IRQL < DISPATCH_LEVEL can use paged pool
+    - refs: <http://msdn.microsoft.com/en-us/library/ms810029.aspx>
+  - asynchronous procedure calls (APCs)
+    - software interrupts targeted at a specific thread
+    - system uses APCs to perform work in context of a particular thread, eg
+      writing back the status of an IO operation to the requesting app
+    - how a target thread responds to APCs depends on the thread's state and
+      the type of APC
+  - driver installation
+    - INFs: jcondit says these are evil and that osrloader is much nicer to
+      deal with
+  - <http://msdn.microsoft.com/en-us/library/ms878125.aspx>
+  - <http://ext2fsd.sourceforge.net/documents/irql.htm>
+  - devices
+    - have a number of entry point routines that a driver can set
+    - a driver can own many devices; usu. create one device obj for each device
+    - device extensions: main storage space for device state
+  - objects & object manager
+    - objs are ref-counted
+    - a process can own 16M handles
+    - kernel objects: accessible only to rest of kernel
+      - eg physical devices, synchronization services
+    - executive objects: accessible to all; apps can wrap objects too
+    - object types
+      - proc, thread, job, file, file mapping, access token, event, sem/mutex,
+        timer, key, desktop, clipboard, windowstation, symbolic link
+    - objects: header (used by obj mgr) and body
+    - named and unnamed
+    - user-accessible named objects are under `\BaseNamedObjects`
+    - by default, creating an object creates it under `Local\` which maps to
+      global `Session\n\BaseNamedObjects`
+    - if want to reference global `BaseNamedObjects\xxx` use `Global\xxx`
+  - `DeviceIoControl`: IOCTL, i.e. direct user-to-kernel-driver interface
+    - <http://msdn.microsoft.com/en-us/library/aa363147(VS.85).aspx>
+  - `ObReferenceObjectByHandle`: get ptr to an object given a handle to it
+    - increments ref count
+  - TODO file names: "\\?\GLOBALROOT", "Global??"
+    - <http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx>
+  - handles: per-process table
+  - `DBG` macro
+  - `ASSERT`, `ASSERTMSG`
+  - overlapped IO: TODO
+  - IO/IRPs
+    - IoCallDriver transfers IRP ownership down
+    - IoCompleteRequest transfers IRP ownership up
+    - IoMarkIrpPending holds the request (for async processing)
+
+      > Unless an IRP's dispatch routine completes the IRP (by calling
+      > IoCompleteRequest) or passes the IRP on to lower drivers, it must call
+      > IoMarkIrpPending with the IRP. Otherwise, the I/O Manager attempts to
+      > complete the IRP as soon as the dispatch routine returns control. "
+
+    - IO mgr creates an array of IO stack locations for each IRP
+      - each driver owns one IO stack location; get with
+        IoGetCurrentIrpStackLocation
+      - each driver responsible for calling IoGetNextIrpStackLocation to set up
+        next-lower driver's IO stack location (if not passing new IRP
+        altogether)
+    - IoAllocateIrp creates a new IRP
+      - eg used by driver to break IRP up into sub-IRPs (maybe to multiple
+        other drivers)
+      - alternative: reuse IRP by setting up next driver's IO stack location
+      - _completion routine_
+    - lowest level driver sets result status on IRP
+      - on device interrupt, interrupt service routine (ISR) does min work:
+        - stops device from interrupting
+        - saves necessary context about operation
+        - calls IoRequestDpc to queue a _deferred procedure call (DPC)_ that
+          completes the requested op at a lower hw pri
+      - DPC
+        - calls IoStartNextPacket to start processing of next packet
+        - sets IRP status and calls IoCompleteRequest
+    - ref: <http://msdn.microsoft.com/en-us/library/ms795764.aspx>
+    - ref: <http://msdn.microsoft.com/en-us/library/ms795773.aspx>
+  - symbols
+    - _public symbols_: basic syms like functions and globals; needed for even
+      rudimentary debugging
+    - _private symbols_: data structures, locals, line numbers
+    - _full symbol file_: contains both public and private; confidential
+    - _stripped symbol file_: contains public only; avail on internet symbol
+      server
+  - user-kernel comm
+    - events: simplest
+      - best approach: named event, created by user
+        - passing names vs passing handles: handles are per-proc
+        - user- vs kernel-created: IoCreateNotificationEvent uses security
+          attrib of current thread, so if created from system thread, then need
+          to be Admin user process to access
+      - passing data: TODO
+    - inverted call: uses pended IRPs
+    - see the `event` WDK sample
+  - wfp callouts
+    - arbitration
+      - if FWPS_RIGHT_ACTION_WRITE set in classifyOut->rights, then it's soft
+        permit/block; allow override
+      - else, it's hard permit/block; overrides count as vetoes (audit logged)
+    - callout types
+      - modify vs inspect: block orig then reinject; callouts are TERMINATING
+      - out-of-band vs inline: pend/block-with-absorb orig then reinject
+  - pnp: characteristic of bus/device spec that facilitates auto discovery
+    - industry standard architecture (ISA): early PC bus standard; superseded
+      by PCI
+    - applies across various buses: ISA, PCI, USB, PCMCIA, etc.
+    - upnp: totally different; for networks
+  - driver memory management
+    - dynamic address space layout
+      - <http://www.nynaeve.net/?p=261>
+      - paged vs non-paged pool, system cache size, etc.
+      - regions used to be fixed at boot
+    - paged/non-paged
+      - control pageability via compiler pragmas (text/data sections only) or via runtime functions
+      - specify to heap allocator
+      - the more pageable, the better
+    - memory descriptor list (MDL): maps VM to PM; opaque struct
+      - for pageable mem: correspondence is temporary
+      - IRPs can be associated with MDLs
+        - MDL has pointer to IRP
+        - IRP has pointer to first MDL in a chain of zero or more MDLs (MDLs
+          linked by next pointers)
+    - globals, device extensions are in non-paged pool
+  - ndis
+    - net buffer lists can be chained together
+    - net buffer lists can net buffers chained together
+      - NBL has pointer to head NB
+      - NB has pointer to next NB
+      - NB has MDL chain of packet buffers
+  - synchronization
+    - can wait on event, mutex, sem, thread, timer
+    - some of these have diff meetings; eg thread means thread terminated
+    - events have state (set or unset)
+  - timing
+    - KeQueryPerformanceCounter: finest grained running count
+      - "KeQueryPerformanceCounter is intended for time-stamping packets or for
+        computing performance and capacity measurements. It is not intended for
+        measuring elapsed time, for computing stalls or waits, or for
+        iterations."
+      - "Use this routine as infrequently as possible. Depending on the
+        platform, KeQueryPerformanceCounter can disable system-wide interrupts
+        for a minimal interval. Consequently, calling this routine frequently,
+        such as in an iteration, defeats its purpose of returning very
+        fine-grained, running time-stamp information. Calling this routine too
+        frequently can degrade I/O performance for the calling driver and for
+        the system as a whole."
+    - KeQuerySystemTime: returns count of 100-nanosecond intervals since
+      January 1, 1601; updated approx every 10 ms; computed for GMT
+      - ExSystemTimeToLocalTime
+    - KeQueryTickCount: returns a count of the interval timer interrupts that
+      have occurred since the system was booted
+    - KeQueryTimeIncrement: returns the number of 100-nanosecond units that are
+      added to the system time each time the interval clock interrupts
+  - sharing mem btwn user and kern
+    - METHOD_NEITHER: direct access to user memory; need to Probe it before
+      using
+    - METHOD_{IN,OUT}_DIRECT: in is buffered access; out has MDL; more details
+    - METHOD_BUFFERED: all in/out data copied to temp intermediate buffer;
+      safest but slowest
+  - languages
+    - c++ is totally usable in kernel! but not stl
+
+- useful windows cmd commands
+
+    where
+    tlist
+
+general kernel hackery
+======================
+
+user_bootstrap either loads a user program ELF in `load_elf()` or, if the embedded binary's name ends with `.img`, a kernel image in `load_img()`.
+
+Virtualization
+
+`Processor` has a `ps_mode` specifying whether it is a VM. If it is, then `processor_arch_run()` (which is called by `processor_run()`) enters `svm_run()`.
+
+VMs are logically stored in `vmprocessor` structs, which in turn contain a VMCB. The initialization of these things occurs in `svm_vector()` via `processor_vector()`.
+
+The _global interrupt flag (GIF)_ is a bit that controls whether interrupts and other events can be taken by the processor; it's set and cleared by `stgi` and `clgi`.
+
+hsave: host save state
+npage: nested page
+
+access msr's (eg apic regs) via rdmsr and wrmsr

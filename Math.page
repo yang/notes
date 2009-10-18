@@ -1,0 +1,144 @@
+- graph theory: a branch of combinatorics
+  - eulerian circuit iff all nodes have even degrees
+  - eulerian non-circuit tour iff only 2 nodes have odd degrees
+
+statistics
+==========
+
+- kernel density estimator: basically place a small kernel everywhere you have
+  a sample, resulting in somtehing much smoother than a histogram (where bins
+  can make all the difference in interpretation)
+
+combinatorics
+=============
+
+- permutations without replacement: P(n,r) = n! / (n-r)!
+- permutations with replacement: n^r
+- combinations without replacement (partitioning sets): C(n,k) = n! / (k! (n-k)!)
+  - this is the _binomial coefficient_
+  - _multinomial coefficient_: partitioning into multiple sets
+    - binomial is actually C(n; k, n-k)
+    - C(n; k1, k2, ..., kp) = n! / (k1! k2! ... kp!)
+- combinations with replacement (multisets/bags):
+  C(n-1 + k; n-1, k) = (n-1+k)! / (k! (n-1)!)
+  - proof using "stars and bars"
+
+mathematics
+===========
+
+- abstract algebra: study of algebraic structures such as groups, rings,
+  fields, modules, vector spaces, and algebras
+- topology: extension of geometry that focuses on structure
+- algebraic topology: uses abstract algebra
+- graph theory
+- topological graph theory: topology + graph theory; studies embeddings of
+  graphs in surfaces
+- number theory
+- computational number theory, algorithmic number theory: applications in
+  crypto
+
+\begin{equation}
+e^x = 1 + x \left(
+      1 + x \left(
+      \frac{1}{2} + x \left(
+      \frac{1}{6} + x \left(
+      \frac{1}{24} + x \left( \dots \right) \right) \right) \right) \right)
+\end{equation}
+
+geometry
+========
+
+- Pythagorean theorem
+  - easy proof
+
+Interesting questions that came up during ICFPC08
+
+- find the tangent lines (up to four) between a pair of circles
+  - find the tangent lines between a circle and a point
+- if we roll a circle around the outside of an ellipse and trace the path of
+  its center, is the resulting oval an ellipse?
+
+linear algebra
+==============
+
+From <http://en.wikipedia.org/wiki/Sparse_matrix>:
+
+> Conceptually, sparsity corresponds to systems which are loosely coupled.
+> Consider a line of balls connected by springs from one to the next; this is a
+> sparse system. By contrast, if the same line of balls had springs connecting
+> every ball to every other ball, the system would be represented by a dense
+> matrix. The concept of sparsity is useful in combinatorics and application
+> areas such as network theory, of a low density of significant data or
+> connections.
+
+symmetric positive definite, positive semi-definite, negative definite, indefinite, etc.
+
+- $M$ is _positive definite_ iff any of:
+  - $z^T M z > 0$ for all nonzero vector $z$
+  - all evals of $M$ are pos
+  - all leading principle minors are pos
+    - i.e. upper left $k \times k$ submatrix of $M$ has pos det for all $k =
+      1,2,\dots,n$
+    - eg: if $M$ is diagonal, then $M$ is pos def iff all diag elts are pos
+      (diag elts are evals)
+- $M$ is neg def iff any of:
+  - $-M$ is pos def, i.e. $x^T M x < 0$ for all nonzero vector $x$
+  - all evals of $M$ are neg
+  - upper left $1 \times 1$ submatrix has pos det, upper left $2 \times 2$
+    submatrix has neg det, upper left $3 \times 3$ submatrix has pos det, etc.
+- $M$ is pos semi-def iff any of:
+  - $z^T M z \ge 0$ for all vector $z$ (usual definition)
+  - all evals of $M$ are non-neg
+  - note: if $M$ is pos semi-def, then all upper left $k \times k$ submatrices
+    have non-neg dets, but this is not a sufficient condition any more; same
+    for neg semi-def below
+- $M$ is neg semi-def iff any of:
+  - $z^T M z \le 0$ for all vector $z$ (usual definition)
+  - all evals of $M$ are non-pos
+  $M$ is indef iff any of:
+    - $M$ is neither pos semi-def nor neg semi-def
+    - $M$ has pos and neg evals
+
+- TODO
+  - characteristic polynomial: $\det(A - lambda I) = 0$
+  - stochastic matrix
+  - eigen*, singular, etc.
+  - http://www.cut-the-knot.org/arithmetic/algebra/eigens.shtml
+  - spectral decomposition aka eigendecomposition
+  - spectral theorem
+
+cryptography
+============
+
+RSA (TODO REVIEW!)
+
+- choose primes p, q
+  - primality testing: _wheel factorization_ is certain; there are also
+    probabilistic tests
+- find $e$ such that $gcd(e, (p-1)(q-1)) = 1$
+  - i.e., find $a$ such that $ae + b(p-1)(q-1) = 1$. This is a _diophantine
+    equation_ and can be solved using the _Euclidian algorithm_.
+- exponentiation: find $M^e \mod n$
+  - $M$ is data, $e$ is pub key, $n$ is priv key
+  - _square and multiply algorithm_
+  - _Chinese Remainder Theorem (CRT)_ for more complex, faster algos
+
+How To Share A Secret (Shamir 79)
+
+- split into $n$ pieces such that any $k$ can reconstruct but $k-1$ can't
+- <http://research.swtch.com/2008/01/i-could-tell-you-but.html>
+
+statistics
+==========
+
+- T-test: TODO
+
+signals, information theory
+===========================
+
+Audio & Video Compression (Keith Winstein's SIPB cluedump 2008/11/06)
+
+- huffman code: recurse: least freq are same len, differ only in last bit
+- keithw: slides
+- entropy coding
+- arithmetic coding can get us flatter?

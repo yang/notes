@@ -1,0 +1,66 @@
+industry
+
+- google
+  - notable employees
+    - Ken Thompson: Unix, plan 9
+    - Vint Cerf: TCP/IP, ICANN
+    - Andrew Morton: #2 in Linux
+    - Guido van Rossum: Python
+    - Ben Collins-Sussman, Brian Fitzpatrick: subversion
+    - Bram Moolenaar: vim
+    - rob pike: unix, plan 9, inferno
+    - eric schmidt: lex
+    - andy herzfeld: mac ui
+    - brian kernighan: awk
+    - hal abelson: scheme
+  - acquisitions
+    - youtube
+    - doubleclick
+    - deja
+    - baidu
+    - john hennessy
+    - orkut
+
+academia
+
+- assistant professor: 5-6 years, then tenure/promote to associate
+- associate professor
+- (full) professor
+
+standard bodies
+
+- ecma: they submit things to iso
+- iso/iec: big kahuna
+- ietf: internet standards, rfcs; works with w3c, iso
+- w3c: web standards; works with iso
+- whatwg: w3c too slow; made html5; w3c agreed to adopt
+- iana: IP addrs, AS numbers, media types, IP protos/ports/etc; runs dns root
+  and some TLDs; op'd by icann
+- icann: iana stuff, TLDs, root servers
+
+- theory folks seem to use single-column articles, probably because math
+  lines grow long (as I encountered in my machine learning report) and
+  because their articles tend to be much shorter (and thus probably require
+  fewer compacting/space-saving measures)
+
+Charles Babbage: first programmer
+
+Ada Lovelace: publisher of first program (Babbage's)
+
+game programming
+
+- heavy emphasis on performance all the way through
+  - unlike web app dev, where you just need to make things scalable
+  - still use asm, esp. for graphics operations
+
+demoscene
+
+- ultra-compact interactive graphical programs, usu. in asm
+
+MusicBrainz
+
+- used to use a patented technology called TMR but that didn't turn out to be
+  scalable (lots of collisions among dissimilar tracks)
+- switched to MusicIP analysis technology, also closed-source
+- Picard tagger has much lighter-weight "fingerprinting" technology
+- ref: <http://nikolasco.livejournal.com/336720.html>

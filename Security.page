@@ -1,0 +1,428 @@
+- michal zalewski: google security person, wrote browsersec book among tons of
+  other literature/tools
+- jeremiah grossman: prominent web security blogger; leader of whitehat
+  security, purveyor of web application firewalls
+- theo de raadt: openssl, openbsd
+- mark dowd: amazing; ibm x-force team; taossa book; nacl exploits; flash null
+  ptr exploit
+
+security
+
+- confidentiality: aka privacy, secrecy
+- integrity: eg phishing, MITM, hijacking, forgery
+- availability: eg DOS
+
+S/MIME: TODO
+
+- http://en.wikipedia.org/wiki/S/MIME
+- http://weblog.infoworld.com/udell/2004/03/23.html
+
+C++
+
+- new/delete[]: if eg you have an array created with new[] and then
+  accidentally delete[] a pointer not pointing to the head, then you can
+  overwrite in the previous element the mem that delete[] treats as the length
+  field
+  - gcc: delete[] consults vtable of each object indepdently
+  - msvc: delete[] consults vtable of first object only
+  - harder on msvc, but can still do interesting things if eg dtor itself does
+    anything interesting with the object data, eg free a pointer or set a value
+- new[]/delete: you can cause coalescing by setting the `prev` bit in the
+  malloc header, among other things
+
+high-level code injection
+
+- unescaped input
+- unicode: bad multibyte chars can bypass poor standard-library escaper
+  functions unscathed
+  - dynamic langs like sql and html/js
+  - specific case of parser errors
+- parser errors: unhandled cases leading to unesacped input
+
+web
+
+- flash: `<embed...allowScriptAccess="always">` instead of `"sameDomain"`
+
+low-level exploits
+
+- buffer overflow: return to libc, eg call system("bash")
+  - defenses
+    - stack canaries: choose random int at process start and insert before
+      return addr
+      - random xor canaries: xor with the return addr to make sure it's not
+        tampered with
+      - propolice: gcc's impl; enhanced version of stackguard (never officially
+        impl'd in gcc)
+      - visual studio: /gs
+    - nonexecutable stack: in windows, called Data Execution Prevention
+      - NX bit: in page table entries; XD bit in intel, enhanced virus
+        protection in amd
+      - segments can be readable/writeable/executable, but modern OS's use flat
+        memory model (pages instead of segments)
+    - address space layout randomization (ASLR): randomize codes, heap, stacks
+- null pointer exploits: TODO
+- heap overflow: overwrite eg a struct's function pointer
+- heap spray: give you a place to place executable code, eg if stack is NX or
+  your overriding return addr is constrained somehow
+  - common in web browser js engines
+  - nozzle: msr project that uses sled detection then reduces false positive
+    rate with "global heap health metric"
+- parser errors: unhandled cases
+- format string attacks: eg printf(untrusted_input())
+  - eg use %s and %x to print data from stack or other memory locations
+  - defenses: statically check format strings
+- integer overflow: unexpected number, either negative or large
+  - eg size header in messages
+  - controls things like strncpy/memcpy for overwrites
+  - controls allocations (malloc) for large, unrealizeable mallocs that return
+    null
+  - also, arithm overflow
+- null pointers
+  - as write vector: use bad alloc to get ptr = null, where app later does
+    *(ptr + offset) = value (where offset and value are user-controlled) to
+    write a function ptr (flash exploit)
+  - if the ptr is dereferenced and fields are accessed, first prep by writing
+    to those fields
+
+same-origin policy (SOP)
+
+- policies
+  - for DOM access: scripts can access another page's functions/data iff from
+    same site (in another frame/window)
+    - scripts run in context of includer, not source; can't xhr or DOM-manip
+      google
+  - for XHR: only time when SOP restrict doc retrieval; html elements can
+    source any domain
+  - for cookies
+  - for flash
+    - `crossdomain.xml`: primarily protects access to the host containing the
+      `crossdomain.xml`, specified with `allow-access-from`
+      - careless wildcard usage opens up holes; eg flickr's api (since isolated
+        to a separate domain)
+    - can make same-origin HTTP reqs
+    - can make same-host TCP conns on any high port
+  - for java: applets can only see site it's downloaded from
+    - can interact with the embedding page via JSObject API iff `mayscript` set
+      in `applet` tag
+    - DOMService API allows cross-site embedding pages to be accessed freely!
+      with no `mayscript` opt-in, directly contradicting JSObject API
+    - ability to send same-origin HTTP reqs using browser stack via
+      URLConnection API; can even set `Host` headers or conflicting caching
+      directives
+    - unconstrained TCP connections back to originating host
+  - for silverlight: mimicks flash
+- attacks against SOP: XSRF, XSS, DNS rebinding
+- rules
+  - match: (domain name, app layer protocol (http/ftp), tcp port)
+  - opt to communicate by setting `document.domain` to same right-hand fragment
+    of current host name (eg en.example.com and fr.example.com set to
+    example.com)
+  - corollary: all subdomains are implicitly granted accessed to parent domain
+- workarounds
+  - google analytics works by issuing a single-pixel image request containing
+    all collected information
+  - google maps api works by dynamically creating script tags that load
+    on-demand javascript (data can be in JSON)
+  - flash: permits cross-domain requests if allowed by crossdomain.xml on
+    target webserver
+- threat model: defend against impersonation of user and impersonation of site
+- some operations still allowed
+  - include scripts across domains
+  - submit POST forms across domains
+- mitigation practices
+  - escaping/filtering
+  - input validation
+  - http responses are variations
+  - http request smuggling
+
+cross-site communication in web apps
+
+- cross-window messaging via `window.postMessage`
+  - receiver gets `message` DOM event; msg contains data, domain, uri, source
+  - allows cross-site communication
+  - requires explicit msg handling on target page, so less susceptible to
+    problems than unchecked shared DOM access (pre-SOP)
+- IE XDomainRequest
+- JSONRequest: based on dynamic script tags
+- W3C CS-XHR
+  - w3c access control for cross-origin resource sharing
+    - sites specify allowed-origins list in their responses
+    - browsers specify origin in their requests; unlike referer, no path
+    - <http://dev.w3.org/2006/waf/access-control/>
+  - IE team claims this proposal has number of problems
+  - <http://blogs.msdn.com/ie/archive/2008/06/23/securing-cross-site-xmlhttprequest.aspx>
+
+web application security
+
+- mozilla content security policy (CSP)
+  - no inline scripts, only included script files from whitelisted sites
+  - no code from strings: eval, setTimeout-with-string, etc.
+  - specify where content allowed from/where requests can be sent
+  - see examples on <https://wiki.mozilla.org/Security/CSP/Spec>
+- html5 sandboxing
+  - sandbox tag treats its contents as different-origin
+
+secure javascript
+
+- caja
+- secure ecmascript: <http://ses.json.org/>
+
+XSS (cross-site scripting)
+
+- exploits the trust that a user has for a particular site
+- name origins: malicious site loads another site in a frame/window, then use
+  js to read/write data; blocked by SOP
+- now: code (html/js) injection into pages (eg forum) viewed by others (to
+  read/write data)
+  - frequently: hijack session key; send by embedding in (eg) img url
+- types
+  - non-persistent aka reflected: request is instantly and transiently used
+    (not stored) to return result, eg search engine box
+    - only affects the requester, but social engineering (eg send link)
+    - most common, but importance is arguable (due to soc eng requirement)
+  - persistent aka stored aka second-order: request is stored & later
+    displayed (to others)
+  - DOM-based aka local: TODO
+    - orthogonal to persistence
+- 80% of all sec vulns in 2007 -symantec
+
+XSRF (cross-site request forgery)
+
+- exploits the trust that a site has for a particular user
+- make user's browser send request to a site that user has active credentials
+  on
+- examples
+  - malicious site contains form that entices user to submit
+    - POSTs to bank site withdrawing money
+    - requires user to be authenticated
+  - post img to bank site forum whose src is a GET that (eg) withdraws money
+- fixes
+  - referer checking: subject to SOP implementation vulnerabilities,
+    referer-filtering
+  - use eg nonces: more complex
+
+- PEM: privacy-enhanced mail; a format of base64-encoded DEM certificates
+  between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----"
+
+- PKI: pub keys, certs, and all that
+
+- MAC: integrity and authenticity; TODO
+- HMAC: hashed MAC; TODO
+- cryptographic hash functions: TODO
+- diffie-hellman: TODO
+
+network attacks
+
+- sockstress: syn-synack-ack flood (local iptables configured to not be
+  affected)
+- ping of death: icmp packet that's >64KB in length
+- teardrop: mangled IP fragments with overlapping, over-sized payloads
+
+network hijacking
+
+- TCP hijacking
+  - if on same segment: easy to just observe seqno and spoof it
+  - if on diff segment: need to guess initial seqno
+- IP/BGP/prefix hijacking: take over groups of IPs by corrupting Internet
+  routing tables
+  - announce a prefix that it you don't actually own
+  - announce a more specific prefix than the true owner's prefix
+  - announce that you have a shorter route to the target AS
+  - "black holing": ??
+  - must hijack BGP TCP session
+- DNS cache poisoning
+  - specify attacker's choosing of authority NS for either requested domain or
+    unrelated domains
+  - bugs in eg BIND allowed the above to slip by; now fixed
+  - DNSSEC signs responses with PKI
+- DNS rebinding: TODO
+  - attacker gets user to use his DNS server
+  - attacker's DNS server first maps bank.com to attacker's IP, then maps
+    bank.com to bank.com's IP
+  - attacker's code loaded in first request can send request to second IP
+  - user-agent must be able to notice the changed IP
+
+brute-force DOS
+
+- flooding
+- DDOS
+- easy to detect (? TODO)
+
+sophisticated DOS
+
+- app bugs: eg buffer overflows
+- fragmentation of data structures: eg hash tables
+- algorithm worst cases, eg regexes
+
+crypto
+
+- rsa
+- elliptic curve
+- rc4
+
+SFI
+---
+
+TODO
+
+SFI (robert wahbe, SOSP 1993)
+
+- RISC
+
+pittsfield (stephen mccamant, greg morrisett, TR/usenix 2005)
+
+- SF vs pittsfield: write/jump sandboxing vs full read/write/jump isolation
+
+vx32 (bryan ford, russ cox, TR 2008)
+
+- x86, linux/freebsd
+
+engineering
+-----------
+
+<http://www.matasano.com/log/989/thoughts-on-ten-years-of-qmail-security/> (DJB 2007)
+
+- directions of progress
+  - eliminating bugs
+  - eliminating code
+  - eliminating trusted code
+  - distractions
+    - chasing attackers
+    - minimizing privilege: vs minimizing TCB
+      - ["privileges" here are superficial OS level privileges]
+    - speed
+- eliminating bugs
+  - enforcing explicit data flow: process isolation, PL support
+  - simplifying integer semantics: used big num lib, PL support
+  - avoid parsing: anything with strings; quoting; printf bugs
+  - generalizing from errors to inputs: insert testable abstractions
+- eliminating code
+  - identifying common functions
+  - automatically handling temporary errors [exceptions better than error checking]
+  - reusing network tools [like `inetd`]
+  - reusing access controls: eg assuming a user's uid
+  - reusing the file system: as an associative array (instead of parsing a
+    single config file)
+- eliminating trusted code
+  - accurately measuring the TCB: hard
+  - isolating single-source xforms
+    - eg jpegtopnm: after jailing, attacker can only produce any img he wants,
+      but he could've done this in the first place
+  - delaying multi-source merges (like XSS)
+
+web
+---
+
+robust defenses for CSRF (adam barth, collin jackson, john c mitchell, CCS 2008)
+
+- login CSRF
+- 
+
+DOS
+---
+
+<http://www.checkmarx.com/NewsDetails.aspx?id=23> regex ("redos")
+
+- worst-case exponential
+- eg: /^(a+)+$/ on "aaaaX" produces 16 paths
+- more: /([a-zA-Z]+)*/, /(a|aa)+/, /(a|a?)+/, /(.*a){x}/ for x>10
+- many legit bad regexes even in OWASP validation regex repo
+- many pts of attack; regexes are ubiq
+  - submit a bad regex or leverage regex injection
+  - submit a string for an already-there bad regex
+- meta-regex for finding bad regexes; use codesearch to find
+- browsers protect against infinite loops but not bad regexes
+- should be not-too-bad to statically analyze regexes
+
+fun exploits
+------------
+
+morris worm
+
+mark dowd flash exploit 2007
+
+- <http://chargen.matasano.com/chargen/2007/7/3/this-new-vulnerability-dowds-inhuman-flash-exploit.html;jsessionid=8DDE25A54184976447838948127BE85C.web18>
+- bounds-checker treats field as signed, permitting (small?) negative numbers
+- interpreter treats as unsigned, so neg -> large
+- controls alloc, so bad alloc -> null ptr
+- flash uses that ptr + attacker-controlled offset
+- to that addr, flash writes attacker-controlled value
+- idea: use this writing vector to target a function ptr, changing it to a
+  user-supplied buffer of shellcode
+- tough constraints: offset > 0x80000000, offset + 4 divisible by 12, used
+  value = (value cast from 16- to 32-bit) - some other var
+- so instead, manipulate actionscript bytecode state
+- interpretation differs btwn verifier TOC & executive TOU
+  - verifier ignores undefined bytecodes
+  - verifier keeps table defining bytecode instruction lengths
+  - bytecode length table is valid target of null ptr overwrite
+  - executive has totally diff machinery for interpreting bytecode
+- use null ptr write vector to clobber the right value in length table, and you
+  can make unused instr that the verifier ignores seem much longer than it is
+- executive doesn't ignore what comes after the initial unused instr, so put
+  valid bytecode there for execution
+
+kernel null pointer exploits
+
+- tun driver uses null ptr; can write to 0x0 with mmap, iff selinux is on,
+  ironically
+- ptr is used in an exploitable way
+- "In well-designed systems, catastrophic failures are rarely the result of a
+  single failure. That is certainly the case here."
+- <http://lwn.net/Articles/342330/>
+
+DIFC
+----
+
+flume
+
+- IFC goals
+  - secrecy: prevent leaking private data
+  - integrity: prevent accepting untrusted data
+- DIFC: decentralized means no central deputy needed for declassification
+- flume: DIFC at process granularity, controlling IO; user-level monitor
+- related work
+  - jif: finer-grained control at function granularity; requires app rewrite
+  - asbestos/histar: kernels designed to support DIFC; message granularity
+  - flume
+    - rules inspired by jif
+    - labels influenced by asbestos
+    - adopted histar's requirement that threads must explicitly request label changes
+- concepts
+  - a tag $t$ is associated with some category of secrecy or integrity
+  - labels are sets of tags
+  - a process $p$ has 2 labels, $S_p$ for secrecy and $I_p$ for integrity
+    - if $t \in S_p$ then (conservatively) $p$ saw private data tagged with $t$
+    - if $t \in I_p$ then every input to $p$ has been endorsed as having
+      integrity for $t$
+  - two capabilities per tag
+    - $t+$: ability to add $t$ to one of its label
+    - $t-$: ability to remove $t$ from one of its label
+    - note: you might not want to use the same $t$ for both secrecy and
+      integrity; see examples below
+  - each $p$ owns a set of capabilities $O_p$
+  - $D_p = { t \vert t+ \in O_p, t- \in O_p }$ (the set of tags for which $p$
+    has dual privileges)
+  - any $p$ can create tags; added to $D_p$
+  - global capability set $O \subseteq O_p \forall p$
+- export protection example
+  - if $b \in S_p$ then $p$ can write to $q$ iff $b \in S_q$ also
+  - but _any_ process can add $b$ and read secret $b$ since $b+ \in O$
+    - means all their output will be tagged with $b$
+    - note that this means $b$ should not be used for integrity, or anyone can
+      add it to their integrity label
+  - but a process $p$ can't leak it out of system unless $b- \in O_p$
+    - transition: from secret to non-secret
+- integrity protection example
+  - if $b \in I_p$ then $p$ can read from $q$ iff $b \in I_q$ also
+  - processes cannot willy nilly add $b$ and be trusted to provide $b$-tagged
+    data
+    - transition: from non-trusted to trusted
+    - this is called _endorsement_
+  - can, however, remove $b$ to remove trust (not sure why they want to do
+    that); so $b- \in O$
+
+IE
+
+- Protected Mode for isolation and sandboxing
+- type 1 (reflected) xss filter

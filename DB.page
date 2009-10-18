@@ -1,0 +1,519 @@
+Background
+----------
+
+companies
+
+- BI
+  - vectorwise
+    - column store
+    - query operators are run via query execution primitives written in
+      low-level code that allow compilers to produce extremely efficient
+      processing instrs
+    - vectors of 100-1000 values get SIMD'd
+    - single machine; not shared-nothing/MPP
+    - founders from CWI
+  - kickfire: entered with TPC-H win
+    - column store, execution, compression
+    - FPGA for data- and task-parallelism
+    - targeting mysql
+  - sybase iq
+  - teradata
+  - XSPRADA/Algebraix
+  - paraccel
+  - kognitio
+  - greenplum
+  - aster data: customers: myspace
+  - infobright
+  - netezza: db hw
+  - datallegro/ms
+  - xtremedata
+  - vertica: column store
+    - stonebraker
+    - h-store
+- elephants
+  - MS: sql server
+  - oracle/sun: mysql
+    - oracle exadata: analytical
+  - postgresql
+  - hp
+    - hp neoview: analytical
+  - ibm
+- emc
+- monetdb
+  - from CWI
+
+denormalization: simplex/complex reads vs writes
+
+optimizations TODO
+
+- from [ormperf]: caching, outer-join fetching, transactional write-behind, etc.
+
+[ormperf]: http://www.javaperformancetuning.com/news/interview041.shtml
+
+applications
+
+- _on-line transaction processing (OLTP)_: many small updates
+- _on-line analytical processing (OLAP)_ aka _data warehousing_: ad-hoc,
+  long-running queries
+- decision support systems
+- business intelligence (BI)
+- data mining
+
+benchmarks
+
+- TPC-C: OLTP
+- TPC-E: new OLTP (TODO: does anyone use this? what's different?)
+- TPC-H: OLAP
+
+indexes
+
+- primary vs. secondary
+  - primary: no duplicates, usu. primary key, may store rec directly in index
+    (otherwise point to rec using rid)
+  - secondary: support duplicates, points to rec using rid or primary key
+- clustered vs. unclustered
+  - TODO
+
+joins
+
+- simple hash join
+  - build hash table of R in memory, and probe into it with S
+  - on overflow, start spilling to file R'; S similarly spills to S'
+    - a new hash function h' is used to determine whether incoming R tuples
+      should be sent to the hash table or to disk
+    - puzzle: should you just stop reading and perform joins with what you
+      have so far (i.e. potentially many keys, but not all tuples with that
+      key are necessarily in the table)? or should you evict things to make
+      space for all the tuples belonging to each key in the hash table (i.e.
+      have fewer keys)?
+      - the former degenerates into O(n^2) nested loop joins - worse because
+        you can't start to throw out tuples of S at any point
+      - so you'll need to start making room for the incoming tuples that h'
+        says should go in memory - but now you need to choose an eviction
+        policy (probably unimportant since it's never discussed - or I'm just
+        misunderstanding something)
+  - recursively (iteratively?) repeat on the overflow files R' and S'
+- grace hash join (assume |R| < |S|)
+  - phase 1: partition R and S into buckets R_i and S_i (all spilled onto disk)
+    - hash function dictates partitioning; same for R, S so R_i need only be
+      joined with S_i
+    - if ~B buffer pages, can have at most ~B partitions (1 output buffer each)
+  - phase 2: for each R_i, build hash table, then probe S_i against this
+    - if R_i is too big and doesn't fit in memory, overflow
+      - can recursively partition R_i back onto disk into sub-partitions
+- hybrid hash join
+  - uses same partitioning, but instead of using all of memory for output
+    buffers, use part of it for the first bucket's hashtable (i.e. build hash
+    table for bucket 1 immediately)
+  - usually you want to make sure you have enough buckets so that each bucket
+    will subsequently be able to fit in memory; if this is the primary goal,
+    then the immediate hash-tabling of bucket 1 is opportunistic (using
+    whatever pages remain)
+  - makes sense when you have larger memory (N buffer pages >> B buckets)
+
+logging and recovery
+
+- buffer management policies
+  - _steal_: steal frames with dirty pages
+    - thus dirty pages are written ("swapped") to disk
+    - faster but complicates recovery
+  - _force_: force all updates to disk before commit
+    - thus committed pages might not be on disk
+    - slower but helps recovery
+
+                     no steal             steal
+-------------------- -------------------- --------------------
+no force             no undo, redo        undo, redo
+force                no undo, no redo     undo, no redo
+
+- write-ahead logging (WAL)
+  - undo info: force log record to disk for an (uncommitted) update *before*
+    corresponding data page is written to disk (swapped/stolen)
+  - redo info: force log record to disk for a xact before commit
+- log seq num (LSN): increasing ID for each log record
+  - each data page contains a _page LSN_, the LSN of the last log record for an
+    update to that page
+  - system keeps track of _flushed LSN_, the max LSN flushed so far
+- WAL: before page $i$ written to disk, log must satisfy pageLSN $\le$
+  flushedLSN
+- log records
+  - fields: LSN, prevLSN, XID, type, [pageID, len, offset, beforeImg, afterImg]
+  - prevLSN: LSN of last record *in this xact*
+  - type: update, commit, abort, checkpoint (for log maintenance), compensation
+    (for undo), end (end of commit/abort)
+  - [...]: updates only
+- in-memory tables
+  - xact table: XID, status (running/committing/aborting), lastLSN (last
+    written by xact)
+  - dirty page table: pageID (entry exists for each dirty page), recLSN (log
+    record which first dirtied the page)
+- checkpointing
+
+mysql replication
+
+- semi-sync replication: wait for receipt
+  - contributed by google in 2007
+- fully-sync replication: wait for persistence
+
+parallel/distributed dbms
+-------------------------
+
+HARBOR (Lau, VLDB06)
+
+- intro
+  - integrate mechanisms for recovery and high availability
+  - take advantage of data redundancy in replicated dbms
+  - features
+    - no logging
+    - recover without quiescing
+- traditional approaches
+  - logging
+- approach overview
+  - data warehousing techniques (assumptions)
+    - data replication: logical (phys unnec); helps perf anyway
+    - snapshot isolation
+      - large ad-hoc query workloads over large read data sets intermingled
+        with a smaller number of OLTP transactions
+      - using snapshot isolation avoids lock contention (TODO is this a
+        requirement?)
+      - harbor uses time travel mechanism similar to snapshot isolation
+      - historical queries of past can proceed without locks since past data
+        never changes
+  - fault tolerance model
+    - k-safety: requires k+1, k may fail
+    - _no network partitions_, no BFT
+  - historical queries
+    - assume T < now, so no locks needed (result set don't change due to
+      updates/deletes after T)
+  - recovery approach
+    - checkpoints: flush dirty pages and record current time T
+    - after coming back up, execute historical query on other live sites that
+      replicate your data; this catches you up to a point closer to present
+    - execute standard non-hist query to catch up to present; this uses read
+      lock, but is shorter than the prev query
+- query execution
+  - recovery query is a range query on T, so break up data into time-partition
+    segments; means normal queries will need to merge from all the segments
+  - commit processing
+    - 2pc with changes
+      - commits include commit times (for modified tuples)
+      - in-mem lists of modified tuple ids can be deleted on commit/abort
+    - opt 2pc: no need for logging/disk writes, except coord
+    - opt 3pc: no need for logging/disk writes, including coord (persist state
+      onto workers, basically); non-blocking (can establish timeout)
+- recovery
+  - query remote, online sites for missing updates
+- evaluation
+  - compare against 2pc and aries
+
+A Performance Evaluation of Four Parallel Join Algorithms in a Shared-Nothing
+Multiprocessor Environment (DeWitt, SIGMOD '89)
+
+- tried out some hash joins in gamma
+- simple hash join
+  - partition tuples among the join nodes (via a _split table_)
+  - overflow possible at any of the join nodes; overflow handling is same as in
+    centralized version, i.e., each node has its own overflow h' and R'
+  - the split table is augmented with h', so S tuples are directed to either
+    the correct join node, or to S'
+- grace hash join
+  - each partition (bucket) is in turn partitioned across all _partition
+    nodes_
+  - then, for each bucket, its tuples are partitioned across the _join nodes_,
+    where the hash table is constructed
+  - hence, all partition nodes talk to all join nodes
+- hybrid hash join
+  - the bucket-1 tuples go straight to some join nodes, and the rest are
+    spilled to the partition nodes
+  - it seems in their system that join nodes are diskless, so that's all they
+    can do - but if the set of join nodes overlaps with the set of partition
+    nodes, then you can imagine immediately processing a number of buckets
+    immediately (as many as there are nodes - the immediate hash table will
+    just consume part of the memory of each of the join nodes)
+
+gamma (project dewitt led 8x-92)
+
+- shared-nothing dbms
+- implemented and evaluated parallel joins: simple hash, grace hash, hybrid
+  hash, sort-merge
+
+- shared memory
+- shared disk
+- shared nothing
+
+why main memory is bad for olap (DB group meeting talk, Mike Stonebraker,
+4/24/08)
+
+- compared: Vertica with disk, Vertica with ramdisk, and Vertica WOS only
+  - seek times disappear; a few disks can satisfy bandwidth (even for several
+    cores)
+  - absence of indexes contributes 2x
+  - compression contributes 7x
+- SAP will compare their TREX against Vertica
+
+scientifica (DB group meeting talk, Mike Stonebraker, 4/24/08)
+
+- multi-dimensional array-based
+  - interesting question is storage manager: how to partition the data (and
+    then in each partition, how to chunk it)
+- uncertainty
+  - minimal, since error analysis is different for each application
+  - use error bars
+- lineage, provenance
+  - need also to remember the derivation process, not just origin
+- interest from various scientific institutions but also amazon, google, etc.
+- CERN had planned to use Objectivity
+
+Efficient Provenance Storage
+
+- main problem: compressing binary xml
+- intro
+  - fields: science, law, etc.
+  - dataset 270mb, provenance store 6gb
+
+h-store concurrency control (evan jones)
+
+- meat is speculative execution with multi-partition tweak
+- local speculation scenario
+  - say you have the following txns, where x=2 is on partition p and y=10 is on q:
+    - txn A: swap x, y
+      - this is a multi-partition txn
+      - this is multi-fragment on p
+    - txn B1: x++
+    - txn B2: x++
+    - end result should be x=12, y=2 OR x=11, y=3 OR x=10, y=4
+  - timeline: say we execute in A, B1, B2 order
+    - read x and read y, sending to coord
+    - cannot yet begin speculation of B1/B2, since A left inconsistent state
+      - ow, second fragment of A will overwrite B1/B2's effects
+      - end result will be x=10, y=2; not serializable
+    - locking or occ can "execute" B1, but they have overhead, and in this
+      (conflicting) case, they will be blocked
+    - each partition gets second fragment of A from coord
+    - each partition sends ack for A, waits to commit (2PC)
+    - while waiting, can start speculating B1/B2
+    - must queue results; release only once no longer speculative
+      - first fragment of a multi-part txn can always be speculated like this
+      - can do better for speculating these first fragments of multi-part txns
+        if using central coord and coord is aware of speculative txns; see next
+        sec
+    - must keep undo buffers; must undo/re-exec B1/B2 *iff* A aborts
+- if you have one coord for a batch of multi-partition txns...
+  - A, B1, C, B2, where C increments both x,y; note C is multi-part single-frag
+  - everything goes as before up till B1 speculation
+  - because A and C have same coordinator, q can return the result to its
+    portion of C, along with indication that result is speculating on A
+    - this is the *end* of all of C; it's a speculative ack
+    - after committing A, coord can immediately commit C
+  - p can speculate its fragment of C, but like B1, cannot send this result,
+    because coord is unaware of prior B1 txn, since single-partition txns do't
+    go through the coord
+  - where does this help?
+    - allows a sequence of multi-part txns, each composed of a single frag at
+      each part, to be executed without blocking; call these _simple multi-part
+      txns_
+    - these are common, e.g. updates to highly replicated read-mostly tables
+    - e.g. updates based on a non-partition column need to search all
+      partitions
+    - all distributed txns in TPC-C are simple multi-part txns
+  - limitations
+    - only applicable after executing last fragment of a multi-part txns, so
+      not useful for non-simple txns
+    - require same coord; on abort, need to be able to cascade aborts
+      - might be able to avert this by assigning txns a global order
+- speculation is on the success of a 2PC
+  - unlike concurrency control, it assumes all txns conflict
+
+Data Integration
+----------------
+
+Indexing Dataspaces
+
+- intro
+  - users explore and use predicate queries and neighborhood keyword queries
+  - traditionally: inverted list or index tree or XML
+- problem definition
+  - indexing heterogeneous data
+    - eg: bibtex, word, ppt, email, www, xls, xml, rdb
+    - triples: (instance, attr, val) or (inst, assoc, inst) (directional)
+
+functiondb - arvindt
+
+bootstrapping pay as you go - alon halevy
+
+pay as you go - alon halevy
+
+oltp ttlg
+
+uncovering the relational web
+
+column-stores vs. row-stores
+
+column stores
+-------------
+
+- column stores only recently gained traction because there's enough memory for fetching large ranges of blocks
+
+hybrid approaches
+
+- PAX (Weaving Relations for Cache Performance by Natassa Ailamaki, David
+  DeWitt, Mark Hill, and Marios Skounakis, VLDB 2001)
+  - store data by column *within disk block*
+  - pros
+    - CPU efficiency of C-stores
+    - improved cache hit ratio & mem bandwidth
+    - better compression
+    - easy to implement in row-store
+  - cons
+    - IO properties of row-stores
+    - cache prefetching on modern CPUs makes PAX cache efficiency obsolete
+- fractured mirrors (A Case for Fractured Mirrors by Ravi Ramamurthy, David DeWitt, and Qi Su, VLDB 2002)
+  - replicate multiple ways; c-stores are OOM faster than row-stores and
+    vice-versa
+  - cons
+    - may need higher degrees of replication
+    - harder impl: need full c-store & row-store exec engines & query
+      optimizers
+    - writes can be a problem
+- fine-grained hybrids (Cudre-Mauroux, Wu, and Madden, CIDR 2009)
+  - individual tables can be row- or col-oriented; declarative storage
+  - pros: get perf advantages of fractured mirrors without additional
+    replication
+  - cons: complex to implement; may be easier to start with c-store since that
+    already supports early materialization and so requires operators be able to
+    handle input in both column and row-oriented format
+  - vertica
+- <http://dbmsmusings.blogspot.com/2009/09/tour-through-hybrid-columnrow-oriented.html>
+
+key-value stores
+----------------
+
+hyder
+
+- oltp KV store on raw flash
+- ops: ins, del, upd, getnext
+- txns
+- no partitioning: single reliable, distributed log shared by all servers
+- no separate db servers from app servers
+- raw flash: 10^5 more IOPS/GB than HDD [higher perf but lower density]
+- API: linq/sql/raw
+- arch: txn layer, indexed record layer, scalable/reliable storage layer
+- erasure coding for reliability
+- multiversioned binary search trees marshalled into log leaf-first (backptrs)
+  - updates: shadow copies
+- every server maintains copy of log tail in memory
+- txn
+  - read a snapshot as cache of last committed db state
+  - appends intention log record to log
+  - record points to last committed record
+  - lookups result in random access; unthinkable in disks but not in flash
+  - OCC: detect conflicts (R/W sets) after appending, abort
+  - broadcast intention at same time as appending intention
+  - when appending, no idea where intention will land; append returns addr
+  - all servers get a copy of this ack
+- root gets conflicting structural (physical) updates all the time, but db
+  content actually doesn't change conflictingly; they can be deterministically
+  merged
+- every server rolls fwd update records one by one
+  - on each one, check if the txn actually committed
+  - all servers will do the same things and make the same abort/commit
+    decisions
+- binary trees vs b-trees: b-tree nodes are large, so cheaper to update lots of
+  small nodes
+- 
+- [questions]
+  - availability
+
+benchmarks
+
+- <http://colinhowe.wordpress.com/2009/04/27/redis-vs-mysql/>
+  - mysql: 3030 sets/s, 4670 gets/s
+  - redis in-mem: 11200 sets/s, 9840 gets/s
+  - tokyo tyrant disk: 9030 sets/s, 9250 gets/s
+
+distributed olap databases
+--------------------------
+
+greenplum
+
+- shared-nothing MPP built on postgresql
+
+teradata
+
+- major customers, 10/2008
+  - ebay: 5 PB
+  - walmart: 2.5 PB
+  - bofa: 1.5 PB
+  - anon financial services co: 1.4 PB
+  - dell: 1 PB
+
+misc db
+-------
+
+couchdb
+
+- <http://sitr.us/2009/09/13/couchdb-notes.html>
+- <http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html>
+
+site stats
+----------
+
+ebay
+
+- olap 4/2009
+  - main teradata warehouse
+    - >2 PB user data, 10,000s of users, Ms of queries/day
+    - 72 nodes, >140 GB/s IO (2 GB/node/sec) (peak?)
+    - 100s of production DBs being fed in
+  - greenplum warehouse
+    - 6.5 PB user data, 17e12 records, 150B new records/day (50 TB/day)
+    - 96 nodes, 200 MB/node/sec IO, 4.5 PB storage, 70% compression
+    - few concurrent users
+    - only for web/network event logs
+  - <http://www.dbms2.com/2009/04/30/ebays-two-enormous-data-warehouses/>
+- oltp 11/2006
+  - 212M users, 1B photos, 1B views/day, $1590/sec, 105M concurrent listings, 2
+    PB data, 3B API calls/mo, 100K new LOC/2 wks, 26B SQL queries/day
+  - TODO
+  - <http://www.dbms2.com/2008/02/27/ebay-oltp-architecture/>
+
+amazon 9/2007
+
+- TODO
+- <http://highscalability.com/amazon-architecture>
+
+wikipedia 2007
+
+- 300 servers
+  - 200 app servers
+  - 70 squid servers
+  - 30 memcached servers, 2 GB mem each
+  - 20 mysql innodb servers, 16 GB mem each (200-300 GB each, total 5TB)
+  - also: squid, nagios, dsh, nfs, ganglia, linux virtual service, lucene on mono, powerdns, lighttpd, apache, php, mediawiki
+- 50K http reqs/sec
+- 80K mysql reqs/sec
+- 7M registered users
+- 18M objects in english version
+- <http://perspectives.mvdirona.com/2008/12/28/WikipediaArchitecture.aspx>
+
+facebook, 2009 talk at MSR
+
+- 300M active users
+- 80B photos; upload 1B+/mo
+- videos: 10M/mo
+- 1B pieces of content
+- 100,000s of apps
+- per day talk
+  - 4 TB compressed new data per day
+  - 135 TB compressed data scanned per day
+  - 7500+ hive jobs on production cluster per day
+  - 80K compute hours per day
+- accessibility
+  - 200 ppl/mo run jobs on hadoop/hive
+  - analysts (non-engs) use hive
+- warehouse
+  - 4800 cores, 5.5 PB
+  - 12 TB per node
+  - 2-lev topology
+    - 1 Gb/s node to rack switch
+    - 4 Gb to top level rack switch

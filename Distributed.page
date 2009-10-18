@@ -1,0 +1,884 @@
+Background
+==========
+
+- consistency
+  - strict: timestamp everything; impractical
+  - sequential: some total ordering that's consistent with the local orderings
+    each computer sees
+
+- Merkle trees
+
+- consistent hashing: when changing hash table width, impose minimal disruption
+  - eg, when adding, take a fair amount from each existing bucket
+  - chord ring is a way to implement this
+    - can replicate each node multiple times to make things smoother
+  - http://citeseer.ist.psu.edu/karger97consistent.html (Karger)
+
+- gossip: decentralized but eventually consistent
+
+TODO DSM
+
+- http://www.cs.umd.edu/~keleher/bib/dsmbiblio/dsmbiblio.html
+
+TODO consistency
+
+- http://en.wikipedia.org/wiki/Consistency_model
+
+BFT
+
+- normal operation: why simple approach similar to failstop replication won't
+  work
+
+    invoke VIEWSTAMP OPERATION -> DEST
+    ----------------------------------
+    invoke 1,1       X         -> B
+    invoke 1,1       Y         -> C
+      nobody's been fooled yet at this point since the you need 2f+1 agreements
+    invoke 1,2       Z         -> B
+    invoke 1,2       Z         -> C
+      but at this point both will reply correctly even though they have diff
+      states
+
+- what about sending hashes of logs?
+- SUNDR: guarantees fork consistency property: if server lies to clients
+  (drops, reorders, etc.) causing a fork in the clients' histories
+
+- actually what happens: see journal
+  - a prepared certificate is a set of 2f+1 prepares
+  - commit point: when $f+1$ non-faulty replicas have a prepared certificate
+
+- read requests: send to all replicas, just wait for enough consistent replies
+
+- view changes: completely diff from paxos
+  - go through primaries round-robin; no leader election
+  - R_n to (new) P: <DOVIEWCHANGE, list of prepared certificates> R_n
+  - P to all: <NEWVIEW, list of $2f+1$ DOVIEWCHANGE msgs> P
+              <PREPREPARE, req...>   all the operations that were supposed to
+                                     have been committed in the prev view
+  - note: 2 replicas can execute the same operation in diff viewstamps; only
+    thing that matters is that they all run in the same order
+
+- questions
+  - diff btwn viewstamp replication and paxos?
+  - what was the point about fork consistency in SUNDR and log hashes?
+  - isn't the all-to-all comm necessary since the primary could lie?
+
+datacenter
+==========
+
+micdrosoft chicago
+
+- trailer containers
+- $.5B, 700 ft^2, 2 levels, 112 containers, 224K servers
+- each container: 2K servers, .5MW critical load, 50K lb, air skates
+- 11 diesel generators, currently 30MW total load, fully 56MW critical load
+
+People
+======
+
+- Michael J Freedman
+- Frans Kaashoek
+- Robert Morris
+- Ion Stoica
+- Scott Shenker
+
+DSM
+===
+
+Ivy: Memory Coherence in Shared Virtual Memory Systems (Yale)
+
+- migrate pages among writers; write invalidation
+- read-only copies can be replicated
+- implements sequential consistency
+- centralized manager algorithm
+  - to get a read
+    - C: RQ to M (read query)
+    - M: RF to O (read forward)
+    - O: RD to C (read data)
+    - C: RC to M (read confirm)
+  - to get a write
+    - C2: WQ to M (write query)
+    - M: IV to C1 (invalidate)
+    - C1: IC to M (invalidate confirm)
+    - M: WF to O (write forward)
+    - O: WD to C2 (write data)
+    - C2: WC to M (write confirm)
+  - tricky: read/write confirms are done to order the read/write data requests
+- efficiency problems: comm intensive, page granularity, false sharing
+
+TreadMarks: DSM on Standard Workstations and Operating Systems
+
+- "better" than Ivy
+- implements lazy release consistency with write notices/write diffs
+- compatibility with existing apps, since you can always re-write programs to
+  respect sharing granularity (to avoid false sharing)
+- technqiues
+  - LRC: lazy release consistency
+  - write diffs: just send RLE of changes
+  - write notices: don't send write diffs immediately, but on demand (even
+    lazier)
+  - vector timestamps
+- details
+  - release consistency: just publish changes following a lock release
+  - eager RC: all coherence actions performed immediately on release operations
+  - lazy RC: all coherence actions delayed until after a corresponding
+    subsequent acquire
+    - even lazier: use write notices
+    - less work: use write diffs
+  - coherence actions = publishing all changes
+- vector timestamps are necessary for this situation:
+
+    CPU0: al1 x=1 rl1  al2 z=99 rl2
+    CPU1:              al1 y=x rl1
+    CPU2:                            al1 print x, y, z rl1
+
+  - want CPU2 to see not just CPU1's release but CPU0's as well
+  - CPU2 knows about CPU0's change via CPU1's vector timestamp, which includes
+    CPU0's entry
+
+Consensus
+=========
+
+Paxos
+
+- overview
+
+    prepare(n) ->
+      "have you accepted a proposal, and if so what's its value?"
+    <- prep_ok(n_a, v_a)
+      the proposer will adopt this value, if it hears it from a majority
+    accept(n,v) ->
+    <- acc_ok(n)
+    decide ->
+
+- proposal n is chosen when a majority of acceptors sent `acc_ok(n)`
+  - interesting property of paxos: once proposal is chosen, system will never
+    change its mind
+- problem: if proposers all get prep_ok responses that say nothing was agreed
+  upon, then there may be conflicts in the accept stage
+  - this is why we have acc_ok
+- pseudocode
+
+    proposer(v):
+      choose n, unique and higher than any n seen so far
+      send prepare(n) to acceptors
+      if prep_ok(n_a, v_a) from majority:
+        # go with the *lower* proposal's value (but retain same n)
+        if any v_a != nil: v' = v_a with max n_a 
+        else: v' = v
+        send accept(n, v') to all
+        if acc_ok(n) from majority: send decided(v') to all
+
+    acceptor:
+      n_p: highest prepare seen, initially 0
+      v_a: highest accept seen, initially nil
+      n_a: highest accept seen, initially 0
+
+      prepare(n) handler:
+        if n > n_p:
+          n_p = n
+          reply prep_ok(n_a, v_a)
+
+      accept(n,v) handler:
+        if n >= n_p: # reject anything lower than highest *prepare*
+          # this ensures that we only accept the highest prepare we've seen
+          n_a = n
+          v_a = v
+          reply acc_ok(n)
+
+    commit point: majority of acceptors record a particular v_a
+    if acceptor times out (doesn't receive decide):
+      ask all servers for v_a, see if majority agrees
+      otherwise become a proposer
+
+- scenario
+
+    A1: p10              a10v10       p11     a11v10
+    A2: p10              a10v10       p11     a11v10
+    A3: p10     p11      a10v10 X             a11v10
+
+- say two proposers both get back a majority of prep_oks; n_p allows us to
+  reject any accept request that isn't the highest
+- vague argument for why other interleavings work out right:
+- important: the variable values must persist across crashes; must not be
+  allowed to forget values
+  - otherwise nodes that have already accepted a value will forget that they
+    have done so, and may subsequently reply incorrectly to a different
+    prepare/accept
+  - what this effectively means is that nodes must record their variable
+    updates to disk
+
+Storage & Consistency
+=====================
+
+From <http://www.allthingsdistributed.com/2008/12/eventually_consistent.html>:
+
+> The first formal treatment of the consistency vs. latency (and if one wishes,
+> availability and tolerance to network partitions) in fact appeared in the
+> paper
+>
+> Hagit Attiya, Jennifer L. Welch: Sequential Consistency versus
+> Linearizability. ACM Trans. Comput. Syst. (TOCS) 12(2):91-122 (1994) -
+> initially published in the SPAA 1991 conference.
+>
+> It formally proves that for lineariability both read and write operations
+> cannot be faster than the network latency. In sequential consistency, either
+> reads or writes can be faster than the network latency, but at least one of
+> them has to be slow.
+>
+> In particular, this means that strong consistency conditions cannot be made
+> highly available in partitionable environments, and cannot be implemented in
+> a scalable manner.
+
+Measurement and Analysis of TCP Throughput Collapse in Cluster-based Storage
+Systems (read 2/25/08)
+
+- cluster storage systems where data is striped across multiple servers
+  experience tcp throughput collapse
+- cause: exceeding output port buffer capacity within switches -> packets
+  dropped -> tcp timeouts
+- solutions: nothing very satisfactory
+
+Chain Replication for Supporting High Throughput and Availability
+
+- simple idea: have a chain of servers
+- all writes start at head and return from tail
+- all reads go to tail
+- "high availability": you can stay up, but you're only reading from tail....
+
+The Chubby Lock Service for Loosely-Coupled Distributed Systems
+
+Rethink the Sync
+
+Tra (Russ Cox)
+
+- sync time >= mod time; time btwn is guaranteed to have no changes
+- only benefit of VT pair is bounding the times for dirs; same thing can be
+  done with VTs, but more verbose repr
+- impl: traserv scans fs for changes
+- paper bugs
+  - why is fig 8 known to have no mods at B3?  it could've....
+  - why doesn't d have min of sync times in fig 12?
+
+Filesystems
+===========
+
+Replication in the Harp File System (Liskov, Ghemawat, et al)
+
+- primary copy replication: single primary server waits on multiple backup
+  servers before returning
+  - primary ensures enough backups to guarantee operation effects will survive
+    all subsequent failovers
+  - failover algorithm masks failures, removes failed node
+- operations are immediately recorded into volatile memory log
+  - write-behind to disk
+  - UPS for power failures
+- each file managed by a _group_ (with one master)
+  - modifications require 2PC
+  - non-modifications don't require 2PC, but instead TODO
+- **replication method**
+  - **overview**
+    - _view change_: each group configuration is a _view_
+    - as with any replication scheme that tolerates network partitions, require
+      $2n+1$ for $n$ failures
+    - only actually need to store data on $n+1$ of the machines; can be
+      propagated on failures (partition)
+    - _witnesses_: replicas that don't store data
+    - 1 _designated primary_ (will act as primary whenever it can), $n$
+      _designated backups_, $n$ _designated witnesses_
+    - arrange groups so that each node is designated primary of one group,
+      designated backup of another, designated witness of a third; this
+      distributes workload
+  - **normal-case processing**
+    - log of _event records_ with growing IDs of operations, both phase 1 and
+      committed
+    - _commit point (CP)_: ID of latest committed op (separates phase 1 and
+      committed)
+    - 2PC
+      - primary logs, sends logged info to backups
+      - backups only accept in log order; ack for $n$ means got up through $n$
+      - primary commits by advancing CP and send CP to backups
+    - applying changes
+      - log is WAL no-steal: changes not applied on disk (FS) until committed
+      - _application point_: ID of latest op that has started being applied to
+        the local FS
+      - _lower bound (LB)_: ID of latest op that has finished being applied to
+        the local FS
+      - primary and backups exchange LBs
+      - _global LB_: min(all LBs); may truncate things beyond this
+    - recovery: log brings recovering node up to date
+      - log is _redo_: only sufficient to redo op after failure
+    - reads can be serviced immediately without 2PC
+      - results reflect committed, no uncommitted (i.e. serialize these reads
+        at the CP)
+      - if primary is partitioned off, then the result of the read may not
+        reflect a write that has been committed in the new view
+      - compromises _external consistency_, which requires comm outside FS
+      - make this unlikely by using loosely synchronized clocks
+        - each message from backup to primary contains a time equal to backup's
+          clock + $\delta$ (few hundred ms)
+        - backup promises to not start new view until that time
+        - expect that starting a new view will not be delayed, since $\delta$
+          will have passed before new view is ready to run
+        - primary needs to comm with the backup about a read op only if the
+          time of its local clock is greater than the promised time
+      - access time: can enable loose consistency on this
+        - return immediately from primary, before committing
+        - may be lost if there's a failure/partition
+  - **view changes**
+    - views have _view numbers_
+    - promoted witnesses may not have resources (eg FS) so must never trunc log
+    - TODO left off here
+
+TODO Concurrency Control and Recovery in Database Systems
+
+The Google File System
+
+- 3x replication
+
+Don't Give Up On Distributed File Systems
+
+- specify hints about consistency
+
+DHTs
+====
+
+UsenetDHT (Emil Sit, NSDI08)
+
+- TODO: read paper
+- high bandwidth for peering and high storage/durability rquirements
+- related work
+  - DHash, OpenDHT optimized for small objects (eg CFS)
+  - Galcier: focus on catastrophic failure
+  - Total Recall: ...
+  - Coral: perf, but a cache, so no durability
+- UsenetDHT: shared Usenet server
+  - > 80 TB/yr
+  - _Passing Tone_: algo for data maintenance
+    - re-replication on failures
+    - durability for immut dat
+    - using only pairwise sync
+    - supports obj expiration
+  - enhanced DHash for perf
+    - bulk data
+    - 6MB/s per server
+- goal: reduce distribution inefficiency and storage reqs
+  - share articles among eg universities, ISPs
+- nodes do full exchange of headers *only*
+- challenges
+  - in talk and paper
+    - respond to eachfailure?
+    - syncs expensive
+    - TODO
+  - in paper
+    - limited disk cap: can cpurious repairs be avoided
+    - rand disk IO
+- Passing Tone
+  - $r_L$ reps for durab
+  - extra replicas to mask transient failures
+  - repair decisions need only pairwise syncing
+  - two algos:
+    - local: replication among current replica set
+    - global: ensures correct placement
+- data placement
+  - replicate to $r_L$ successors
+  - idea from Carbonite system: extra replicas to mask transient failures
+  - make new copies when $< r_L$ avail
+- predecessors enable local decisions
+  - chord only know about immed pred
+    - forces immed succ to handle maint
+    - coord hard: constant writes/epirations
+  - pred list allows nodes to handle own maint
+    - given $r_L$ and preds, know responsible range
+    - extras reps can be reclaimed for space if nec
+- local maint
+  - calc respons range from preds
+  - sync with nbrs over range to
+    - identify objs missing locally
+    - make local reps of those objs
+
+Chord: A Scalable Peer-to-Peer Lookup Service for Internet Applications
+
+Programming
+===========
+
+Friday: global debugging (paper notes)
+
+- intro
+  - objective: track global state
+  - contributions [basically new debugger]
+    - primitives detect events with watch/breakpoints
+    - attach commands to these
+- liblog
+  - for libc/posix c/c++ apps
+  - each thread logs side effects of non-det syscalls (recvfrom, select)
+  - maintains causally consistent group replay by inserting lamport clocks in
+    messages
+  - incrementally deployable
+  - can simulate a reasonably large # nodes on debugging machine
+  - still hard to debug - find needle in haystack
+- design
+  - watch/breakpoints
+    - breakpoints are the same
+    - implementation [watchpoints]
+      - write-protected pages
+      - alternatives
+        - hardware - limited # watchpoint regs (usu. 8) not enough
+        - single-stepping - too slow
+        - local breakpoints - hard to analyze program to know where to insert
+          them
+        - periodic sampling - coarse-grained
+    - implementation complexity
+      - replicated gdb functionality
+      - replaced gdb's calling facilities due to conflicts with
+        write-protection
+  - commands
+    - scripting language (running in own world; effectively 'global' state)
+    - + syntax to access app state, current node, lamport/real clocks, etc
+    - language choice
+      - python - easy to embed
+    - syntax
+      - translate to gdb's 'print'/'set'
+      - string interpolation
+      - memory protection on app function invocs
+      - general data structure marshalling -> raw bytes, enough for equivalence
+        testing
+  - limitations
+    - false positives slow down replay
+      - can recompile app to spread out stack
+    - must manually build debugging state if starting from middle of replay
+      - future: add debugging state to liblog checkpoints (at debug time)
+    - friday predicates often require debugging themselves
+    - ...
+- case studies
+  - routing consistency: i3/chord dht
+
+Orc
+
+P2
+
+- overlog
+
+BOOM: data-centric programming for the data center
+
+- implemented HDFS, including multi-paxos master node, in overlog
+- master/namespace is partitioned for scale-out; took 1 day
+- overlog timestep
+
+The NIL distributed systems programming language: a status report
+
+Mace: language support for building distributed systems
+
+JXTA
+
+Prolac
+
+A System for Constructing Configurable High-Level Protocols
+
+From asynchronous to synchronous specifications for distributed program synthesis
+
+File-Sharing
+============
+
+The Darknet and the Future of Content Distribution
+
+A Survey of Anonymous Peer-to-Peer File-Sharing
+
+- F2F filesharing
+  - <http://www.dargens.com/>
+  - <https://alliancep2p.dev.java.net/>
+  - <http://fileforum.betanews.com/detail/RetroShare_for_Windows/1179842697/1>
+- group filesharing
+  - <http://waste.sourceforge.net/>
+  - <http://dcplusplus.sourceforge.net/> (hubs)
+
+Cloud
+=====
+
+ec2
+
+- elastic compute cloud
+- "compute units" = some amd opteron
+- vm's (~2-3 min to start)
+- can't run arbitrary os; must be linux 2.6-based with paravirt (for xen)
+
+s3
+
+- storage service
+
+simpledb
+
+- similar to bigtable
+- objects with loose set of multi-valued attrs
+- simple query lang
+- queries capped at 5 sec runtime
+- $1.50 / gb-month
+- $0.14 / cpu-hr consumed by queries
+
+Deployment
+==========
+
+On Designing and Deploying Internet-Scale Services
+
+- lessons learned from Windows Live
+
+Misc
+====
+
+PeerReview: Practical Accountability for Distributed Systems
+
+Algorithms
+==========
+
+Hundreds of Impossibility Results in Distributed Computing
+<http://citeseer.ist.psu.edu/fich03hundreds.html>
+
+- TODO
+
+Uncategorized
+=============
+
+Arpeggio
+
+SIP
+
+- endpoints talk to a gateway (eg belonging to the company)
+- gateways talk to each other (over IP)
+- no P2P network as in Skype
+
+Debugging
+=========
+
+r2: record and replay debugging tool
+
+- lib-based replay
+  - binary rewriting (loader): liblog, jockey, recplay
+    - intercept at syscall/libc 
+    - more lightweight than whole-sys replay
+  - record run
+    - call orig syscall/libc funcs
+    - log input
+    - log thread scheduling info
+- read()
+  - record: log input
+  - replay: feed buf
+- challenges
+  - mem addrs must be identical
+    - but fundamentally diff, eg shared libs
+    - control mem consumption
+  - nondet must be enclosed
+    - shared mem, ioctl, benign race, ...
+    - fixing syscall/libc too restricted
+  - fat interface
+    - need to wrap too many api funcs
+- contribs
+  - app-level isolation
+    - kernel ideas: replay & system space
+    - manage mem and exec
+    - customize record & replay layer
+  - annotation keywords
+    - code template
+  - experiments and experience
+    - sqlite, bt, mpi
+- replay & system spaces
+  - api as r2 syscalls: replay -> system
+  - r2 upcall (from lib into app): system -> replay
+- space mode bit
+  - 0 - system space; 1 - replay space
+  - start in 0
+  - when entering main, switch to 1
+  - when invoking a syscall, switch to 0; e.g., read()
+  - when issuing an upcall, switch to 1
+    - wrap upcall (callback), e.g., createThread(...workerThread...)
+- mem mgmt
+  - separate mem pools: all calls to malloc inside system space do not exist
+    during replay run
+  - explicit data xfers: read()
+- code templates
+  - annotated prototype: int read([in]int fd, [out,bsize(return)]void *buf,
+    [in]unsigned int nbytes)
+    - language already in use (windows); see also SafeDrive(?)
+  - php code template to generat c++ code snippet
+- mem mgmt (cont)
+  - cross space pointers (xpointer)
+    - make a copy in replay pool, e.g., `getcwd(NULL,o)`
+  - encapsulated resources: as ints, e.g., files
+- capturing exec orders: lamport's algo
+  - maintain logical timestamp for each thread
+  - syscall-upcall (callback): createthread < workerthread
+  - syscall-syscall (signal & wait): releasemutex < waitforsingleobject
+  - total order vs. causal order: race
+- related work
+  - lib-based replay
+  - whole system replay: hardware (strata), vm (revirt, idna)
+  - annots: sal icse06, deputy osdi06
+  - isolation: xfi osdi06, nooks sosp03
+  - domain-specific replay: ml, mpi, java
+  - replay apps: predicate checking, rate detection, intrusion detection
+
+
+NSDI09
+======
+
+hashcache (nsdi09)
+
+- web proxy cache with pluggable indexing policy
+  - goal: minimize in-mem index for storing largest amount of data
+  - goal: maximize perf by minimize disk seeks
+  - take advantage of the fact that there is a hash table on disk
+  - index mainly to serve existence queries
+  - achieved just 1 disk seek per req
+- 3 policies, from most compact to highest performant: Basic, SetMem, and Log
+- Basic: just store 8 bit low-false-positive hash
+- SetMem: store add'l 3 bits of LRU info
+- Log: store offset onto disk improves write performance
+- compared against open-source squid (least efficient) and commercial tiger
+  (more efficient)
+
+partial content replication (ucsd nsdi09)
+
+- eventual filter-based consistency
+
+cimbiosys: content-based partial replication/partial content replication (doug
+terry, msrsv, ucsd, nsdi09)
+
+- motiv: photos
+- reqs: content-based selection, flexible (mesh) communication network
+- protocol: simple
+  - target sends knowledge and filter to source
+  - source sends unknown and filtered items to target
+  - target adds items and updates knowledge
+- provides: eventual filter consistency (correctness), eventual knowledge
+  singularity (perf)
+- move-out notifications for removing item when item no longer matches filter
+  - "local" move-outs: must hold on to it so that it's not lost permanently (in
+    case someone else wanted to get it)
+  - move-out notification chains: when a node that has removed an item syncs
+    with another node that should remove the item as well; send move-out iff:
+    - source's filter is a superset of target's filter,
+    - source is as knowledgeable,
+    - source doesn't store item that target stores
+- filter changes: local operation
+  - remove items that no longer match
+  - retract knowledge
+- to ensure eventual singularity: tree embedded sync topology
+- misc
+  - implemented in Mace on linux
+
+rpc chains (nsdi09)
+
+- this primitive chains together multiple RPC invocations so that the
+  computation can flow from one server to the next without involving the client
+  every time
+- results are added to param list and fwded
+- evaluated with chained copy from one nfs server to another
+- nest/compose sub-chains by maintaining stack of chaining functions and state
+  - also allow concurrent sub-chains using splits in the path
+- also ties in to efficient bandwidth usage a la GFS (chained replication)
+
+transactions across datacenters (google io 2009)
+
+- google dubs it "multihoming"; focus on app engine datastore
+- consistency (wrt durability)
+  - weak: reads might not see prior write
+    - gae memcache
+  - eventual: reads eventually see prior write
+    - dns, email, S3/simpledb (~500ms lag in S3)
+  - strong: reads will see prior write
+    - gae datastore, filesystems (sync), rdbms, azure tables
+- stats
+  - within DC: 1-100Gbps, <1ms within rack, 1-5ms cross racks, no cost
+  - across DC: 10Mbps-1Gbps, 50-150ms, cost for fiber
+    - 30ms baseline speed-of-light across US
+- options
+  - bunkerize single DC: azure, simpledb
+    - redundant power sources, backbone connectivity, cooling
+  - single-master
+    - if async, then window of data loss vulnerability; sometimes even
+      inconsistent replication
+    - AWS
+      - EC2, S3, SQS: choose US or EU
+      - EC2: availability zones, elastic load balancing
+    - financial institutions (banks, brokerages, etc.) use this frequently
+    - can geolocate reads, depending on your consistency requirements
+  - multihoming/multi-master: sync replication
+- techniques
+  - backups: super-async, weak consistency; low latency, high throughput
+  - master-slave: async, eventual consistency; low latency, high throughput
+    - gae datastore uses this
+  - multi-master: async, eventual consistency; need ordering; can keep updating
+    on DC failures (since no single master)
+  - 2PC: for cross-shard operations
+    - semi-distributed consensus protocol (always need coordinator)
+    - synchronous, high latency, low throughput
+    - 3PC buys async with extra round trip
+  - paxos
+    - fully distributed; no single coordinator
+    - synchronous, high latency (prohibitively high even in same DC), medium
+      throughput
+    - used in chubby; for moving state, memcache, offline processing
+  - no silver bullet; embrace tradeoffs
+- entity groups in megastore are the unit of partitioning/consistency
+- criticism: if you watch this, don't get too caught up in the taxonomies here;
+  they aren't very carefully designed. unfortunately the talk doesn't bring to
+  the forefront the fundamental dimensions, instead convolving them into a
+  jumble of different "packages" without sufficiently teasing them apart. my
+  fear is that this talk will lead to the proliferation of such falsehoods as
+  "master-slave replication != paxos" (!) and "master-slave replication means
+  == weak/eventual consistency." that, and "multihoming." (google managed to do
+  it before with "sharding.")
+
+CAP theorem
+
+- bigtable, hbase opt for consistency and availability
+- dynamo opts for availability and partition-tolerance
+
+revision control systems
+------------------------
+
+git/hg
+
+- cherry-picking: choosing individual changes from one branch and applying them
+  to another branch
+- daggy fixes: fix the code as a tiny branch off of wherever the bug was
+  introduced
+  - nicer than cherry-picking because the problem is reduced to one of merge
+  - reuse the same merge/conflict-resolution machinery
+
+perforce
+
+- do work in client workspaces; submit changed files together in changelists
+- p4 client
+- used at google; g4 frontend
+
+source depot
+
+- microsoft's internal rcs; fast
+- shares the same syntax and model as perforce
+- there's a vast hierarchy of branches
+  - integration happens up the tree (reverse integration) and down the tree
+    (forward integration)
+  - integrations occur more frequently toward the leaves and less frequently
+    toward the root
+  - the leaves are what individual teams work on
+  - they're all mirroring the same file/dir namespace
+  - there's actually a set of these trees; the roots are called _trunks_
+
+distributed oltp databases
+--------------------------
+
+bigtable
+
+- in-memory memtable for holding pending writes
+- on write, flush WAL and update memtable
+- on reads, read memtable & multiple disktables, but first checking for
+  existence in their respective bloom filters (which may say "maybe" or "no")
+- when full, flush memtable to disk as a new disktable
+- periodically compact the disktables, merging them into a single disktable
+- not partition-tolerant
+
+voldemort (linkedin, 2009)
+
+- based on dynamo
+- linkedin: no joins, lot of denorm, no orm, no constraints/triggers, memcache,
+  no-downtime releases, *NOT* horizontally partitioned (!), latency is key
+- large/persistent dataset cannot all be in mem
+- combines memory caching
+- design
+  - layers top to bottom
+    - client API, conflict resolution, serialization
+    - routing and read repair, failover (hinted handoff)
+    - storage engine (bdb/mysql/memory)
+  - layers all have same interface: put, get, delete
+- physical arch configs (all top to bottom)
+  - 3-tier, server-routed: frontend, load bal, backend service, load bal, voldemort cluster
+  - 3-tier, client-routed: frontend, load bal, backend service, partition-aware routing, voldemort cluster
+  - 2-tier, frontend-routed: frontend, best-effort partition-aware routing, backend service with voldemorts
+- client api
+  - put, get, get_all, delete
+  - _store_: a table; keys are unique to stores
+  - put, delete: can specify expected version
+  - OCC to support multi-row updates and consistent read-update-delete
+- versioning and conflict resolution and consistency
+  - vector clocks provide partial order on values; like an improved OCC
+  - conflicts resolved at read time and write time; user can supply handler
+  - no locking/blocking necessary
+  - also recently added paxos
+- routing
+  - turns single get/put/delete into multiple parallel ops
+  - consistent hashing variant that allows for weighing nodes by their capacity
+  - repairs stale data at read time (??)
+  - can add user strategies, eg only do synchronous ops on nodes in local DC
+    (??)
+- storage: bdb, mysql, mmap, or memory for testing
+- limitations: no elasticity
+- offline processing
+  - parallel extract from voldemort with throttling to respect live workload
+  - use hadoop to produce new voldemort stores then atomic swap with live
+- perf
+  - latency: median 0.1ms, 99.9% <3ms
+  - 1-cli 1-svr throughput: 20K reads/s, 16.5K writes/s
+- TODO: any relation to memcached?
+- <http://project-voldemort.com/>
+
+cassandra (facebook, 2008)
+
+- based on dynamo's eventual consistency, bigtable's column family data model
+- designed by one of the authors of dynamo, avinash lakshman
+- ![data model and physical storage layout](cassandra-data-model)
+  - cluster: the machines in a logical cassandra instance; set of keyspaces
+  - keyspace: a namespace for column families; typically one per app
+  - column families: ordered list of columns; analogous to relational table
+    - rows have column name, value, timestamp; referenced by row keys
+    - each stored in separate file, in row (i.e. key) major order
+  - supercolumns: columns that have subcolumns
+- no mem caching
+- refs
+  - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
+  - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
+
+dynamo
+
+- works across DCs
+- eventual consistency
+- hinted handoff
+
+http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
+http://stackoverflow.com/questions/1189911/non-relational-database-design
+http://www.google.com/search?hl=en&rlz=1C1GGLS_enUS337US337&q=voldemort+cassandra+hbase+hypertable+tyrant+dynomite&aq=f&oq=&aqi=
+
+megastore
+
+- built on big-table
+- provides declarative schemas, multi-row transactions, secondary indices
+- used to do in-order & atomic wide-area replication with Paxos, but now
+  realizes the folly of its synchronous ways
+  - switch to asynchronous replication
+  - along with fixing replication to maintain transactional consistency
+    (before, replication would leave destination in potentially transactionally
+    inconsistent state)
+- means that apps now get to deal with eventual consistency (the alternative
+  being unavailability)
+
+infinispan
+
+- data grids: caches; in-mem data structure
+- FLOSS from jboss
+- formerly jboss cache
+- supports read committed and repeatable read
+- distributed transactions
+- supports eager distributed locking
+- mvcc
+
+DRKP: working on "mul-tree-cast" membership service
+
+- multicast updates down multiple trees
+- each tree has the same root (leader)
+- leader changes by epoch
+- is BFT (without BFT protocol)
+- the idea is that if any leader is BF, then just wait for the next epoch
+- they use the currently constructed trees to disseminate the other trees being
+  constructed
+- trees are constructed using a deterministic algorithm that each node can
+  independently calculate
+- problem: what if you send different subsets of the membership to each tree?

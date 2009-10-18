@@ -1,0 +1,377 @@
+- Bob Metcalfe: inventor of Ethernet
+- Van Jacobson: primary contributor to TCP/IP
+
+- tcp reno: most widely used today
+- tcp vegas: newer than reno/newreno
+  - interacts poorly with reno (gets unfair slice of total bandwidth, detecting
+    more congestion than exists)
+  - inherits reno's problems dealing with wifi: packet loss isn't necessarily
+    due to congestion, but may be due to channel error (interference, echoes,
+    etc.)
+- tcp westwood: measures bw st can maintain high rates when channel err causes
+  pkt loss, but handles congestion-based losses like reno does
+- source:
+  http://blog.case.edu/bes7/2008/07/15/congestion_control_algorithms_for_a_wireless_router
+
+- flow table
+  - uses: ACL in firewalls, NAT, QoS, ...
+
+nat TODO
+
+- types
+  - full cone: once internal addr (iaddr:iport) is mapped to external addr (eaddr:eport), pkts from iaddr:iport go through eaddr:eport, and pkts to eaddr:eport go to iaddr:iport
+  - (address) restricted cone: only accept pkts previously sent to host:anyport
+  - port-restricted cone: accept only pkts 
+  - symmetric
+- nat-t
+- simple traversal of udp through nat (STUN)
+  - UDP
+- traversal using relay nat/traversal using relays around nat (TURN)
+  - TCP/UDP
+  - proxy: 
+
+vpn
+
+- the main use of ipsec
+- ipsec expects key distribution to have been solve (public keys to have been
+  exchanged already); this is reasonable for vpn's
+- vpn creates a new interface backed by the vpn software daemon (which does
+  encryption); the routing table is updated to route through this interface
+
+ipsec
+
+- authenticated header (AH) vs. encapsulating security payload (ESP)
+  - authentication vs. authentication and/or encryption
+  - these are both protos above IP alongside TCP/UDP/ICMP/IGMP
+  - can't nat vs. can nat: AH includes src/dst IP address in HMAC vs. ESP
+    doesn't authenticate src/dst IP
+  - encapsulation: precede vs. surround
+- transport vs. tunneling
+  - encapsulation: packet body vs. whole IP packet (IP proto = IP(-in-IP))
+  - endpoints: hosts vs. gateways
+- internet key exchange (IKE): establishes shared session secret; uses PKI or
+  pre-shared key; builds upon the ISAKMP/Oakley protocol; basically d-h
+- main mode vs. aggressive mode
+  - 6 packets back and forth to init vs. 3 but with slightly less security
+- security parameters index (SPI) is an identifying number in each packet;
+  think of like a randomly chosen port numbered: indexes into state about
+  session details, called a _security assocation (SA)_, stored in a _SADB_
+- nat-t: encapsulates IPsec IP packets; runs on UDP port 4500
+- read somewhere (perhaps in NIST doc), unverified: ipsec doesn't use
+  pki/certs, but this was planned
+- refs
+  - http://unixwiz.net/techtips/iguide-ipsec.html
+  - http://csrc.nist.gov/publications/nistpubs/800-77/sp800-77.pdf
+- implementations
+  - freeswan: orig ipsec for linux; dead
+  - openswan: freeswan fork; targets more than linux
+  - strongswan: freeswan fork
+  - netkey: native linux ipsec; in linux now
+  - windows server
+
+RADIUS
+
+- runs over UDP; used by VPN servers, AP, NAS, etc.
+
+Wi-Fi
+
+- 802.11a: 54Mbps, 5GHz band, OFDM, 35m
+- 802.11b: 11Mbps, 2.4GHz band, DSSS, 38m
+- 802.11g: 54Mbps, same 2.4GHz band as 802.11b, OFDM, 38m
+
+Cellular
+
+- CDMA vs GSM: two main competing techs
+
+- 2G: generic term for the second generation networks
+- 3G: generic term for the third generation networks
+- CDMA: a 2G network; launched in 1995
+  - leader in USA until recent surge by competitor GSM
+  - Verizon, Sprint
+- CDMA2000: succeeds CDMA
+  - comprises 1xRTT (2.5G), 1xEVDO (3G), 1xEVDV (3G)
+- Enhanced Data-rates for GSM Evolution (EDGE): 2.5G replacement for GSM
+  - theoretical top speed of 200Kbps
+- Evolution Data-Only (EVDO): subset of CDMA2000
+  - peaks at 2.4Mbps; averages at 300-600Kbps
+  - Sprint, Verizon
+- Global System for Mobile Communications (GSM): 2G (9.6Kbps) network
+  - popular because it's international standard
+  - ATT, T-Mobile
+- High-Speed Downlink Packet Access (HSDPA): enhancement for 3G UMTS networks
+  - ATT
+- Universal Mobile Telephone Service (UMTS): 3G network that GSM carriers use
+  - developed by GSM community; one of ITU's family of 3G systems
+  - peaks at 2Mbps; averages at 300-400Kbps
+  - W-CDMA
+  - ATT
+- WiMax: high-perf Wi-Fi 802.16
+  - potential cornerstone of 4G networks
+- Advanced Wireless Service (AWS): 3G
+  - T-Mobile
+
+DNS
+
+- start of authority (SOA) record: info about a zone
+  - mname: FQDN of primary NS
+  - rname: responsible person's email with `@` replaced by `.`
+  - serial: an incrementing version number (uint32_t) for this record; usually
+    an encoding of timestamp
+  - refresh: seconds until secondary NS tries to refresh; 1 hr
+  - retry: seconds beween secondary NS retries if refreshes failed; 15 min
+  - expire: seconds until secondary NS stops answering queries for this zone;
+    long time
+  - minimum: seconds that *records* of this zone are valid; 1 day
+- NS record
+- A record: main record type
+- MX record: mail exchange record
+- CNAME record: alias
+- ref: <http://rscott.org/dns/soa.html>
+
+TCP
+
+- segment: a packet (as in max seg size, MSS)
+- push: send immediately
+- Nagle's algorithm: delay packets sends for batching
+- rfc793: TCP
+  - options: nop, mss
+- rfc1323: TCP Extensions for High Performance
+  - introduces 2 tcp options
+  - wscale: scaled windows (larger than 2^16)
+  - timestamps: for estimating RTT
+- rfc2018: TCP Selective Acknowledgment Options
+  - sacks: ack particular bytes; rexmit what's needed instead of entire tail
+- rfc2581: TCP Congestion Control
+  - slow start, congestion avoidance, fast retransmit, fast recovery
+- rfc2861: TCP Congestion Window Validation
+  - problem: after long periods of silence, window may not reflect current
+    network congestion
+  - decay window cwnd after transition from a sufficiently long
+    application-limited period
+- <http://www.tcpipguide.com/>
+- <http://www.iana.org/assignments/tcp-parameters/>
+
+Congestion Control in Linux TCP
+
+Clean Slate
+===========
+
+Why can't I innovate in my wiring closet? (Nick McKeown's talk, 4/17)
+
+- worthless talk
+- current
+  - software approach: XORP (and Zebra; or Linux)
+    - flexible, easy
+    - limited perf
+    - point solution, limited port count
+  - hardware approach: NetFPGA (<http://www.netfpga.org/>)
+    - small "router", OSS hardware/software
+    - line-rate perf
+    - point solution, limited port count
+  - first two are aimed more at the backbone
+    - network researchers tend to focus more on the core
+  - OpenWRT
+    - embedded Linux for wireless APs and routers
+    - aimed more at our more local networks
+      - most of us interact at the edges
+- idea: change the substrate
+  - IP is the current narrow waist
+  - virtualization layer would allow us to introduce alternatives to IP
+  - one way to characterize the GENI approach
+  - "innovation from the top down"
+  - see: WUSTL SPP, VINI, ...
+- proposed approach: OpenFlow, "innovation from the bottom up"
+  - complementary, not a replacement for that approach
+  - flow layer
+- deployment
+  - work with switch and AP vendors to add OpenFlow to products
+    - no immediate motivation for them, besides better relations with
+      researchers
+  - deploy on university campuses
+  - stand back and watch innovations
+- desirable features
+  - isolation: regular production traffic untouched by experimental stuff
+  - virtualized and programmable: different flows processed in diff ways
+    - can't add more hardware to the closet, "stuff will catch on fire!"
+  - equipment we can trust in our wiring closet
+  - open development env for all researchers (e.g. Linux, Verilog, etc.)
+  - flexible defs of a flow
+- the router talks to a controller PC (when it sees a new flow?)
+- flow table entry, type 0
+  - rule: match on header fields
+  - action: fwd to port, encap and fwd to controller, drop, send to
+    normal processing pipeline
+  - stats: # packets, bytes
+- type 1 (future)
+  - more flexible header/matching
+  - add'l actions: rewrite headers, map to queue/class, encryption
+  - support multiple controllers: load-balancing and robustness
+- status
+  - Stanford CS building will have this
+
+GENI
+
+- http://geni.net/
+
+Routing
+=======
+
+Secure Internet Routing (Sharon Goldberg, Princeton, MIT special seminar,
+2008-02-26)
+
+- work on both the Control Plane (routing protocol layer) and the Data Plane
+  (normal traffic)
+- SBGP: announce paths signed with public keys
+- on the Control Plane, showed that Secure BGP does *not* dissuade rational
+  players under the "attraction" incentive model
+  - key idea (game theory-ish): a player's utility function depends not just on
+    their willingness to send packets to a place, but also how much they want
+    others to send packets through them (how much they want to *receive*
+    packets; this is the "attraction")
+  - SBGP *does* dissuade rational players from lying under the previous "no
+    attraction" incentive model
+  - how do players know how to manipulate people they're receiving from?  they
+    can learn about others' valuation functions out-of-band
+- next-hop routing: you can lie in this by generating cycles, taking advantage
+  of players' refusal to route using cycles
+  - but SBGP prevents cycles
+  - combine SBGP and next-hop routing: then you can't lie!
+  - next-hop routing not practical itself, but useful when combined with
+    filtering, but you can no longer prove anything (simple NHR is necessary)
+- on the Data Plane, you can actually *detect* a lying router
+  - pair share secure key into a hash function $h$
+  - maintain a _sketch_: an array of counters $A$
+  - for each packet $x$, $A[h(x)]++$
+  - compare sketches every once in a while; if drop or change, then mismatch
+- ongoing work: need to have keys for each pair of endpoint nodes in a network
+- to *localize*, you need to have key pairs with every node in the system
+
+DCell: Data Center Networking (reading group reading 2008-07-21)
+
+- properties
+  - scalability
+  - fault-tolerance: better than trees
+  - high network capacity
+- related work
+  - Fat Tree (by CEL, for supercomputers): "scalability of Fat Tree is not
+    comparable to that of DCell"
+    - Fat Tree: total bandwidth at every level of the tree is the same
+
+Compact Routing
+
+Linux
+=====
+
+Speeding up Networking (Van Jacobson, Linux.conf.au 2006)
+
+- TODO
+- http://vger.kernel.org/~davem/cgi-bin/blog.cgi/2006/01/27#vj_channels
+- http://evanjones.ca/researchpapers/network-channels.html
+
+NSDI09
+======
+
+iplane nano (ucsd nsdi09)
+
+- motivation
+  - eg p2p CDNs are geo dist; clients must pair with best replica
+  - eg bt, skype, etc
+  - internet perf neither const nor queriable; currently each app measures
+    independently
+- desired sol: predict perf and have shared infrastructure for all apps
+- prior work
+  - network coords: limited to latency, but lightweight
+  - iplane: rich metrics, but 2GB atlas (large mem footprint)
+  - iplane nano: 7mb atlas
+- overview
+  - traceroutes from vantage points
+  - plane: store all paths; leads to combinatorial explosion
+  - key idea: replace atlas of paths with atlas of links
+    - O(n^2) -> O(n)
+  - clients download atlas and query locally against prediction engine
+- routing policy: link atlas throws away too much info
+  - iplane: 81% correct predicted AS path using 2GB atlas
+  - strawman link-based: 30%, 5MB; too big a hit
+  - iplane nano: 70%, 6.6MB
+- so far just predicting routes; also predict properties (latency, loss rate,
+  bw)
+  - predict route, then compute prop based on props of links
+  - ongoing challenge: measuring link props
+- evaluated how much it improves 3 apps (refer to paper for latter 2)
+  - p2p cdn: choose replica with best perf
+  - voip: choose detour node to bridge hosts behind nats
+  - detour routing for reliability: route around failures
+- p2p cdn: 199 plab nodes, 10 random akamai nodes per client, 1MB downloaded
+  from 'best' replica
+  - best to worst: iplane nano, measured latency, vivaldi, OASIS, random
+
+congestion control
+------------------
+
+Analysis and Simulation of a Fair Queueing Algorithm
+
+- traditionally, endpoints manage congestion control (eg TCP), while use simple
+  FCFS/tail drop policy
+  - problems
+    - malicious endpoints can do whatever they want
+    - heterogeneous CC techniques may interact in unpredictable/undesirable ways
+    - high latency for interactive low-BW conns sharing same network as high-BW conns
+- FQ: bit-by-bit round robin, but 1 packet at a time
+  - each user has separate queue
+  - route packets in order defined by per-packet finishing times
+  - if packet arrives and full, drop last packet from largest queue
+- give slight pref to packets arriving into empty queues
+  - even without this, FQ has much better promptness
+- game theory: encourages good behavior since bad is punished (dropped)
+- adds much more state to routers
+
+random early detection gateways for congestion avoidance
+
+- 2 schools: argue that router must play important role in CC
+  - random early detection (RED): take action as soon as approaching congestion
+    is detected
+  - fair queuing (FQ): take action once queue buffers are full
+- detection: calculate avg queue size using low-pass filter with EWMA
+  - min size and max size separate no/moderate/severe congestion states
+- on congestion, mark packet to inform senders to reduce rate
+  - marking: either dropping packet or setting bit in header
+  - no congestion: no packets need to be marked
+  - severe congestion: all packets marked
+  - moderate: mark with probability that's scaling with queue size
+- properties
+  - responds more promptly than "tail drop" policy, avoiding catastrophic
+    congestion collapse
+  - fairness: high-BW senders more likely to have packets dropped than low-BW
+    senders
+  - no bias against bursty traffic, unlike tail drop or random drop
+
+Congestion Control for High Bandwidth-Delay Product Networks
+
+- XCP: CC from scratch
+- TCP: AIMD for both efficiency and fairness
+- XCP: separate; MIMD for efficiency, AIMD for fairness
+- why explicit congestion signals
+  - clients can't distinguish losses due to errors vs congestion
+  - detection requires RTO timeout, duplicate acks, or similar
+  - packet loss is binary, but notification can carry more info
+- comments
+  - ECN for IP has been around for a long time
+  - DECNet did something similar long before XCP
+  - hard to deploy
+
+misc
+====
+
+NetMedic: Detailed Diagnose in Enterprise Networks (sigcomm 2009)
+
+- <http://everythingisdata.wordpress.com/2009/09/17/detailed-diagnose-in-enterprise-networks/>
+- pinpointing network problems
+- model network as set of components (machines, processes, network paths, etc.)
+  - each component has set of vars defining current state
+  - and a set of unidirectional dependencies on other components
+  - auto construct dependency graph
+- record state over time; infer correlations between states of 2 components
+  - eg when C1_x abnormal, C2_y abnormal also
+- label edges with correlation strength, estimating likelihood that one
+  component influences the state of another component
+  - infer which component is causing the undesirable behavior/failure
