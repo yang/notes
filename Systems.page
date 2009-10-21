@@ -1,7 +1,7 @@
 Background
 ==========
 
-- interruption vs preemption: like forced procedure call vs unavailable cpu
+- interruption vs preemption: forced procedure call vs unavailable cpu
 
 - double fault: cpu encounters problem while trying to service a pending
   interrupt/exception
@@ -35,6 +35,11 @@ Kernel architecture
 - microkernels
   - L4
 - exokernel
+
+fastcgi
+
+- protocol for keeping resident CGI handlers (eg in process pool)
+- req/resp serialized over TCP, allowing remote handlers
 
 Concurrency
 ===========
@@ -121,8 +126,50 @@ Synthesis: An Efficient Implementation of Fundamental Operating System Services
 
 A principled approach to operating system construction in Haskell
 
-Browsers
-========
+Sandboxing
+==========
+
+Efficient Software-Based Fault Isolation (Wahbe, sosp93)
+
+- can isolate via separate addr spaces, but switches not good for tightly
+  coupled modules
+  - RPC: trap, copy, ctx save/restore, switch HW addr space (flush TLB), trap
+    - repeat on return; 3 OOM > normal proc call
+  - eg postgres extensible type system can define ctors, dtors, preds
+  - eg OS exts: packet filters, app-specific virt mem mgmt, Active Messages
+- propose a portable, PL-indep approach:
+  - load code/data into own _fault domain_ (portion of host's addr space)
+  - rewrite code to prevent writes/jumps outside fault domain
+- poses tradeoff rel. to hardware fault isolation: substantially faster comm
+  btwn fault domains, but slightly increased execution time for distrusted
+  modules
+  - evaluated on postgres; 3x faster than sep addr spaces
+
+App-V (john sheehan, MS ECS 2009)
+
+- sequencing (packaging)
+  - monitor installation from kernel; capture FS/reg changes
+  - now know all the resources needed by app; can optimize the layout for
+    streaming
+  - extract metadata; eg recognize COM objs, NT services; store in manifest
+  - heuristics
+    - program files: don't need to roam with user
+    - hkey_current_user keys: should roam with users
+    - UI for tweaking these settings
+- SystemGuard: "namespace mgr"
+  - system namespace: everything else
+  - sequencing produces an app namespace
+    - eg `C:\windows\system32\foo.dll` could've been installed by app
+    - enables streaming (Click2Run), user roaming
+  - writes go to modification namespace (either roaming or non-roaming)
+  - handles: files, reg, COM, fonts, services, object mgr, mailslots, etc.
+    - eg virtualize CLSIDs for COMs; virtualize service names
+    - don't deal with drivers; typically installed as part of platform
+  - dynamic, not static: watch processes, not programs
+    - eg cmd is already there, but if run via a VS shortcut, run it in the VS
+      bubble
+  - for cross-app, dynamic suite composition (DSC) feature: run in same bubble
+- office doesn't user the generic app-v UIs
 
 native client
 
@@ -150,6 +197,56 @@ native client
   - OS-dependent
   - ptrace on linux, syscall ACLs on Windows
 - compile for native client with modified gcc (1000 lines patched)
+
+Sprockets: Safe extensions for distributed file systems (umich usenix 07)
+
+- for distributed FS "tweak" extensions; DFSs mostly impl'd in user space
+  - run procedure in same addr space, then always roll back except for the
+    buffer expecting results (this is validated/acted on by host)
+  - programmability like proc call: lightweight usage, can access any data/code
+  - cost: not up front per sprocket, but per line of code executed, since
+    sprockets are small
+- alt designs and their problems
+  - direct procedure call: same addr space
+  - separate addr spaces, eg fastcgi
+    - no access to (reuse of) data/code; need to define (read) interface
+    - requires OS fine-grained sandboxing (only read file1 and write file2)
+  - chkpt/rollback (fork): closest to sprockets
+    - heavy; still requires OS sandboxing
+    - idea for multithreading: wait for all locks to release before fork
+- binary instrumentation/SFI with PIN
+  - first save caller ctx (regs, PC, heap size, etc)
+  - for each mem write, save orig loc/val in undo log
+  - dynamically enable/disable instrumentation: core FS functions called via
+    sprockets are instrumented; outside, orig is used
+  - OOM slower, but faster than fork
+  - optims: no need to restore unused memory, eg space below stack or malloc'd
+    by sprocket; avoid dup backups
+- handling buggy sprockets
+  - register sig handlers for segfaults, timeouts
+  - instrument syscalls with check against whitelist + optional specific
+    syscall handling (eg closing an fd that it didn't open)
+- multithreading: sprocket time (.14-.62ms) << scheduling quantum
+- implemented: transducers (id3), app-specific resolution (id3), devices (PTP)
+- related work
+  - wahbe: limits access to addr space outside sandbox
+  - vino: SFI for OS exts; not full access (whitelist of kernel fn's)
+  - nooks: used this technique for device drivers
+  - exokernel: allows user-level code to impl many services
+  - sprockets target functionality already avail. at user-level; min changes;
+    user-level tools/libs
+  - type-safe langs: eg SPIN OS uses modula-3; limits FS code reuse (mostly not
+    in type-safe langs)
+  - watchdogs, stackable FSs: more coarse-grained ext interface allowing exts
+    only at certain pre-defined VFS ops like open, close, write
+  - may leverage STM/HTM techniques
+
+OSs
+===
+
+SPIN (UW)
+
+- modula-3
 
 VMs
 ===
@@ -936,6 +1033,20 @@ PCMFS
     must have already been committed back to persistent storage
   - requires minor changes to several parts of PC arch
 - all ops but cross-dir moves never bubble up to (parent) inode
+
+semantic file systems (david gifford 1991)
+
+- flexible associative access by auto extracting attribs with file
+  type-specific _transducers_
+
+    /sfs/exports:/lookup_fault # files that export procedure `lookup_fault`
+    /sfs/exports:/lookup_fault/ext:/c # and that have extension `c`
+
+- related work
+  - unix/linux: /dev, /proc, named pipes, automount, etc.
+  - plan 9: distributed service dirs
+  - other projs: arbitrary file/dir semantics (files can be anything)
+- indexing process
 
 DVCS
 ====
