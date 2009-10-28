@@ -3,16 +3,16 @@ term frequency inverse document frequency (TFIDF)
 - term frequency is num occurrences of term $t_i$ in doc $d_j$ over total num
   words in $d_j$ (how prominent $t_i$ is in $d_j$):
 
-  \begin{equation}
+  $$
   tf_{i,j} = \frac{ n_{i,j} }{ \sum_k n_{k,j} }
-  \end{equation}
+  $$
 
 - inverse document frequency is num docs over num docs with $t_i$ (more common
   words are less important):
 
-  \begin{equation}
+  $$
   idf_i = \log \frac{ \abs{D} }{ \abs{ \set{ d : t_i \in d } } }
-  \end{equation}
+  $$
 
 - tf-idf = tf * idf
 
@@ -38,4 +38,4 @@ cosine similarity
 
 jaccard similarity/coefficient/index
 
-- simple: J(A,B) = |A \cap B| / |A \cup B|
+- simple: $J(A,B) = \frac{|A \cap B|}{|A \cup B|}$
