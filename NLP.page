@@ -11,7 +11,7 @@ term frequency inverse document frequency (TFIDF)
   words are less important):
 
   $$
-  idf_i = \log \frac{ \abs{D} }{ \abs{ \set{ d : t_i \in d } } }
+  idf_i = \log \frac{ |D| }{ | \{ d : t_i \in d \} | }
   $$
 
 - tf-idf = tf * idf
