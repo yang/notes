@@ -1,5 +1,19 @@
+game development
+
+- asm is still freq used
+- c++ is the de facto std bc of physical memory control (rather than raw perf)
+- often have heavy duty scripting infrastructure
+- equal numbers of engineers/artists, with slightly fewer designers (scripters)
+
+concepts
+
 - scrum
-- dependency injection
+- dependency injection: a way of structuring your code for testability
+  - banish global state/singletons
+  - explicitly pass objects/object factories around to ctors
+  - ctors are very simple
+  - initialize object/object factory graph at startup
+  - easy to substitute different implementations for testing
 
 characterizing and predicting which bugs get fixed: emp study of ms win (philip guo)
 
