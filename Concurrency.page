@@ -1,6 +1,8 @@
 Background
 ----------
 
+- semaphores: p decrements/acquires, v increments/releases
+
 - annoying to do performant multiprocessor programming
   - on tile64, singly cached shared memory means that all accesses to that
     memory need to go through the owning tile; can't do this remotely
@@ -463,6 +465,18 @@ still need to finish crawling:
 - [Parallel and Distributed Systems](http://www.cs.rochester.edu/~scott/458/)
 - [CS 194-2 Parallel Programming](http://www.cs.berkeley.edu/~mhoemmen/cs194/)
 
+MS technologies
+
+- Parallel Framework Extensions (PFX): TPL and PLINQ
+- Parallel LINQ (PLINQ): data parallel comprehensions
+- Task Parallel Library (TPL): fine-grained tasks are run in thread pools
+- Concurrency and Control Runtime (CCR): TODO
+- Axum: actors ("agents") pass msgs asynchronously across ports on channels
+- F# asynchronous workflows: TODO
+- CHESS: Find and Reproduce Heisenbugs in Concurrent Programs TODO
+  - repeatedly runs a concurrent test ensuring that every run takes a different
+    interleaving
+
 Tools
 -----
 
@@ -498,9 +512,10 @@ multi-core runtime (Stanford)
     for former only, too coarsed-grained with latter
 - keep as ref for performance numbers
 
-LogTM (Wisc)
+LogTM (Wisc, HPCA 2006)
 
-- eager versioning (undo logging), eager conflict detection
+- most HTMs leave old values, buffer new values; fast aborts, slow commits
+- LogTM: eager versioning (undo logging); also, eager conflict detection
 - transaction log
   - per-thread linear virtual address space
   - filled by hardware, read by software
