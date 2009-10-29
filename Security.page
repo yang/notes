@@ -1,3 +1,5 @@
+people
+
 - michal zalewski: google security person, wrote browsersec book among tons of
   other literature/tools
 - jeremiah grossman: prominent web security blogger; leader of whitehat
@@ -5,6 +7,11 @@
 - theo de raadt: openssl, openbsd
 - mark dowd: amazing; ibm x-force team; taossa book; nacl exploits; flash null
   ptr exploit
+
+terms
+
+- _drive-by download_: browser (or extension) exploit triggered on simply
+  displaying a page
 
 security
 
@@ -167,6 +174,11 @@ secure javascript
 - caja
 - secure ecmascript: <http://ses.json.org/>
 
+javascript
+
+- ESAPI: an encoding lib that uses declarative rules and whitelists of allowed
+  chars
+
 XSS (cross-site scripting)
 
 - exploits the trust that a user has for a particular site
@@ -230,10 +242,11 @@ network hijacking
   - announce that you have a shorter route to the target AS
   - "black holing": ??
   - must hijack BGP TCP session
-- DNS cache poisoning
+- DNS cache poisoning: tricking NS into thinking it got authentic info
   - specify attacker's choosing of authority NS for either requested domain or
     unrelated domains
   - bugs in eg BIND allowed the above to slip by; now fixed
+  - still, no signing means easy to do MITM
   - DNSSEC signs responses with PKI
 - DNS rebinding: TODO
   - attacker gets user to use his DNS server
@@ -426,3 +439,72 @@ IE
 
 - Protected Mode for isolation and sandboxing
 - type 1 (reflected) xss filter
+
+malware
+-------
+
+the ghost in the browser: analysis of web-based malware (provos, google, 2008)
+
+- 10% of URLs engaged in drive-by downloads
+  - map-reduce looks for known malicious URLs in corpus
+  - instrumented IE in VM; watch for add'l processes, changes in FS/reg
+- malware comes from lack of content control on pages
+  - web app exploits
+  - user content
+  - ads: partner with dedicated ad companies, not individual advertisers; trust
+    is not transitive
+  - third-party widgets: eg stats counter, iframemoney.org
+- exploits
+  - popular: MS DAC
+    - js instantiates activex object; normally not safe for scripting
+    - js retrieves exe via XHR
+    - adodb.stream used to write exe to disk
+    - shell.application launches new exe
+  - popular: MS WebViewFolderIcon heap spray
+  - many gather info (eg browser, jvm version, OS patches) then fetches
+    applicable exploits
+  - can also trick user, eg video activex codec
+- trends
+  - js escaping: effective against signature/anomaly-based IDSs; also used by
+    legit sites
+  - classification: use majority voting by major AV software
+    - trojan: contains/installs malicious app with harmful impact on user's
+      computer
+      - most common: downloaders (get other trojans), banking (bank acct
+        numbers, passwds)
+    - adware
+    - unknown/obfuscated
+  - http reqs not from browser: mostly for popup ads, some for updates/instrs
+  - most exploits not hosted on compromised sites; distributed across many
+    sites
+  - hosted binaries mostly change infrequently; some do, to evade sig scans
+- most malware are user-mode apps
+- [curiously, saw nothing on spam]
+
+a crawler-based study of spyware on the web (uw, 2007)
+
+- downloaded exe's, ran/install in VM, ID with lavasoft ad-aware
+- twice: 5/2005, 10/2005
+- high risk sites: games, celebs
+- types
+  - adware
+  - keylogging spyware
+  - trojan downloaders
+  - browser hijackers: search engine, default home page, URL redirection
+  - dialers: uses modem to call expensive toll numbers
+  - mostly adware, hijackers (relatively benign) but many downloaders
+  - drive-by's have same distribution as spyware
+- time comparisons: older AV DB misses 1/3 of spyware; URL blacklisting
+  ineffective [numbers don't seem to support, though]
+- many tweak registry
+- collection via disposable webmail
+- [notes]
+  - curiously, saw nothing on spam, game passwd harvesting
+  - no need for exploits
+
+seminal
+-------
+
+Why Isn't Trust Transitive? (bruce christianson, william s harbison)
+
+- straightforward but classic
