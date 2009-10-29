@@ -16,6 +16,11 @@ term frequency inverse document frequency (TFIDF)
 
 - tf-idf = tf * idf
 
+soundex algorithm
+
+- rudemintary "sounds-alike" phonetic algorithm for encoding things that sound
+  similar to the same representation, for matching
+
 vector space model
 
 - represent text docs as vectors of identifiers
