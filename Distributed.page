@@ -34,6 +34,14 @@ TODO consistency
 
 - http://en.wikipedia.org/wiki/Consistency_model
 
+data grids
+
+- data grids: general distributed utilities
+  - caches, in-mem data structures, txns, pub-sub/msging, membership
+- oracle coherence, ibm websphere extreme scale/object grid, terracotta,
+  gigaspaces, gemstone, jbosscache/jgroups/infinispan, hazelcast
+  - hazelcast: undocumented consistency guarantees
+
 BFT
 
 - normal operation: why simple approach similar to failstop replication won't
@@ -76,12 +84,52 @@ BFT
 datacenter
 ==========
 
-micdrosoft chicago
+microsoft chicago
 
 - trailer containers
 - $.5B, 700 ft^2, 2 levels, 112 containers, 224K servers
 - each container: 2K servers, .5MW critical load, 50K lb, air skates
 - 11 diesel generators, currently 30MW total load, fully 56MW critical load
+
+FAWN (dga, sosp09)
+
+- low-power embedded CPUs + small flash storage
+  - increasing CPU/IO gap: reduce CPU
+  - power grows super-linearly with speed
+  - dynamic power scaling on trad'l systems is inefficient; near min volt at
+    highest freqs
+- flash
+  - fast random reads: << 1 ms (up to 175x faster than disk)
+  - power-efficient IO: < 1 W at heavy load (disks at load use 10 W)
+  - slow random writes
+- FAWN-DS: log-structured store
+  - main-mem hash index: maps 160-bit keys to log pos
+    - only stores 15-bit fragment of key, 1 valid bit, 4 B log pos = 16 B
+    - index into hash table is lowest i bits (16 bits); tables have 2^i elts
+    - key frag is next 15 bits; cmp this
+    - pseudocode
+
+        index = key & 0xffff
+        keyfrag = (key >> 16) & 0x7fff
+        for i = 0 to n:
+          bucket = hash[i][index]
+          if bucket.valid and bucket.keyfrag == keyfrag and
+             readkey(bucket.offset) == key:
+            return bucket
+        return not_found
+
+    - periodic snapshots
+    - typical obj size: 256 B to 1 KB; for 256 MB RAM, yields approx 4 GB
+      storage
+  - each node has several virtual IDs in the key ring, so multiple files;
+    these _semi-random writes_ are still fast
+  - maintenance: split, merge, compact are all scans that can run
+    concurrently with ongoing operation (thanks to immutability/main-memory
+    index)
+- TODO
+- FAWN-KV: consistent, replicated, HA KV store
+  - chained replication
+- 350 KV queries/Joule: 2 OOM more than disk-based system
 
 People
 ======
@@ -269,6 +317,56 @@ Tra (Russ Cox)
 - paper bugs
   - why is fig 8 known to have no mods at B3?  it could've....
   - why doesn't d have min of sync times in fig 12?
+
+MapReduce
+=========
+
+mapreduce TODO
+
+hadoop
+
+- _jobtracker_: master node that splits jobs into tasks and assigns them to
+  nodes
+- _tasktracker_: on each node; manages task execution
+- map task execution
+  - _split_: portion of input file for a task; defaults to 1 chunk (64MB)
+  - mapper interface
+
+      class mapper:
+        map(key, val, OutputCollector)
+        close(): called when map has been called on all records in split
+
+  - OutputCollector: stores output in a format for reducer
+    - apply partition function on key, buffer record/partition number in buffer
+    - spill to disk occasionally; spill sorts by (partition, key)
+  - _commit phase_: on task completion; merges spills; read when servicing reqs
+  - _combiner_: optional map-side reducer
+- reduce task execution
+  - each reduce task is assigned a partition of key range
+  - _shuffle phase_: fetch task partition from each map task's output (HTTP;
+    default 5 at a time)
+  - _sort phase_: group records with same key
+  - _reduce phase_: apply reducer to each key and corresponding list of values
+
+mapreduce online (tyson condie, nconway, ..., jmh, cal TR 2009)
+
+- built hadoop online prototype (HOP); submitting to hadoop project
+- key idea: pipeline (no materialization)
+- features
+  - online aggregation: see snapshots of results as they are generated ("early
+    returns")
+  - continuous data stream processing: indefinite input
+  - jobs finish faster
+- single job: start as many map/reduce tasks as you have slots for
+  - don't schedule all at once, since not enough slots and too many TCP conns
+    - if no reducer task to take from a mapper, then just materialize
+  - buffer records for opportunity to apply sort/combiner
+    - resort/recombine periodically if reducer not keeping up
+- multi-job pipelining
+- fault-tolerance: reducer just avoids mixing tentative ("uncommitted") map
+  task output with "committed"
+- online agg: snapshot accuracy is hard; report simple progress metric along
+  with snapshot results
 
 Filesystems
 ===========
@@ -870,9 +968,8 @@ megastore
 - means that apps now get to deal with eventual consistency (the alternative
   being unavailability)
 
-infinispan
+infinispan (data grid)
 
-- data grids: caches; in-mem data structure
 - FLOSS from jboss
 - formerly jboss cache
 - supports read committed and repeatable read
@@ -892,3 +989,34 @@ DRKP: working on "mul-tree-cast" membership service
 - trees are constructed using a deterministic algorithm that each node can
   independently calculate
 - problem: what if you send different subsets of the membership to each tree?
+
+memcached
+
+velocity
+
+- MS's memcached
+- <http://msdn.microsoft.com/en-us/magazine/cc655792.aspx>
+
+mongodb
+
+- C++
+- data model/organization
+  - server can manage multiple isolated DBs
+  - each DB has 1+ collections; collections have documents (objects) + ACL
+  - all objects have `_id` field; always indexed
+- BSON: like JSON data model; general binary serialization format; primitives,
+  objects, arrays
+- dynamic queries: JSON-like notation; equality and gt/lt comparators;
+  generates plan, uses indexes; cursors
+- indexing on inner objects and embedded arrays; compound keys; specify sorting
+  order; unique indexes
+- query profiler
+- master-slave replication: async; both manual and auto (replica pairs; auto
+  failover)
+- efficient storage of binary data incl. large objects (photos, videos)
+- auto-sharding for high scalability
+  - each shard is replica pair and manages some chunks
+  - chunk: continuous range of objects from particular collection, ordered by a
+    key (specified similarly as index)
+  - other components: frontend coordinators; config/metadata servers
+- no txns
