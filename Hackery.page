@@ -1,3 +1,15 @@
+- name resolution on linux
+  - /etc/nssswitch.conf indicates what /lib/libnss* to use for resolving
+    certain classes of names
+  - libnss_compat: uses NIS/NIS+, DNS, files (/etc/{hosts,networks})
+  - linux has no resolver daemon or kernel code for resolving names (i.e. no
+    caching); all in lib
+
+- .NET 4
+  - BCL: code contracts, parallelism, tuples, better fire IO
+  - mscorlib: main .NET runtime lib (.NET used to be called Common Object
+    Runtime)
+
 - common C defines
   - <http://www.woodtennis.com/win2unix.html>
 
@@ -893,8 +905,75 @@
     - priority is inherited iff parent is < normal class (below normal/idle)
 
 - windows kernel dev
+  - system service dispatches (syscalls)
+    - all go through `ntdll.dll`; `Zw*` for kernel, `Nt*` for user
+    - many undocumented
+    - trap into `KiDispatchService`/`KiSystemService`
+
+        ZwCreateFile:
+          mov eax, SERVICEINDEX
+          lea edx, [esp+4]
+          int 2eh # sysenter on xp
+          ret 2ch
+
+    - `KeServiceDescriptorTable[Shadow]`: global syscall tables
+    - syscall nums are OS version-dependent
+
+        DWORD * addr = (DWORD *)
+          (1+(DWORD)GetProcAddress(GetModuleHandle("ntdll.dll"),
+                                   "NtCreateSection"));
+
+    - kernel finds target addr in _thread environment block (TEB)_
+      - TEB contains regs, pri, process ptr, service descriptor table (SDT)
+        ptr, more
+      - ie, there's a per-thread syscall table
+      - SDT contains ntoskrnl and win32k system service tables (SSTs)
+        - SST contains
+          - system service dispatch table (SSDT): array of fn ptrs
+          - always-0 field
+          - number of entries in SSDT/SSPT
+          - system service parameter table (SSPT): array of byte counts
+        - for win32k syscall numbers, subtract 0x1000 to get offset
+        - bits 12, 13 specify which of the four possible SDTs to look in
+        - SDT ptr offset in TEB is also OS version-dependent
+
+            struct SYS_SERVICE_TABLE {
+              void **ServiceTable;
+              unsigned long CounterTable;
+              unsigned long ServiceLimit;
+              void **ArgumentsTable;
+            };
+
+    - when changing, either disable write protection in cr0, or map the SSDT's
+      phys addr into a new virt addr and access via that
+    - refs
+      - "rootkit arsenal: escape and evasion"
+      - russinovich. [nt syscall hooking](http://www.ddj.com/184410109)
+      - <http://www.codeproject.com/KB/system/soviet_protector.aspx>
+      - http://www.volynkin.com/sdts.htm
+      - http://www.osronline.com/showthread.cfm?link=93915
+      - http://forum.sysinternals.com/forum_posts.asp?TID=3758
+      - http://unlmtd.wordpress.com/2007/07/29/hooking-nt-functions/
   - hooks
-    - PsSetCreateProcessNotifyRoutine
+    - user level injection
+      - `SetWindowsHookEx`: only certain uninteresting hooks
+        - window msgs, debugging, foreground thread going idle, kbd/mouse, shell
+      - browser helper object (BHO): COM DLL for IE hookig
+      - Office add-ins
+      - `CreateRemoteThread(targetProc, ..., &LoadLibrary, "C:\\my.dll")`: only
+        works if `kernel32.dll!LoadLibrary` is always mapped to same loc
+        - reqs monitoring running procs; call `CreateProcess` yourself or use
+          `PsSetCreateProcessNotifyRoutine`
+    - kernel level interception
+      - NT syscall hooking
+      - `PsSetCreateProcessNotifyRoutine`
+    - user level interception
+      - proxy DLLs: share same name and exports as established DLL
+        - easy with function forwarders: `#pragma comment(linker,
+          "/expo.rt:DoSomething=DllImpl.ActuallyDoSomething")`
+      - binary rewriting
+      - debugger spying
+      - import address table (IAT): change addr in `.idata` in PE
   - debugging
     - virtual pc: use the virtual com port
       - run this on the target machine in an admin cmd; `bcdedit` is a program
@@ -1135,12 +1214,17 @@
       - specify to heap allocator
       - the more pageable, the better
     - memory descriptor list (MDL): maps VM to PM; opaque struct
+      - PTEs for VM->PM; MDL for buffers associated with DMAs
       - for pageable mem: correspondence is temporary
       - IRPs can be associated with MDLs
         - MDL has pointer to IRP
         - IRP has pointer to first MDL in a chain of zero or more MDLs (MDLs
           linked by next pointers)
+    - memory registers
+      - drivers have full access to virt addr space, but not devices
+      - devices need to use HAL _map registers_
     - globals, device extensions are in non-paged pool
+    - `MmMapIoSpace`: map phys addrs (ie bus-relative IO addrs) to virt addrs
   - ndis
     - net buffer lists can be chained together
     - net buffer lists can net buffers chained together
@@ -1152,6 +1236,8 @@
     - some of these have diff meetings; eg thread means thread terminated
     - events have state (set or unset)
   - timing
+    - KeDelayExecutionThread: sleep current thread
+      - TerminateThread can still kill, even if alert=0
     - KeQueryPerformanceCounter: finest grained running count
       - "KeQueryPerformanceCounter is intended for time-stamping packets or for
         computing performance and capacity measurements. It is not intended for
@@ -1172,11 +1258,11 @@
     - KeQueryTimeIncrement: returns the number of 100-nanosecond units that are
       added to the system time each time the interval clock interrupts
   - sharing mem btwn user and kern
-    - METHOD_NEITHER: direct access to user memory; need to Probe it before
-      using
-    - METHOD_{IN,OUT}_DIRECT: in is buffered access; out has MDL; more details
     - METHOD_BUFFERED: all in/out data copied to temp intermediate buffer;
       safest but slowest
+    - METHOD_{IN,OUT}_DIRECT: in is buffered access; out has MDL; more details
+    - METHOD_NEITHER: direct access to user memory
+      - need to use `MmProbeAndLockPages`
   - languages
     - c++ is totally usable in kernel! but not stl
 

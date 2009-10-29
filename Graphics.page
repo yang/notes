@@ -13,6 +13,30 @@ Software
 - openglut: fork of freeglut that adds some more functionality
 - GLUI: OpenGL User Interface Library
 
+windows graphics APIs
+
+- user32.dll does all window/menu/etc. drawing on top of GDI
+- Graphics Device Interface (GDI): old Windows API for drawing lines/curves,
+  rendering fonts, handling palettes
+  - can't animate: no synchronizing framebuffers
+  - can't rasterize for 3D
+  - no direct app-HW access but higher abstraction; easy to draw on multiple
+    devices
+  - GDI+: C++-based; anti-aliasing; FP coords; gradient shading; more complex
+    path mgmt; intrinsic file format (jgp/gif) support; affine xforms of 2D
+    view pipeline
+- desktop window manager (DWM): compositing engine added in vista
+  - runs on D3D
+  - runs GDI, GDI+; GDI no longer HW-accel'd; GDI now software-rendered legacy
+- Direct3D: basically the GPU API ("immediate mode graphics API")
+  - fills in holes that HW is missing with software
+- Direct2D: added in Win7; to render geometries, bmps, text directly atop D3D
+  - also: remote rendering over RDP; SW fallback for server-side rendering/lack
+    of HW; cleartype
+- DirectWrite: complements D2D; HW-accel'd text; text layout/rendering;
+  typography
+- handle can be passed to various GDI functions
+
 Graphics architecture (Angstrom group meeting, jrk@mit.edu, 4/24/08)
 
 - raytracing vs rasterization

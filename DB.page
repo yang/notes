@@ -385,6 +385,20 @@ hybrid approaches
   - vertica
 - <http://dbmsmusings.blogspot.com/2009/09/tour-through-hybrid-columnrow-oriented.html>
 
+olap
+----
+
+greenplum
+
+- table storage options
+  - traditional pg
+  - row-oriented append-only: compressible, scan-optimized
+  - col-oriented append-only
+  - treat external source as relational
+- compression: LZ, gzip
+- no need for joins to get multi columns
+- no: columnwise compression options, in-mem compression, late materialization
+
 key-value stores
 ----------------
 
@@ -420,7 +434,7 @@ hyder
     decisions
 - binary trees vs b-trees: b-tree nodes are large, so cheaper to update lots of
   small nodes
-- 
+- TODO
 - [questions]
   - availability
 
@@ -430,6 +444,13 @@ benchmarks
   - mysql: 3030 sets/s, 4670 gets/s
   - redis in-mem: 11200 sets/s, 9840 gets/s
   - tokyo tyrant disk: 9030 sets/s, 9250 gets/s
+
+redis
+
+- non-volatile memcached that can also map to lists and sets with atomic push/pop ops
+- async persists
+- microbench: 110K sets/s, 81K gets/s on entry level linux box
+- impl in C
 
 distributed olap databases
 --------------------------
