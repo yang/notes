@@ -1,5 +1,106 @@
+people
+
 - Bob Metcalfe: inventor of Ethernet
 - Van Jacobson: primary contributor to TCP/IP
+
+general terms
+
+- anycast: send to 1 of many; useful for HA/load-bal/geoloc; used in BGP, DNS
+
+dns
+
+- 13 root NSs; maintained by ICANN
+- either recursive or non-recursive queries
+- protocol: stateless
+  - udp port 53, or tcp if response > 512B or if doing zone xfer
+  - sections: header, question, answer, authority, add'l
+  - question: the only section in queries
+    - name (no wildcards), type (incl. specials), class
+  - answers: matching RRs; if any CNAMEs, then target RRs should also be
+    included
+  - auth: NS RRs pointing to more authoritative NSs; clients should cache this
+  - add'l: RRs that may be useful
+- zone xfers: commonly done by secondary NS updating its DB
+- glue records: specify the IP, not just the hostname, of another NS, to avoid
+  circular deps (if under same domain as the one being resolved)
+- caching: TTL 0 to 68 yrs; also have negative caching (non-existence)
+- some apps (like browsers) maintain own DNS cache, to reduce resolves
+- zones: subtrees in domain name tree; don't necessarily extend to leaves
+  - may delegate authority to another NS for a zone
+  - an NS may be authority for multiple zones
+- other uses
+  - many hostnames -> 1 IP: virtual hosting
+  - 1 hostame -> many IPs: fault tolerance, load distribution, geolocation
+  - MX records: where MTAs should send email for this domain
+  - internet-scale cached storage, eg email blacklists, software updates
+    (latest version checks), sender policy framework/domainkeys (use TXT
+    records)
+- reverse lookups: maintain a reverse lookup hierarchy under in-addr.com using
+  _pointer records_
+  - eg to find name of 1.2.3.4, lookup 4.3.2.1.in-addr.com (note topological
+    addr reversal)
+  - impractical since introduction of CIDR; see RFC 2317 (uses CNAMEs)
+- _resource record (RR)_: the basic data elt
+  - contains: NAME (FQDN), TYPE, TTL, CLASS, type-specific data (RDLENGTH,
+    RDATA)
+    - NAME: may have wildcard
+    - CLASS: IN for internet, CH for chaos, HS for hesiod
+    - TYPE
+      - A (answer): translate name to IP
+      - NS: list FQDNs of (more) authoritative NSs for zones
+      - MX: specify the mail server
+      - CNAME: canonical name; specifies a FQDN
+      - PTR (pointer): like CNAMEs, but semantically means just a pointer; used
+        for reverse lookups
+      - SOA (start of authority): start of DNS zone; the first record in a NS
+        for that domain
+  - RRs of same type define a _resource record set_; this is what's returned
+  - RRS order undefined, but servers implement round-robin for load bal
+- DNSSEC: works on complete RRSs in canonical order
+- domain names have no char restrictions, but hostnames must be LDH (letters,
+  digits, hyphen; ASCII subset)
+- internationalized domain names in applications (IDNA): unicode in LDH
+  - based on punycode
+- dynamic DNS: use `UPDATE` DNS op to add/remove RRs dynamically from a zone DB
+  on an authoritative NS
+- 240+ country code TLDs (ccTLDs)
+- registration
+  - domain name registrars: accredited by ICANN; they feed registries
+  - TLDs maintained by different orgs, operating a registry
+  - registries, registrars charge annual fees
+  - WHOIS DB held by many domain registries; provides contact info
+- WHOIS: tcp port 43; query/response
+  - no std for determining authoritative WHOIS server for a domain
+  - commonly used for TLDs
+    - whois-servers.net provides DNS CNAMEs for TLD WHOIS servers of the form
+      `<TLD>.whois-servers.net`
+    - some TLDs publish a server referral (SRV record) for the WHOIS protocol
+      in their zone, which identifies their WHOIS server, in the format
+      `_nicname._tcp.TLD`
+- COM and NET: thin registry used; domain registry holds basic WHOIS
+- verisign's sitefinder directed unregistered domains to verisign site,
+  breaking many non-web apps like email (which relies on non-existence to mark
+  msgs undeliverable)
+
+CIDR TODO
+
+ethernet
+
+- _segment_: single physical layer
+- _bridge_: connects segments into multi-hop network (LAN), forming a
+  _broadcast domain_
+  - maintain _forwarding table_ mapping MAC addrs to ports
+  - for unknown MAC addrs, flood all outgoing ports; cache incoming packet
+    addrs
+- each host has 48-bit _MAC address_ (MAC-48; also used in other PHYs)
+  - first 3 bytes: organizationally unique identifier (OUI)
+  - latter 3 bytes: NIC specific
+- multiple bridges are arranged into spanning tree to avoid loops since
+  ethernet pkts have no TTL
+  - admins choose a single _root bridge_
+- ARP (bcasting) is used to resolve IPs to MACs
+
+tcp
 
 - tcp reno: most widely used today
 - tcp vegas: newer than reno/newreno
@@ -10,8 +111,23 @@
     etc.)
 - tcp westwood: measures bw st can maintain high rates when channel err causes
   pkt loss, but handles congestion-based losses like reno does
-- source:
-  http://blog.case.edu/bes7/2008/07/15/congestion_control_algorithms_for_a_wireless_router
+- <http://blog.case.edu/bes7/2008/07/15/congestion_control_algorithms_for_a_wireless_router>
+- <http://technet.microsoft.com/en-us/library/bb878127.aspx>
+
+more tcp
+
+- nagle's: wait to batch sends
+- oob: send urgent data out of stream; unused; unreliable; poorly supported
+- delayed ACKs for batching; by default (on linux), wait up to 40ms
+
+IP
+
+- explicit congestion notification (ECN): RFC 3168; set bit in header instead
+  of dropping packet
+  - only meaningful with _active queue mgmt (AQM)_, of which early impl's were
+    RED
+
+misc
 
 - flow table
   - uses: ACL in firewalls, NAT, QoS, ...
@@ -213,6 +329,75 @@ GENI
 
 - http://geni.net/
 
+Data Center Network Architecture
+================================
+
+Floodless in SEATTLE (princeton)
+
+- status quo
+  - ethernet
+    - simple to manage/reconfig: MAC IDs are of flat namespace
+    - not scalable: relies on flooding/bcasting to learn network info
+      - fwding table grows linearly with network size
+      - flooding for basic operation
+        - flood all ports for unknown MAC addrs
+        - ARP (bcasting) is used to resolve IPs to MACs
+      - multiple bridges arranged into spanning trees; 1 path btwn any 2 nodes
+        - packets "routed" through tree don't necessarily follow shortest path
+        - also can't choose alt paths for scalability/reliability
+  - IP
+    - shortest-path routing; smaller routing tables based on prefixes/subnets
+    - config overhead due to hierarchical addressing
+      - must specify subnets on router interfaces
+      - DHCP servers must be consistent with router subnets
+    - limited mobile host support (migratable VMs)
+  - VLANs
+    - group hosts into single broadcast domain
+    - defined logically, not based on locations
+    - hosts can retain IP addrs while moving btwn bridges
+    - extending across multiple bridges required trunking (provisioning) at
+      each bridge; deciding which bridges should be in a given VLAN must take
+      into acct traffic & mobility patterns for efficient operation, hence done
+      manually
+    - limited control-plane scalability: must maintain fwd tables on every host
+      in every VLAN
+    - insufficient data-plane efficiency: single spanning tree in each VLAN
+- SEATTLE
+  - switch topology is replicated to each switch using link-state protocol
+    - enables shortest path routing
+    - sensible: switch topoligy changes much less frequently than indiv hosts
+  - 1-hop network-level DHT: IP -> MAC -> physical loc
+    - modified ARP to query DHT
+    - routers cache DHT lookups; argues that reactive caching results in
+      smaller tables than proactive distribution
+  - define "groups" (on DHT) instead of doing network-wide bcasts
+- <http://everythingisdata.wordpress.com/2009/09/17/floodless-in-seattle/>
+
+PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric
+
+- assumptions: modern DCs are "fat trees" or multi-rooted hierarchies
+  - core, agg, and edge switches
+  - location discovery protocol (LDP): used by switches to determine position
+    in hierarchy and communicate this to the other switchesg
+- pseudo MAC (PMAC) addrs: specify locations; reduce table sizes
+  - translated back to MACs by switches
+- centralized _fabric mgr_ to resolve ARP queries, and to simplify
+  multicast/fault tolerance
+  - switches fwd ARP reqs to FM
+  - usually can resolve bc PMAC-IP mappings are eagerly sent to FM as PMACs are
+    assigned and as VMs are migrated (new PMAC)
+  - rarely, can't resolve, so bcast down fat tree and cache result
+- fault tolerance simplified
+  - switches send keepalive (LDP) msg to neighbors every 10 ms
+  - if no keepalive for 50 ms, assume switch failed, contact FM
+  - FM updates state, informs affected switches
+  - switches recompute tables based on new topology
+- <http://everythingisdata.wordpress.com/2009/09/19/portland-a-scalable-fault-tolerant-layer-2-data-center-network-fabric/>
+
+VL2 TODO
+
+Monsoon TODO
+
 Routing
 =======
 
@@ -344,6 +529,7 @@ random early detection gateways for congestion avoidance
   - fairness: high-BW senders more likely to have packets dropped than low-BW
     senders
   - no bias against bursty traffic, unlike tail drop or random drop
+- [this work led to ECN]
 
 Congestion Control for High Bandwidth-Delay Product Networks
 
@@ -358,6 +544,51 @@ Congestion Control for High Bandwidth-Delay Product Networks
   - ECN for IP has been around for a long time
   - DECNet did something similar long before XCP
   - hard to deploy
+
+Safe and Effective Fine-grained TCP Retransmissions for Datacenter
+Communication (CMU)
+
+- TCP Incast problem: catastrophic drop in TCP goodput when:
+  - client issues req in parallel to multiple servers and waits for all resps
+  - servers respond at once, overflowing switch buffers on bottleneck link,
+    causing pkt loss
+  - default lower bound on TCP RTO is typically 200ms, much more than typical
+    RTT on DC nets (<1ms)
+    - servers that suffered pkt loss must wait for a relatively long time
+      before retransmitting dropped packets
+  - client is waiting for all to respond, so can't make progress/further
+    utilize network
+- causes
+  - commodity switches have small buffers
+  - RTO timers on all servers will retry at about same time; RTO grows
+    exponentially
+- proposes lowering the TCP retransmission timeout (RTO) to <= 1ms [and not
+  delaying ACKs?]
+- simulated next-gen network (10Gbps, 20gs RTT); showed problem still persists
+  at scale (>1024 servers)
+  - adding randomization to RTO avoids phenomenon, but might be unnecessary
+    outside of sim
+- fine-grained RTO safe to use in WANs? yes, little to no impact
+- how does fine-grained RTO interact with unmodified TCP stacks that use
+  delayed ACKs?
+  - doesn't actually wait up to 40ms; no delays when seeing a retransmission
+  - interacts poorly, but not as bad as incast
+  - latency more important than ACK traffic in DCs
+- <http://everythingisdata.wordpress.com/2009/09/25/fine-grained-tcp-retransmissions/>
+
+Understanding TCP Incast Throughput Collapse in Datacenter Networks (yanpei
+chen, berkeley, 2009)
+
+- differences from CMU paper
+  - while varying number of servers, CMU kept size of data received by client
+    fixed, vs. size of data sent by each server fixed
+  - delayed acks hurt both workloads bc overdrives congestion window (widens it
+    too much) and bc of congestion; no explanation why overdrive
+  - 200us RTO lower bound led to poor perf for both workloads bc network RTT
+    was 2ms, whereas CMU's was 100us
+    - should really be using jacobson RTO estimation: RTO = min(200us, mean RTT
+      + 4 * RTT linear deviation)
+- <http://everythingisdata.wordpress.com/2009/09/25/understanding-tcp-incast-throughput-collapse/>
 
 misc
 ====
