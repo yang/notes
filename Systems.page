@@ -1,6 +1,11 @@
 Background
 ==========
 
+people
+
+- david cheriton: systems at stanford
+  - granite systems; kaelia; helped launch google; arastra; aster data advisor
+
 - interruption vs preemption: forced procedure call vs unavailable cpu
 
 - double fault: cpu encounters problem while trying to service a pending
@@ -147,7 +152,7 @@ Efficient Software-Based Fault Isolation (Wahbe, sosp93)
 
 App-V (john sheehan, MS ECS 2009)
 
-- sequencing (packaging)
+- _sequencing_: process of packaging apps
   - monitor installation from kernel; capture FS/reg changes
   - now know all the resources needed by app; can optimize the layout for
     streaming
@@ -157,11 +162,11 @@ App-V (john sheehan, MS ECS 2009)
     - hkey_current_user keys: should roam with users
     - UI for tweaking these settings
 - SystemGuard: "namespace mgr"
-  - system namespace: everything else
-  - sequencing produces an app namespace
+  - system namespace: fall-through for everything else
+  - elseapp namespace: produced by sequencing
     - eg `C:\windows\system32\foo.dll` could've been installed by app
     - enables streaming (Click2Run), user roaming
-  - writes go to modification namespace (either roaming or non-roaming)
+  - modification namespace: where writes go (either roaming or non-roaming)
   - handles: files, reg, COM, fonts, services, object mgr, mailslots, etc.
     - eg virtualize CLSIDs for COMs; virtualize service names
     - don't deal with drivers; typically installed as part of platform
@@ -243,6 +248,29 @@ Sprockets: Safe extensions for distributed file systems (umich usenix 07)
 
 OSs
 ===
+
+inside windows 7 (channel 9 interview with mark russinovich)
+
+- removed global dispatcher spin lock
+- global lock in memory mgr (used for mapping pages to process addr spaces)
+- core parking
+- timer coalescing
+- delayed starting of services
+- trigger-starting of services
+- server core: removing the parts of windows that aren't used in server roles
+  - have to cut out each time
+  - not very systematic analysis; just exhaustive testing
+  - similar to winpe
+- minwin: more systematic analysis of dependency graph (telemetry) and taking
+  just the core
+  - use just the testing component that is bootable
+  - refactored a lot of things to clean up the graph
+  - includes nt kernel, executive, net, fs; excludes pnp
+  - visible in win7: kernel32.dll layered on top of new kernelbase.dll
+- virtual HDs (VHDs): can boot off the network
+- dynamic address space
+- moved reg from non-paged pool and into mmap'd file
+- extended/nested page table support
 
 SPIN (UW)
 
