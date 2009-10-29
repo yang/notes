@@ -590,6 +590,57 @@ chen, berkeley, 2009)
       + 4 * RTT linear deviation)
 - <http://everythingisdata.wordpress.com/2009/09/25/understanding-tcp-incast-throughput-collapse/>
 
+Wireless
+========
+
+MACAW: a media access protocol for wireless lan's
+
+- media access protocol: link-layer protocol for allocating access to a shared
+  medium (wireless channel) among multiple transmitters
+- MACAW: media access protocol for mobile _pads_ that communicate wirelessly
+  with _base stations_
+- each base station can hear transmission from pads within a certain range of
+  its location, called a _cell_
+- challenges
+  - mobility, but location not communicated explicitly; transmitter simply
+    moves
+  - connectivity is not transitive: A-B comm, and B-C comm, but A-C don't
+    - must prevent B-C from disrupting A, even though A doesn't know C
+  - noise: asymmetric comm (A->B, but not B->A), interfering xmitters (A out of
+    B's range, but A's xmissions might still disrupt B's xmissions)
+- MACAW ignores asymmetry and interference; assumes simplified model
+  - xmission successfully received iff there's only one active xmitter in range of receiver
+  - no 2 base stations are within range of one another
+- goals: high media utilization and fairness
+- MACA: earlier protocol to improve on
+  - before xmitting, send "ready to send" (RTS) containing len of upcoming data
+  - if receiver hears RTS and is not deferring, reply with "clear to send" (CTS) containing len
+  - any station that hears a CTS defers xmissions for long enough to allow len reception
+  - any station that hears a RTS defers xmissions for long enough to allow CTS
+    reception (not len reception, since collisions are at receiver)
+  - backoff: if no CTS, wait [1..BO] seconds, re-xmit RTS; BO = exponentially
+    growing backoff counter, reduced to 1 on successful RTS-CTS
+- MACAW
+  - less aggressive backoff: orig has large oscillations
+    - increase BO by 1.5 after timeout, decrease by 1 after success
+    - communicate BO btwn clients, to prevent client with lower BO starving
+      other clients
+    - maintain BO per-destination, rather than single counter
+  - receivers should ACK bc min TCP RTO is long (.5s at the time)
+  - allow xmitters to avoid contention
+    - send DS after successful RTS-CTS, before data
+      - so if a pad hears RTS but not CTS, don't try to xmit during data xfer period
+    - say A,B in diff cells, want to receive rapidly, but close to ea other
+      [TODO confusing]
+      - B will be unlikely to send CTS bc it would need to hear RTS exactly
+        right after A finishes receiving a data msg
+      - fix: if receiver hears RTS while deferring xmissions, after deferral
+        period reply with "ready for RTS" (RRTS)
+      - sender then resends RTS
+      - solution is imperfect: if A is receiving data constantly, B won't hear
+        RTS, so won't know to send RRTS
+- best-case perf of MACAW < MACA bc of add'l ACK/DS
+
 misc
 ====
 
