@@ -1,21 +1,24 @@
-- intel arch
-  - iret: restores context; for returning from interrupt/exception handler
-    - complex; pseudo-code spans pages in manual
-    - 2 stages: pre-commit, post-commit (commit = privilege level change)
-    - from <http://www.cr0.org/misc/CVE-2009-2793.txt>
+TODO merge in my notes from corey
 
-      > IF new mode != 64-Bit Mode
-      >   THEN
-      >     IF tempEIP is not within code segment limits
-      >       THEN #GP(0); FI;
-      >     EIP <- tempEIP;
-      >   ELSE (* new mode = 64-bit mode *)
-      >     IF tempRIP is non-canonical
-      >       THEN #GP(0); FI;
-      >     RIP <- tempRIP;
-      > FI;
-      > CS <- tempCS;  // This is the commit point (privilege switch)
-      > EFLAGS (CF, PF, AF, ZF, SF, TF, DF, OF, NT) <- tempEFLAGS;
+intel arch
+
+- iret: restores context; for returning from interrupt/exception handler
+  - complex; pseudo-code spans pages in manual
+  - 2 stages: pre-commit, post-commit (commit = privilege level change)
+  - from <http://www.cr0.org/misc/CVE-2009-2793.txt>
+
+    > IF new mode != 64-Bit Mode
+    >   THEN
+    >     IF tempEIP is not within code segment limits
+    >       THEN #GP(0); FI;
+    >     EIP <- tempEIP;
+    >   ELSE (* new mode = 64-bit mode *)
+    >     IF tempRIP is non-canonical
+    >       THEN #GP(0); FI;
+    >     RIP <- tempRIP;
+    > FI;
+    > CS <- tempCS;  // This is the commit point (privilege switch)
+    > EFLAGS (CF, PF, AF, ZF, SF, TF, DF, OF, NT) <- tempEFLAGS;
 
 disks
 
