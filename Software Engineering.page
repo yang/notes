@@ -1,2 +1,16 @@
 - scrum
 - dependency injection
+
+characterizing and predicting which bugs get fixed: emp study of ms win (philip guo)
+
+- bug fixing is imp; triaging is hard
+- ms emp data on vista/7: bug lifetime, employee info
+- qualitative survey to win devs with 20% response rate
+- main question: how do factors related to ppl and bug report edits affect whether bug is fixed?
+  - reputation, interest, reassignments, distance
+- prev paper on bug triaging: bug opener reputation = |opened cup fixed| / (|opened| + 1)
+  - +1 encourages more bug reports
+- built predictive model: logistic regression with 7 factors
+  - source, rep of opener, rep of first assignee, severity, opened by temp?, opener/assignee in same team?, same bldg?
+  - 68% prec 64% recall (.5 cutoff)
+
