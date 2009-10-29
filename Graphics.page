@@ -1,19 +1,69 @@
+Basics
+
 - bitblt: perform boolean operation on same-sized rectangles in two images
   (src, dst)
 - Bresenham's algorithm: line-drawing
+- triangulation
+  - subdividing surfaces is useful for many things
+  - Delaunay triangulation: maximizes angles; yields most-equilateral triangles
 
-Software
+Definitions
 
-- NVIDIA Cg: high-level shading language (HLSL)
-- NVIDIA CUDA: GPGPU PL
-- OpenGL: graphics library
+- texel: pixel in a texture
+
+"Post-processing" techniques
+
+- anti-aliasing: techniques include hyper sampling, subdividing pixels, random sampling, ...
+  - "2X AA" means supersample at twice the display resolution
+- texture filtering: blend texels for smoothing, eg when scaling/misaligned
+  - cheap approx to anti-aliasing
+  - betterness: anisotropic > trilinear > bilinear > nearest-neighbor with mipmapping > nearest-neighbor
+    - bilinear: blur pixels
+    - trilinear: blur mipmaps
+    - anisotropic: make mipmaps of diff ratios
+- mipmapping: technique to save some filtering
+  - when minifying textures, may need to combine many texels
+  - so, prefilter at smaller sizes
+
+GPU programming
+
+- pixel shaders, cuda are examples of things that compile to gpu bytecode
+  - before gpgpu langs, devs had to pack data into triangles/textures
+- langs
+  - opencl: cross-platform
+  - cuda: nvidia only
+  - Cg: NVIDIA high-level shading language (HLSL)
+  - D3D11 "compute shaders": platform-indep HLSL
+  - CUDA: GPGPU PL
+- pixel shaders: typically for effects; eg solar flares
+- gpu bytecode is card-indep; cards from same mfr can have different ISAs
+- gpu instrs are very SIMD; slow branches; produces machine code
+
+CUDA
+
+- gives you 'threads'
+- but real way to get any speedup is to have all threads executing same instr at same time (simd)
+- gpu's have very predictable cycle counts
+- up to dev to keep threads in step
+
+OpenGL
+
+- opengl has a mode where you can disable the perspective frustum
+  - useful for 2D games; TODO why single 3D plane insufficient?
+- textures, triangles reside in video mem
+- textures are mapped/interpolated onto surfaces
+- use 4D linear transformations for non-linear xforms in 3D (eg translations)
+
+OpenGL Software
+
 - GLU: OpenGL Utility Library
 - GLUT: OpenGL Utility Toolkit; unmaintained, restrictive license
 - freeglut: OSS clone of the original GLUT
 - openglut: fork of freeglut that adds some more functionality
+- SDL: takes care of opengl init
 - GLUI: OpenGL User Interface Library
 
-windows graphics APIs
+Windows Graphics APIs
 
 - user32.dll does all window/menu/etc. drawing on top of GDI
 - Graphics Device Interface (GDI): old Windows API for drawing lines/curves,
@@ -28,14 +78,36 @@ windows graphics APIs
 - desktop window manager (DWM): compositing engine added in vista
   - runs on D3D
   - runs GDI, GDI+; GDI no longer HW-accel'd; GDI now software-rendered legacy
+  - GDI: apps paint to system memory surface; copied to video memory surface in
+    DX pixel fmt on compositor's schedule
+  - DX: call `Present()` when done
 - Direct3D: basically the GPU API ("immediate mode graphics API")
   - fills in holes that HW is missing with software
 - Direct2D: added in Win7; to render geometries, bmps, text directly atop D3D
+  - less capabilities than gdi and wpf
   - also: remote rendering over RDP; SW fallback for server-side rendering/lack
     of HW; cleartype
+  - native api and .net wrapper
 - DirectWrite: complements D2D; HW-accel'd text; text layout/rendering;
-  typography
+  typography; works with any other drawing api
 - handle can be passed to various GDI functions
+- WPF: aka avalon; .net api; uses milcore.dll (dx)
+  - xaml tree sent to wpf rendering thread; app then sends tree updates
+- old gdi: paint directly to drawn buffer
+- compositing window mgr: paint to own buffer; DWM composes these
+  - redraw elsewhere/in other ways
+  - tear-free experience (dx "flip")
+  - no re-draw's to background apps (window trails, blank spaces)
+  - windows are drawn as textures; borderglass blur done via pixel shaders
+  - not .net but like wpf in using milcore.dll (dx)
+- WDDM: new dx driver model in vista
+  - virtualizes video mem: backed by main mem, then disk
+  - allows interruptibility of GPU
+  - allows dx surfaces to be shared across processes
+
+DirectX
+
+- final `Present()` call draws
 
 Graphics architecture (Angstrom group meeting, jrk@mit.edu, 4/24/08)
 
