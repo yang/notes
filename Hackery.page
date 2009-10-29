@@ -1,3 +1,14 @@
+- git
+
+    # choose which commits to amend and then replay (step through) them
+    git rebase --interactive
+    # force origin to accept your rebased changes
+    git push -f
+    # fetch into new branch on the fly
+    git fetch file://another/repo +master:temprepo/master
+    # just mirror another repo, discarding all your current changes
+    git reset --hard temprepo/master
+
 - name resolution on linux
   - /etc/nssswitch.conf indicates what /lib/libnss* to use for resolving
     certain classes of names
@@ -917,6 +928,7 @@
           ret 2ch
 
     - `KeServiceDescriptorTable[Shadow]`: global syscall tables
+      - KSDT is exported by ntoskrnl.exe, but not KSDTS
     - syscall nums are OS version-dependent
 
         DWORD * addr = (DWORD *)
