@@ -417,3 +417,50 @@ Beyond Time Travel Debugging (CSAIL talk, 2008-10-23)
   - how long have you been with moz?  what do you do there?
   - what did you work on here with dnj?
   - lots of researchy programming folks there?  do you publish papers
+
+Philosophy
+==========
+
+expert to expert: web programming, javascript with types, and flapjax (channel 9)
+
+- working on types and javascript
+  - but not typed js (don't want to type all of js), or type inference (algo);
+    these are hopeless
+  - want semantics
+    - problem with C: no real semantics; semantics are "whatever you get from
+      running the program"
+    - all of verification is about redundancy; check that two specifications
+      agree
+    - TI should be viewed as a programming environment feature
+  - js and js_t; program starts off in js; move parts gradually to js_t through
+    "type enrichment"
+    - cross-modular links: need some barrier that enforces guarantees across js
+      and js_t
+    - currently using contracts; eventually want to use other things like
+      static flow analyses and verification tools
+    - type inference: not scalable
+    - flow analysis: worst-case fallback since need a *flow*, hence need to
+      model entire DOM; not clear what polymorphism means here (FA just an
+      abstraction over values)
+  - idea: be able to take scripts to programs; a "continuum of guarantees"
+  - research: ways to enforce contracts
+    - crosses into IFC
+- flapjax
+  - have long designed languages for computation, not interaction
+  - callbacks invert program structure
+  - algorithmic language is not designed to be *notified* of events
+  - when OS notifies us, we return, but OS doesn't are what we return
+  - soln 1: design langs around interaction; composition of interactions;
+    flapjax does this
+  - soln 2: make OS smarter
+    - OS conflates neutrality with hostility
+    - world/universe programming model
+    - can pass copies of the same world to several programs concurrently
+    - worked on this for 5 years; was turned down several years ago
+    - thinks it's better than monads, bc monads delimit non-functional parts
+    - closer to concurrent clean than to haskell
+  - flapjax: whose job is it to keep things consistent?
+    - language's, not developer's
+    - the OS is in control; actually, the outside world is the one in control,
+      but OS is the proxy (what's visible to the program)
+- <http://channel9.msdn.com/shows/Going+Deep/Expert-to-Expert-Web-Programming-with-Flapjax/>
