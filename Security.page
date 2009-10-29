@@ -273,6 +273,15 @@ crypto
 - elliptic curve
 - rc4
 
+windows 7 UAC design flaws
+
+- auto-elevating executables: to reduce annoyance
+  - but anyone can run them; at one pt rundll32 was auto-elevating
+- auto-elevating components
+  - work only when caller is ms-signed exe, eg explorer
+  - but procs can inject code into ea other as long as same user
+- <http://arstechnica.com/microsoft/news/2009/03/opinion-ms-should-kill-win7-uac.ars>
+
 SFI
 ---
 
