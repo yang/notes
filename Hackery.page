@@ -1224,7 +1224,7 @@
       - drivers have full access to virt addr space, but not devices
       - devices need to use HAL _map registers_
     - globals, device extensions are in non-paged pool
-    - `MmMapIoSpace`: to map bus-relative IO addrs (for IO) to virt addrs
+    - `MmMapIoSpace`: map phys addrs (ie bus-relative IO addrs) to virt addrs
   - ndis
     - net buffer lists can be chained together
     - net buffer lists can net buffers chained together
