@@ -14,6 +14,8 @@ people
     invalid
 - triple fault: generated when double fault encounters fault
 
+- valerie aurora: linux dev, fs dev; chunkfs; lwn; redhat
+
 - IOCTL: direct user-to-kernel-driver interface
 
 - time of check to time of use (TOCTTOU): race condition btwn checking a
@@ -252,7 +254,7 @@ OSs
 inside windows 7 (channel 9 interview with mark russinovich)
 
 - removed global dispatcher spin lock
-- global lock in memory mgr (used for mapping pages to process addr spaces)
+- global lock in pfn database in mem mgr (used for mapping pages to process addr spaces)
 - core parking
 - timer coalescing
 - delayed starting of services
