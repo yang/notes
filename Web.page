@@ -34,3 +34,31 @@ techniques
 
 - css spriting: combining multiple images into one (reducing requests) and
   cutting pieces out using css
+
+browser plugins
+
+- plugins like flash can be windowed for perf, or windowless (opaque or transparent)
+- z-ordering
+  - certain browser elements like native widgets or iframes are traditionally also windowed
+  - windowed elements are all drawn on top of other elements
+  - de-facto standard practice: use iframes to pos things atop other windows
+- harder to smoothly (synchronously) scroll windowed plugins
+- must desynchronize for responsiveness, but windowless
+gtk, moz moving to eliminate widgets in own native windows
+
+x drawables TODO
+
+xt: ancient toolkit for windowed plugins
+
+3 old techniques for dynamically typed languages on language vm's
+- all objects in lang subclass a common root object; lots of cons
+- reflection: may be mismatch for lang type concepts
+- interpreter: slow
+invokedynamic
+- opcode identifies method name & type (which can be very generic, e.g. (Object;Object)Object)
+- a bootstrap method is registered with a class
+- first time you encounter a particular invokedynamic in some class C's method, call C's bootstrap method
+- bootstrap method is passed the calling class C, method name, method type
+- return a CallSite whose target has been set to some MethodHandle (a pointer to a method)
+- for some reason, the CallSite ctor takes the same args as the bootstrap method; not sure how this is used
+- as side effect, the CallSite may be stored away in a data structure managed by the lang runtime, so that it can be retargeted in the future
