@@ -1,3 +1,9 @@
+core concepts
+
+- TODO: Range counting, predecessor, voronoi diagrams, dynamic optimality, planar point location, nearest neighbor, partial sums, connectivity
+- skim adv algos
+- <http://mybiasedcoin.blogspot.com/2009/10/core-tcs.html>
+
 in-place quicksort (c.a.r. hoare)
 
 - select a pivot, possibly doing so using sampling
