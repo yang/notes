@@ -1,3 +1,18 @@
+TODO late binding
+
+TODO clojure (esp concurrency)
+
+TODO F#, axum, join patterns
+
+misc
+
+- pit of success: design that makes it hard for users to fail
+
+properties of macros
+
+- hygiene
+- referential transparency
+
 immutability advantages
 
 - nice list of args for immutability from
@@ -127,6 +142,43 @@ Lisp
   - lexically scoped
   - `fluid-let`: dynamic binding
 
+.NET
+
+- DLR: TODO expression trees, dynamic dispatch, call site caching
+
+C# 3
+
+- extension methods: similar to expanders
+
+C# 4
+
+- dynamic: late binding via DLR
+  - don't know object type (ie type `object`) but want to use it
+  - options before dynamic:
+    - use reflection, eg GetType, InvokeMember
+    - manually discover type and cast
+    - use specialized interface, eg ScriptObject
+  - through DLR, get unified interface IDynamicObject, or fall back on lang reflection
+
+Reactivity
+----------
+
+TODO RP, FRP
+
+flapjax (leo meyerovich, shriram krishnamurthy, OOPSLA09 best student paper)
+
+- [not convinced this brings anything new to the table vs. eg openlaszlo, javafx]
+- optional compiler
+  - automatic lifting of expressions into reactions, eg `timeB(1000)+1` instead of `liftB(function(t) { return t+1; }, timerB(1000))`
+  - inline flapjax binding expressions in html attribs
+- [talks about behaviors, but can ignore; really just event streams]
+- first-class values: eg higher-order event streams, rebinding
+  - [claim: unlike openlaszlo/javafx, but not convinced]
+- glitch-freedom: process dataflow graph in topological order to avoid transient inconsistencies (breaking app invariants)
+  - [claim: unlike openlaszlo/javafx, but is that true? seems obvious, and silly to do anything else]
+  - cycles should be broken with delays [no argument there; makes sense]
+- in use since 10/06 (pretty early)
+
 Parsing
 -------
 
@@ -162,6 +214,51 @@ active libraries
 - see also: meta-compilation of language abstractions
   <http://lambda-the-ultimate.org/node/2019>
 
+java syntactic extender (jonathan bachrach)
+
+- dylan-inspired hygienic macros for java
+- pretty simple; don't try to solve any big problems; java special cases
+- [strikes nice feature set vs ease-of-use balance]
+
+Expressivity and Abstractions
+-----------------------------
+
+ejava: statically scope object adaptation with expanders (todd millstein, ucla, oopsla06)
+
+- [excellent, thorough discussion; presents many subtleties, some highlighted here]
+- design
+  - semantically, changes the existing class
+  - explicitly import
+  - can expand interfaces; can implement interfaces
+  - expander families for overriding; dispatch on dynamic type (hence expander methods are always invoked on an expander *family*, not an individual expander)
+  - expanders are fully modular (don't actually recompile orig classes); as is augmenting expander families
+- method lookup
+  - static
+    - always use orig methods if exist
+    - can explicitly say what expander family to use in case of multiple ambiguous expanders
+  - dynamic
+    - java requires method families be _exhaustive_ and _unambiguous_ so run-time lookup always works
+    - ie classes must implement all inherited abstracts
+    - hence, cannot have abstract methods in expanders, due to unknown subclasses of expanded class (which we may not have expanders for) [but then must still throw run-time exceptions!]
+    - overriding expanders can only expand classes, not interfaces
+- implementation
+  - maintain a weak-ref cache of wrappers
+  - instantiate wrappers using if-else chain of instanceof checks
+- comparisons
+  - visitors
+    - must plan in advance
+    - invasive changes to visitor classes when type hierarchy changes
+    - visitor advantage: can inherit code
+      - eg many visitors just traverse into children
+      - expander families are isolated from each other
+- related work
+  - classboxes: closest work
+  - scala views
+    - no support for augmentation; new type must forward ops
+    - no overriding
+  - also: aspectj, multijava, half & half
+  - not for changing existing classes: mixins, traits, parameterized modules
+
 Haskell
 -------
 
@@ -182,6 +279,8 @@ Scala
 PiLib: A Hosted language for Pi-Calculus Style Concurrency *
 
 - TODO: review this and take notes
+
+[akka](http://akkasource.org/): OTP for scala; actors, supervision, STM, dataflow vars
 
 Aspects
 -------
@@ -486,3 +585,18 @@ expert to expert: web programming, javascript with types, and flapjax (channel 9
     - the OS is in control; actually, the outside world is the one in control,
       but OS is the proxy (what's visible to the program)
 - <http://channel9.msdn.com/shows/Going+Deep/Expert-to-Expert-Web-Programming-with-Flapjax/>
+
+barbara liskov's keynote at oopsla09 (same as turing award lecture)
+
+- named influential papers
+  - Djikstra - "Goto Statement Considered harmful" - which raised the innovative claim that programs ought to be easy to reason about, and language elements that made them hard to reason about were bad
+  - Wirth - "Program development by stepwise refinement" - which pointed out that a program is a series of design decisions, and these decisions give rise to a family of related programs, corresponding to different design choices.
+  - Parnas - "Information Distribution Aspects of Design Methodology".  I haven't read this one!  I thought I had read all his papers.  It sounded a lot like his modularity paper. "The connections between modules are the assumptions that the modules make about each other."
+  - Liskov - "A Design Methodology for Reliable Systems"
+  - Balzer - Dataless Programming - I read this one a long time ago but I don't remember it and ought to read it again
+  - Dahl and Hoare - Hiearchical Program Structures", in "Structured Programming" from 1972.  She said there were three very good papers in this book.  I think I have a copy, but I don't remember this paper. 
+  - Morris - "Protection in Programming Languages" - I don't think I read this one
+  - Wolf and Shaw - "Global Variables Considerd Harmful"
+  - Liskov and Zilles - "Programming with Abstract Datatypes"
+  - Goodenough - "Exception Handling" Issues and a Proposed Notation"
+- tom malone TODO
