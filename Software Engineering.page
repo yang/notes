@@ -28,3 +28,6 @@ characterizing and predicting which bugs get fixed: emp study of ms win (philip 
   - source, rep of opener, rep of first assignee, severity, opened by temp?, opener/assignee in same team?, same bldg?
   - 68% prec 64% recall (.5 cutoff)
 
+anecdotes
+
+- oopsla09: nasa jpl uses model checking (heavy duty theory) and static analyses (less theoretical but still highly useful)
