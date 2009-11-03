@@ -1,3 +1,6 @@
+- networking
+  - 4.2.2.1: level3 ns server
+
 - git
 
     # choose which commits to amend and then replay (step through) them
@@ -407,6 +410,16 @@
 - c++
   - `#define public private` trick may allow you to access private variables
   - `extern "C"`: preserves C calling convetions and name (non-)manging
+  - ranges
+    - advantages of ranges over iterators
+    - iterator_range<iter_type>(begin, end): iter -> range
+    - iterator_traits<range_type>::type: range -> iter
+    - begin(), end()
+    - transform
+    - make_filtered_range, make_transformed_range; or, input_range | transformed(f) | filtered(f)
+  - iterators
+    - make_filter_iterator, make_transform_iterator
+    - transform
 
 - g++
   - warnings
@@ -699,6 +712,8 @@
     - wait(2) gives you other info, eg whether program crashed (presumably bash
       uses that)
     - no way to capture shell's "Segmentation fault" message to a file, AFAIK
+  - time
+    - `ctime()` produces `time_t`, 32-bit seconds since 1/1/70 UTC
 
 - terminals
   - <http://www.linusakesson.net/programming/tty/index.php>
@@ -935,10 +950,29 @@
   - processes/threads
     - priority is inherited iff parent is < normal class (below normal/idle)
     - groups: used by `GenerateConsoleCtrlEvent` (kinda like posix signals)
+    - default stacks on 32-, 64-bit: commit 4KB, reserve 1MB
+    - stack guard pages trigger commits on reserved stack space
+    - limited by virt mem on 32-bit OS, commit on 64-bit OS
+    - 200 KB min working set size (code + data)
   - NUMA support: processor groups
     - threads assigned to groups; processes can straddle n groups
+  - _Windows on Windows 64 (WOW64)_: runs 32-bit app on 64-bit OS
+    - 64-bit process executes 64-bit code on behalf of 32-bit threads
+    - threads starts in 64-bit mode
 
 - windows kernel dev
+  - SKU: TODO
+  - data execution prevention (DEP): TODO
+  - memory
+    - virt mem: _reserved_ or _committed_, _private_ or _pagefile-backed_ (shared)
+      - _commit charge_: system-wide total commit
+      - _commit limit_: approx. phys + swap; swap can grow
+      - PF-backed must be allocated by opening handle to a Section object
+      - only private can be accounted to processes
+    - upper 1GB or 2GB of 4GB virt addr space is kernel
+  - memory manager
+    - _PFN database_: array of 28-byte structs, one per page; tracks assignments to addr spaces
+    - devices are mapped into phys and virt addr space; eg gfx card can take up a lot on 32-bit systems
   - crash dumps
     - mini (64K), kernel (XP produces ~60M on 256M), full
   - system service dispatches (syscalls)
@@ -1085,7 +1119,11 @@
     - experience:
       - Misuse of length parameter in call to 'strncat'. Pass the number of
         remaining characters, not the buffer size of 'metaLabel'.
+  - threads/processes
+    - thread: unit of scheduling; has regs, IP, SP
+    - process: >=1 thread; has handles, sec token, AS
   - threads
+    - each has 2 stacks: 1 user, 1 kernel (1:1 scheduling)
     - priorities
       - 1-15: _dynamic_ priorities; kernel can boost/drop this temporarily to
         increase system tput (but never boosted to real-time)
@@ -1114,14 +1152,16 @@
       - run at `IRQL_PASSIVE_LEVEL`
       - using up too much time or too many workers can deadlock the system
     - refs: <http://msdn.microsoft.com/en-us/library/ms810029.aspx>
-  - interrupt request level (IRQL): hardware pri
+  - interrupt request level (IRQL): distinct from x86 IRQLs
     - low to high: passive, apc, dispatch, cmc, device interrupt (dirql), pc
       profile, synch, clock, clock2, IPI, power, high
     - all threads run at IRQL < DISPATCH_LEVEL
     - thread scheduler itself ("dispatcher") runs at DISPATCH_LEVEL
     - hence any thread running at/above DISPATCH_LEVEL has exclusive use of cpu
     - DISPATCH_LEVEL interrupts are masked off on the cpu, so thread scheduler
-      cannot schedule any other thread
+      is disabled / cannot schedule any other thread
+      - using this you can run uninterrupted but cannot incur page faults (bc doing so requires suspending thread until swapped)
+      - ISRs, DPCs run here
     - for shared memory synchronization, drivers should use a lock that raises
       the IRQL to the highest level at which any code that accesses the data
       can run
@@ -1133,6 +1173,7 @@
       - HIGHEST_LEVEL
     - thread-specific IRQLs
       - PASSIVE_LEVEL: normal operating state; use thread scheduling pris
+        - all user code; only kernel can elevate
         - threads are both preemptible and interruptible
       - PASSIVE_LEVEL in critical region:
         - use `KeEnterCriticalRegion`/`KeLeaveCriticalRegion`
@@ -1158,8 +1199,13 @@
     - objs are ref-counted
     - a process can own 16M handles
     - kernel objects: accessible only to rest of kernel
-      - eg physical devices, synchronization services
+      - eg physical devices, certain synchronization services
     - executive objects: accessible to all; apps can wrap objects too
+      - conf mgr: reg key
+      - executive: sem, mutex, event
+      - IO mgr: file
+      - proc mgr: process, thread
+      - mem mgr: section
     - object types
       - proc, thread, job, file, file mapping, access token, event, sem/mutex,
         timer, key, desktop, clipboard, windowstation, symbolic link
@@ -1175,9 +1221,12 @@
     - increments ref count
   - TODO file names: "\\?\GLOBALROOT", "Global??"
     - <http://msdn.microsoft.com/en-us/library/aa365247(VS.85).aspx>
-  - handles: per-process table
+  - handles: managed in per-process tables
+    - handle entry: pointer + 32 permission bits (8 B on 32-bit, aligned 16 B on 64-bit)
+    - 3 levels of tables; upper indirect table is just pointers to lower tables
+    - tables allocated from paged pool
   - `DBG` macro
-  - `ASSERT`, `ASSERTMSG`
+  - `ASSERT`, `ASSERTMSG`; `NT_ASSERT`: <http://winprogger.com/?p=1156>
   - overlapped IO: TODO
   - IO/IRPs
     - IoCallDriver transfers IRP ownership down
@@ -1246,10 +1295,19 @@
       - <http://www.nynaeve.net/?p=261>
       - paged vs non-paged pool, system cache size, etc.
       - regions used to be fixed at boot
-    - paged/non-paged
+    - resident available mem: phys mem for kernel stacks, nonpaged pool, certain kernel code/data
+    - paged/non-paged pools
+      - pools: the kernel's heap; eg nonpaged pool is *not* all non-pageable code/data
       - control pageability via compiler pragmas (text/data sections only) or via runtime functions
       - specify to heap allocator
       - the more pageable, the better
+      - nonpaged
+        - procs, threads, mutexes, sems, events, files, IRPs
+        - limited by phys mem
+        - takes from resident available mem
+      - paged
+        - registry, sections, handle tables
+        - limited by addr space, commit size
     - memory descriptor list (MDL): maps VM to PM; opaque struct
       - PTEs for VM->PM; MDL for buffers associated with DMAs
       - for pageable mem: correspondence is temporary
