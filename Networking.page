@@ -82,6 +82,18 @@ dns
   breaking many non-web apps like email (which relies on non-existence to mark
   msgs undeliverable)
 
+zeroconf
+
+- techniques for creating IP networks automatically
+- displaces DHCP and DNS services
+- _link-local addr assignment_: standard in IP; addr autoconfig; 169.254.0.0/16
+- _multicast DNS (mDNS)_: name resolution, service discovery (printers, shares)
+  - apple, DNS-SD: TODO
+  - making IETF std
+- impls
+  - bonjour: apple's
+  - avahi: posix
+
 CIDR TODO
 
 ethernet
@@ -657,3 +669,25 @@ NetMedic: Detailed Diagnose in Enterprise Networks (sigcomm 2009)
 - label edges with correlation strength, estimating likelihood that one
   component influences the state of another component
   - infer which component is causing the undesirable behavior/failure
+
+Network Protocols and Infrastructures to Hide Latency for Cloud-Based
+Applications (MSR talk 2009)
+
+- xbox live primetime (XBL) service needs reliable and low-latency comm btwn xbox and DC
+  - all comm is based on TCP
+  - 1-way msg latency (ms)
+    - RTT 200 avg 144 90% 203 99% 703
+    - RTT 300 avg 208 90% 305 99% 860 99.9% 1360 99.99% 2321
+- forward error correction (FEC) widely used as E2E tech
+  - real-time comm: degradable; video, voip
+  - bulk data xfer: throughput; reliable multicast, digital fountains, network
+    coding
+  - short xfer: not degradable, latency; balakrishnan '07 '08; pangolin
+    addresses this
+- propose _pangolin_ protocol: FEC with rexmits
+  - 1 msg -> k packets -> n packets (FEC); ACK received pkts; RTO
+  - key for rest of talk: how to choose the rate?
+- TCP vs pangolin: 300ms RTT, 2% bidir loss, n=5 k=4
+  - TCP, pangolin same up to 90%; TCP latency drops considerably
+  - pangolin: 90% 313 99% 313 99.9% 625
+  - TCP: 90% 313 99% 1734 99.9% 3656
