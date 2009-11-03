@@ -3,6 +3,13 @@ people
 - Bob Metcalfe: inventor of Ethernet
 - Van Jacobson: primary contributor to TCP/IP
 
+basic performance facts
+
+- latency
+  - typical backbone takes 60 ms from SF to NYC
+  - EDGE: 150 ms best, 500 ms real-world avg
+  - ref: an engineer's guide to bandwidth on ydn
+
 general terms
 
 - anycast: send to 1 of many; useful for HA/load-bal/geoloc; used in BGP, DNS
