@@ -8,6 +8,12 @@
     git fetch file://another/repo +master:temprepo/master
     # just mirror another repo, discarding all your current changes
     git reset --hard temprepo/master
+    # split subdir into new repo without losing history
+    git filter-branch --prune-empty --subdirectory-filter SUBDIR master
+
+  - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
+  - _subtree merge_: actually merge in another proj but isolated in its own
+    subdir
 
 - name resolution on linux
   - /etc/nssswitch.conf indicates what /lib/libnss* to use for resolving
@@ -678,6 +684,13 @@
     - pid 0: idle task, never exits; pid 1: `init` task (calls `wait`
       periodically to sweep up zombies)
     - _orphan_ processes are adopted by `init`
+  - process groups
+    - used to control signal distribution
+    - _session_: group of groups; procs can't join/create groups in other
+      sessions
+      - used to implement _login sessions_
+      - session leader: proc that interacts with the controlling terminal
+        (shell); terminates procs on hang-up
   - exit codes
     - mod 256
     - convention: 0 = success, 1 = failure, >=128 = subprocess failure
@@ -686,6 +699,9 @@
     - wait(2) gives you other info, eg whether program crashed (presumably bash
       uses that)
     - no way to capture shell's "Segmentation fault" message to a file, AFAIK
+
+- terminals
+  - <http://www.linusakesson.net/programming/tty/index.php>
 
 - system
   - threading
@@ -761,6 +777,10 @@
 - ruby
   - must require 'rubygems' first
   - #ruby-talk better than #ruby
+
+- boost
+  - useful lang libs: ptrs, concepts, optional, variant, any
+  - useful sys libs: fs, threads, asio, program_options
 
 - boost.serialization
   - binary format is quite verbose, has a lot of boilerplate overhead
@@ -912,10 +932,15 @@
   - have just one instance of program running at a time by trying to create a
     named Monitor either under Local\ or Global\
   - can have 0-thread procs
-  - processes
+  - processes/threads
     - priority is inherited iff parent is < normal class (below normal/idle)
+    - groups: used by `GenerateConsoleCtrlEvent` (kinda like posix signals)
+  - NUMA support: processor groups
+    - threads assigned to groups; processes can straddle n groups
 
 - windows kernel dev
+  - crash dumps
+    - mini (64K), kernel (XP produces ~60M on 256M), full
   - system service dispatches (syscalls)
     - all go through `ntdll.dll`; `Zw*` for kernel, `Nt*` for user
     - many undocumented
