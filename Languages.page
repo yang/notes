@@ -127,6 +127,28 @@ Lisp
   - lexically scoped
   - `fluid-let`: dynamic binding
 
+Parsing
+-------
+
+higher order abstract syntax (HOAS)
+
+- implementing operations like substitutions on ASTs requires tedium, eg renaming variables to avoid variable capture
+- use the host lang's existing substitution capabilites; instead of
+
+    data Exp = Var String | App Exp Exp | Lam String Exp
+
+  use
+
+    data Exp = App Exp Exp | Lam (Exp -> Exp)
+
+  eg
+
+    omega = App (Lam (\x -> App x x)) (Lam (\x -> App x x))
+
+- for _open terms_ (terms with free vars), nest in more lambda abstractions
+- not scalable: depends on number of free vars, and can't analyze (only apply)
+- ref: <http://lambda-the-ultimate.org/node/3627>
+
 Extensible
 ----------
 
