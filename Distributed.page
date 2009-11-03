@@ -956,6 +956,8 @@ cassandra (facebook, 2008)
   - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
   - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
 
+riak TODO
+
 dynamo
 
 - works across DCs
