@@ -29,13 +29,16 @@ GPU programming
 
 - pixel shaders, cuda are examples of things that compile to gpu bytecode
   - before gpgpu langs, devs had to pack data into triangles/textures
-- langs
-  - opencl: cross-platform
-  - cuda: nvidia only
-  - Cg: NVIDIA high-level shading language (HLSL)
-  - D3D11 "compute shaders": platform-indep HLSL
-  - CUDA: GPGPU PL
 - pixel shaders: typically for effects; eg solar flares
+- high-level shading languages (HLSLs)
+  - OpenGL GLSL: based on C
+  - NVIDIA Cg
+  - D3D10 HLSL: very similar to Cg, analogous to GLSL; vertex shaders, geom shaders,
+    pixel (or fragment) shaders
+  - D3D11 "compute shaders": platform-indep
+- GPGPU langs
+  - OpenCL: cross-platform
+  - CUDA: nvidia only
 - gpu bytecode is card-indep; cards from same mfr can have different ISAs
 - gpu instrs are very SIMD; slow branches; produces machine code
 
