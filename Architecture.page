@@ -1,5 +1,58 @@
 TODO merge in my notes from corey
 
+TODO fused multiply add (FMA)
+
+ARM
+
+- invents designs; licenses to actual mfr's
+- reasonable perf, good price/perf, amazing power/perf
+  - no multicore, no >2gb ram
+- pushed by dga (FAWN), james hamilton
+
+intel atom
+
+- good low-power chip but currently no 64-bit mem or ECC
+
+nvidia GPUs
+
+- _Parallel Thread eXecution (PTX)_ layer: bytecode; helps portability; no legacy machine code
+- nvidia has very good appreciation of software importance
+- OpenCL, DirectCompute are comparable; more standard than single-vendor CUDA
+
+nvidia fermi/gt300, due 2010
+
+- biggest advance since gt80
+  - gt200 made big changes, but was fundamentally same design as G80
+  - demo'd real-time raytracer
+- major features geared toward HPC, don't help graphics
+  - real FP in quality and perf; IEEE 754-2008 with fused multiply add
+    - double precision now half speed of single precision, vs. 10th in G80
+  - ECC main mem and caches
+  - 64-bit virtual address space; PTX helped migration
+  - caches
+    - graphics apps had enough parallelism to hide DRAM latency
+    - L1: 64 KB SRAM; configurable semi-coherence; 16/48 KB shared/cache or vice-versa (cache = coherent within SM)
+    - regs: 128 KB > L1; total L1 = 768 KB = L2
+  - fast context switching: 20-25 us; enables indep kernels overlapping execution
+  - unified addr space: used to have separate instructions for accessing scratchpad, graphics, and system mems
+  - debugging support with traps/breakpoints to freeze GPU
+  - faster atomic instrs for task-based parallelism
+    - graphics apps needed less synchronization
+    - G80 had atomics; now atomics can be in L2; 5-20X faster
+  - brand new instr set: more RISC-like, with sep load/store instrs; should last
+  - faster than G80
+- more
+  - indirect branches
+- architecture TODO
+  - GDDR5
+- remaining challenges
+  - small GPU memory; no direct IO; no glueless multisocket HW, nor SW support with cache coherence
+- contemporary landscape
+  - intel's larrabee: too out there; will probably be much slower
+  - AMD/ATI's evergreen: focusing on graphics/gaming; market is not as strong during econ downturn
+  - nvidia also pressing mobile; they may be working on x86 due to looming IGP (GPU merging with CPU)
+- ref: patterson paper, RWT article, ars technica, press release
+
 intel arch
 
 - iret: restores context; for returning from interrupt/exception handler
@@ -278,3 +331,29 @@ x86
   - x86: 32 IRQLs
   - diff primarily due to type of interrupt controller of each CPU
   - each cpu can be running at a different IRQL
+  - distinct from windows IRQLs
+- rings 0-3; usu. only 0 and 3 used
+
+DRAM Errors in the Wild: A Large Scale Field Study
+
+- 1/3 machines, 8% DIMMs saw correctable errors in 1 year
+- per-DIMM: avg 25K-75K FIT (failures in time per billion hrs of operation) per Mbit, median 778-25K
+  - prev studies: 200-5K
+  - high variance across DIMMs
+- memory errors strongly correlated (in space and time)
+  - a DIMM that sees error is 13-228X likely to see another in same month
+  - autocorrelation shows significant corr levels up to 7 months
+  - 70-80% uncorrectable errors preceded by correctable
+  - presence of correctable error increases prob of uncorrectable error by 9-400X
+  - abs. prob of correctable-then-uncorrectable is small, .1-2.3%/month
+    - so, replacing DIMMs on correctable error is only attractive if downtime outweighs costs
+- CEs increase after 10-18 months; UEs decrease continuously early on (due to replacements; survival of fittest)
+- newer, denser DIMMs don't have increasing CE rates; in fact, latest have lower rates than 2 older platforms
+- temp has no effect
+- strong corr with utilization
+- measurements don't distinguish, but unlikely to be dominated by soft errors; rather, hard errors or errors on data path
+  - used _memory scrubbers_ to periodically scan otherwise idle ECC RAM for errors
+  - _soft error_: random bit corruption; most prior work focuses on this
+  - _hard error_: repeatable corruption due to physical defect (eg "stuck bits")
+- [kathy yelick's ICSA09 keynote: ECC recovery is common and slows compute]
+- <http://perspectives.mvdirona.com/2009/10/07/YouReallyDONeedECCMemory.aspx>
