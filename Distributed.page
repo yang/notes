@@ -140,6 +140,14 @@ People
 - Ion Stoica
 - Scott Shenker
 
+vuze aka azureus
+
+- custom msging protocol for extensions
+  - peer exchange
+- superseeding
+- vivaldi coords
+- kademlia dht
+
 DSM
 ===
 
@@ -322,6 +330,9 @@ MapReduce
 =========
 
 mapreduce TODO
+
+- [work underappreciated for its answers to systems issues like stragglers and
+  query fault-tolerance]
 
 hadoop
 
