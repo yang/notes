@@ -525,6 +525,11 @@ misc db
 
 couchdb
 
+- b-tree storage
+- append-only
+- MVCC, lockless
+- REST API
+- incremental map-reduce
 - <http://sitr.us/2009/09/13/couchdb-notes.html>
 - <http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html>
 
@@ -590,3 +595,5 @@ facebook, 2009 talk at MSR
   - 2-lev topology
     - 1 Gb/s node to rack switch
     - 4 Gb to top level rack switch
+- last year “20 percent more photo servers and 50 percent more upload servers” to process Halloween traffic, adding up to an additional 40 terabytes (that’s 40,000,000,000,000 bytes) of storage. That was when the site had 140 million users, less than half its current active user base of more than 300 million.
+  <http://www.datacenterknowledge.com/archives/2009/10/30/facebooks-spooktacular-scaling-for-halloween/>
