@@ -1,17 +1,25 @@
 Background
 ----------
 
+vocab
+
+- PDBMS = MPP
+
 companies
 
 - BI
-  - vectorwise
-    - column store
+  - vectorwise: orig monetdb; from CWI, holland; led by marten kersten
+    - partnered with ingres
+    - shared-everything (single machine) multicore
+    - open-source column store (actually row/col hybrid)
     - query operators are run via query execution primitives written in
       low-level code that allow compilers to produce extremely efficient
       processing instrs
     - vectors of 100-1000 values get SIMD'd
-    - single machine; not shared-nothing/MPP
     - founders from CWI
+    - 3GB/s decompression, 4-5 cycles/tuple, 3-4X ratio
+    - operate in decompressed domain
+    - shared scans
   - kickfire: entered with TPC-H win
     - column store, execution, compression
     - FPGA for data- and task-parallelism
@@ -32,6 +40,7 @@ companies
     - h-store
 - elephants
   - MS: sql server
+    - shared scans
   - oracle/sun: mysql
     - oracle exadata: analytical
   - postgresql
@@ -39,8 +48,11 @@ companies
     - hp neoview: analytical
   - ibm
 - emc
-- monetdb
-  - from CWI
+- marklogic: XML processing
+
+people
+
+- dave dewitt: uwisc prof; started msr wisc
 
 denormalization: simplex/complex reads vs writes
 
@@ -154,6 +166,32 @@ mysql replication
 - semi-sync replication: wait for receipt
   - contributed by google in 2007
 - fully-sync replication: wait for persistence
+
+scientific databases
+--------------------
+
+general
+
+- projects
+- extremely large database (xldb): workshop started by jacek becla of slac
+  - 55 PB raw images, 100 PB astronomical data for LSST
+  - involvement
+    - ppl: stonebraker, dewitt, kersten
+    - vendors: teradata, greenplum, cloudera
+    - companies: ebay, web companies
+- scidb: stonebraker, dewitt
+  - A data model based on multidimensional arrays, not sets of tuples
+  - A storage model based on versions and not update in place
+  - Built-in support for provenance (lineage), workflows, and uncertainty
+  - Scalability to 100s of petabytes and 1,000s of nodes with high degrees of
+    tolerance to failures (including query fault tolerance)
+  - Support for “external” data objects so that data sets can be queried and
+    manipulated without ever having to be loaded into the database
+  - Open source in order to foster a community of contributors and to insure
+    that data is never “locked up” — a critical requirement for scientists
+- refs
+  - <http://www.dbms2.com/2009/10/03/issues-in-scientific-data-management/>
+  - <http://www.dbms2.com/2009/09/12/xldb-scid/>
 
 parallel/distributed dbms
 -------------------------
@@ -352,7 +390,10 @@ column-stores vs. row-stores
 column stores
 -------------
 
-- column stores only recently gained traction because there's enough memory for fetching large ranges of blocks
+general
+
+- column stores only recently gained traction because there's enough memory for
+  fetching large ranges of blocks
 
 hybrid approaches
 
@@ -387,6 +428,17 @@ hybrid approaches
 
 olap
 ----
+
+hadoopdb
+
+- hadoop scalability while faster on structured data workloads
+- hadoop coordinates/exports from hdfs; dbms's execute; allows fast sql
+- currently using pg; slower than db2; may use vectorwise
+- pg significantly outperforms hadoop on structured data
+- benefits vs PDBMSs
+  - open/cheap/free
+  - query fault-tolerance
+  - tolerate node degradation (eg stragglers, not outright failures)
 
 greenplum
 
