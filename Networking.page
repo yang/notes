@@ -392,7 +392,7 @@ Floodless in SEATTLE (princeton)
   - define "groups" (on DHT) instead of doing network-wide bcasts
 - <http://everythingisdata.wordpress.com/2009/09/17/floodless-in-seattle/>
 
-PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric
+PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric (amin vahdat, ucsd, sigcomm09)
 
 - assumptions: modern DCs are "fat trees" or multi-rooted hierarchies
   - core, agg, and edge switches
@@ -411,9 +411,19 @@ PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric
   - if no keepalive for 50 ms, assume switch failed, contact FM
   - FM updates state, informs affected switches
   - switches recompute tables based on new topology
+- implemented using OpenFlow
+- vs VL2: added LDP for easier mgmt
 - <http://everythingisdata.wordpress.com/2009/09/19/portland-a-scalable-fault-tolerant-layer-2-data-center-network-fabric/>
 
-VL2 TODO
+VL2 (msr, sigcomm09)
+
+- TODO
+
+PortLand vs VL2
+
+- both presented in same session
+- modify switch SW vs modify end host; both don't modify switch HW
+- both leverage directory service for efficient routing w/o bcast
 
 Monsoon TODO
 
