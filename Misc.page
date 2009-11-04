@@ -74,3 +74,76 @@ MusicBrainz
 - switched to MusicIP analysis technology, also closed-source
 - Picard tagger has much lighter-weight "fingerprinting" technology
 - ref: <http://nikolasco.livejournal.com/336720.html>
+
+games
+=====
+
+- engines
+  - cube
+    - games: assaultcube
+  - cube 2/sauerbraten: in-game level editing
+    - games: blood frontier (last release 2/2009)
+  - id tech 1: 1993; opened 1997, GPL'd 1999
+    - games: doom, doom 2, hexen, heretic
+    - BSP
+  - quake engine: 1996; GPL'd xmas 1999
+    - games: quake, quakeworld
+    - BSP
+    - gouraud shading for moving objs
+    - lightmap for static objs
+    - quakec scripting lang; future id engines used c then c++
+  - id tech 2: 1997; GPL'd xmas 2001
+    - games: quake 2
+    - BSP
+    - opengl
+    - MD2 model fmt: 10 keyframes/s
+    - lightmap levels using radiosity
+    - used DLLs to switch btwn opengl/SW, to release certain srcs to allow
+      modding, and to replace the dynamic lang quakec
+  - id tech 3: 1999; GPL'd 2005
+    - games: q3a, urban terror (proprietary)
+    - BSP
+    - levels can use either lightmaps or gouraud shading; engine could apply
+      lightgrid lights to models
+    - MD3 model fmt: use vertex movements (vs skeletal anim); variable
+      keyframes/s; separate head/torso/leg parts for indep animations
+    - blob shadows and accurate polygonal shadow
+    - HLSL
+    - volumetric fog
+  - ioquake3: cleaned-up id tech 3
+    - games: openarena, tremulous
+  - darkplaces (heavily modified quake 1 engine); best gfx
+    - games: nexuiz
+  - id tech 4: 200
+    - games: doom 3, quake 4, ET:QW
+    - C++
+    - entirely dynamic per-pixel lighting, vs. lightmaps and gourard shading
+      - dynamic effects previously available only changed polygon vertex
+        brightness and interpolated pixel colors
+    - bump mapping, normal mapping, specular highlighting
+    - more features added in successive games
+    - later feature _megatexture_ (for ET:QW) enabled outdoor scenes; 32768^2
+      pixels
+  - id tech 5: 2010
+    - games: rage, doom 4
+    - emphasis on making engine easier to use for devs and others
+    - id studio: content-creation tools; no more need for external/cmdline tools
+    - virtual texturing: 128000^2 pixels; stream on demand
+    - dynamically changeable worlds
+    - penumbra (soft edges) in shadows using shadow maps (vs sharply defined
+      shadows)
+    - HDR, depth of field, motion blur, multi-threaded processing
+    - opengl, DX9, not DX10
+- games
+  - quakeworld: quake with networking redone for much better internet play
+    (orig for LAN); GPL'd maps
+- tools
+  - netradiant: q3 map editor; heritage in gtkradiant, q3radiant, QE4 (q2)
+- misc
+  - rcon: remote console; various protocols include valve's, quakeworld's, etc
+  - quakenet: orig for quakeworld players; now general IRC net
+  - binary space partitioning (BSP): TODO
+    - recursively subdivide space into convex sets by hyperplanes, yielding BSP
+      trees
+    - used for levels; render quickly while minimizing polygon count per refresh
+    - large open areas don't work well
