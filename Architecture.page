@@ -1,4 +1,4 @@
-TODO merge in my notes from corey
+TODO merge in my notes from corey, CS152
 
 TODO fused multiply add (FMA)
 
@@ -316,6 +316,10 @@ icsa 09
 TODO
 
 - specint
+
+IA32
+
+- access MSRs (eg apic regs) via rdmsr and wrmsr
 
 x86
 
