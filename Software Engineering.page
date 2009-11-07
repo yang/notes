@@ -1,3 +1,5 @@
+TODO merge in notes from sweng class
+
 game development
 
 - asm is still freq used
@@ -31,3 +33,13 @@ characterizing and predicting which bugs get fixed: emp study of ms win (philip 
 anecdotes
 
 - oopsla09: nasa jpl uses model checking (heavy duty theory) and static analyses (less theoretical but still highly useful)
+
+Exploding Software-Engineering Myths
+
+- <http://research.microsoft.com/en-us/news/features/nagappan-100609.aspx>
+- code coverage is not a good metric
+- TDD team 60-90% better in terms of defect density than non-TDD
+- assertion/verification count negatively correlated with bug count
+- org structure matters a lot: org metrics can predict SW failure-proneness
+  with precision & recall of 85%
+- geo distance doesn't matter much
