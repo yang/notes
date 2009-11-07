@@ -1,3 +1,14 @@
+- DWARF2
+  - unwind tables
+    - `-fasynchronous-unwind-tables`: table is exact at each instr boundary, so
+      can be used to unwind from async events (debugger, GC)
+      - even when `-fomit-frame-pointer`
+      - put in ELF section `.eh_frame_hdr`; used by gdb, `backtrace()` (even
+        though docs say `-fomit-frame-pointer` breaks it)
+      - not stripped; not a normal debug section, but an allocated data section
+    - must have accurate tables through 100% of binaries, eg libc
+    - <http://www.yosefk.com/blog/getting-the-call-stack-without-a-frame-pointer.html>
+
 - networking
   - 4.2.2.1: level3 ns server
 
@@ -77,6 +88,7 @@
       - eax, ecx, edx avail for use within function
       - stack cleaned up by caller (esp incremented by caller)
       - MS compilers prefix these function names with underscore
+      - this is the default for MS compilers
       - main/wmain, variadic (even if declared otherwise), higher-order
         functions
   - windows
@@ -420,6 +432,12 @@
   - iterators
     - make_filter_iterator, make_transform_iterator
     - transform
+  - pains
+    - C++ is not CFG
+    - "most vexing parse": coined by scott meyers in "effective stl"
+      - `S s(S());` is interpreted as fn decl not var copy-ctor decl
+        - a function that takes (a function that takes 0 args and returns S)
+      - also, `S s();` is a fn decl
 
 - g++
   - warnings
@@ -430,6 +448,17 @@
       narrower scope.
     - `-Weffc++`: This warns about things found in the "Effective C++" books.
       Some are useful, but many are not.
+
+- linking
+  - gold: new gnu linker that is parallelizable
+  - COMDATs: for vague linkage
+    - constructs that don't clearly live in a single place have _vague linkage_
+    - eg for C++ constructs: header inlines, vtables, typeinfos
+    - there must be only one in the final linked program, so that you can take
+      its addr consistently
+    - COMDAT sections: each has special string; linker keeps only one of each
+      string
+    - <http://www.airs.com/blog/archives/52>
 
 - java
   - initial heap size = 1/64 phy, max heap size = 1/4 phy (cap 1gb)
@@ -688,6 +717,9 @@
 
 - posix
   - IEEE Std 1003.1 aka POSIX.1
+  - signals
+    - synchronous: SIGSEGV, SIGFPE, ...
+    - asynchronous: SIGUSR1, ...
   - processes
     - a process that has exited, but whose parent has not called
       `wait()`/`waitpid()` on it, is a _zombie_
@@ -908,6 +940,10 @@
     - ipconfig /flushdns
 
 - windows app dev
+  - linking
+    - std libs
+      - <http://support.microsoft.com/kb/154753>
+      - <http://msdn.microsoft.com/en-us/library/abx4dbyh(VS.80).aspx>
   - UNC paths: C:\blah, \\host\blah, and \\?\C:\blah or \\?\UNC\host\blah
   - command line
     - compiler: `cl`
@@ -959,6 +995,8 @@
   - _Windows on Windows 64 (WOW64)_: runs 32-bit app on 64-bit OS
     - 64-bit process executes 64-bit code on behalf of 32-bit threads
     - threads starts in 64-bit mode
+  - stack
+    - `StackWalk64`: obtains a stack trace
 
 - windows kernel dev
   - SKU: TODO
@@ -1381,5 +1419,3 @@ The _global interrupt flag (GIF)_ is a bit that controls whether interrupts and 
 
 hsave: host save state
 npage: nested page
-
-access msr's (eg apic regs) via rdmsr and wrmsr
