@@ -1,3 +1,5 @@
+TODO merge in notes from CS164
+
 - TODO: distinguish grammars from parsers more cleanly in these notes
 - compiler types
   - recursive descent
@@ -48,6 +50,9 @@
   - Backus-Naur Form (BNF): TODO
   - Extended BNF (EBNF): TODO
 - determining ambiguity: uncomputable
+  - eg "dangling else" in C/C++/Java; convention is attach to nearest
+    - if SLR/LR(1)/LALR LR, rely on generated parser feature of preferring
+      shift over reduce if conflict
   - LR (and thus LL) grammars are always non-ambiguous
   - unsure: LR parsers can identify certain non-ambiguous grammars, but they
     have this gray area where they can't tell whether the grammar is ambiguous
@@ -65,6 +70,12 @@
     - <http://research.swtch.com/2008/01/division-via-multiplication.html>
 - superoptimizers: exhaustively search for *truly optimal* generated code
   sequence
+- language classes: low to high power
+  - regular: regexes; DFAs/NFAs
+  - context-free: don't need symbol table
+    - python is context-free but req's tokenizer that recognizes (de-)indents
+  - context-sensitive: need symbol table; eg in C++, is `T*x` a type decl or a
+    mult? ("most vexing parse")
 
 Tools
 
@@ -72,13 +83,15 @@ Tools
   - lex/yacc: old and busted; LALR
   - flex/bison: new hotness; LALR
     - generates C
-    - flex includes flex++ for C++
+    - does GLR
+    - flex includes flex++ for C++; bison++ also exists
   - javacc: most popular for java
   - alex/happy: haskell
   - ANTLR: LL(k) parser generator
 - edsl parsers
   - parsec: haskell
   - scala
+- boost spirit 2: GLR
 
 Grammars
 
