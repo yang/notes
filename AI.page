@@ -1,6 +1,9 @@
+TODO mege in notes from CS182
+
 - case-based reasoning
   - knowledge-based ai
   - statistical ml
+- anytime learning: online continuous learning
 
 Developing a self-driving car for the 2007 DARPA Urban Challenge (Seth Teller's
 Angstrom talk, 5/1/08)
@@ -73,3 +76,9 @@ MACHINE LEARNING
 - resources
   - http://videolectures.net/icmi05_bengio_tsmla/
   - google video: machine learning
+
+trending algorithms
+
+- simple baseline trend algorithm: daily trend = most recent day's change *
+  log(monthly total)
+  - <http://stackoverflow.com/questions/1635703/understanding-algorithms-for-measuring-trends>
