@@ -160,6 +160,26 @@ C# 4
     - use specialized interface, eg ScriptObject
   - through DLR, get unified interface IDynamicObject, or fall back on lang reflection
 
+Continuations etc.
+------------------
+
+coroutines
+
+- symmetric: yield command takes extra arg specifying who to yield to
+  - behave more like threads
+- asymmetric: yield and resume are separate commands; similar to generators
+  - behave more like routines; control is always transferred back to caller
+  - can be composed like regular functions
+  - lua implements this; "simpler"
+  - similar arg made for partial continuations
+- can simulate each other
+
+continuations
+
+- partial
+- delimited
+- full
+
 Reactivity
 ----------
 
