@@ -1440,59 +1440,59 @@ Space-time programming/computing (Sussman, Project MAC 05)
 OS related
 ----------
 
-  * K42/Tornado
-    Gamsa-Tornado.pdf
-    Appavoo-K42.pdf
-    Krieger-HFS.pdf
+- K42/Tornado
+  - Gamsa-Tornado.pdf
+  - Appavoo-K42.pdf
+  - Krieger-HFS.pdf
 
-  * Xen
-    Barham-Xen.pdf
+- Xen
+  - Barham-Xen.pdf
 
-  * McRT
-    Saha-CMPScalability.pdf
+- McRT
+  - Saha-CMPScalability.pdf
 
-  * TxLinux/MetaTM
-    Rossbach-TxLinux.pdf
-    Ramadan-MetaTM_TxLinux.pdf
+- TxLinux/MetaTM
+  - Rossbach-TxLinux.pdf
+  - Ramadan-MetaTM_TxLinux.pdf
 
-  * MapReduce
-    Ranger-MapReduce_SMP.pdf
-    He-MR_Mars.pdf
+- MapReduce
+  - Ranger-MapReduce_SMP.pdf
+  - He-MR_Mars.pdf
 
-  * Scheduling
-    Tam-ThreadClustering.pdf
+- Scheduling
+  - Tam-ThreadClustering.pdf
 
-  * OLS large scale NUMAs
-    Gough-LinuxScalability.pdf
-    Sarma-SelectedLinuxScaling.pdf
-    Bryant-ExtremeLinuxScaling.pdf
+- OLS large scale NUMAs
+  - Gough-LinuxScalability.pdf
+  - Sarma-SelectedLinuxScaling.pdf
+  - Bryant-ExtremeLinuxScaling.pdf
 
-  * Berkeley Parallel Computing Research
-    http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html
+- Berkeley Parallel Computing Research
+  - <http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html>
 
-  * RCU
-    McKenney-RCU_OLS.pdf
+- RCU
+  - McKenney-RCU_OLS.pdf
 
-  * Memory Allocation
-    Mckenney-ParallelMemAlloc.pdf
+- Memory Allocation
+  - Mckenney-ParallelMemAlloc.pdf
 
-  * MP Web Server
-    Veal-MP_WebServer.pdf
+- MP Web Server
+  - Veal-MP_WebServer.pdf
 
 HW related
 ----------
 
-  * Synchronization State Buffer
-    Zhu-SynchStateBuf.pdf
+- Synchronization State Buffer
+  - Zhu-SynchStateBuf.pdf
 
-  * HyperTransport & Torrenza
+- HyperTransport & Torrenza
 
-  * Wisconsin Multifacet Project
-    (http://www.cs.wisc.edu/multifacet/papers/)
+- Wisconsin Multifacet Project
+  - <http://www.cs.wisc.edu/multifacet/papers/>
 
-  * HTM
-    Herlihy-HTM.pdf
-    Performance pathologies in HTM?
+- HTM
+  - Herlihy-HTM.pdf
+  - Performance pathologies in HTM?
 
 Misc
 ----
