@@ -1,3 +1,5 @@
+TODO merge in notes from 6.864
+
 term frequency inverse document frequency (TFIDF)
 
 - term frequency is num occurrences of term $t_i$ in doc $d_j$ over total num
