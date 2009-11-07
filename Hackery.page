@@ -419,6 +419,24 @@
     - very slow; it actually times out when running the beautifier (I get
       "Alarm Clock")
 
+- c++ utility library documentation
+  - <http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/>
+  - <http://www.boost.org/doc/libs/1_40_0>
+  - <http://pocoproject.org/docs/>
+  - <http://doc.trolltech.com/4.5/>
+  - <http://api.kde.org/>
+  - <http://wxwidgets.org/>
+  - <http://dclib.sourceforge.net/>
+  - <http://www.uplinklabs.net/?page=crisscross/index>
+  - <http://www.gnutelephony.org/doxy/bayonne2/>
+  - <http://libutl.sourceforge.net/>
+
+- C utility library documentation
+  - <http://apr.apache.org/>
+  - <http://libclc.sourceforge.net/>
+  - <http://dklibs.sourceforge.net/doxy/html/index.html>
+  - <https://sourceforge.net/projects/libul/>
+
 - c++
   - `#define public private` trick may allow you to access private variables
   - `extern "C"`: preserves C calling convetions and name (non-)manging
