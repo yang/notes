@@ -14,6 +14,8 @@
 
 - git
 
+    # change the last commit; also: git reset --soft HEAD^, ..., git commit -c ORIG_HEAD
+    git commit --amend
     # choose which commits to amend and then replay (step through) them
     git rebase --interactive
     # force origin to accept your rebased changes
@@ -66,8 +68,8 @@
 
 - i18n
   - Unicode
-    - 1.0 is 16 bits
-    - 2.0 is 21 bits
+    - 1.0: 1991; 16 bits; UCS-1, UCS-2, UCS-4
+    - 2.0: 1996; 21 bits; UTF-8, UTF-16, UTF-32
   - ASCII: 7 bits
   - ISO/IEC 8859-1 aka Latin-1: superset of ASCII; 191 chars
   - ISO-8859-1: superset of ISO/IECS 8859-1
@@ -75,8 +77,10 @@
     - assigns control chars to 00-1F, 7F, 80-9F
   - Windows-1252: superset of ISO/IEC 8859-1
     - assigns 80-9F displayable chars (not control chars)
+    - UTF-7: 7 bits
   - UTF-8: superset of ASCII; everything else -> multibyte
   - <http://intertwingly.net/stories/2004/04/14/i18n.html>
+  - UTF-16: still multi-byte ("surrogate pairs")
 
 - x86 calling conventions
   - <http://unixwiz.net/techtips/win32-callconv.html>
@@ -352,6 +356,8 @@
     - __STDC_LIMIT_MACROS
     - uint_least*_t
     - uint_fast*_t
+    - `__STDC__`: ANSI C or C++ (vs. K&R C)
+    - `__cplusplus`: C++
   - reference rules
     - const T&: binds to anything
     - T&: binds to non-const lvalues
@@ -422,7 +428,13 @@
 - c++ utility library documentation
   - <http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/>
   - <http://www.boost.org/doc/libs/1_40_0>
+    - ptrs, concepts, optional, variant, any, io, format
+    - sys: fs, threads, asio, program_options, system (errors)
   - <http://pocoproject.org/docs/>
+    - ByteOrder, UnicodeConverter
+    - sys: DNS
+  - <http://stlab.adobe.com/asl_toc.html>
+    - forest, move, COW, table index, adam/even gui
   - <http://doc.trolltech.com/4.5/>
   - <http://api.kde.org/>
   - <http://wxwidgets.org/>
@@ -440,6 +452,9 @@
 - c++
   - `#define public private` trick may allow you to access private variables
   - `extern "C"`: preserves C calling convetions and name (non-)manging
+  - streams: clog = cerr
+    - iostream synced w cstdio; see sync_with_stdio()
+    - rdbuf gets underlying streambuf
   - ranges
     - advantages of ranges over iterators
     - iterator_range<iter_type>(begin, end): iter -> range
@@ -843,10 +858,6 @@
   - must require 'rubygems' first
   - #ruby-talk better than #ruby
 
-- boost
-  - useful lang libs: ptrs, concepts, optional, variant, any
-  - useful sys libs: fs, threads, asio, program_options
-
 - boost.serialization
   - binary format is quite verbose, has a lot of boilerplate overhead
     - serializing a single int takes 43 bytes; long long takes 47
@@ -958,10 +969,20 @@
     - ipconfig /flushdns
 
 - windows app dev
+  - resources
+    - `FindResource`, `LoadResource`
+  - strings
+    - converting: <http://msdn.microsoft.com/en-us/library/ms235631(VS.80).aspx>
   - linking
     - std libs
       - <http://support.microsoft.com/kb/154753>
       - <http://msdn.microsoft.com/en-us/library/abx4dbyh(VS.80).aspx>
+    - `/MT` for static, `/MD` for shared (DLL), `/M[TD]d` for debug
+    - all dependent libs must have a 
+    - .libs: archives of .obj's
+      - import libs are thin wrappers for shared libs
+    - can specify `#pragma comment(lib, "PocoXXXmt.lib)` to automatically pull
+      in libs
   - UNC paths: C:\blah, \\host\blah, and \\?\C:\blah or \\?\UNC\host\blah
   - command line
     - compiler: `cl`
