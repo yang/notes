@@ -338,6 +338,10 @@ x86
   - distinct from windows IRQLs
 - rings 0-3; usu. only 0 and 3 used
 
+PC architecture
+
+- <http://arstechnica.com/hardware/news/2009/09/intel-launches-all-new-pc-architecture-with-core-i5i7-cpus.ars>
+
 DRAM Errors in the Wild: A Large Scale Field Study
 
 - 1/3 machines, 8% DIMMs saw correctable errors in 1 year
