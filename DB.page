@@ -169,6 +169,28 @@ mysql replication
   - contributed by google in 2007
 - fully-sync replication: wait for persistence
 
+RDBMSs
+------
+
+OLTP Through the Looking Glass, and What We Found There (stavros, dna, madden, stonenbraker)
+
+- lots of CPU overhead in conventional RDBMS
+- removed features from Shore to get to main memory DB
+  - Shore uses user level non-preemptive threads with IO processes
+  - [hence latching overheads not from multiprocessing; unclear why latching is
+    so impactful or even prevalent]
+- went from 640 to 12700 TPS; down to 6.8% of orig work
+- removed in order:
+  - 35% buffer mgr
+  - 14% latching: many structs
+  - 16% locking: 2PL lock mgr
+  - 12% WAL: building records; pinning records; IO
+  - 16% hand-coded optimizations: tuned B trees
+- "every reason to believe that many OLTP systems already fit or will soon fit
+  into main memory"
+  - [but no cost benefit analysis; james hamilton says even move to SSDs is not
+    worth it, contrary to myspace's claims]
+
 scientific databases
 --------------------
 
@@ -195,7 +217,27 @@ general
   - <http://www.dbms2.com/2009/10/03/issues-in-scientific-data-management/>
   - <http://www.dbms2.com/2009/09/12/xldb-scid/>
 
-parallel/distributed dbms
+scientifica (DB group meeting talk, Mike Stonebraker, 4/24/08)
+
+- multi-dimensional array-based
+  - interesting question is storage manager: how to partition the data (and
+    then in each partition, how to chunk it)
+- uncertainty
+  - minimal, since error analysis is different for each application
+  - use error bars
+- lineage, provenance
+  - need also to remember the derivation process, not just origin
+- interest from various scientific institutions but also amazon, google, etc.
+- CERN had planned to use Objectivity
+
+Efficient Provenance Storage
+
+- main problem: compressing binary xml
+- intro
+  - fields: science, law, etc.
+  - dataset 270mb, provenance store 6gb
+
+parallel/distributed olap
 -------------------------
 
 HARBOR (Lau, VLDB06)
@@ -277,9 +319,12 @@ gamma (project dewitt led 8x-92)
 - implemented and evaluated parallel joins: simple hash, grace hash, hybrid
   hash, sort-merge
 
+sharing
+
 - shared memory
 - shared disk
 - shared nothing
+- the first two are relics anyway
 
 why main memory is bad for olap (DB group meeting talk, Mike Stonebraker,
 4/24/08)
@@ -291,25 +336,39 @@ why main memory is bad for olap (DB group meeting talk, Mike Stonebraker,
   - compression contributes 7x
 - SAP will compare their TREX against Vertica
 
-scientifica (DB group meeting talk, Mike Stonebraker, 4/24/08)
+OLTP
+----
 
-- multi-dimensional array-based
-  - interesting question is storage manager: how to partition the data (and
-    then in each partition, how to chunk it)
-- uncertainty
-  - minimal, since error analysis is different for each application
-  - use error bars
-- lineage, provenance
-  - need also to remember the derivation process, not just origin
-- interest from various scientific institutions but also amazon, google, etc.
-- CERN had planned to use Objectivity
+the end of an architectural era (it's time for a complete rewrite) (stonebraker, madden, dna, stavros, nabil, pat helland)
 
-Efficient Provenance Storage
-
-- main problem: compressing binary xml
-- intro
-  - fields: science, law, etc.
-  - dataset 270mb, provenance store 6gb
+- features
+  - main memory
+    - "vast majority of OLTPs <1 TB in size, and growing slowly"
+    - [implies you're throughput bound vs. capacity bound]
+    - timesten, soliddb: inherit RDBMS baggage of System R, incl. disk-based
+      recovery log, dynamic locking
+  - single-threading vs. multi-threading and resource control (sync)
+    - OLTP txns lightweight
+    - current systems interleave CPU and IO via synchronization
+  - elasticity vs. fork-lift upgrades
+  - high avail through shared-nothing replication
+  - no knobs
+- txn and schema characteristics
+  - OLTP tend to have highly partitionable tree schemas [think entity groups]
+    - [unsubstantiated; I do believe a more cyclic reasoning: high-scaling apps
+      already are partitionable]
+  - _constrained-tree application_: txns run within 1 partition
+  - _one-shot_ txn: can be executed in parallel without requiring intermed
+    results to be serialized; still needs 2PC; can be done via vert part
+  - also: _two-phase_, _strongly two-phase_, commutativity
+- system architecture
+  - all txns are stored procedures; runtime in same thread as DB
+  - distributed txn mgmt: single-sited, one-shot, general
+  - replication and recovery
+  - DB designer: make as many txn classes as possible single sited
+    - [this is focused on static property of txn classes; I would like to focus
+      on dynamic property of txn instances, i.e. individual objects]
+- [lot of faith in TPC-C]
 
 h-store concurrency control (evan jones)
 
@@ -538,6 +597,12 @@ couchdb
 site stats
 ----------
 
+google
+
+- 2006: 400M queries/day
+- 9/2009: 12.8B queries/mo, 427M queries/day, 5K queries/s
+- TODO index size
+
 ebay
 
 - olap 4/2009
@@ -599,3 +664,20 @@ facebook, 2009 talk at MSR
     - 4 Gb to top level rack switch
 - last year “20 percent more photo servers and 50 percent more upload servers” to process Halloween traffic, adding up to an additional 40 terabytes (that’s 40,000,000,000,000 bytes) of storage. That was when the site had 140 million users, less than half its current active user base of more than 300 million.
   <http://www.datacenterknowledge.com/archives/2009/10/30/facebooks-spooktacular-scaling-for-halloween/>
+
+myspace
+
+- claimed to have moved entirely from HDDs to SSDs
+  - 1% of orig power
+  - <http://perspectives.mvdirona.com/2009/10/14/ReplacingALLDiskWithSSD.aspx>
+  - james hamilton: "in every company I¿ve ever worked or visited, the vast
+    majority of the persistent disk resident data is cold"
+
+stackoverflow (8/2009)
+
+- asp.net, C#, LINQ
+- 2 * (4 core, 2.83 GHz, 12 MB L2, 500 GB datacenter RAID1, 8 GB RAM)
+- sql server 2008 on 1 * (8 core, 3.5 GHz, 24 MB L2, 48 GB RAM)
+  -  CPU surprisingly important; 1.86 to 2.5 to 3.5 GHz scales linearly typical
+     query times
+- scaled up instead of out
