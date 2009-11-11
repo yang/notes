@@ -250,6 +250,18 @@ Sprockets: Safe extensions for distributed file systems (umich usenix 07)
     only at certain pre-defined VFS ops like open, close, write
   - may leverage STM/HTM techniques
 
+chrome/chromium
+
+- chroot: requires suid but is ironically more secure
+- exec()ing from empty jail is hard
+  - can copy all dep files, but maintenance/packaging nightmare
+  - use clone() flag CLONE_FS and share FS struct btwn a trusted/privileged
+    thread and the exec()ed renderer
+  - trusted thread can call chroot and have it affect the unprivileged,
+    untrusted renderer post-exec
+- CLONE_NEWPID and CLONE_NEWNET: prevent sending signals, network access
+- <http://scarybeastsecurity.blogspot.com/2009/10/chromium-and-linux-sandboxing.html>
+
 OSs
 ===
 
