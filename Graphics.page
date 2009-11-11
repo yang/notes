@@ -29,12 +29,12 @@ GPU programming
 
 - pixel shaders, cuda are examples of things that compile to gpu bytecode
   - before gpgpu langs, devs had to pack data into triangles/textures
-- pixel shaders: typically for effects; eg solar flares
+- pixel shaders: typically for lighting and effects; eg solar flares
 - high-level shading languages (HLSLs)
   - OpenGL GLSL: based on C
   - NVIDIA Cg
-  - D3D10 HLSL: very similar to Cg, analogous to GLSL; vertex shaders, geom shaders,
-    pixel (or fragment) shaders
+  - D3D10 HLSL: very similar to Cg, analogous to GLSL; vertex shaders, geom
+    shaders, pixel (or fragment) shaders
   - D3D11 "compute shaders": platform-indep
 - GPGPU langs
   - OpenCL: cross-platform
