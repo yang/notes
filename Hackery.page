@@ -428,8 +428,10 @@
 - c++ utility library documentation
   - <http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/>
   - <http://www.boost.org/doc/libs/1_40_0>
-    - ptrs, concepts, optional, variant, any, io, format
+    - ptrs, concepts, optional, variant, any, io, format, date time, utility
+      (noncopyable, base_from_member)
     - sys: fs, threads, asio, program_options, system (errors)
+    - lesser: spirit (safe_bool), tribool, value_init
   - <http://pocoproject.org/docs/>
     - ByteOrder, UnicodeConverter
     - sys: DNS
@@ -471,6 +473,14 @@
       - `S s(S());` is interpreted as fn decl not var copy-ctor decl
         - a function that takes (a function that takes 0 args and returns S)
       - also, `S s();` is a fn decl
+    - verbosity: `vector<string> xs; f(xs, ...)` vs. `vector<string> xs =
+      f(...)`
+  - idioms/patterns
+    - Curiously Recurring Template Pattern
+  - optimizations
+    - return value optimization (RVO)
+    - named RVO (NRVO)
+    - empty base optimization (EBO)
 
 - g++
   - warnings
@@ -968,9 +978,13 @@
     - lmhosts, hosts, etc. all in \system32\drivers\etc
     - ipconfig /flushdns
 
+- windows usage
+  - `shutdown -a`: abort shutdown
+
 - windows app dev
   - resources
     - `FindResource`, `LoadResource`
+    - compile resource script .rc with rc.exe and link in resulting .res
   - strings
     - converting: <http://msdn.microsoft.com/en-us/library/ms235631(VS.80).aspx>
   - linking
@@ -1165,6 +1179,10 @@
     - ntsd: cui
       - kd: doesn't exist anymore; used to be kernel debugger
     - KeBreakinBreakpoint
+    - KD_DEBUGGER_ENABLED: whether system was booted with /debug
+      - see also:
+        `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control:SystemStartOptions`
+    - KD_DEBUGGER_NOT_PRESENT: whether debugger is attached
   - debug printing
     - `DbgPrint`/`KdPrint`: same as `DbgPrintEx(component=DPFLTR_DEFAULT_ID,
       level=DPFLTR_INFO_LEVEL, ...)`
