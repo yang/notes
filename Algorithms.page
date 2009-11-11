@@ -111,9 +111,22 @@ compression
   - rename from bottom-up scopes to reuse vars
   - stable ordering of renames (so always get f(a,b,c))
 
-FFT
+high-perf linear algebra
+========================
 
+TODO singular value decomposition (SVD)
+
+- many apps in signal processing and statistics
+- important factorization of rectangular real or complex matrix
+
+TODO fast-fourier transform (FFT)
+
+- compute (inverse) discrete FT
 - FFT on columns
 - multiply by twiddle factors
 - FFT on rows
 - transposes
+- butterfly diagram: used to describe FFT; portion of compute that combines
+  smaller DFTs into larger DFT
+
+TODO parallel HPC algorithms
