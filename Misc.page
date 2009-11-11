@@ -86,7 +86,8 @@ games
   - id tech 1: 1993; opened 1997, GPL'd 1999
     - games: doom, doom 2, hexen, heretic
     - BSP
-  - quake engine: 1996; GPL'd xmas 1999
+  - quake engine: 1996; GPL'd xmas 1999; maps GPL'd 2006 (but not other
+    content, eg textures)
     - games: quake, quakeworld
     - BSP
     - gouraud shading for moving objs
