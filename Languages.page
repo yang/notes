@@ -4,6 +4,29 @@ TODO clojure (esp concurrency)
 
 TODO F#, axum, join patterns
 
+analysis TODO
+
+- differences btwn pointer analysis and CFA?
+- pointer analysis aka points-to analysis
+- control flow analysis (CFA) aka data flow analysis
+  - 0-CFA
+  - backward
+    - liveness (dead code elimination)
+  - forward
+    - reaching definitions
+- shape analysis
+- alias analysis
+
+TODOs
+
+- region inference
+- effect systems
+- uniqueness types
+- operational semantics
+- denotational semantics
+- category theory
+- free theorems
+
 misc
 
 - pit of success: design that makes it hard for users to fail
