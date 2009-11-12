@@ -71,6 +71,66 @@ B programming language
 - anything can be dereferenced (everything is a pointer)
 - predecessor to C, inspired by BCPL
 
+Go (11/10/2009 Robert Griesemer, Rob Pike, Ken Thompson, Ian Taylor, Russ Cox,
+Jini Kim and Adam Langley)
+
+- ["Pike is sometimes maddening to read or listen to because of the way he
+  doesn't ack prior art and sometimes goes on too long about obvious points."]
+- no generics, exceptions, inheritance
+- most interesting aspect: interface polymorphism
+  - interfaces are not bound to types; can freely retrofit by defining the
+    methods on that type (physically, this takes place externally to the class
+    code)
+- plain mark-&-sweep GC
+- goroutines: coro's/csp
+- pike's limbo/newsqueak influence
+- decent std lib
+- fast compilers & execution: plan-9 and gcc
+- a memory model for concurrency
+- choose stack or heap allocation
+- simple type system + inference
+- mem-safe: bounds-checked arrays, no ptr arithmetic, type safety, GC
+- uses a module system
+- built-in arrays are value types
+- Python like slice syntx `a[lo:hi]`
+- immutable strings
+- switch has no break; use "fallthrough" to fallthrough
+- nested functions
+- tuples
+- := for assignment
+- uses `var` to declare variables (this was chapmpioned by some here instead of
+  auto)
+- variable type comes after declaration and is optional
+- return type of functions comes after parameters
+- no Windows port yet
+- iota!?
+- walter bright on what's missing that D has, off top of head [but: bloat]:
+
+  > - exception handling
+  > - generic programming
+  > - metaprogramming
+  > - inline assembler
+  > - interface to C
+  > - RAII
+  > - immutability for anything but strings
+  > - vector operations
+  > - operator overloading
+  > - purity
+  > - CTFE
+  > - unit testing
+  > - documentation generation
+  > - ability to write systems code like implement a GC
+  > - conditional compilation
+  > - contracts
+  > - 80 bit floating point
+  > - introspection (runtime or compile time)
+  > - delegates
+  > - reference parameters
+
+- <http://www.youtube.com/watch?v=rKnDgT73v8s>
+- <http://lambda-the-ultimate.org/node/3676>
+- <http://www.digitalmars.com/webnews/newsgroups.php?art_group=digitalmars.D&article_id=100626>
+
 Revisiting Coroutines (2004)
 
 - very nice organization and juxtaposition of coros and even continuations; a
