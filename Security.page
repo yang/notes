@@ -8,10 +8,22 @@ people
 - mark dowd: amazing; ibm x-force team; taossa book; nacl exploits; flash null
   ptr exploit
 
-terms
+misc terms
 
 - _drive-by download_: browser (or extension) exploit triggered on simply
   displaying a page
+
+high level exploit classification
+
+- confused deputy: fool a privileged process to do things for you
+- arbitrary code execution: take over and do things yourself
+
+access control
+
+- discretionary: subjects can xfer perms to others; decentralized
+  - commonly in practice: objs have owners who controls perms
+  - capability systems: subjects can xfer perms to others
+- mandatory: policy controlled by admin only; centralized
 
 security
 
@@ -517,3 +529,207 @@ seminal
 Why Isn't Trust Transitive? (bruce christianson, william s harbison)
 
 - straightforward but classic
+
+Sandboxing
+----------
+
+Efficient Software-Based Fault Isolation (Wahbe, sosp93)
+
+- can isolate via separate addr spaces, but switches not good for tightly
+  coupled modules
+  - RPC: trap, copy, ctx save/restore, switch HW addr space (flush TLB), trap
+    - repeat on return; 3 OOM > normal proc call
+  - eg postgres extensible type system can define ctors, dtors, preds
+  - eg OS exts: packet filters, app-specific virt mem mgmt, Active Messages
+- propose a portable, PL-indep approach:
+  - load code/data into own _fault domain_ (portion of host's addr space)
+  - rewrite code to prevent writes/jumps outside fault domain
+- poses tradeoff rel. to hardware fault isolation: substantially faster comm
+  btwn fault domains, but slightly increased execution time for distrusted
+  modules
+  - evaluated on postgres; 3x faster than sep addr spaces
+
+App-V (john sheehan, MS ECS 2009)
+
+- _sequencing_: process of packaging apps
+  - monitor installation from kernel; capture FS/reg changes
+  - now know all the resources needed by app; can optimize the layout for
+    streaming
+  - extract metadata; eg recognize COM objs, NT services; store in manifest
+  - heuristics
+    - program files: don't need to roam with user
+    - hkey_current_user keys: should roam with users
+    - UI for tweaking these settings
+- SystemGuard: "namespace mgr"
+  - system namespace: fall-through for everything else
+  - elseapp namespace: produced by sequencing
+    - eg `C:\windows\system32\foo.dll` could've been installed by app
+    - enables streaming (Click2Run), user roaming
+  - modification namespace: where writes go (either roaming or non-roaming)
+  - handles: files, reg, COM, fonts, services, object mgr, mailslots, etc.
+    - eg virtualize CLSIDs for COMs; virtualize service names
+    - don't deal with drivers; typically installed as part of platform
+  - dynamic, not static: watch processes, not programs
+    - eg cmd is already there, but if run via a VS shortcut, run it in the VS
+      bubble
+  - for cross-app, dynamic suite composition (DSC) feature: run in same bubble
+- office doesn't user the generic app-v UIs
+
+native client
+
+- inner sandbox
+  - software fault isolation
+    - in general disassembly is unreliable: same instruction stream may be
+      entirely different if you jump to somewhere in the middle of it
+    - goal: get reliable disassembly; then, can prohibit certain instructions
+    - static validation of most calls/jumps
+    - once loaded, binary is not writable; also uses x86 segments to constrain
+      the executable instruction range
+    - locates instructions at address 0 so that indirect jumps need only be
+      prefixed by an `and` and not an `and;or`
+    - omit certain instructions: ret, int, syscall; use indirect jumps
+    - all indirect branch targets must be aligned; bitmask every target
+      address
+    - no code gen, mixed text/data, overlapping instrs
+  - x86 segments: hardware support -> faster
+    - original SFI: bitmask every load/store address
+    - caveat: need LDT; privileged instruction, vista 64 doesn't provide this;
+      confuses os an hardware exceptions
+- outer sandbox
+  - system call filter for untrusted modules
+  - redundant; defense in depth
+  - OS-dependent
+  - ptrace on linux, syscall ACLs on Windows
+- compile for native client with modified gcc (1000 lines patched)
+
+Sprockets: Safe extensions for distributed file systems (umich usenix 07)
+
+- for distributed FS "tweak" extensions; DFSs mostly impl'd in user space
+  - run procedure in same addr space, then always roll back except for the
+    buffer expecting results (this is validated/acted on by host)
+  - programmability like proc call: lightweight usage, can access any data/code
+  - cost: not up front per sprocket, but per line of code executed, since
+    sprockets are small
+- alt designs and their problems
+  - direct procedure call: same addr space
+  - separate addr spaces, eg fastcgi
+    - no access to (reuse of) data/code; need to define (read) interface
+    - requires OS fine-grained sandboxing (only read file1 and write file2)
+  - chkpt/rollback (fork): closest to sprockets
+    - heavy; still requires OS sandboxing
+    - idea for multithreading: wait for all locks to release before fork
+- binary instrumentation/SFI with PIN
+  - first save caller ctx (regs, PC, heap size, etc)
+  - for each mem write, save orig loc/val in undo log
+  - dynamically enable/disable instrumentation: core FS functions called via
+    sprockets are instrumented; outside, orig is used
+  - OOM slower, but faster than fork
+  - optims: no need to restore unused memory, eg space below stack or malloc'd
+    by sprocket; avoid dup backups
+- handling buggy sprockets
+  - register sig handlers for segfaults, timeouts
+  - instrument syscalls with check against whitelist + optional specific
+    syscall handling (eg closing an fd that it didn't open)
+- multithreading: sprocket time (.14-.62ms) << scheduling quantum
+- implemented: transducers (id3), app-specific resolution (id3), devices (PTP)
+- related work
+  - wahbe: limits access to addr space outside sandbox
+  - vino: SFI for OS exts; not full access (whitelist of kernel fn's)
+  - nooks: used this technique for device drivers
+  - exokernel: allows user-level code to impl many services
+  - sprockets target functionality already avail. at user-level; min changes;
+    user-level tools/libs
+  - type-safe langs: eg SPIN OS uses modula-3; limits FS code reuse (mostly not
+    in type-safe langs)
+  - watchdogs, stackable FSs: more coarse-grained ext interface allowing exts
+    only at certain pre-defined VFS ops like open, close, write
+  - may leverage STM/HTM techniques
+
+chrome/chromium
+
+- chroot: requires suid but is ironically more secure
+- exec()ing from empty jail is hard
+  - can copy all dep files, but maintenance/packaging nightmare
+  - use clone() flag CLONE_FS and share FS struct btwn a trusted/privileged
+    thread and the exec()ed renderer
+  - trusted thread can call chroot and have it affect the unprivileged,
+    untrusted renderer post-exec
+- CLONE_NEWPID and CLONE_NEWNET: prevent sending signals, network access
+- <http://scarybeastsecurity.blogspot.com/2009/10/chromium-and-linux-sandboxing.html>
+
+Security In-Depth for Linux Software: Preventing and Mitigating Security Bugs (Julien Tinnes, Chris Evans, Google, Hack in the Box 10/2009)
+
+- examples: chromium, vsftpd
+- security in depth
+  - reduce bugs
+  - app-level mitigation (SSP, relro)
+  - sys-level mitigation (ASLR, NX)
+  - privilege dropping (sandboxing)
+  - mandatory access control (MAC)
+  - update strategy
+- privileges in linux: processes and privileges
+  - kernel is a mandatory interface to system; process is privilege boundary
+  - A > B if A's privileges are superset of B's
+  - procs have uid + gid
+  - threads *generally* don't have privilege separation (but: clone, seccomp)
+  - if A can ptrace B, then A > B
+  - uids/gids
+    - types
+      - real: owner; who you really are; only root (usu. login) can change; `id -ru`
+      - effective: for access ctl; `id -un`
+      - saved: 
+      - FS: file system; in linux
+    - operations
+      - fork inherits UIDs
+      - suid + seteuid let you temporarily drop root and restore later
+      - not sure if correct (prolly not):
+        - `setuid(x) = if (euid == 0) { ruid = euid = suid = x } else { euid = x }`
+        - `seteuid(x) = if (euid == 0) { ruid = euid = suid = x } else { euid = x }`
+    - summary
+      - (r)uid, euid, suid, fsuid
+      - (r)gid, egid, sgid, fsgid, supplementary groups
+  - POSIX.1e capabilities: for splitting root privileges; in linux 2.2
+  - partial uid switching
+    - mostly useful to avoid confused deputy problems
+    - useless given arbitrary code execution
+    - only root can use
+  - linux capabilities
+    - CAP_NET_RAW: permit use of RAW and PACKET sockets
+    - CAP_SYS_ADMIN: administrative ops (mount, sethostname, etc)
+    - CAP_NET_BIND_SERVICE: binding to reserved ports (<1024)
+  - common mistakes
+    - forgetting to switch from uid 0
+  - chroot: popular way to drop FS access; root only
+    - requires dropping privileges afterward, or easy to escape
+    - re-chroot technique (popular), inject modules, ptrace non-chroot-ed proc,
+      etc
+    - look at capabilities for inspirations of other things you can do as root
+      to escape
+  - recent kernels add clone/unshare flags for dropping privileges; root only
+    - CLONE_NEWPID: new pid namespace
+    - CLONE_NEWNET: new network namespace
+    - CLONE_NEWIPC, CLONE_NEWUTS, CLONE_NEWNS
+  - resource limits
+    - RLIMIT_NOFILE: can't get new fd's, but can still rename and unlink
+    - RLIMIT_NPROC: can't create new procs
+    - if used for security, both soft and hard limit need to be set to 0
+    - or attacker could replace existing fd to create new fd's
+  - linux supports per process dumpable (debuggable) flag
+    - can be set through
+      - prctl with PR_SET_DUMPABLE
+      - when executing a file you don't own and can't read
+      - when switching uid
+    - CAP_SYS_PTRACE: can't ptrace a non dumpable proc; thus, elevation of
+      privileges
+    - allows to lower another process' privileges
+- writing good code
+  - preventing common security flaws
+  - privilege separation
+  - trust relationships
+  - update strategy
+- sandbox designs
+  - ptrace
+  - setuid
+  - SECCOMP
+  - other
+  - attack surface eval
