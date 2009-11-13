@@ -36,6 +36,12 @@ TODO consistency
 
 - http://en.wikipedia.org/wiki/Consistency_model
 
+coordination
+
+- lamport clocks: total ordering; single values
+- vector clocks: causal ordering; partial ordering; more information to eg
+  resolve conflicts; easy to move to total order (eg by appending node ids)
+
 data grids
 
 - data grids: general distributed utilities
