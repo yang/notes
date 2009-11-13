@@ -17,7 +17,7 @@
     # change the last commit; also: git reset --soft HEAD^, ..., git commit -c ORIG_HEAD
     git commit --amend
     # choose which commits to amend and then replay (step through) them
-    git rebase --interactive
+    git rebase -i
     # force origin to accept your rebased changes
     git push -f
     # fetch into new branch on the fly
@@ -26,6 +26,17 @@
     git reset --hard temprepo/master
     # split subdir into new repo without losing history
     git filter-branch --prune-empty --subdirectory-filter SUBDIR master
+    # stash away current changes and then retrieve them
+    git stash
+    git stash apply
+    # make named stash, view stashes, and apply last one
+    git stash save 'Description of my changes'
+    git stash list
+    git stash pop
+    # create a new branch NEWBRANCH (based on SOURCEBRANCH)
+    git checkout -b NEWBRANCH [SOURCEBRANCH]
+    # create an archive of the repo from tree 'COMMIT'
+    git archive --format=tar --prefix=foo-1.1/ COMMIT | gzip > foo-1.1.tgz
 
   - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
   - _subtree merge_: actually merge in another proj but isolated in its own
@@ -432,6 +443,8 @@
       (noncopyable, base_from_member)
     - sys: fs, threads, asio, program_options, system (errors)
     - lesser: spirit (safe_bool), tribool, value_init
+    - build on win: `bjam --build-type=complete --with-program_options
+      toolset=msvc-10.0`
   - <http://pocoproject.org/docs/>
     - ByteOrder, UnicodeConverter
     - sys: DNS
@@ -982,6 +995,8 @@
   - `shutdown -a`: abort shutdown
 
 - windows app dev
+  - security zone tainting
+    - foo.ps1:Zone.Identifier
   - resources
     - `FindResource`, `LoadResource`
     - compile resource script .rc with rc.exe and link in resulting .res
