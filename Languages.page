@@ -7,15 +7,26 @@ TODO F#, axum, join patterns
 analysis TODO
 
 - differences btwn pointer analysis and CFA?
-- pointer analysis aka points-to analysis
+- relationship btwn alias analysis and shape analysis?
+- escape analysis: determining the dynamic scope of pointers; eg ptrs
+- pointer analysis aka points-to analysis: specific case of alias analysis
+  - slow
 - control flow analysis (CFA) aka data flow analysis
   - 0-CFA
   - backward
     - liveness (dead code elimination)
   - forward
     - reaching definitions
-- shape analysis
-- alias analysis
+- shape analysis: properties of linked, dynamically allocated structs
+  - generalization of ptr analysis
+  - powerful but slow -> no widespread use
+  - finding leaks; multiple frees; dangling ptrs; bounds errors; type-state
+    properties; algo correctness (eg reverse, sort)
+- alias analysis: if location can be accessed multiple ways
+  analysis, shape analysis
+  - converting heap allocs to stack allocs, if pointer never escapes subroutine
+  - synchronization elision, if pointer never escapes thread
+  - breaking up objects/scalar replacement: store in regs instead of mem
 
 TODOs
 
