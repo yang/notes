@@ -94,6 +94,10 @@ indexes
 
 joins
 
+- bitmap join indices
+  - build bitmap index over low cardinality outer table R (at least on join
+    key)
+  - map into this while scanning over S
 - simple hash join
   - build hash table of R in memory, and probe into it with S
   - on overflow, start spilling to file R'; S similarly spills to S'
@@ -172,6 +176,34 @@ mysql replication
 - semi-sync replication: wait for receipt
   - contributed by google in 2007
 - fully-sync replication: wait for persistence
+
+clustering
+----------
+
+blenddb
+
+- colocate related tuples on same pages in navigational queries
+  - eg web page for a movie: `actors >< movies >< directors; movies -- ratings`
+  - eg further navigate into 
+  - construct _paths_ starting from prim key into one table and following
+    foreign key joins to other tables; eg `movie.id -> acted.movieid ->
+    actor.id`, `movie.id -> directed.movieid -> director.id`, `movie.id ->
+    ratings.movieid`
+  - pull in all tuples read by those paths
+  - clustering is an offline process
+    - optimization i didn't try to fully understand: prioritize path heads by
+      how frequently they spill over one page (don't waste space on path sets
+      that are too big anyway and require multiple seeks?)
+  - faster than performing joins online and less space than materialized views
+- related work
+  - (stochastic) clustering in OODBMSs: could use their algos here, but they're
+    about migration not replication
+  - _merged indices_ of multiple cols/tables: can cluster on this, but that
+    only benefits joins on a single key, i.e. no navigation
+  - memcached: blenddb is not a cache; prepped for any data
+  - multi-table indices, eg oracle clusters: crappy implementation of merged
+    indices that requires sep keys to be on sep pages
+- first work on clustering in RDBMS
 
 RDBMSs
 ------
@@ -601,6 +633,20 @@ redis
 - async persists
 - microbench: 110K sets/s, 81K gets/s on entry level linux box
 - impl in C
+
+GT.M
+
+- old DB from 1986
+  - OCC txns; non-distributed
+  - users can also use locks
+- from wikipedia:
+
+  > GT.M is a high-performance schemaless database engine, optimized for transaction processing. GT.M is also an application development platform and a compiler for the ANSI/ISO standard M language, also known as MUMPS.
+  >
+  > GT.M compiles the M source code into the target machine language. These object files are dynamically linked into an image. GT.M databases are UNIX files identified by a file called Global directory. By changing the Global Directories, one can make the same program access different databases. Internal to these files, GT.M stores data in b-tree based multidimensional arrays (otherwise known as MUMPS globals), similarly to most modern M implementations.
+
+- MUMPS language predates C
+- M/DB is a SDB interface to GT.M
 
 distributed olap databases
 --------------------------
