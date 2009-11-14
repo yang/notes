@@ -1,16 +1,15 @@
 TODO merge in notes from CS170
 
+misc terms
+
+- _binary decision diagram (BDD)_: binary tree representation of truth table;
+  each layer switches on one input
+
 core concepts
 
 - TODO: Range counting, predecessor, voronoi diagrams, dynamic optimality, planar point location, nearest neighbor, partial sums, connectivity
 - skim adv algos
 - <http://mybiasedcoin.blogspot.com/2009/10/core-tcs.html>
-
-in-place quicksort (c.a.r. hoare)
-
-- select a pivot, possibly doing so using sampling
-- rather than building lists less/equal/greater, walk the list from both ends
-  and swap as necessary (to construct sublists in-place)
 
 hash tables
 
@@ -57,6 +56,31 @@ self-balancing binary search trees
     of black nodes
 - AVL
 - splay
+
+sort
+====
+
+TODO heap, insertion, selection, bubble, radix, quick
+
+in-place quicksort (c.a.r. hoare)
+
+- select a pivot, possibly doing so using sampling
+- rather than building lists less/equal/greater, walk the list from both ends
+  and swap as necessary (to construct sublists in-place)
+
+timsort
+
+- adaptive, stable, natural mergesort; hybrid with insertion sort
+- supernatural perf on many kinds of partially ordered/reversed arrays
+  - less than lg(N!) cmp's needed; few as N-1
+  - as fast as Python's previous highly tuned samplesort hybrid on random arrays
+- pseudocode: TODO
+- use
+  - python's default list.sort
+  - java 7's new Arrays.sort
+- <http://svn.python.org/projects/python/trunk/Objects/listsort.txt>
+- <http://en.wikipedia.org/wiki/Timsort>
+- <http://stackoverflow.com/questions/1733073/grokking-timsort>
 
 dynamic programming
 ===================
