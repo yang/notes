@@ -1,3 +1,8 @@
+- random vocab
+
+  - ILP32: int, long, ptr are 32 bits
+  - LP64: long, ptr are 64 bits
+
 - DWARF2
   - unwind tables
     - `-fasynchronous-unwind-tables`: table is exact at each instr boundary, so
@@ -180,6 +185,13 @@
   - GC: generational; parallel young
 
   - objects copied in DFS; this clusters related objects together
+
+  - vocab
+    - _ordinary object pointer (OOP)_
+
+  - compressed OOPs: in Java 7; 32-bit ptrs
+    - `wide_oop = narrow_oop == 0 ? 0 : (narrow_oop << 3) + base`
+    - allows up to 4B objs/32GB
 
   - Each object has special first word for synchronization, marking, hashing
 
