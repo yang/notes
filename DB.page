@@ -317,9 +317,42 @@ Multiprocessor Environment (DeWitt, SIGMOD '89)
     immediately (as many as there are nodes - the immediate hash table will
     just consume part of the memory of each of the join nodes)
 
+chained declustering (dewitt 92)
+
+- shared nothing dbs
+- compared against
+  - tandem: mirrored disks
+    - each partition mirrored on 2 disks that are each connected to same 2
+      controllers that are each connected to same 2 cpu's
+    - on cpu failure, cpu 2 has to support the load of parts 1 & 2
+    - [silly: the problem with this comparison is that it's comparing a
+      shared-nothing system against a shared-something system]
+      - equivalent shared nothing system is one where you treat each disk pair
+        as the single partition they're storing, and replicate each such
+        partition onto 2 machines
+      - and that would be obv. stupid
+  - teradata: in $n$ node system, break up each partition into $n-1$ pieces and
+    scatter over the other nodes
+    - good innate load redistribution on failure
+    - but expensive writes in normal operation
+  - RAID5: check (parity) bytes
+    - writing one sector of a block requires 4 accesses (R/W disk/parity)
+- chained declustering
+  - eg
+    - node 1: part 1 primary + part $n$ backup
+    - node 2: part 2 primary + part 1 backup
+    - node 3: part 3 primary + part 2 backup
+    - etc
+  - on failure, evenly redistribute work over all other hosts
+  - in larger systems, don't spread across all nodes; partition up system
+    (called "relation clusters")
+- [this was not designed for high scaling distributed systems]
+  - assuming indep failures
+  - back to inefficient system if nodes $i$ and $i+2$ fail
+
 gamma (project dewitt led 8x-92)
 
-- shared-nothing dbms
+- shared-nothing dbms; horizontal partitioning
 - implemented and evaluated parallel joins: simple hash, grace hash, hybrid
   hash, sort-merge
 
