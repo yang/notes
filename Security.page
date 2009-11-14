@@ -10,6 +10,8 @@ people
 
 misc terms
 
+- _side-channel attack_: exploits physical implementation (vs. brute force or theoretical weakness); in crypto
+- _covert channel_: channel that draws BW from another channel; in info theory
 - _drive-by download_: browser (or extension) exploit triggered on simply
   displaying a page
 
@@ -279,11 +281,45 @@ sophisticated DOS
 - fragmentation of data structures: eg hash tables
 - algorithm worst cases, eg regexes
 
-crypto
+public key crypto
 
 - rsa
+- dsa
 - elliptic curve
-- rc4
+  - attractive for mobile/wireless env's
+  - vs RSA: equiv security with smaller key sizes (faster, less resources)
+
+block ciphers vs. stream ciphers
+
+- distinction not always clear cut; block ciphers sometimes act effectively as
+  stream ciphers
+- stream ciphers usu. faster, but serious sec problems if used incorrectly
+  (esp: same starting state must never be reused)
+
+stream ciphers
+
+- _stream cipher_: symmetric key cypher where plaintext is combined with
+  pseudorandom cipher bit stream called _keystream_, typically xor
+  - plaintext bits encrypted one at a time
+  - xform varies during encryption
+- rc4: by ron rivest; in (eg) WEP, WPA (default), TLS/SSL (opt), BT, ssh (opt),
+  RDP, KRB (opt), PDF
+
+block ciphers
+
+- _block cipher_: operate on large blocks of digits with a fixed, unvarying
+  xformation
+  - eg 128-bit blocks of plaintext -> 128-bit blocks of ciphertext
+- des: early highly influential; ibm; 1997; insecure to brute force
+  - EFF DES cracker aka "deep crack": cracking machine
+  - with distributed.net, decryted challenge 3 after just 22h
+- 3des: 1998; applies des 3x per block; used by electronic payments industry
+  - simply increases key size 3x to defend against brute force
+  - pseudocde: des_enc(k1) -> des_dec(k2) -> des_enc(k3)
+- blowfish: bruce schneier; 1993; fast; no known cryptanalysis; widely used,
+  but aes overshadows it
+- aes: successor to des; 2001
+  - 128, 192, 256 bit key sizes; all 128 bit block sizes
 
 windows 7 UAC design flaws
 
