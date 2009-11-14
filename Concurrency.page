@@ -1288,6 +1288,49 @@ The Problem With Threads (Lee, Cal 06)
   coordination languages *orthogonal* to current languages
 - what about concern: interleaving (with IO) for efficiency?
 
+Disciplined Message Passing (Lee, MSR 09)
+
+- [this talk turned out to be sorta uninteresting/aloof/masturbatory; not
+  bothering to clean up these notes; did learn something about MPI though]
+- whipping boy: MPI
+  - get your rank (ie process id) and figure out what to do based on that
+  - ex: implementing a bool select: recv control bit on control source, then
+    read from the data source
+  - some modularity problems: specify direct source processes (no indir)
+  - no type safety: must specify type of received object
+  - send: standard allows *either( guaranteed delivery or buffering semantics!
+- problem about buffers: with 2 sinks on a connection, when should scheduler
+  execute what?
+  - if one proc consumes, other still needs, so can't consume right away
+  - can deadlock
+- naive schedulers all fail
+  - is "fair" scheduling a good idea? no, ...
+  - is data-driven execution a good idea? no, eg bool select
+  - is demand-driven execution a good idea? no, flip the prev example
+  - most mixtures thereof
+- problems have been solved; ptolemy ii has _director_, which provides much
+  more structure than msg-passing or thread lib; provides concurrent model of
+  computation
+  - _correct execution_
+    - kahn least fixed point denotational semantics
+    - kahn: functions that map streams to streams; these can be characterized
+      using a nice topological framework as monotonic functions
+      - eg if prefix of input, then prefix of output; provides ordering;
+        functions are monotonic using usu. def'n
+      - network of such processes can be ; has least solution; could be inf
+        seqs
+  - _useful execution_: extend at least one stream in finite add'l time
+    - if correct execution satisfying criterion (1) exists that executes with
+      bounded buffers, then a useful execution will execute with bounded
+      buffers (prefer over buffer overrun)
+      - hard to satisfy: trivial programs are undecidable: will it deadlock?
+        can it be executed with bounded buffers?
+- synchronous data flow (SDF): lee's phd thesis
+  - boolean selects/switches no longer allowed (but muxes can work; muxes read
+    from both at a time and discard one)
+  - by itself too restrictive; other extension work, eg streamit
+- collective (higher order) operations
+
 Unified Parallel C (UPC)
 
 - `MYTHREAD`, `upc_forall`, `upc_barrier`
