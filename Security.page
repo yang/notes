@@ -158,13 +158,17 @@ same-origin policy (SOP)
 
 cross-site communication in web apps
 
+- dynamically create script tags to get data; unsafe
 - cross-window messaging via `window.postMessage`
   - receiver gets `message` DOM event; msg contains data, domain, uri, source
   - allows cross-site communication
   - requires explicit msg handling on target page, so less susceptible to
     problems than unchecked shared DOM access (pre-SOP)
 - IE XDomainRequest
-- JSONRequest: based on dynamic script tags
+- JSONRequest
+  - safer than dynamically creating script tags to get around SOP
+  - POST
+  - like form.submit, but no auth data or cookies
 - W3C CS-XHR
   - w3c access control for cross-origin resource sharing
     - sites specify allowed-origins list in their responses
@@ -215,6 +219,8 @@ XSS (cross-site scripting)
 XSRF (cross-site request forgery)
 
 - exploits the trust that a site has for a particular user
+- before SOP, easy for evil.com to use XHRs to send requests to bank.com that
+  carry cookies and auth data
 - make user's browser send request to a site that user has active credentials
   on
 - examples
