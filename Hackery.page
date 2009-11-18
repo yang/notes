@@ -1,3 +1,6 @@
+- gdb
+  - mostly implemented using ptrace
+
 - athena
   - `system:htaccess.mit`: the web server group
 
@@ -33,6 +36,8 @@
 
 - git
 
+    # undo last commit (implies --soft)
+    git reset HEAD^
     # change the last commit; also: git reset --soft HEAD^, ..., git commit -c ORIG_HEAD
     git commit --amend
     # choose which commits to amend and then replay (step through) them
