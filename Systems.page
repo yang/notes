@@ -377,11 +377,21 @@ Research (talk, Butler Lampson, 4/17/08)
 Operating Systems
 =================
 
+flux (utah 1995) TODO
+
+- _flux advanced security kernel (FLASK)_:
+  - implementations of selinux, opensolari FMAC, trustedbsd
+  - directly influenced by the Fluke research kernel
+
 Windows Vista/7
 
 - dnssec
 - powercfg: /energy, /requests
 - application compatibility db and shims
+- security
+  - ASLR
+  - fine-grained privileges for services
+  - bitlocker: disk encryption
 - enterprise features
   - applocker: permit only specific apps to run
     - like old software restriction policies (SRP) but allows ranges of versions
@@ -389,7 +399,6 @@ Windows Vista/7
     - ikev2 for ipsec allows temp disconnects
     - directaccess: direct ipsec on ipv6; no logging in necessary
   - branchcache: wide-area SMB2/HTTP(S) cache; like DFS/DFS-R but needs less HW infrastructure
-  - bitlocker: disk encryption
   - offline files: cache of network shared files; reports conflicts; rsync-like protocol
 
 CuriOS: Improving Reliability through Operating System Structure (UIUC, OSDI08,
