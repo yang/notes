@@ -1,7 +1,21 @@
+- athena
+  - `system:htaccess.mit`: the web server group
+
 - random vocab
 
   - ILP32: int, long, ptr are 32 bits
   - LP64: long, ptr are 64 bits
+
+- postgresql
+  - rules: query rewriting, eg let you insert/update a view and redirect to
+    underlying table(s)
+  - triggers: executed in-transaction
+  - notify/listen: messaging to clients
+    - sent only after commit
+    - received only when not in txn
+    - like unix signals, many redundant signals can be reduced to one, and
+      can't carry extra data
+    - can use rules to generate
 
 - DWARF2
   - unwind tables
@@ -922,6 +936,11 @@
     formats
   - `ulimit` can only lower not raise for non-root; root can raise;
     `/etc/security/limits.conf` can set global cap for non-roots
+  - scheduler works on threads
+
+- linkage
+  - if a library contains an _init symbol or function marked with __attribute__((constructor)), it will be immediately when loaded. There's no way to "pause" the library loading, switch seccomp on, and then allow the library loading to continue. (<http://stackoverflow.com/questions/1019707/sandboxing-in-linux>)
+
 
 - type coercion: implicit type conversion
 
@@ -1005,8 +1024,29 @@
 
 - windows usage
   - `shutdown -a`: abort shutdown
+  - windows steadystate aka pc safeguard: sandboxing system for a whole user
+    - useful for trying out software
+    - TODO how secure is it?
+  - group policy: control reg, NTFS, audit/security policy, installs,
+    logons/logoffs
+    - eg block taskmgr, some fs access, downloading exe's
+    - group policy object (GPO): periodically pulled by clients from active
+      directory
+  - offline files: caching of remote files; many changes in vista
+    - on reconnect, handles to open files are auto redirected to remote vers
+    - efficient _bitmap differential transfer_ protocol
+  - distributed file system (DFS): merge many SMB shares; in win server
+  - folder redirection: a user GPO; can specify `%USERNAME%`; useful for
+    network roaming; similar to `mount --bind`
+  - roaming profile: requires domain controller
+  - `AppData\LocalLow`: low-integrity apps like IE addons
 
 - windows app dev
+  - wow64
+    - FS redir: %windir%/system32 reserved for 64-bit bins, so redir to
+      %windir% to %windir/syswow64
+      - disable on per-thread basis
+      - %windir%/sysnative for raw access (doesn't exist outside 32-bit apps)
   - security zone tainting
     - foo.ps1:Zone.Identifier
   - resources
@@ -1019,7 +1059,7 @@
       - <http://support.microsoft.com/kb/154753>
       - <http://msdn.microsoft.com/en-us/library/abx4dbyh(VS.80).aspx>
     - `/MT` for static, `/MD` for shared (DLL), `/M[TD]d` for debug
-    - all dependent libs must have a 
+    - `/LD` for generating DLLs
     - .libs: archives of .obj's
       - import libs are thin wrappers for shared libs
     - can specify `#pragma comment(lib, "PocoXXXmt.lib)` to automatically pull
