@@ -1383,6 +1383,66 @@ Java semi-automatic parallelization (Danny Dig)
 - tool checks whether the xform is safe and performs the changes
 - eg: uphold class invariants and determine smallest critical sections
 
+scalable reader writer locks (for .NET) (msr talk)
+
+- problem: acquiring read locks does a contended write
+  - STM atomic perf was the best
+  - slower than mutex lock on readonly workload; mutex can get away with
+    hardware op on acquire (still write on release)
+- on current 8-way machine, must do 1000 empty calls within lock to avoid
+  dramatic slowdown from contention
+- scalable, pure .NET lib, fairness, space efficient (difficult)
+- scalability: divide reader count into 'subcount' buckets (indexed with thread
+  id hash)
+  - acquiring write lock acquires all
+  - each subcount has cache line sized padding
+- fairness: queue-based lock; nodes represent 1 writer or a bunch of readers
+  (add to readers node if already at end)
+  - can have multiple writers in a row but not readers
+- locking discipline
+  - lock has tail and head ptrs
+    - tail: lock to write/read consistently, but can sometimes dirty read
+    - head: lock for null-non-null transitions
+  - reader nodes.next: ...
+  - writer node.next: lock owning lock
+
+      while true
+        an = tail
+        if an != null ad an is readers node
+          increment lock count for thread for this thread
+          if failed, continue loop
+          wait until this node becomes the head
+        else # null or writer
+          increment lock count for thread for this thread
+          lock this
+            an = tail
+            if an == null
+              head = tail = rn; return
+            elif a is readers node
+              ...
+            ...
+          ...
+
+  - IncrementLockCountForThread()
+
+      id = thread.hash()
+      index = id % nprocs
+      lock arr[ind]
+        if next != null return false
+        arr[ind].lockCount++
+        return true
+
+  - WaitUntilHead()
+
+      for k in 0 to spincount
+        if an == head, return
+        spin(1)
+      lock an
+        while an != head
+          monitor.wait(an)
+
+  - ...
+
 Other
 
 - Cache-Conscious Structure Layout
