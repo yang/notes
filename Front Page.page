@@ -1,9 +1,14 @@
 # Welcome to Yang's Wiki
 
-This is my collection of notes on computer science-related material---systems research and general hackery in particular.
+This is my collection of notes on computer science, research, programming, and
+industry, with a heavy focus on software systems. I wiki-fied this to share the
+information through a familiar read/write web interface. This wiki system,
+[Gitit](http://gitit.net/), is powered by Git, so I've cloned the repository
+[on github](http://github.com/yang/notes).
 
 To see what's here, click on the [All Pages](_index) link at the left.
 
-The wiki has a [site-wide feed](_feed) and per-page feeds (e.g., for the [Concurrency]() page, use [_feed/Concurrency](_feed/Concurrency)).
+The wiki has a [site-wide feed](_feed) and per-page feeds (e.g., for the
+[Concurrency]() page, use [_feed/Concurrency](_feed/Concurrency)).
 
 Watch your step. This place is really messy.
