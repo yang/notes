@@ -2,6 +2,14 @@ TODO merge in my notes from corey, CS152
 
 TODO fused multiply add (FMA)
 
+misc notes
+
+- x87: the FPU
+
+SSE
+
+- has ssqrt and a much faster rsqrt
+
 ARM
 
 - invents designs; licenses to actual mfr's
