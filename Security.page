@@ -1,3 +1,7 @@
+resources
+
+- <http://www.cs.berkeley.edu/~daw/teaching/cs261-f08/>
+
 people
 
 - michal zalewski: google security person, wrote browsersec book among tons of
@@ -7,6 +11,17 @@ people
 - theo de raadt: openssl, openbsd
 - mark dowd: amazing; ibm x-force team; taossa book; nacl exploits; flash null
   ptr exploit
+- mark miller: exploits, reveng, rootkits; joined windows 8/2008
+- james whittaker: testing; joined windows 5/2006; joined google 6/2009
+- crispin cowan: stackguard, immunix, subdomain, apparmor; joined windows from
+  novell 1/2008
+- michael howard: windows security team lead
+- niels provos: principal engr at google; libevent, libio, openssh privsep;
+  malware work
+
+vulnerability databases
+
+- MITRE Common Vulnerabilities and Exposures (CVE)
 
 misc terms
 
@@ -15,6 +30,20 @@ misc terms
 - _drive-by download_: browser (or extension) exploit triggered on simply
   displaying a page
 
+security models
+
+- clark-wilson integrity model: semi-formal model
+  - 2 categories of data, known-good (trusted) and unknown (untrusted)
+  - mandatory checks to filter data before moving it from unknown to known-good
+  - mandatory checks that data must be in the known-good state before it can
+    participate in sensitive ops
+  - eg: virus scanner than forces checking of all files as they're opened
+- bell-lapuda (BPL) privacy model: formal model and policy
+  - "data diode": info only flows in not out; useful for eg CIA
+  - label-based access control; formal models of security allow for proofs
+  - hugely influential in academic security research
+- biba integrity model: dual of BPL model, for integrity instead
+
 high level exploit classification
 
 - confused deputy: fool a privileged process to do things for you
@@ -22,10 +51,19 @@ high level exploit classification
 
 access control
 
-- discretionary: subjects can xfer perms to others; decentralized
+- _discretionary access control (DAC)_: subjects can xfer perms to others;
+  decentralized
   - commonly in practice: objs have owners who controls perms
   - capability systems: subjects can xfer perms to others
-- mandatory: policy controlled by admin only; centralized
+- _mandatory access control (MAC)_: policy controlled by admin only; centralized
+- _role-based (RBAC)_: restrict system access to authorized users
+  - newer alt to MAC/DAC; can sim MAC/DAC
+  - users are assigned particular roles; roles are assigned permissions
+  - basically, roles are a level of indirection
+  - qualitatively/typically, more fine-grained than ACLs, enumerating specific
+    high-level operations
+
+integrity control TODO
 
 security
 
@@ -60,6 +98,45 @@ high-level code injection
   - specific case of parser errors
 - parser errors: unhandled cases leading to unesacped input
 
+sandboxing pitfalls
+
+- ptrace: race conditions
+  - ptrace behavior: suspends thread; mon reads args (regs, mem) separately
+    - monitor can rewrite syscalls
+  - multi-threaded arg race (TOCTTOU)
+    - A syscalls; monitor checks; B changes args
+    - works only on args that are not in regs, eg ptrs to other mem (file paths)
+    - heavy-handed soln: prohibit multithreading
+    - soln: suspend all threads
+      - only for syscalls that use such ptrs ("volatile" syscalls)
+      - if block all syscalls, then deadlock
+        - devs use syscalls for sync (eg read and write)
+        - authors don't know of any such pair of syscalls where one is volatile
+  - another process could modify args via shared mem
+    - heavy-handed soln: prohibit forking, shared mem
+    - soln: or suspend all processes
+  - fork-attach race
+    - sandbox doesn't immediately attach to a forked child (!)
+    - forked child can secretly fork another child monitor won't know about
+    - soln: change call from fork to clone; has option to start in ptraced mode
+  - FS race: trickiest; use symlinks to break security
+    - prisoner does syscall involving path
+    - monitor looks up path, following symlinks, to verify
+    - another process/thread replaces a component in path with symlink to
+      secure region in FS (eg user's $HOME)
+    - soln: suspend threads
+  - signals TODO
+    - avoid by denying signals
+  - alts to syscalls
+    - lcall7 and lcall27 call gates; removed from most modern linuxes
+  - MITRE CVE has over 40 ptrace-related items
+  - refs
+    - <http://iacoma.cs.uiuc.edu/~greskamp/pdfs/598cz.pdf>
+    - NaCl
+- chroot
+  - TODO
+  - (obv) can still make arbitrary syscalls; FS is only one part of sandboxing
+
 web
 
 - flash: `<embed...allowScriptAccess="always">` instead of `"sameDomain"`
@@ -81,6 +158,7 @@ low-level exploits
       - segments can be readable/writeable/executable, but modern OS's use flat
         memory model (pages instead of segments)
     - address space layout randomization (ASLR): randomize codes, heap, stacks
+      - against return-to-libc (arbitrary code can still detect things)
 - null pointer exploits: TODO
 - heap overflow: overwrite eg a struct's function pointer
 - heap spray: give you a place to place executable code, eg if stack is NX or
@@ -104,6 +182,9 @@ low-level exploits
     write a function ptr (flash exploit)
   - if the ptr is dereferenced and fields are accessed, first prep by writing
     to those fields
+- return-to-libc: execute existing code; eg `system`
+  - just supply data; no need to inject code, unaffected by NX
+  - ASLR defends against this
 
 same-origin policy (SOP)
 
@@ -327,6 +408,16 @@ block ciphers
 - aes: successor to des; 2001
   - 128, 192, 256 bit key sizes; all 128 bit block sizes
 
+windows
+
+- ASLR
+- DEP: uses NX if avail or software emulation with limited, almost-unrelated
+  protection with SafeSEH (simply checks that an exception is registered in a
+  function table for the app)
+- common exploit techniques TODO <http://www.hick.org/~mmiller/shellcode/win32/generic.c>
+  - PEB
+  - SEH
+
 windows 7 UAC design flaws
 
 - auto-elevating executables: to reduce annoyance
@@ -335,6 +426,27 @@ windows 7 UAC design flaws
   - work only when caller is ms-signed exe, eg explorer
   - but procs can inject code into ea other as long as same user
 - <http://arstechnica.com/microsoft/news/2009/03/opinion-ms-should-kill-win7-uac.ars>
+
+selinux (nsa 2000; merged mainline 2003)
+
+- supplements unix DAC with MAC
+- selinux is an implementation of FLASK for linux
+- hybrid of concepts and capabilities from MAC, MIC, RBAC
+- hard to config
+- applies labels to files
+- identifies files by inodes
+- perms
+  - specify specific ops (creat, rename, unlink, etc)
+  - allow, deny, auditallow, auditdeny
+
+linux apparmor (novell 2005)
+
+- supplements unix DAC with MAC
+- manually specify profiles for apps
+- "learning mode" logs holes that are opened and creates profiles from that
+- alternative to selinux
+  - identifies files by paths instead of inodes
+  - can make use of FSs with no support for extended file attributes, eg NFS
 
 SFI
 ---
@@ -565,6 +677,14 @@ a crawler-based study of spyware on the web (uw, 2007)
   - curiously, saw nothing on spam, game passwd harvesting
   - no need for exploits
 
+systems security
+----------------
+
+return-oriented programming (Hovav Shacham, ucsd, 2009)
+
+- generalization of return-to-libc; chain `ret`s together
+- [not much here]
+
 seminal
 -------
 
@@ -574,6 +694,12 @@ Why Isn't Trust Transitive? (bruce christianson, william s harbison)
 
 Sandboxing
 ----------
+
+privsep (niels provos, usenix 03)
+
+- privileged parent monitor for unprivileged child process
+- child runs with unused user and chroot'd to /var/empty
+- comm over pipes, shared mem
 
 Efficient Software-Based Fault Isolation (Wahbe, sosp93)
 
@@ -638,10 +764,10 @@ native client
     - caveat: need LDT; privileged instruction, vista 64 doesn't provide this;
       confuses os an hardware exceptions
 - outer sandbox
-  - system call filter for untrusted modules
   - redundant; defense in depth
-  - OS-dependent
-  - ptrace on linux, syscall ACLs on Windows
+  - system call filter for untrusted modules
+  - OS-dependent: ptrace on linux, syscall ACLs on Windows
+    - to avoid ptrace overhead, nacl provides own shared mem and sync objects
 - compile for native client with modified gcc (1000 lines patched)
 
 Sprockets: Safe extensions for distributed file systems (umich usenix 07)
@@ -686,6 +812,11 @@ Sprockets: Safe extensions for distributed file systems (umich usenix 07)
   - watchdogs, stackable FSs: more coarse-grained ext interface allowing exts
     only at certain pre-defined VFS ops like open, close, write
   - may leverage STM/HTM techniques
+
+Saltzer & Schroeder, "The Protection of Information in Computer Systems"
+
+- seminal paper on OS security
+- no mention of pub key crypto; still 5 yrs away
 
 chrome/chromium
 
