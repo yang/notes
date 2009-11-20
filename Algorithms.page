@@ -57,6 +57,19 @@ self-balancing binary search trees
 - AVL
 - splay
 
+string search
+
+- knuth morris pratt
+- boyer-moore
+- boyer-moore-horspool
+
+hashing
+
+- locality sensitive hashing
+- perfect hashing
+- universal hashing
+- linear probing, linear hashing
+
 sort
 ====
 
