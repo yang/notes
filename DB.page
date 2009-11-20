@@ -10,6 +10,20 @@ resources
 vocab
 
 - PDBMS = MPP
+- data cube: hypercube of multi-dim info; analytical aggregation along dims
+
+fields
+
+- analytical processing, BI, data warehousing
+- transaction processing: worry about scaling, consistency
+- stream processing, sensor nets
+- data integration, deep web, federated db's
+  - template extraction, schema recognition
+  - schema resolution
+  - entity resolution
+  - data extraction, wrapping (deep web)
+  - query routing (federated db's)
+- information extraction
 
 companies
 
