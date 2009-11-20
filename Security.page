@@ -417,6 +417,8 @@ windows
 - common exploit techniques TODO <http://www.hick.org/~mmiller/shellcode/win32/generic.c>
   - PEB
   - SEH
+- steadystate/pc safeguard
+  - applied only to std accounts; rolls back all reg, fs changes
 
 windows 7 UAC design flaws
 
@@ -697,7 +699,8 @@ Sandboxing
 
 privsep (niels provos, usenix 03)
 
-- privileged parent monitor for unprivileged child process
+- privileged parent monitor and unprivileged child process
+- no syscall tracing; only using OS UID-based privilege separation
 - child runs with unused user and chroot'd to /var/empty
 - comm over pipes, shared mem
 
