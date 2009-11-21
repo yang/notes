@@ -997,3 +997,8 @@ Xax (MSR)
     assigned in user mode, so must emulate or obviate this functionality
   - port more interactive code: GUI libs with few deps (qt/embeded); blit frame
     buffers; keyboard/mouse events catpure in js
+
+umview
+
+- linux sandboxing tool; uses ptrace
+- tried contributing some kernel patches for ptrace perf (pmulti)
