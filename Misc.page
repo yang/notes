@@ -153,6 +153,10 @@ games
     - used for levels; render quickly while minimizing polygon count per refresh
     - large open areas don't work well
 
+typography
+
+- ligatures: prepared combinations of adjacent chars (eg Th that overlap)
+
 Startups
 ========
 
