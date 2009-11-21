@@ -75,6 +75,26 @@ Optimizations
   - avoids dynamic dispatch
   - can lead to code explosion; HotSpot only does this for certain things
 
+garbage collection
+
+- design axes
+  - moving (compacting) vs non-moving
+    - moving: no extra work to reclaim dead space; fast subseq allocs; survivor
+      locality
+    - non-moving: no need to copy; no need to update refs
+  - copying vs mark-and-sweep vs mark-and-don't-sweep
+    - copying: switch btwn 2 regions; copy while traversing
+    - mark-sweep: mark while traversing; sweep separately; sweep can be either
+      moving or non-moving depending on avail mem
+  - generational: inspect younger gens more frequently; cross-gen links are
+    problematic
+  - stop-the-world vs incremental vs concurrent
+  - precise vs conservative
+    - internal ptrs: ptrs to fields in objects (C)
+- boehm: conservative, incremental, mark-sweep; competitive speed
+- hybrids in Java/.NET: generational with occasional mark-and-sweep and rarer
+  full-copying
+
 B programming language
 
 - basically C without types
