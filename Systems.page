@@ -50,6 +50,37 @@ fastcgi
 - protocol for keeping resident CGI handlers (eg in process pool)
 - req/resp serialized over TCP, allowing remote handlers
 
+storage
+
+- Electrically Erasable Programmable Read-Only Memory (eeprom)
+  - small amounts of data to be saved in computers and devices
+- flash: can only change 0 to 1; erasure must happen block at a time
+  - technically an eeprom, but larger block sizes, so better large-write perf,
+    and more economical
+  - nor flash
+    - similar to ram: execute in place (XIP), read-write
+    - typical block sizes: 64, 128, 256 KB
+    - greater write endurance than nand: 100K-1M cycles
+    - slow writes vs nand flash, but better random access
+  - nand flash: more like block device; in usb, mem cards, ssd
+    - typical block sizes
+      - 32 pg * 512 B/pg = 16 KB
+      - 64 pg * 2 KB/pg = 128 KB
+      - 64 pg * 4 KB/pg = 256 KB
+      - 128 pg * 4 KB/pg = 512 KB
+    - lesser write endurance: 10K-100K cycles
+    - higher densities/larger capacities at lower costs than nor
+    - faster erase, sequential write, sequential read than nor
+    - much faster at reading than writing; wear slows down writes a lot
+- phase change memory (pcm): samsung got a bunch of hype in 9/2009
+  - read: 100s of ns; write: ms
+  - OOM faster than flash, OOMs faster than disk
+  - actually a bunch of different non-NAND NVRAM techs that are
+    byte-addressable, including something from HP that sounded like 'mem
+    registers'
+  - mature tech?  cost/availability?  still very early, but results are
+    promising and should scale up to disks in size
+
 Concurrency
 ===========
 
@@ -1126,34 +1157,3 @@ Petabytes on a budget: How to build cheap cloud storage (Backblaze blog post 200
   - 4 GB RAM $50
 - software: https, JFS, 3 RAID6 volumes
   - IBM JFS is journaling file system...curious why they chose this
-
-storage
-
-- Electrically Erasable Programmable Read-Only Memory (eeprom)
-  - small amounts of data to be saved in computers and devices
-- flash: can only change 0 to 1; erasure must happen block at a time
-  - technically an eeprom, but larger block sizes, so better large-write perf,
-    and more economical
-  - nor flash
-    - similar to ram: execute in place (XIP), read-write
-    - typical block sizes: 64, 128, 256 KB
-    - greater write endurance than nand: 100K-1M cycles
-    - slow writes vs nand flash, but better random access
-  - nand flash: more like block device; in usb, mem cards, ssd
-    - typical block sizes
-      - 32 pg * 512 B/pg = 16 KB
-      - 64 pg * 2 KB/pg = 128 KB
-      - 64 pg * 4 KB/pg = 256 KB
-      - 128 pg * 4 KB/pg = 512 KB
-    - lesser write endurance: 10K-100K cycles
-    - higher densities/larger capacities at lower costs than nor
-    - faster erase, sequential write, sequential read than nor
-    - much faster at reading than writing; wear slows down writes a lot
-- phase change memory (pcm): samsung got a bunch of hype in 9/2009
-  - read: 100s of ns; write: ms
-  - OOM faster than flash, OOMs faster than disk
-  - actually a bunch of different non-NAND NVRAM techs that are
-    byte-addressable, including something from HP that sounded like 'mem
-    registers'
-  - mature tech?  cost/availability?  still very early, but results are
-    promising and should scale up to disks in size
