@@ -50,6 +50,11 @@ fastcgi
 - protocol for keeping resident CGI handlers (eg in process pool)
 - req/resp serialized over TCP, allowing remote handlers
 
+file systems
+
+- typical FS cluster sizes (unit of data read/write): 4KB
+  - this usu. matches hardware page sizes
+
 storage
 
 - Electrically Erasable Programmable Read-Only Memory (eeprom)
@@ -63,7 +68,8 @@ storage
     - greater write endurance than nand: 100K-1M cycles
     - slow writes vs nand flash, but better random access
   - nand flash: more like block device; in usb, mem cards, ssd
-    - typical block sizes
+    - typical page sizes (unit of read/write): 4KB-8KB
+    - typical block sizes (unit of erasure): 128KB
       - 32 pg * 512 B/pg = 16 KB
       - 64 pg * 2 KB/pg = 128 KB
       - 64 pg * 4 KB/pg = 256 KB
@@ -72,6 +78,7 @@ storage
     - higher densities/larger capacities at lower costs than nor
     - faster erase, sequential write, sequential read than nor
     - much faster at reading than writing; wear slows down writes a lot
+  - <http://www.rethinkdb.com/blog/>
 - phase change memory (pcm): samsung got a bunch of hype in 9/2009
   - read: 100s of ns; write: ms
   - OOM faster than flash, OOMs faster than disk
@@ -771,6 +778,11 @@ Linux
 
 - _ticket spinlocks_: two counters (in same int), owner and next
   - `atomic { n=next++; }; while (n!=owner); ++owner;`
+
+cool techs
+
+- utrace: a better ptrace
+- kexec/kdump: boot into another kernel/boot into crash dump producer
 
 ext4 vs fsync
 
