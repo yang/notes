@@ -833,6 +833,12 @@
     - no way to capture shell's "Segmentation fault" message to a file, AFAIK
   - time
     - `ctime()` produces `time_t`, 32-bit seconds since 1/1/70 UTC
+  - tricks
+    - zygote process: a technique for being able to exec the same program
+      later, even if binaries are replaced on disk
+      - do this by keeping a prototype process around since startup and forking
+        it when needed
+      - <http://code.google.com/p/chromium/wiki/LinuxZygote>
 
 - terminals
   - <http://www.linusakesson.net/programming/tty/index.php>
