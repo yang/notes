@@ -734,3 +734,29 @@ barbara liskov's keynote at oopsla09 (same as turing award lecture)
   - Liskov and Zilles - "Programming with Abstract Datatypes"
   - Goodenough - "Exception Handling" Issues and a Proposed Notation"
 - tom malone TODO
+
+fringe
+======
+
+coherence (jonathan edwards, onwards09)
+
+- introduces _co-actions_ (coherent actions)
+- each reaction executed before all others that it has any side effects upon
+  - setup: all reactive bindings are bidirectional
+  - super useful in _callback hell_, eg GUI frameworks
+  - eg: given `object{start,len,end=start+len}`
+    - setting `start+=1;end+=2` is wrong; increments `end` by 3
+      - must do `end+=2;start+=1`
+      - changing impl to eg `start=end-len,len,end` requires diff order
+- maintain to-do queue; execute in reverse order
+  - in above example `start+=1;end+=2`
+    - `end=end+2`
+    - triggers `len=end-start`, pushing onto to-do queue; immed execute
+    - `start=start+1`
+    - R-W conflict on `start` with `len=end-start`, so undo triggered actions
+    - redo `len=end-start`
+- more than just firing all reactions at end; reactions must be ordered among
+  themselves as well
+  - build up graph of reactions (reads -> writes) and sort topologically
+  - thus focuses on constraint *discovery* (vs satisfaction)
+- actually first discovered by [Trellis](http://pypi.python.org/pypi/Trellis)
