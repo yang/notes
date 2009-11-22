@@ -698,7 +698,55 @@ google
 
 - 2006: 400M queries/day
 - 9/2009: 12.8B queries/mo, 427M queries/day, 5K queries/s
-- TODO index size
+- 11/2009 jeff dean LADIS talk
+  - typical server: 16GB RAM, 2TB disk
+    - easily hold full web index in mem with just 500K servers
+  - failures/year: 1-5% disks, 2-4% servers; ea server expected to crash twice+
+  - DC storage hierarchy
+    - Server: DRAM: 16GB, 100ns, 20GB/s; Disk: 2TB, 10ms, 200MB/s
+    - Rack: DRAM: 1TB, 300us, 100MB/s; Disk: 160TB, 11ms, 100MB/s
+    - Aggregate Switch: DRAM: 30TB, 500us, 10MB/s; Disk: 4.8PB, 12ms, 10MB/s
+  - times everyone should know (ns)
+    - L1 cache reference: 0.5
+    - Branch mispredict: 5
+    - L2 cache reference:  7
+    - Mutex lock/unlock: 25
+    - Main memory reference: 100
+    - Compress 1KB bytes with Zippy: 3,000
+    - Send 2K bytes over 1 Gbps network: 20,000
+    - Read 1MB sequentially from memory: 250,000
+    - Roundtrip within same datacenter:  500,000
+    - Disk seek: 10,000,000
+    - Read 1MB sequentially from disk: 20,000,000
+    - Send packet CA -> Netherlands -> CA: 150,000,000
+  - GFS usage: 200+ 1000+-machine clusters, 4+ PB clients, 40 GB/s R/W load
+  - mapreduce usage: 3.5M jobs/yr (488 machines/job, 8min/job)
+  - bigtable usage: 500 clusters; largest 70PB, 30+GB/s IO
+  - bigtable changes
+    - better scaling, perf isolation, corruption protection
+    - per-table replication; uses eventual consistency
+      - all user-facing production uses of bigtable use replication
+    - coprocessors: code that lives/moves/splits with data; auto scaling, load
+      bal, req routing
+      - eg used in managing metadata for colossus (new GFS)
+      - eg lang model serving for machine xlation system
+      - eg distributed query processing for full-text indexing support
+      - eg regex code search
+  - spanner: new bigtable; similar tabular data model, locality groups, coprocs
+    - auto move/replicate data based on usage
+    - optimizes resources of entire cluster
+    - hierarchical dir structure
+    - allows fine-grained access and replication control
+    - supports distributed txns for apps that need it
+    - plan to scale to 10M machines and 1 EB data
+  - refs
+    - <http://glinden.blogspot.com/2009/10/advice-from-google-on-large-distributed.html>
+    - <http://perspectives.mvdirona.com/2009/10/17/JeffDeanDesignLessonsAndAdviceFromBuildingLargeScaleDistributedSystems.aspx>
+
+internet archive
+
+- index size: 2 PB
+- refs: <http://www.archive.org/about/faqs.php>
 
 ebay
 
