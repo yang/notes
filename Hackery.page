@@ -1,3 +1,12 @@
+- disks
+  - sector: 512 B
+  - partition: physical region on disk; serves as a storage container
+    - windows PC: first partition starts at sector 63
+  - volume: OS abstraction for storage container
+    - usu just a single partition
+    - logical volume managers (LVMs) can create virtual volumes; eg concat or
+      stripe partitions
+
 - gdb
   - mostly implemented using ptrace
 
@@ -1212,8 +1221,14 @@
         - easy with function forwarders: `#pragma comment(linker,
           "/expo.rt:DoSomething=DllImpl.ActuallyDoSomething")`
       - binary rewriting
+        - [detours](http://research.microsoft.com/en-us/projects/detours/):
+          injects trampolines in-mem
       - debugger spying
       - import address table (IAT): change addr in `.idata` in PE
+    - refs
+      - [Protecting by hooking ZwOpenProcess](http://unlmtd.wordpress.com/2007/07/27/protecting-by-hooking-zwopenprocess/)
+      - [Detecting Windows NT/2K process execution](http://www.codeproject.com/KB/threads/procmon.aspx)
+      - [Hooking Nt* functions](http://unlmtd.wordpress.com/2007/07/29/hooking-nt-functions/)
   - debugging
     - virtual pc: use the virtual com port
       - run this on the target machine in an admin cmd; `bcdedit` is a program
@@ -1449,7 +1464,11 @@
           to be Admin user process to access
       - passing data: TODO
     - inverted call: uses pended IRPs
-    - see the `event` WDK sample
+    - refs
+      - `event` WDK sample
+      - [Sharing is Caring](http://www.osronline.com/article.cfm?id=108)
+      - [Calling User Mode---Using the Inverted Call
+        Model](http://www.osronline.com/article.cfm?id=94)
   - wfp callouts
     - arbitration
       - if FWPS_RIGHT_ACTION_WRITE set in classifyOut->rights, then it's soft
