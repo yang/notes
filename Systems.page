@@ -52,8 +52,12 @@ fastcgi
 
 file systems
 
-- typical FS cluster sizes (unit of data read/write): 4KB
+- typical FS cluster sizes (unit of data read/write): 4KB (8 sectors)
+  - NTFS: 4KB
+  - always some multiple of 2; always in terms of sectors
   - this usu. matches hardware page sizes
+- NTFS
+  - master file table (MFT): the "inodes"
 
 storage
 
