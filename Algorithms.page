@@ -134,6 +134,10 @@ compression
   - reversible: last col gives all chars; sort to get first col; last and first
     give all pairs of successive chars
 - prediction by partial matching (PPM)
+- zippy: google's fast compression algo
+  - zippy: 300MB/s encode, 600MB/s decode, 2-4X compression
+  - gzip: 25MB/s encode, 200MB/s decode, 4-6X compression
+  - <http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf>
 
 [On Reducing the Size of Compressed Javascript (by up to 20%)](http://timepedia.blogspot.com/2009/08/on-reducing-size-of-compressed.html)
 
