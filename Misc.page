@@ -156,6 +156,22 @@ games
 typography
 
 - ligatures: prepared combinations of adjacent chars (eg Th that overlap)
+- techniques
+  - expanded caps
+  - condensed caps
+
+favorite fonts
+
+- monospace
+  - bitstream vera sans mono
+  - consolas
+- humanist
+  - calibri
+  - gill sans
+  - lucida grande/lucida sans unicode
+  - trebuchet
+- serif
+  - bitstream charter
 
 Startups
 ========
