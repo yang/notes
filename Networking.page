@@ -291,6 +291,26 @@ TCP
 
 Congestion Control in Linux TCP
 
+- TODO
+
+network topologies
+
+- clos network
+  - insight: number of crosspoints required can be much fewer than were the
+    entire switching system implemented with one large crossbar switch
+  - reasonable approximate indication of total cost of switching system
+  - 3 stages: ingress, middle, egress; each stage has some crossbar switches
+    - ![clos network](http://en.wikipedia.org/wiki/File:Closnetwork.png)
+    - nonblocking: requires $m \ge 2n - 1$
+    - may be extended to any odd number of stages by replacing each middle
+      crossbar with 3-stage network
+  - very-large-scale integration (VLSI): integrated circuits by combining
+    thousands of transistor-based circuits into a single chip
+- fat tree (charles leiserson): upper links are fatter
+  - make nonblocking my making upper links fat enough to aggregate lower links
+  - this is basic def; "A Scalable, Commodity Data Center Network Architecture"
+    uses hypertree version of this
+
 Clean Slate
 ===========
 
@@ -395,14 +415,22 @@ Floodless in SEATTLE (princeton)
   - define "groups" (on DHT) instead of doing network-wide bcasts
 - <http://everythingisdata.wordpress.com/2009/09/17/floodless-in-seattle/>
 
+A Scalable, Commodity Data Center Network Architecture (amin vahdat, ucsd, sigcomm08)
+
+- use an instance of a clos network they call a "fat tree" [not sure why they
+  call it a fat tree, since that already has another meaning]
+- straightfwd application of clos network
+
 PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric (amin vahdat, ucsd, sigcomm09)
 
 - assumptions: modern DCs are "fat trees" or multi-rooted hierarchies
   - core, agg, and edge switches
   - location discovery protocol (LDP): used by switches to determine position
     in hierarchy and communicate this to the other switchesg
-- pseudo MAC (PMAC) addrs: specify locations; reduce table sizes
-  - translated back to MACs by switches
+- propose _pseudo MAC (PMAC) addrs_ [add layer of indirection]
+  - PMACs are hierarchical and specify locations; reduce table sizes
+  - translated back to MACs by switches; routing is done by MACs
+  - VMs keep stable MACs (and IPs)
 - centralized _fabric mgr_ to resolve ARP queries, and to simplify
   multicast/fault tolerance
   - switches fwd ARP reqs to FM
@@ -416,19 +444,50 @@ PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric (amin vah
   - switches recompute tables based on new topology
 - implemented using OpenFlow
 - vs VL2: added LDP for easier mgmt
+- [Ethan also uses centralized routing implemented in OpenFlow]
 - <http://everythingisdata.wordpress.com/2009/09/19/portland-a-scalable-fault-tolerant-layer-2-data-center-network-fabric/>
 
 VL2 (msr, sigcomm09)
 
-- TODO
+- focused on high bisectional bandwidth and good fairness among flows
+- propose virtualized app-level IP addrs (AAs) for addr migration
+  - modifies end-host OSs to perform loc-specific addr (LA) resolution
+  - OS module also intercepts ARP reqs for LA addrs and converts ARP bcasts
+    into unicast lookups into a centralized directory service (like
+    PortLand/Ethane)
+- uses clos network topology
+  - each top-of-rack switch connects to two agg switches
+  - each agg switch connects to every core switch (called "intermediate" switch)
+- uses valiant load balancing (VLB) and equal-cost multi-path (ECMP) routing
+  - valiant load balancing: work from '80
+    - dst-indep (eg random) traffic spreading across multiple intermediate nodes
+    - VL2 spreads flows rather than packets; avoids OOO delivery
+  - VLB+ECMP spreads traffic uniformly across network paths
+    - VLB uses random intermediate waypoint to route traffic btwn 2 endpoints
+    - ECMP selects amongst multiple equal-cost paths; provides load balancing
+      among the many VLB paths
+  - [but does this apply to intra-rack flows too? seems silly.]
+- all together
+  - first AA -> LA then encapsulate with an intermediate switch
+- found high variance among flows in MS properties, so static BW alloc is not
+  promising
+- ran on cluster of 3 racks, 80 servers, 10 switches
 
 PortLand vs VL2
 
 - both presented in same session
+- both propose locator/ID split
 - modify switch SW vs modify end host; both don't modify switch HW
 - both leverage directory service for efficient routing w/o bcast
+- PortLand is L2 only soln; VL2 is L2/L3
+- <http://sns.cs.princeton.edu/2009/10/new-datacenter-networks/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed:+PrincetonSNS+(Princeton+SNS)&utm_content=Google+Reader>
 
 Monsoon TODO
+
+your data center is a router: the case for reconfigurable optical circuit switched paths (rice, cmu, intel pa, hotnets09)
+
+- use reconfigurable optically switched network for bulk xfers
+- keep electrically switched network for small flows
 
 Routing
 =======
