@@ -648,6 +648,58 @@ redis
 - microbench: 110K sets/s, 81K gets/s on entry level linux box
 - impl in C
 
+memcachedb
+
+- supports replication
+- thread pool
+
+tokyo cabinet
+
+- successor to GDBM, QDBM
+- features compactness, speed, parallelism, simple API, fault tol, 64-bit
+- C lib
+- much faster than BDB
+  - 1M inserts/.4 s; 1M lookups/.33 s
+- record-level locking
+- txns: WAL and shadow paging [but apparently can disable this, since tyrant
+  relies only on replication for durability]
+- backends
+  - mem: string, array list dequeue, hash map, ordered tree
+  - disk: hash, B+tree, fixed, column
+    - hash: chaining with binary search
+    - column: built on hash DB; col indexes built on B+ tree
+- lots of low-level opt/tuning, eg combining mmap and pwrite/pread syscalls
+- optional compression
+- tokyo dystopia: FTS engine; uses tokyo cabinet for inverted index
+
+tokyo tyrant
+
+- server interface to tokyo cabinet
+- hot backup/update log
+- async replication; master-slaves or master-master (but no atomic conflict
+  detection, only eventual)
+- speaks binary, memcached, HTTP
+- built-in ops: no-reply updates, multi-gets
+- lua extensibility for more ops (stored procs)
+- epoll/kqueue + thread pool scalability
+- 1M queries/17.2 s
+
+chunkd
+
+- single-node storage daemon for project hail
+- similar to tokyo cabinet but with multi users and channel security
+- 2nd place to tokyo cabinet in perf
+
+simple DBMs
+
+- DBM: simple database engine by ken thompson
+- CDB: constant database by dan j bernstein; super fast
+
+berkeleydb
+
+- very slow for random writes into DBs of >100K rows
+- hard to configure
+
 GT.M
 
 - old DB from 1986
@@ -823,6 +875,6 @@ stackoverflow (8/2009)
 - asp.net, C#, LINQ
 - 2 * (4 core, 2.83 GHz, 12 MB L2, 500 GB datacenter RAID1, 8 GB RAM)
 - sql server 2008 on 1 * (8 core, 3.5 GHz, 24 MB L2, 48 GB RAM)
-  -  CPU surprisingly important; 1.86 to 2.5 to 3.5 GHz scales linearly typical
-     query times
+  - CPU surprisingly important; 1.86 to 2.5 to 3.5 GHz scales linearly typical
+    query times
 - scaled up instead of out
