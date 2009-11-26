@@ -394,6 +394,11 @@ mapreduce online (tyson condie, nconway, ..., jmh, cal TR 2009)
 Filesystems
 ===========
 
+xtreemfs
+
+- WAN operation
+- TODO
+
 Replication in the Harp File System (Liskov, Ghemawat, et al)
 
 - primary copy replication: single primary server waits on multiple backup
@@ -956,6 +961,7 @@ cassandra (facebook, 2008)
 
 - based on dynamo's eventual consistency, bigtable's column family data model
 - designed by one of the authors of dynamo, avinash lakshman
+- richer data model than voldemort
 - ![data model and physical storage layout](cassandra-data-model)
   - cluster: the machines in a logical cassandra instance; set of keyspaces
   - keyspace: a namespace for column families; typically one per app
@@ -969,6 +975,22 @@ cassandra (facebook, 2008)
   - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
 
 riak TODO
+
+- richer data model than voldemort
+
+perf comparisons with key-value usage model
+
+- chunkd: 100% tyrant in warm-read case, 83% in cold
+- cassandra: 30-85% chunkd
+- voldemort: 30-80% cassandra
+- tabled: 50-90% voldemort
+- riak: 15-45% tabled; 8-24x slower than tyrant
+- <http://pl.atyp.us/wordpress/?p=2417>
+
+lightcloud
+
+- provides consistent hashing on top of tokyo tyrant
+- TODO
 
 dynamo
 
