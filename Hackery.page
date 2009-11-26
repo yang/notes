@@ -1,3 +1,7 @@
+- pdf
+  - <http://www.adobe.com/devnet/livecycle/articles/lc_pdf_overview_format.pdf>
+  - <http://www.mactech.com/articles/mactech/Vol.15/15.09/PDFIntro/>
+
 - disks
   - sector: 512 B
   - partition: physical region on disk; serves as a storage container
@@ -1084,6 +1088,14 @@
       - import libs are thin wrappers for shared libs
     - can specify `#pragma comment(lib, "PocoXXXmt.lib)` to automatically pull
       in libs
+  - DLLs
+    - `DisableThreadLibraryCalls()`: per-DLL optimization
+      - otherwise windows calls into DLL on ea thread create/destroy
+      - useful for DLLs that maintain per-thread state, eg CRT or winsock
+      - <http://blogs.msdn.com/larryosterman/archive/2004/06/03/147736.aspx>
+  - VirtualProtect: changes protection on region of committed pages in VA space
+    - modes: x, rx, rwx, rx+cow, none, r, rw, cow
+    - conditional options: guard, uncached, write-combined (for devices?)
   - UNC paths: C:\blah, \\host\blah, and \\?\C:\blah or \\?\UNC\host\blah
   - command line
     - compiler: `cl`
