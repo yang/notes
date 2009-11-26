@@ -471,6 +471,7 @@ VL2 (msr, sigcomm09)
   - first AA -> LA then encapsulate with an intermediate switch
 - found high variance among flows in MS properties, so static BW alloc is not
   promising
+- implemented entirely in existing protocols: packet encaps, ECMP, OSPF, etc
 - ran on cluster of 3 racks, 80 servers, 10 switches
 
 PortLand vs VL2
@@ -482,12 +483,22 @@ PortLand vs VL2
 - PortLand is L2 only soln; VL2 is L2/L3
 - <http://sns.cs.princeton.edu/2009/10/new-datacenter-networks/?utm_source=feedburner&utm_medium=feed&utm_campaign=Feed:+PrincetonSNS+(Princeton+SNS)&utm_content=Google+Reader>
 
+BCube/DCell (MSRA)
+
+- more complex networks than fat trees
+- like hypercube networks; orig in thinking machine's CM-5 supercomputer
+
 Monsoon TODO
 
 your data center is a router: the case for reconfigurable optical circuit switched paths (rice, cmu, intel pa, hotnets09)
 
 - use reconfigurable optically switched network for bulk xfers
 - keep electrically switched network for small flows
+
+flyways to de-congest data center networks (MSR, hotnets09)
+
+- propose hybrid wired/wireless network; wifi is "flyway"
+- use wifi to handle transient overages in wire
 
 Routing
 =======
