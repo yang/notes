@@ -237,26 +237,28 @@ same-origin policy (SOP)
   - http responses are variations
   - http request smuggling
 
-cross-site communication in web apps
+ways to do cross-site communication in web apps
 
-- dynamically create script tags to get data; unsafe
-- cross-window messaging via `window.postMessage`
+- dynamically create script tags to get data
+  - unsafe: response can do arbitrary code execution
+- Mozilla cross-window messaging via `window.postMessage`
   - receiver gets `message` DOM event; msg contains data, domain, uri, source
   - allows cross-site communication
   - requires explicit msg handling on target page, so less susceptible to
     problems than unchecked shared DOM access (pre-SOP)
-- IE XDomainRequest
-- JSONRequest
-  - safer than dynamically creating script tags to get around SOP
-  - POST
+- JSONRequest: obsoleted by CS-XHR
   - like form.submit, but no auth data or cookies
-- W3C CS-XHR
-  - w3c access control for cross-origin resource sharing
-    - sites specify allowed-origins list in their responses
-    - browsers specify origin in their requests; unlike referer, no path
-    - <http://dev.w3.org/2006/waf/access-control/>
-  - IE team claims this proposal has number of problems
-  - <http://blogs.msdn.com/ie/archive/2008/06/23/securing-cross-site-xmlhttprequest.aspx>
+- IE XDomainRequest (XDR) and W3C Cross-Origin Resource Sharing (CORS)
+  - send `Origin` in req (like `Referer` but no path)
+  - require `Access-Control-Allow-Origin` in response; must be `*` or the exact
+    page URL
+  - CORS is for XmlHttpRequest Level 2, namely the Cross Site-XHR (CS-XHR) part
+    (XHR2 bundles many features)
+  - IE team criticizes CS-XHR in favor of XDR
+  - spec says JSONRequest doesn't address their requirements
+- Flash, Silverlight: similar server-side sandboxing as XDR/CORS using
+  `crossdomain.xml`
+- <http://blogs.msdn.com/ie/archive/2008/06/23/securing-cross-site-xmlhttprequest.aspx>
 
 web application security
 
