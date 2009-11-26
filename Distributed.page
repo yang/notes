@@ -472,6 +472,14 @@ The Google File System
 
 - 3x replication
 
+GFS Evolution
+
+- orig master per cell per DC, but isolation was difficult and 1-master not
+  scalable (no more mem); moved to multi-cell, multi-master
+- batch processing to online apps like gmail: more available and performant
+- loose/eventual consistency: biggest issue was with client failures, since clients are responsible for resolving
+- <http://queue.acm.org/detail.cfm?id=1594206>
+
 Don't Give Up On Distributed File Systems
 
 - specify hints about consistency
@@ -912,6 +920,7 @@ bigtable
 - when full, flush memtable to disk as a new disktable
 - periodically compact the disktables, merging them into a single disktable
 - not partition-tolerant
+- scale to PB range across thousands of machines; auto elasticity
 
 voldemort (linkedin, 2009)
 
