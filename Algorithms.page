@@ -1,5 +1,51 @@
 TODO merge in notes from CS170
 
+TODO
+
+- basics
+  - the chinese remainder theorem (really an algo)
+  - the euclidean algorithm
+  - gaussian elimination
+  - linear programming
+  - primality testing
+  - fast matrix product
+  - tsp
+  - integer factoring
+- combinatorial optimization
+  - minimum spanning tree
+  - shortest path in graphs
+  - for-fulkerson max-flow algorithm
+  - gale-shapley stable marriage
+  - general matching in graphs
+- randomized algos
+  - primality testing
+  - volume of convex bodies
+  - counting matchings
+  - min-cut of graphs
+  - string matching
+  - hashing
+- heuristic algos
+  - local search
+  - shotgun sequencing algorithm
+  - simulated annealing
+- real-world impact
+  - fast fourier transform
+  - rsa encryption
+  - miller-rabin primality test
+  - reed-solomon codes
+  - lempel-ziv compression
+  - page rank of google
+  - consistent hashing of akamai
+  - viterbi and hidden markov models
+  - smith-waterman
+  - spectral low rank approximation algorithms
+  - binary decision diagrams
+- info theory
+  - digital fountain codes
+  - cdma
+  - compressive sensing of images
+- <http://rjlipton.wordpress.com/2009/10/27/highlights-of-focs-theory-day/>
+
 misc terms
 
 - _binary decision diagram (BDD)_: binary tree representation of truth table;
