@@ -82,7 +82,15 @@ storage
     - higher densities/larger capacities at lower costs than nor
     - faster erase, sequential write, sequential read than nor
     - much faster at reading than writing; wear slows down writes a lot
-  - <http://www.rethinkdb.com/blog/>
+    - 30K read IOPS, 20K write IOPS
+    - oracle: 7.7M tpmC with 24 Flash devices
+    - trends
+      - 100x density/10 yr
+      - cost, latency falls 50%/yr
+      - density, tput grows 2x/yr
+  - refs
+    - <http://www.rethinkdb.com/blog/>
+    - <http://perspectives.mvdirona.com/2009/10/26/AndyBechtolsheimAtHPTS2009.aspx>
 - phase change memory (pcm): samsung got a bunch of hype in 9/2009
   - read: 100s of ns; write: ms
   - OOM faster than flash, OOMs faster than disk
@@ -91,6 +99,7 @@ storage
     registers'
   - mature tech?  cost/availability?  still very early, but results are
     promising and should scale up to disks in size
+- others: carbon nanotube, nano-ionic
 
 Concurrency
 ===========
