@@ -50,11 +50,12 @@ companies
   - paraccel
   - kognitio
   - greenplum
-  - aster data: customers: myspace
+  - aster data: customers: myspace; hadoop interop
   - infobright
   - netezza: db hw
   - datallegro/ms
   - xtremedata
+  - groovy: main mem
   - vertica: column store
     - stonebraker
     - h-store
@@ -68,7 +69,7 @@ companies
     - hp neoview: analytical
   - ibm
 - emc
-- marklogic: XML processing
+- marklogic: XML DB with XQuery as primary QL
 
 people
 
@@ -594,14 +595,26 @@ greenplum
 - table storage options
   - traditional pg
   - row-oriented append-only: compressible, scan-optimized
-  - col-oriented append-only
+  - col-oriented append-only (storage-level-only solution)
   - treat external source as relational
 - compression: LZ, gzip
 - no need for joins to get multi columns
 - no: columnwise compression options, in-mem compression, late materialization
 
-key-value stores
-----------------
+alternative DBs
+---------------
+
+Alternative DBs
+
+- key‐value‐cache:  memcached, repcached, coherence, infinispan, eXtreme scale, jboss cache, velocity, terracoqa
+- key‐value‐store: keyspace, flare, schema‐free, RAMCloud
+- eventually‐consistent key‐value‐store: dynamo, voldemort, Dynomite, SubRecord, Mo8onDb, Dovetaildb
+- ordered‐key‐value‐store: tokyo tyrant, lightcloud, NMDB, luxio, memcachedb, actord
+- data‐structures server: redis
+- tuple‐store: gigaspaces, coord, apache river
+- object database: ZopeDB, db4o, Shoal
+- document store: CouchDB, Mongo, Jackrabbit, XML Databases, ThruDB, CloudKit, Perservere, Riak Basho, Scalaris
+- wide columnar store: BigTable, Hbase, Cassandra, Hypertable, KAI, OpenNeptune, Qbase, KDI
 
 hyder
 
@@ -718,6 +731,16 @@ GT.M
 
 - MUMPS language predates C
 - M/DB is a SDB interface to GT.M
+
+FluidDB
+
+- impl in Python
+- schemaless attrib-val pairs
+- attrib names are OWNER/NAME/NAME/...
+- each of read/update/create/see is open/closed has exceptions
+- basic data types
+- CQL-like query lang: `has sara/rating and (tim/rating > 5 or mike/comment
+  matches fantastic or mary/product-reviews/keywords contains "kids")`
 
 distributed olap databases
 --------------------------
@@ -883,3 +906,31 @@ stackoverflow (8/2009)
   - CPU surprisingly important; 1.86 to 2.5 to 3.5 GHz scales linearly typical
     query times
 - scaled up instead of out
+
+twitter
+
+- use pig and hadoop <http://www.slideshare.net/kevinweil/hadoop-pig-and-twitter-nosql-east-2009>
+  - basic stats
+    - # reqs/day
+    - req latency
+    - distribution of response codes
+    - searches/day
+    - unique searches
+    - unique users
+    - geo dist
+  - correlations
+    - diffs for other clients (mobile, desktop, services, etc)
+    - cohort analyses
+    - what fails at the same time
+    - what features get users hooked
+    - what features do successful users use often
+    - search corrections/suggestions
+    - A/B testing
+  - research
+    - profiling users based on tweets (theirs, followers, followees)
+    - what graph structures lead to successful networks
+    - reputation
+    - sentiments
+    - retweets, retweet depths
+    - duplicates
+    - language detection
