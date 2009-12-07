@@ -416,6 +416,17 @@ Asynchronous exceptions in Haskell
 
 - TODO: review this and take notes
 
+Haskell Type Constraints
+
+- address naming problems
+  - aliases for long constraints: `(A a, B a, C a, D b, E b, F b, G a b)`
+  - refactoring Num into Additive, Multiplicative, FromInteger using
+    super/subclasses requires rewriting programs that use Num
+- address uniformity problems
+  - constraints (contexts) on type classes: `Functor f` has `fmap :: (a -> b)
+    -> f a -> f b`, but `Set.map` requires extra constraint `(Ord a, Ord b)`
+- <http://lambda-the-ultimate.org/node/3670>
+
 Scala
 -----
 
