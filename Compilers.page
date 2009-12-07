@@ -185,3 +185,24 @@ Bottom-up parsing
     As a result, the grammar is ambiguous since a program can be interpreted more than one way.
 
     This error is often caused by recursive grammar definitions where the system cannot determine when one rule is complete and another is just started. The Builder documentation contains an example of the common if-then-else grammar problem and how to fit it.
+
+compiler optimizations
+
+- <http://lambda-the-ultimate.org/node/3674>
+- const objects are treated as constants (vs const refs where constness can be cast away)
+- macros/inline unnecessary; compiler tries to inline anyway
+- reduce conditionals; change to arithmetic
+- in-CPU call stack makes regular function calls fast too
+- common subexpression elimination
+- invariant hoisting moves loop-invariant checks out of the loop
+- inlining lets compiler do variable value range analysis
+- auto vectorization: words at a time or 128-bit vector at a time
+- bit shifts and `lea`s
+- tail recursion (gcc)
+- dead code elimination
+- things that don't matter: pre-/post-inc, data structures/algos (vs. simple
+  cache-friendly arrays)
+- memory hierarchy is the only important optimization today
+  - mult instead of shift: 5 cycles
+  - branch mispredict: 10 cycles
+  - cache miss to main memory: 250 cycles
