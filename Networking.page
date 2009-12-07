@@ -17,6 +17,15 @@ general terms
 
 - anycast: send to 1 of many; useful for HA/load-bal/geoloc; used in BGP, DNS
 
+MACs
+
+- time division multiple access (TDMA)
+- frequency division multiple access (FDMA)
+- carrier sense multiple access (CSMA): verify channel clear before xmit
+  - with collision detection (CSMA/CD): terminate xmission as soon as collision
+    is detected, reducing prob of collision on retry
+  - with collision avoidance (CSMA/CA): eg RTS/CTS
+
 dns
 
 - 13 root NSs; maintained by ICANN
