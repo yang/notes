@@ -128,3 +128,7 @@ trending algorithms
 - simple baseline trend algorithm: daily trend = most recent day's change *
   log(monthly total)
   - <http://stackoverflow.com/questions/1635703/understanding-algorithms-for-measuring-trends>
+
+decision tree learning algorithms TODO
+
+- NP complete
