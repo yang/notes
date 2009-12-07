@@ -38,6 +38,14 @@ TODOs
 - category theory
 - free theorems
 
+people
+
+- guy steele
+  - Harv BS, MIT PhD, asst prof at CMU
+  - *lisp at Thinking Machines, java at Sun
+  - wrote orig Lambda (The Ultimate) papers with advisor Sussman
+- gerald sussman: scheme; coauthor of SICP with abelson
+
 misc
 
 - pit of success: design that makes it hard for users to fail
@@ -83,17 +91,18 @@ garbage collection
       locality
     - non-moving: no need to copy; no need to update refs
   - copying vs mark-and-sweep vs mark-and-don't-sweep
-    - copying: switch btwn 2 regions; copy while traversing
+    - copying: switch btwn 2 regions; copy while traversing; requires 2x space
     - mark-sweep: mark while traversing; sweep separately; sweep can be either
       moving or non-moving depending on avail mem
-  - generational: inspect younger gens more frequently; cross-gen links are
-    problematic
+  - generational aka ephemeral: inspect younger gens more frequently
+    - cross-gen links are perf problem
   - stop-the-world vs incremental vs concurrent
   - precise vs conservative
     - internal ptrs: ptrs to fields in objects (C)
 - boehm: conservative, incremental, mark-sweep; competitive speed
 - hybrids in Java/.NET: generational with occasional mark-and-sweep and rarer
   full-copying
+- great big FAQ: <http://www.iecc.com/gclist/GC-faq.html>
 
 B programming language
 
