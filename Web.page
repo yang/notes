@@ -62,3 +62,40 @@ invokedynamic
 - return a CallSite whose target has been set to some MethodHandle (a pointer to a method)
 - for some reason, the CallSite ctor takes the same args as the bootstrap method; not sure how this is used
 - as side effect, the CallSite may be stored away in a data structure managed by the lang runtime, so that it can be retargeted in the future
+
+Google SPDY (Alyssa (Rzeszutek) Wilk, talk at MIT 12/8/2009)
+
+- HTTP protocol built on TCP; former internal name "FLIP"
+- features
+  - basic
+    - multiplexed streams: done by packetizing/framing (has SYN, DATA, FIN
+      pkts)
+    - prioritization: advisory, per-req; can reduce load times by eg loading js
+      first that processes while other resources are loading
+      - determined entirely by browser
+    - header compression: gzip dicts are kept across reqs
+  - advanced (optional
+    - server push: avoid half the round trip of having client send a req
+    - hints: client *may* request this soon, but don't xmit yet
+- status
+  - protocol still being developed
+  - will be opt-in in chrome; built in-memory server
+  - will do out-of-lab experiments, deploying across google services
+- performance
+  - 40% fewer packets than compressed HTTP, 15% fewer bytes
+  - 88% header compression, 85% resp hdr compression
+  - saved 45-1142ms per page load
+- real world pkt loss is ~1%; SPDY is 41-47% faster for PL btwn 1-2% because
+  (1) fewer packets and (2) prioritization
+- SSL: a bunch of remaining work/issues; want to negotiate SPDY as part of SSL
+  handshake
+- future work
+  - caching implications: what are latency implications of not using proxy
+    caches, etc? (can't proxy bc not enough support for SPDY)
+  - unidirectional streams: replace bidir streams + half-close
+  - flow control: backoff + GOAWAY; if server overloaded, tell client "slow
+    down" or lose benefits
+  - insecure content: classify data as public + cacheable?
+- related work
+  - HTTP over SCTP
+  - SST
