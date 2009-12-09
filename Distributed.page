@@ -541,6 +541,12 @@ UsenetDHT (Emil Sit, NSDI08)
     - identify objs missing locally
     - make local reps of those objs
 
+Kademlia (Petar Maymounkov, David Mazieres)
+
+- simplest
+
+Pastry
+
 Chord: A Scalable Peer-to-Peer Lookup Service for Internet Applications
 
 Programming
