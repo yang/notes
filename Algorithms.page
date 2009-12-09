@@ -116,6 +116,22 @@ hashing
 - universal hashing
 - linear probing, linear hashing
 
+spatial indexing
+
+- quadtree: 4-ary tree (child per quadrant)
+- geohashing: treat each quadtree as trie, and address the quadrants as 00, 01,
+  10, and 11; then leaves are `00 11 01 10 00`
+  - to query region intersection, can just choose leaves for tightest bound,
+    but that's slow/numerous
+  - instead, specify max number of regions, then recursively choose the
+    quadrant that when subdivided will remove the most area while staying under
+    max
+  - visit selected areas in "Z" order; this limits the continuity
+- hilbert curves: "U" order; better locality behavior [for convex hulls?]
+  - a type of 1D fractal known as a _space-filling curve_
+  - can translate (x,y) to hilbert curve pos
+- <http://blog.notdot.net/2009/11/Damn-Cool-Algorithms-Spatial-indexing-with-Quadtrees-and-Hilbert-Curves>
+
 sort
 ====
 
