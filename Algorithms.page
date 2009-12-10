@@ -168,6 +168,12 @@ edit distance
   - damerau-levenshtein: also transposition of two chars
 - hamming distance: considers only substitutions in same-length strings
 
+subsequence sum
+
+- given $x_i$, $A_i$ is max subsequence sum up to and including $x_i$
+
+  $$A_i = \max{ A_{i-1}, 0 } + x_i$$
+
 compression
 ===========
 
