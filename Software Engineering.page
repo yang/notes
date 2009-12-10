@@ -43,3 +43,15 @@ Exploding Software-Engineering Myths
 - org structure matters a lot: org metrics can predict SW failure-proneness
   with precision & recall of 85%
 - geo distance doesn't matter much
+
+companies
+---------
+
+facebook software engineering
+
+- minimze downtime, scale fast, rapid deployment
+- limited QA but many code reviews
+- A/B testing, gradual/staged (geo) deployment
+- PHP, memcached, mysql, hadoop, scribe, hive, hipal, haystack, thrift
+- user:dev ratio is ~1.1M
+- <http://cacm.acm.org/blogs/blog-cacm/51564-extreme-agility-at-facebook/fulltext>
