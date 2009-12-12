@@ -127,3 +127,10 @@ social standards TODO
   - user and social graph
   - defines common API for social apps across multiple websites
 - google friend connect: something about AJAX widgets
+
+latency costs
+
+- amazon: every 100ms latency cost 1% in sales <http://home.blarg.net/~glinden/StanfordDataMining.2006-11-29.ppt>
+- google: adding .5s lost 20% traffic <http://glinden.blogspot.com/2006/11/marissa-mayer-at-web-20.html>
+- brokers could lose $4M revenue/ms if etrading platform 5ms behind competition <http://www.tabbgroup.com/PublicationDetail.aspx?PublicationID=346>
+- <http://highscalability.com/blog/2009/7/25/latency-is-everywhere-and-it-costs-you-sales-how-to-crush-it.html>
