@@ -193,7 +193,7 @@ compression
   - permits multiple compression algos, but deflate dominant
   - can take collections of files, but compresses each individually, so can't
     exploit redundancy across files
-- gzip compression: deflate; compresses single files (freq. tar)
+- gzip: deflate; compresses single files (freq. tar); not parallelizable
 - LZMA: lempel-ziv markov chain
   - used in 7z
 - burrows-wheeler transform (BWT)
@@ -201,7 +201,13 @@ compression
     col
   - reversible: last col gives all chars; sort to get first col; last and first
     give all pairs of successive chars
-- prediction by partial matching (PPM)
+- bzip2: BWT + MTF transform + Huffman coding; parallelizable; slower than gzip
+  - move-to-front (MTF) transform: decrease entropy; usu useful only after BWT
+- prediction by partial matching (PPM): smaller/slower than bzip2
+- lempel-ziv-oberhumer (LZO): very fast decompression
+  - block-based (parallelizable)
+  - similar compression speed as deflate
+  - added to hadoop by twitter
 - zippy: google's fast compression algo
   - zippy: 300MB/s encode, 600MB/s decode, 2-4X compression
   - gzip: 25MB/s encode, 200MB/s decode, 4-6X compression
