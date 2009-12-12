@@ -40,7 +40,7 @@ companies
     - 3GB/s decompression, 4-5 cycles/tuple, 3-4X ratio
     - operate in decompressed domain
     - shared scans
-  - kickfire: entered with TPC-H win
+  - kickfire/C2: entered with TPC-H win
     - column store, execution, compression
     - FPGA for data- and task-parallelism
     - targeting mysql
@@ -59,6 +59,11 @@ companies
   - vertica: column store
     - stonebraker
     - h-store
+- main-memory
+  - ibm soliddb: uses tries instead of btrees for indexes
+  - oracle timesten
+  - scaledb: mysql clustering; uses tries instead of btrees for indexes; better
+    in-mem perf, more compact
 - elephants
   - MS: sql server
     - shared scans
@@ -186,11 +191,66 @@ force                no undo, no redo     undo, no redo
     record which first dirtied the page)
 - checkpointing
 
-mysql replication
+B+ trees TODO
 
-- semi-sync replication: wait for receipt
-  - contributed by google in 2007
-- fully-sync replication: wait for persistence
+LSM trees
+
+- uses _log-structured merge (LSM)_ trees to create full DB replicas using
+  purely sequential IO
+- LSM-trees don't become fragmented; provide fast, predictable index scans
+- LSM-tree lookup perf comparable to B-tree lookups
+- good for many (amortized) random writes; bad for random reads (need to hit
+  multiple _components_)
+
+mysql
+
+- engines
+  - myisam
+  - innodb
+  - percona's xtradb
+  - mariadb's maria: evolve myisam toward innodb; adds txns, crash safety, etc
+- forks
+  - mariadb: founder's community-oriented fork; dissatisfied with sun procedure
+  - drizzle: complete refactoring/slimming by brian aker, long-time mysql dev
+
+distributed mysql
+
+- mysql cluster/NDB (network database)
+  - node types
+    - mgmt node: config server, start/stop nodes, run backup, etc
+    - data node: number of data nodes = replicas * fragments
+    - sql node or api node
+  - database
+    - partition: a fragment of the database; these are replicated
+    - replica: a copy of a partition
+    - hash-partitioned on table primary keys
+    - stored in mem or on disk asynchronously
+  - organization
+    - data node: manages a replica
+    - node group: manages a partition
+  - checkpoints
+    - local: save all data to disk; every few mins
+    - global: txns for all nodes synced; redo log flushed; every few secs
+  - system
+    - replication may be sync or async
+    - 2PC
+    - no referential integrity
+    - no txn isolation above read committed, so dtxns are naive
+    - replication via mysql replication (replicate entire cluster)
+- mysql replication
+  - system
+    - async replication or semi-sync replication (wait for receipt; contributed
+      by google in 2007)
+    - supports multi-master
+    - simple "greatest timestamp wins" conflict resolution
+    - no auto failover
+  - formats
+    - statement-based replication: stream the queries
+    - row-based replication: stream the updates
+    - mixed format: default; usu statements, but rows for things like UUIDs
+- mysql multi-master replication manager (MMM)
+  - async replication *with* auto failover
+  - also: flipper, tungsten
 
 clustering
 ----------
@@ -424,6 +484,45 @@ why main memory is bad for olap (DB group meeting talk, Mike Stonebraker,
   - absence of indexes contributes 2x
   - compression contributes 7x
 - SAP will compare their TREX against Vertica
+
+distributed dbms
+----------------
+
+rose: compressed, log-structured replication (russell sears, VLDB08)
+
+- ROSE: replication oriented storage engine
+  - storage engine for high-tput replication
+  - targets seek-limited, write-intensive workloads that do near-real-time OLAP
+  - target usage in replication: replication log (of actual data) comes
+    streaming into replicas, which are fed as input to ROSE (which itself just
+    uses STASIS for logging LSM tree ops)
+  - although targeting replication, provides high-tput writes to any app that
+    updates tuples without reading existing data, eg append-only, streaming,
+    and versioning DBMSs
+  - write perf depends on replicas' ability to do writes without looking up old
+    values; reads are expensive (esp. of deleted values)
+- maintains multiple versions/snapshots for each item, supporting eg OCC, MVCC,
+  and more
+  - deletion: tombstone insertion
+- introduce page compression format that takes advantage of LSM-tree's
+  sequential, sorted data layout
+  - increases replication tput by reducing sequential IO
+  - enables efficient tree lookups by supporting small page sizes & doubling as
+    an index of the values it stores
+  - any scheme that can compress data in a single pass and provide random
+    access to compressed values could be used by rose
+- replication envs have multiple readers, 1 writer; thus rose gets atomicity,
+  consistency, isolation to concurrent txns without resorting to rollbacks,
+  blocking index reqs or interfering with maintenance tasks
+- rose avoids random IO during replication and scans
+  - leaves more IO capacity for queries than existing systems
+  - provides scalable, real-time replication of seek-bound workloads
+- analytical models and experiments: OOMs greater replication bandwidth
+- column-store within pages (a la PAX)
+  - within each column, doesn't sort by column values; just stores in tuple
+    slot id order
+  - adds overhead to lookups
+  - appends: append to each col; buffered staging space
 
 OLTP
 ----
@@ -934,3 +1033,16 @@ twitter
     - retweets, retweet depths
     - duplicates
     - language detection
+
+NYSE (brian clark's talk at linux foundation end user summit 2009)
+
+- systems run under high pressure and tight constraints
+- process 3B txns/day (more than goog); each txn must be <1ms
+- "customers can switch to competing exchanges instantly and for almost no cost,
+  so if NYSE's systems are not performing, its customers will vanish"
+- typically 1.5TB/day; PBs of data kept online
+- "subject to thousands of attacks every day"
+- downtime must be limited to 90s/yr
+- wants to be able to move everything except specific app off a given core
+  - also wants to lock a proc's mem in place, but this has been avail via mlock
+  - also wants non-disruptive way to measure latency, esp in net stack
