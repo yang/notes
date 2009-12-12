@@ -1,3 +1,7 @@
+- html
+  - link rel canonical: the canonical URL for this page; useful for eg search
+    engines, sharing, bookmarking, etc
+
 - pdf
   - <http://www.adobe.com/devnet/livecycle/articles/lc_pdf_overview_format.pdf>
   - <http://www.mactech.com/articles/mactech/Vol.15/15.09/PDFIntro/>
