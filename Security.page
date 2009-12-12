@@ -326,6 +326,9 @@ XSRF (cross-site request forgery)
 - cryptographic hash functions: TODO
 - diffie-hellman: TODO
 
+- salting: decorating a password with a (program-static) scheme (eg
+  prefix/suffix) and hashing that as the "password" (for storage/comparison)
+
 network attacks
 
 - sockstress: syn-synack-ack flood (local iptables configured to not be
@@ -688,6 +691,34 @@ return-oriented programming (Hovav Shacham, ucsd, 2009)
 
 - generalization of return-to-libc; chain `ret`s together
 - [not much here]
+
+"Countering Kernel Rootkits with Lightweight Hook Protection"
+
+- gist: copy all hooks to read-only mem and make all callsites (found by
+  profiling) use that
+- premise: preserving kernel code integrity (eg disallowing changing kernel
+  code and disallowing introduction of new code) is not enough
+  - exploits leverage existing code and subvert control flow, eg return
+    addresses and function pointers
+  - protecting return addresses is well studied
+  - this paper: protecting function pointers (hooks)
+- profile system offline to find out the calling sites of all hooks, or _hook
+  access points (HAPs)_
+  - given the list of kernel hook locations for protection (globals)
+  - dynamically allocated hooks: discovered at runtime by monitoring call stack
+    at alloc sites to see what object is being created
+- online system protection: run OS in hypervisor (Xen)
+  - after OS init, copy all hooks into a memory region; these copies are the
+    _shadow hooks_
+    - region is read-only
+    - read/write requests distinguished by HAP
+    - hypervisor validates write request (requires new hook value to be
+      recognized from offline profiling phase, but other validations possible)
+  - dynamically allocated hooks: alloc/update/free results in hypercall
+  - memory protection is guaranteed by hypervisor shadow page table
+  - trampoline the HAPs to call into shadow hook area
+    - (as typical) the instructions are in read-only executable text pages
+  - syscall table can be uniquely optimized
 
 seminal
 -------
