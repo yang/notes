@@ -64,6 +64,8 @@ companies
   - oracle timesten
   - scaledb: mysql clustering; uses tries instead of btrees for indexes; better
     in-mem perf, more compact
+- distributed
+  - continuent tungsten replicator: DB-neutral master/slave replication
 - elephants
   - MS: sql server
     - shared scans
@@ -79,6 +81,10 @@ companies
 people
 
 - dave dewitt: uwisc prof; started msr wisc
+
+misc
+
+- XA transactions: open group specification for common dtxn standard
 
 denormalization: simplex/complex reads vs writes
 
