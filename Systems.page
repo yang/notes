@@ -88,6 +88,13 @@ storage
       - 100x density/10 yr
       - cost, latency falls 50%/yr
       - density, tput grows 2x/yr
+      - interfaces moving from SATA to PCIe
+  - history TODO
+    - flash disks internally remap
+    - MLC/SLC
+    - why they moved to block-level abstraction instead of byte-addressible; erases
+    - firmware sequentializes everything
+    - <http://arstechnica.com/hardware/news/2009/11/biography-solid-state-disk.ars>
   - refs
     - <http://www.rethinkdb.com/blog/>
     - <http://perspectives.mvdirona.com/2009/10/26/AndyBechtolsheimAtHPTS2009.aspx>
