@@ -715,20 +715,33 @@ Alternative DBs
 - document store: CouchDB, Mongo, Jackrabbit, XML Databases, ThruDB, CloudKit, Perservere, Riak Basho, Scalaris
 - wide columnar store: BigTable, Hbase, Cassandra, Hypertable, KAI, OpenNeptune, Qbase, KDI
 
-hyder
+hyder (phil bernstein, msr 2009)
 
-- oltp KV store on raw flash
-- ops: ins, del, upd, getnext
-- txns
-- no partitioning: single reliable, distributed log shared by all servers
-- no separate db servers from app servers
-- raw flash: 10^5 more IOPS/GB than HDD [higher perf but lower density]
-- API: linq/sql/raw
-- arch: txn layer, indexed record layer, scalable/reliable storage layer
-- erasure coding for reliability
-- multiversioned binary search trees marshalled into log leaf-first (backptrs)
-  - updates: shadow copies
-- every server maintains copy of log tail in memory
+- modern scalable systems: abandon dtxns; eventual consistency; memcached
+- Hyder: oltp KV store on raw flash
+  - single, reliable, distributed log accessed by all servers; "log is DB"
+  - "no partitioning, all data avail to all"; servers can fetch from each others' caches
+  - DB is multi-versioned; server caches are trivially coherent
+- all homogeneous nodes (symmetric); app+db in-process
+  - unified cache (no server/client/memcached)
+  - no RPC
+- enabling hardware assumptions
+  - Flash
+    - 10^4 more IOPS/GB than HDD; higher perf but lower density
+    - 4K pages: 100us to read, 200us to write, per chip
+  - data center networks: RTTs <25us, 10GigE; so, many servers can share load
+  - large mem: so, reduce rate that hyder needs to hit the log
+  - manycore servers: so, maintain consistent views of DB
+- Flash
+  - no mutates; must erase before writing
+  - end up treating as sequential device
+  - wear-leveling: multi-layer (MLC): ~10K erases; single-layer (SLC): ~100K
+  - 12/09: 4GB MLC is $8.50; 1GB SLC is $6 (SLC ~= 3*MLC)
+  - densities can double only 2-3 more times, but other non-vol memories (PCM, memristors)
+- Hyder stack: API (SQL/LINQ), OCC txn layer, indexed record layer, storage layer
+- storage layer
+  - custom controller interface
+  - log uses RAID erasure coding for reliability
 - txn
   - read a snapshot as cache of last committed db state
   - appends intention log record to log
@@ -738,18 +751,48 @@ hyder
   - broadcast intention at same time as appending intention
   - when appending, no idea where intention will land; append returns addr
   - all servers get a copy of this ack
-- root gets conflicting structural (physical) updates all the time, but db
-  content actually doesn't change conflictingly; they can be deterministically
-  merged
-- every server rolls fwd update records one by one
+- indexed record layer: multi-versioned binary tree
+  - think of whole DB as one big binary search tree
+  - multiversioned binary search trees marshalled into log leaf-first
+    (backptrs)
+  - no update-in-place; must make new copy; shadow copies are wasteful
+  - instead, just record the path, not actually the internal node contents
+  - to avoid having every txn conflict with each other, distinguish between
+    structural updates to internal nodes vs content updates
+  - rationale: Flash space is costly
+  - binary trees vs b-trees: b-tree nodes are large, so cheaper to update lots
+    of small nodes
+- txn execution: get snapshot (ptr to root), generate updates locally, append intention log record
+  - if there was an earlier conflicting update, cannot commit the change of this log entry
+  - ergo entries that appear in log may not have been committed
+  - key ingredient: log updates are bcast to all machines
+  - but no global ordering
+    - custom flash controller supports append-page() that returns addr where it stored the page
+    - [could've alternatively had a txn manager sit in the controller that simply tells you whether to abort]
+      - avoided this to minimize latency; longer-running txns increases conflicts in OCC
+      - but now writing all this crap to flash (previously noted as "precious")
+  - a lot of effort spent on reliability of controller
+- every server maintains copy of log tail in memory
+  - every server rolls fwd update records one by one
   - on each one, check if the txn actually committed
   - all servers will do the same things and make the same abort/commit
     decisions
-- binary trees vs b-trees: b-tree nodes are large, so cheaper to update lots of
-  small nodes
-- TODO
-- [questions]
-  - availability
+- bottlenecks
+  - network: 15K update txns/s over 1 GigE; 150K update txns/s over 10 GigE
+  - conflict detection & merge: every machine must roll fwd every op; up to 300K updates/s
+  - root gets conflicting structural (physical) updates all the time, but db
+    content actually doesn't change conflictingly; they can be
+    deterministically merged
+  - aborts on write-hot data; currently takes 200us to write txn
+- major techs
+  - flash is append-only: custom controller has mechanisms for sync & fault tol
+  - storage is striped, with self-adaptive algo for storage alloc & load bal
+  - fault-tol protocol for total ordering
+  - fast algo for conflict detection & merging of intention records into last-committed state
+- [essentially building shared disk system]
+  - one of criticisms is scalability: requires lots of cross-sectional bandwidth
+  - answer: "predictable cross-sectional talk (bcasting as network was intended)"
+  - answer?: cross-sectional bandwidth solved by fat trees
 
 benchmarks
 
