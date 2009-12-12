@@ -32,6 +32,18 @@ industry
 
 - gossip: decentralized but eventually consistent
 
+general principles for reducing latency
+
+- distributed caches
+- CDN
+- caching proxy server
+- app-level (yslow, ajax)
+- edge DNS accelerator
+- zero copy
+- no serialization
+- load-balanced replicas
+- TCP offload engine
+
 TODO DSM
 
 - http://www.cs.umd.edu/~keleher/bib/dsmbiblio/dsmbiblio.html
@@ -1012,6 +1024,29 @@ dynamo
 - works across DCs
 - eventual consistency
 - hinted handoff
+- vector clocks to detect conflicts
+- quorum consensus: if R+W>N then [usu.] consistent reads [but see critique]
+- sloppy quorums?
+  - writes don't need to happen on first N members of preference list
+  - eg if first 3 are down then just take next 3 on the list; if first 3 came back, inconsistency
+  - but then: "Using hinted handoff, Dynamo ensures that the read and write operations are not failed due to temporary node or network failures. Applications that need the highest level of availability can set W to 1, which ensures that a write is accepted as long as a single node in the system has durably written the key it to its local store."
+  - so, if W < N, then N - W writes can be written using hinted handoff to nodes other than the final destination, and forwarded when the natural nodes come back online. BUT the W writes specified by the requested consistency level do have to be to the right nodes or everything falls apart.
+- 3 levels of repair: read-repairs, hinted handoffs, replica synchronization
+  - read-repairs and hinted handoffs are near-realtime, minimizing drift
+  - read repair deals with stale data on a per-key/per-op basis; coord can identify nodes with stale data and update them accordingly
+  - hinted handoffs: bulk op done on node rejoin
+  - replica sync: complete merge once a day using merkel trees
+- critique: <http://jsensarma.com/blog/2009/11/dynamo-a-flawed-architecture-part-i/>
+  - inconsistency: actually asymmetric when claiming to be symmetric; symmetry is a flawed goal because nothing else in the datacenter architecture is symmetric
+  - disaster recovery: lack of point-in-time consistency pushes complicated recovery onto app
+    - eg can't just replay logical operations from a point in time since the DB is not a consistent snapshot
+    - standard log-shipping replication/recovery can at least track replication lag
+  - quorum consensus: doesn't actually guarantee consistency because nodes that (re-)join a quorum don't have to go through a sync barrier (not brought up to date before being considered part of the quorum), so eg if R=1 then it may respond to a read request with stale data
+  - decentralization !iff availability
+    - centralized resources may be made highly available, eg dual-everything in SANs, eg highly available
+    - centralization is a *scalability* bottleneck if anything
+    - in fact dynamo cluster itself is likely centralized; eg no dual-routers means unavailability/partitions
+
 
 http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
 http://stackoverflow.com/questions/1189911/non-relational-database-design
