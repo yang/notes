@@ -7,6 +7,22 @@ resources
 
 - <http://marcua.net/notes/6.824/>
 
+MPI/PVM
+
+- MPI
+  - lib for apps
+  - don't mandate thread-safe impls, but allow them
+  - high perf on high perf systems
+  - modular: all refs relative to a module, not entire program
+    - eg linear solver module must be restricted to a subset of processes
+    - process src/dst must be spec'd by rank in a group not absolute ID
+  - extensible
+  - heterogeneous computing (impls working together)
+  - well-defined behavior: no race conds/avoidable impl-specific behavior
+- PVM
+  - also supporting heterogeneous computing and diff approach to extensibility
+  - provide portable, heterogeneous env for using clusters over TCP
+
 industry
 
 - cloudera
