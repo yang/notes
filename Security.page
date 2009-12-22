@@ -163,6 +163,7 @@ low-level exploits
 - heap overflow: overwrite eg a struct's function pointer
 - heap spray: give you a place to place executable code, eg if stack is NX or
   your overriding return addr is constrained somehow
+  - spray it everywhere to increase chances of landing in it
   - common in web browser js engines
   - nozzle: msr project that uses sled detection then reduces false positive
     rate with "global heap health metric"
@@ -1035,3 +1036,14 @@ umview
 
 - linux sandboxing tool; uses ptrace
 - tried contributing some kernel patches for ptrace perf (pmulti)
+
+web
+---
+
+forcehttps
+
+- stricter https error processing; treat errors not as possible misconfigs but
+  as attacks
+- prohibit mixed http/https
+- simple url rewriting rules: //foo.com/blah gets the current http/https
+  prepended
