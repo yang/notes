@@ -12,6 +12,8 @@ TODO merge in notes from CS164
   - predictive grammars
     - use $k$ tokens of lookahead to fully determine which production to use
     - no backtracking needed
+  - top-down operator precedence (pratt) parser
+    - TODO
 - parsing types
   - shift-reduce parsing: a type of bottom-up parsing
 - grammar types (hierarchy)
