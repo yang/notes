@@ -303,6 +303,12 @@ continuations
 - delimited
 - full
 
+software metrics
+
+- coverage, comment density, coupling, SLOC, bugs per SLOC, perf
+- cyclomatic complexity: num of linearly indep paths
+- cohesion: how strongly related/focused a module's responsibilities are
+
 Reactivity
 ----------
 
@@ -780,3 +786,12 @@ coherence (jonathan edwards, onwards09)
   - build up graph of reactions (reads -> writes) and sort topologically
   - thus focuses on constraint *discovery* (vs satisfaction)
 - actually first discovered by [Trellis](http://pypi.python.org/pypi/Trellis)
+
+roomy: disk-based computation (talk at MIT 12/21/09)
+
+- transparently utilize disk as working space memory
+- has 3 basic structs: array, list, hash table
+  - sequential accesses are efficient and immediately satisfied
+  - random accesses are delayed until they can be done in batch
+- [what if he used B+ trees instead? then he could make LSM trees happen
+  transparently; would be neat]
