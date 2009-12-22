@@ -132,6 +132,17 @@ spatial indexing
   - can translate (x,y) to hilbert curve pos
 - <http://blog.notdot.net/2009/11/Damn-Cool-Algorithms-Spatial-indexing-with-Quadtrees-and-Hilbert-Curves>
 
+randomized
+==========
+
+- reservoir sampling: sample $n$ elts from stream of unknown len in 1 pass
+  - keep buffer (_reservoir_) of $n$ elts, where elts are $x_i$
+  - $\forall x_i, i>n$, with prob $n/i$ replace random buffered elt with $x_i$
+  - prob $n/i$ is prob of no combination of $n$ elts containing $x_i$ (or any
+    particular elt in a set of $i$ elts)
+- weighted reservoir sampling: each elt has weight
+  - maintain total seen weight and total reservoir weight
+
 sort
 ====
 
