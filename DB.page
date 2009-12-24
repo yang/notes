@@ -1095,3 +1095,17 @@ NYSE (brian clark's talk at linux foundation end user summit 2009)
 - wants to be able to move everything except specific app off a given core
   - also wants to lock a proc's mem in place, but this has been avail via mlock
   - also wants non-disruptive way to measure latency, esp in net stack
+
+stumbleupon
+
+- moved from oracle to hbase
+- chose hbase over cassandra and hypertable bc of community, features, hadoop
+  integration
+- hbase serves su.pr: no add'l caching, 9B rows, 1300GB, map-red 700GB in 20m
+  on 20 machines
+- <http://www.cloudera.com/blog/2009/11/25/hadoop-world-practical-hbase-from-jonathan-gray-and-ryan-rawson/>
+
+streamy
+
+- moved from postgresql to hbase
+- <http://www.cloudera.com/blog/2009/11/25/hadoop-world-practical-hbase-from-jonathan-gray-and-ryan-rawson/>
