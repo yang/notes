@@ -1063,6 +1063,21 @@ dynamo
     - centralization is a *scalability* bottleneck if anything
     - in fact dynamo cluster itself is likely centralized; eg no dual-routers means unavailability/partitions
 
+hbase
+
+- sits atop HDFS
+- _region_: key range in consistent hashing (a shard/partition)
+- similar to HDFS: master:namenode :: regionserver:datanode (usu. deployed
+  alongside each other on same hosts)
+  - regionserver: assigned regions
+  - master: manages assignments, notices failures
+- memstore: fast random writes
+- column family data model provides user-controlled locality and versioning
+- hbase 0.20: fast random reads
+- in-progress:
+  - multi-master WAN replication
+  - rewrite the master to leverage zookeeper more
+  - need HDFS appends to avoid data loss
 
 http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
 http://stackoverflow.com/questions/1189911/non-relational-database-design
