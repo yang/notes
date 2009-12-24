@@ -1038,6 +1038,61 @@ facebook, 2009 talk at MSR
 - last year "20 percent more photo servers and 50 percent more upload servers" to process Halloween traffic, adding up to an additional 40 terabytes (that's 40,000,000,000,000 bytes) of storage. That was when the site had 140 million users, less than half its current active user base of more than 300 million.
   <http://www.datacenterknowledge.com/archives/2009/10/30/facebooks-spooktacular-scaling-for-halloween/>
 
+facebook, 2009 talk at UCSD
+
+- general
+  - #2 property on internet, measuring time spent on site
+  - 200B hits/mo, >3.9T feed actions/day, 15K sites using FB content
+  - exponential user growth; 70% users outside US
+- 20B photos in 4 resolutions; 2-3B uploads/mo; serve 600K photos/s
+  - orig served from NFS; can't handle many files; added cache
+  - optimized from 10 down to 2-4 IOs per serve
+  - haystack: 1 IO per serve
+- arch
+  - load balancers -> web servers -> memcached
+  - php: easy but slow, sloppy, hard to interop w C++ backend; optimized php
+    engine
+  - syslog breaks at scale; built scribe; 25TB msgs/day
+  - 30K (mostly web) servers
+- misc
+  - looked at clustering algos; found little win for add'l complexity; use hash
+    partitioning
+  - requests get data from 100s of hosts; network perf critical
+- memcached: total 120M req/s
+  - initially, 15-20K req/s/host; today, 250K
+  - added: multithreading, polling device drivers, stats locking, batched
+    packet handling
+- incast: get all responses in same 40us window -> overflow commodity switch
+  buffers -> 200ms TCP timeout
+  - custom congestion-aware UDP-based transport to manage congestion across
+    multiple reqs instead of within single conn
+- authoritative storage in mysql
+  - no joins; no dynamically changing data; no heavily-referenced static data
+  - hard:
+    - logical data migration
+    - load balancing many logical db's over varying number of hosts
+    - scaling CPU
+- WAN replication in west/east (master/slave) US DCs
+  - layer 7 load balancer routes to west (master) any requests that perform
+    writes (based on a hard-coded list)
+  - problem: propagated update won't invalidate memcache at replica
+    - soln: updates specify what memcached keys to invalidate
+    - eg: `REPLACE INTO profile (`first_name`) VALUES ('Monkey') WHERE
+      `user_id`='jsobel' MEMCACHE_DIRTY 'jsobel:first_name'`
+  - problem: read stale values after updating at master due to lag
+    - soln: on write, set cookie w current time; load balancer routes all reqs
+      to master for 20s
+  - <http://www.facebook.com/note.php?note_id=23844338919&id=9445547199&index=0>
+- future work
+  - load balancing
+  - middle tier: balance btwn productivity/efficiency
+  - graph-based caching/storage systems
+  - search relevance via social graph
+  - object discovery and ranking
+  - storage systems
+  - personalization
+- <http://idleprocess.wordpress.com/2009/11/24/presentation-summary-high-performance-at-massive-scale-lessons-learned-at-facebook/>
+
 myspace
 
 - claimed to have moved entirely from HDDs to SSDs
