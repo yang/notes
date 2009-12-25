@@ -65,7 +65,7 @@ companies
   - scaledb: mysql clustering; uses tries instead of btrees for indexes; better
     in-mem perf, more compact
 - distributed
-  - continuent tungsten replicator: DB-neutral master/slave replication
+  - continuent tungsten replicator: DB-neutral master/slave async replication
 - elephants
   - MS: sql server
     - shared scans
@@ -493,6 +493,15 @@ why main memory is bad for olap (DB group meeting talk, Mike Stonebraker,
 
 distributed dbms
 ----------------
+
+building a database on s3
+
+- this system completely gives up concurrency control (write-write conflicts)
+  and coherency (write-read consistency)
+- durability via SQS
+- highly inefficient, but claims "good for internet speeds"; several seconds
+  per transaction
+- <http://www.dbis.ethz.ch/people/kraskat/SIGMOD-s3-slides.pdf>
 
 rose: compressed, log-structured replication (russell sears, VLDB08)
 
@@ -994,6 +1003,12 @@ ebay
     PB data, 3B API calls/mo, 100K new LOC/2 wks, 26B SQL queries/day
   - TODO
   - <http://www.dbms2.com/2008/02/27/ebay-oltp-architecture/>
+- randy shoup, HPTS09
+  - 89M active users, 190M items in 50K categories, 8B hits/day, 10% items
+    start/end auction, 70B R/W ops/day
+  - arch lessons: partition everything, use async, automate everything,
+    tolerate failures, embrace inconsistency, expect evolution, understand
+    dependencies, cache, save everything, invest in infrastructure
 
 amazon 9/2007
 
