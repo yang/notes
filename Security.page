@@ -27,6 +27,9 @@ misc terms
 
 - _side-channel attack_: exploits physical implementation (vs. brute force or theoretical weakness); in crypto
 - _covert channel_: channel that draws BW from another channel; in info theory
+  - eg timing attacks: latency tells you whether logged in, whether query
+    succeeds/fails (document contains term), how much of password you match
+    (page-aligning password), etc
 - _drive-by download_: browser (or extension) exploit triggered on simply
   displaying a page
 
@@ -140,6 +143,8 @@ sandboxing pitfalls
 web
 
 - flash: `<embed...allowScriptAccess="always">` instead of `"sameDomain"`
+- _HTTP parameter pollution (HPP)_ variants: multi-value, OOO value, malformed
+  value, malformed request methods
 
 low-level exploits
 
