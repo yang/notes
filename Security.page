@@ -466,9 +466,31 @@ SFI
 
 TODO
 
-SFI (robert wahbe, SOSP 1993)
+efficient software-based fault isolation (wahbe, sosp93)
 
-- RISC
+- [aka "classical SFI"]
+- isolate software modules without relying on MMU
+- naive custom compiler approach: on a write or indirect branch/jump, check that addr is in current module's range
+  - slow
+  - circumventable; eg, indirect branch to own write that skips the checks before it
+- use a dedicated reg to hold an addr
+  - all writes must be performed to the addr in the reg
+  - reg must always point to valid addr in current module
+    - if any instr invalidates this, program must fail or fix by the next write/indir jump
+- to jump outside, use local jump table; system allows only this table to point outside
+  - allows indir jumps to be very simple: only check for local
+  - switch stacks
+  - callee-save regs: call stub saves regs in case callee does not preserve regs
+- opts
+  - checks can be made into a simple bitmask as long as ranges can be identified by bit prefixes
+  - stack writes use $esp + small static offsets; hence just validate $esp when it's changed, and pad module space with guard regions that are bigger than biggest offsets
+- overhead: 0-12% (avg 4.3%); if also checking reads, avg 21.8%
+- [depends on large trusted compiler for correctness; later works like pittsfield use smaller verifier on machine code]
+- [not used in practice, maybe bc depends on RISC features like reserving certain regs, maybe bc no robust product]
+- [pittsfield, vx32 apply to x86 and have more robust prototypes]
+- [vx32 creatively exploits legacy hardware being phased out]
+- [SFI has a useful fault iso model that deserves HW support]
+- <http://papersincomputerscience.org/2009/12/19/efficient-software-based-fault-isolation/>
 
 pittsfield (stephen mccamant, greg morrisett, TR/usenix 2005)
 
