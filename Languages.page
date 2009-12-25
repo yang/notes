@@ -372,6 +372,16 @@ java syntactic extender (jonathan bachrach)
 Expressivity and Abstractions
 -----------------------------
 
+on understanding data abstraction, revisited (william cook, 2009)
+
+- explain diff btwn objects and abstract data types
+- objects have interfaces and private impls; always go through interface methods
+  - even cannot reach into other objects of same type; this is _autognosis_
+  - interchangeable at runtime
+- ADTs have public impls
+  - interchangeable at compile time
+- common to start with ADTs then upgrade into objects when more flexibility needed
+
 ejava: statically scope object adaptation with expanders (todd millstein, ucla, oopsla06)
 
 - [excellent, thorough discussion; presents many subtleties, some highlighted here]
