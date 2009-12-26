@@ -709,6 +709,21 @@ Beyond Time Travel Debugging (CSAIL talk, 2008-10-23)
   - what did you work on here with dnj?
   - lots of researchy programming folks there?  do you publish papers
 
+Do You Have to Reproduce the Bug at the First Replay Attempt? -- PRES: Probabilistic Replay with Execution Sketching on Multiprocessors (Soyeon Park, UCSD/UIUC, SOSP09)
+
+- problem: hard/slow to record for multi-processor replays
+  - prev SW approaches record all input/scheduling info
+  - HW: faster but only proposals exist
+- insight: prev SW approaches try to record all exec path info to repro replay
+  in "1 try"
+- soln: record less info and search for matching replay
+  - maintain checkpoints, aborting/retrying differently on failure to match
+    partial recording
+- evaluated several levels of recording and effects on repro
+- [system can generate input that causes certain exec path, but how useful is
+  this? what if we know we'd never receive certain inputs? specify add'l
+  constraints?]
+
 Philosophy
 ==========
 
