@@ -419,7 +419,52 @@ block ciphers
 - aes: successor to des; 2001
   - 128, 192, 256 bit key sizes; all 128 bit block sizes
 
-windows
+cracking
+
+- MS-CHAPv2, LEAP, PPTP
+  - protocols
+    - challenge handshake authentication protocol (MS-CHAPv2)
+      - only authentication protocol for windows PPTP
+      - uses DES
+      - weaknesses known by 1999; bruce schneier and l0pht wrote a
+        cryptanalysis
+      - username is in plaintext
+    - lightweight extensible authentication protocol (LEAP): extension of EAP;
+      in cisco ap's
+    - point-to-point tunneling protocol (PPTP): microsoft's default VPN
+      protocol
+      - there are alts eg RADIUS but PPTP is default for client back-compat
+  - tools
+    - ASLEAP: cracks LEAP and PPTP; updated to crack MS-CHAPv2
+      - given MS-CHAPv2 challenge and response, return last 2 bytes of password
+        hash (username already in plaintext)
+    - CUPP: common user password profiler; wizard-like dictionary generator
+      that asks for info about user
+    - genkeys: generates hashes of a wordlist using DES
+    - cowpatty: cracks pre-shared key (PSK) WPA networks based on the TKIP
+      protocol
+- MD5
+  - BarsWF: CUDA-based MD5 cracker; 4B hashes/s with quad SLI;
+    <http://3.14.by/en/md5>
+- windows
+  - 2 ways windows stores acct credentials: LAN Manager and NTLM
+    - LAN Manager: weak; brute force, rainbow tables
+    - NTLM: time-memory tradeoff attacks
+  - tools
+    - pwdump: outputs LM and NTLM account password hashes from the Security
+      Account Manager (SAM)
+    - CUDA-based NTLM brute forcer for linux:
+      <http://3.14.by/forum/viewtopic.php?f=8&t=60&>
+    - ophcrack: crack windows passwords using rainbow tables
+    - usbophcrack: downloads some rainbow tables and creates boot usb
+      - advise using ophcrack's rainbow tables instead
+- OpenVPN ALS: web-based SSL VPN server written in Java; derived from Adito,
+  SSL-Explorer
+- misc
+  - rainbow tables: sets of precomputed hashes as a time-memory tradeoff
+- <http://revision3.com/hak5/asleap>
+
+windows system security
 
 - ASLR
 - DEP: uses NX if avail or software emulation with limited, almost-unrelated
