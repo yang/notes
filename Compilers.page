@@ -208,3 +208,19 @@ compiler optimizations
   - mult instead of shift: 5 cycles
   - branch mispredict: 10 cycles
   - cache miss to main memory: 250 cycles
+
+lexing/regular expression matching
+
+- 2 approaches: backtracking and parallel
+- backtracking: depth-first search; used in Perl, Python, etc
+  - sucks for `a?{n}a{n}` since it may need to redo the `a?{n}` many times
+  - may take exp-time
+  - perl uses memoization to avoid exp'l blow-up, but requires $O(nm)$ space,
+    where $n$ is len of regex and $m$ is len of str
+- parallel aka Thompson NFA: breadth-tracking search; track all possible states
+  simultaneously
+  - when building DFAs out of NFAs, this is the approach used
+  - sed, awk, grep, tcl, lexers build DFAs
+  - sucks (exp-time) for wide-branching cases? can't think of them right now
+- backreferences trivial in backtracking, but make parallel exp-time
+- <http://swtch.com/~rsc/regexp/regexp1.html>
