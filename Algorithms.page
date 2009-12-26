@@ -63,12 +63,26 @@ hash tables
 - linear scanning aka open addressing: try other slots
   - try $h$, $h+1$, $h+2$, ...
   - try $h_1$, $h_2$, $h_3$, ...
+- cuckoo hashing: $k$ (usu. 2) hash fn's
+  - insert: into one of the 2 locs, displacing any resident and repeat the
+    insertion of the resident, possibly evicting multiple keys
+  - lookup: inspect 2 locs
+  - inserts succeed in expected const time, even amortizing table rebuilds
+    (growths), as long as load factor <50%; with 3 fn's, up to <91% load
+  - also considering $n$-way tables; with 2 keys per bucket, up to <80% load
+  - much faster than chained hashing for small, cache-resident hash tables on
+    modern processors
+  - $n$-way buckets faster than conventional methods for large tables
 
 hash functions
 
 - _rotating hashes_: for open addressing, avoid computing a bunch of different
   hash functions; just compute one long hash value and apply sliding window on
   it to get a bunch of shorter hash values
+
+bloom filter
+
+- TODO
 
 prime sieve
 
