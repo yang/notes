@@ -1179,3 +1179,12 @@ streamy
 
 - moved from postgresql to hbase
 - <http://www.cloudera.com/blog/2009/11/25/hadoop-world-practical-hbase-from-jonathan-gray-and-ryan-rawson/>
+
+blizzard
+
+- AT&T has provided space, network monitoring/mgmt for 9 yrs
+- 10 DCs around world: WA, CA, TX, MA, fr, de, sw, kr, cn, tw
+- 20K systems, 1.3 PB storage, 13,250 blades, 75K cores, 112.5 TB RAM
+- 68 admins/ops; monitored from global NOC (GNOC), "which like many NOCs,
+  features televisions tuned to the weather stations to track potential uptime
+  threats across its data center footprint"
