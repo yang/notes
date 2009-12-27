@@ -257,6 +257,23 @@ Cellular
 - Advanced Wireless Service (AWS): 3G
   - T-Mobile
 
+wireless
+
+- WiFi
+  - 802.11a: 54 Mbps, 20MHz-wide channels
+  - 802.11b: 11 Mbps, 20MHz-wide channels
+  - 802.11g: 54 Mbps (20-30 actual), 20MHz-wide channels
+  - 802.11n: 150 Mbps (75-100 actual) per radio stream (MIMO)
+    - 2.4GHz or 5GHz, but 2.4GHz is crowded & can't take adv of future
+      improvements
+    - 20MHz- or 40MHz-wide channels (2x bandwidth)
+  - 802.11ac: 1 Gbps @5GHz; due 2012
+    - up to 160MHz-wide channels
+    - multi user MIMO (MU-MIMO): xmit simultaneous streams to diff users on
+      same channels
+- WiGig: 60GHz + WiFi; 7 Gbps
+  - beyond 10 m, switch to 600-Mbps WiFi, which has 100-m range
+
 DNS
 
 - start of authority (SOA) record: info about a zone
