@@ -188,6 +188,13 @@
   - put to sleep: echo -n mem > /sys/power/state
 
 - xdr vs. asn.1
+  - abstract syntax notation (ASN.1): ITU
+    - packed encoding rules (PER): more compact than BER
+    - basic encoding rules (BER)
+
+- voip
+  - SIP: extensible; won VOIP wars; IETF std; builds on other standards
+  - H.323: always back-compat; ITU standard; ASN.1 PER
 
 - net lib
   - getsockname getpeername
