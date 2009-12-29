@@ -230,6 +230,7 @@ Cellular
 
 - CDMA vs GSM: two main competing techs
 
+- general packet radio service (GPRS): packet data service for GSM; TODO
 - 2G: generic term for the second generation networks
 - 3G: generic term for the third generation networks
 - CDMA: a 2G network; launched in 1995
@@ -245,6 +246,7 @@ Cellular
 - Global System for Mobile Communications (GSM): 2G (9.6Kbps) network
   - popular because it's international standard
   - ATT, T-Mobile
+  - has security vulns even when using KASUMI
 - High-Speed Downlink Packet Access (HSDPA): enhancement for 3G UMTS networks
   - ATT
 - Universal Mobile Telephone Service (UMTS): 3G network that GSM carriers use
