@@ -219,6 +219,38 @@ mysql
   - mariadb: founder's community-oriented fork; dissatisfied with sun procedure
   - drizzle: complete refactoring/slimming by brian aker, long-time mysql dev
 
+sqlite
+
+- concurrency
+  - one global lock
+  - multi-process concurrency: only whole-database locks
+    - unlocked, shared, reserved, pending, exclusive
+      - reserved: intend to write (upgrade to exclusive)
+      - pending: waiting to upgrade to exclusive; prevents new locks
+    - isolation levels: eg `BEGIN DEFERRED`
+      - deferred: acquire only on first query
+      - immediate: acquire reserved lock right away; reads can still proceed
+      - exclusive: acquire exclusive lock right away
+  - shared-cache concurrency (disabled by default)
+    - supports multiple cnxns to shared cache; 1 txn per cnxn at a time
+    - 3 levels of locking
+      - txn-level locking: at most 1 write txn at a time; txn implicitly
+        becomes writer on first INSERT/UPDATE/DELETE; coexist with any readers
+      - table-level locking: reader and writer locks
+      - schema-level locking: on sqlite_master catalog table; some special
+        rules
+    - isolation levels
+      - default isolation level is (actually) serializable, since <=1 writer
+        per db at a time
+      - read uncommitted: cnxn doesn't take read locks; no blocking
+  - features
+    - heavy testing: 100% branch coverage; fault injection (malloc, IO);
+      virtual file system snapshots to simulate crashes
+    - virtual table: you can export a table interface and provide callback
+      implementations for events on this table
+- storage
+  - data stored directly in btree
+
 distributed mysql
 
 - mysql cluster/NDB (network database)
@@ -818,10 +850,13 @@ benchmarks
 
 redis
 
-- non-volatile memcached that can also map to lists and sets with atomic push/pop ops
-- async persists
+- non-volatile memcached that can also map to lists and sets with atomic
+  push/pop ops
+- designed for in-memory workloads
+- can be persistent, either async or sync, but sync is currently slow
 - microbench: 110K sets/s, 81K gets/s on entry level linux box
-- impl in C
+- impl in C; single-threaded event-driven
+- simple async master/slave replication out of the box
 
 memcachedb
 
