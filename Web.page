@@ -2,10 +2,11 @@ mark pilgrim: google's html5 evangelist
 
 encodings:
 
-- url encoding: `user%40domain.com`, `hello%20world`
-- html encoding: `1 &lt; 2`
+- url encoding: `user%40domain.com`, `hello%20world`, `%6A` for `j`
+- html encoding: `1 &lt; 2`, `&#x6A` for `j`
 - javascript escaping: eg for json
 - css escaping
+- UTF-7 encoding: `+ADw-` for `<`
 
 flash RTFMP
 
