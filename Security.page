@@ -92,13 +92,26 @@ C++
 - new[]/delete: you can cause coalescing by setting the `prev` bit in the
   malloc header, among other things
 
-high-level code injection
+high-level code injection, encoding/parsing vulns
 
 - unescaped input
-- unicode: bad multibyte chars can bypass poor standard-library escaper
-  functions unscathed
+- unicode: bad multibyte chars can bypass poor standard-library
+  escapers/filters and validators/scanners unscathed
   - dynamic langs like sql and html/js
   - specific case of parser errors
+  - eg: UTF-7
+    - can encode ascii, eg `+ADw-` for `<`
+    - IE interprets html/javascript using UTF-7 by default, and others use
+      UTF-7 if a UTF-7 encoding appears anywhere early on (hence, `title`,
+      `meta`, etc are targets)
+    - need to check that all places handling this interpret it/escape it
+      correctly, eg need to specify UTF-7 to php escaper `htmlentities()`
+    - <http://shiflett.org/blog/2005/dec/google-xss-example>
+  - eg: multi-byte encoding
+    - eg, adding slashes (php `addslashes()`) is insufficient
+    - `addslashes("\xbf27")` is '\xbf5c27', and '\xbf5c' is a valid char in
+      GBK, swallowing the slash/letting the quote work
+    - <http://shiflett.org/blog/2006/jan/addslashes-versus-mysql-real-escape-string>
 - parser errors: unhandled cases leading to unesacped input
 
 sandboxing pitfalls
@@ -402,6 +415,10 @@ stream ciphers
   - xform varies during encryption
 - rc4: by ron rivest; in (eg) WEP, WPA (default), TLS/SSL (opt), BT, ssh (opt),
   RDP, KRB (opt), PDF
+- a5/1: in GSM; in US, EU; leaked, rev-eng'd; numerous weaknesses
+  - can decrypt GSM phone calls in real time
+  - <http://www.schneier.com/blog/archives/2008/02/cryptanalysis_o_1.html>
+- a5/2: a5/1 with deliberate weakening for certain export regions
 
 block ciphers
 
@@ -418,6 +435,8 @@ block ciphers
   but aes overshadows it
 - aes: successor to des; 2001
   - 128, 192, 256 bit key sizes; all 128 bit block sizes
+- KASUMI aka a5/3 in GSM aka GEA3 in GPRS: no known weaknesses, but GSM is vuln
+  (can avoid a5/3)
 
 cracking
 
