@@ -128,8 +128,8 @@
     - combines with ISO 6429 control chars ("C0 and C1 control chars")
     - assigns control chars to 00-1F, 7F, 80-9F
   - Windows-1252: superset of ISO/IEC 8859-1
-    - assigns 80-9F displayable chars (not control chars)
-    - UTF-7: 7 bits
+    - uses 8 bits; assigns 80-9F displayable chars (not control chars)
+  - UTF-7: for encoding unicode in ascii, eg in email; security issues
   - UTF-8: superset of ASCII; everything else -> multibyte
   - <http://intertwingly.net/stories/2004/04/14/i18n.html>
   - UTF-16: still multi-byte ("surrogate pairs")
