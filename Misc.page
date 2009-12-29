@@ -168,8 +168,18 @@ typography
   - expanded caps
   - condensed caps
 
+font formats
+
+- truetype: scalable
+- opentype: truetype + greater extension of basic char set, including small
+  caps, old-style numerals, more detailed shapes like glyphs and ligatures
+- postscript type 1: smooth, detailed, high-qual; for pro-quality printing
+- <http://windows.microsoft.com/en-us/windows-vista/Whats-the-difference-between-TrueType-PostScript-and-OpenType-fonts>
+- <http://blogs.adobe.com/typblography/TT%20PS%20OpenType.pdf>
+
 favorite fonts
 
+- computer modern <http://www.ctan.org/tex-archive/fonts/cm/ps-type1/bakoma/>
 - monospace
   - bitstream vera sans mono
   - consolas
