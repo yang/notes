@@ -26,6 +26,10 @@
   - ILP32: int, long, ptr are 32 bits
   - LP64: long, ptr are 64 bits
 
+- mysql
+  - grant tables: user, db, host, tables_priv, columns_priv
+    - created by mysql_upgrade and mysql_install_db
+
 - postgresql
   - rules: query rewriting, eg let you insert/update a view and redirect to
     underlying table(s)
