@@ -345,8 +345,15 @@ XSRF (cross-site request forgery)
 - cryptographic hash functions: TODO
 - diffie-hellman: TODO
 
-- salting: decorating a password with a (program-static) scheme (eg
-  prefix/suffix) and hashing that as the "password" (for storage/comparison)
+- salting: decorating a password (eg prefix/suffix) and hashing that as the
+  "password" (for storage/comparison); similar to nonce
+  - defends against rainbow table attacks (since each user)
+  - variations
+    - site-wide, static hash (hardcoded)
+    - hash of user info; lacks entropy, still can be predicted (only so many
+      usernames)
+    - generate and store random salt
+    - combo of above: static + user info hash + stored hash
 
 network attacks
 
@@ -437,6 +444,21 @@ block ciphers
   - 128, 192, 256 bit key sizes; all 128 bit block sizes
 - KASUMI aka a5/3 in GSM aka GEA3 in GPRS: no known weaknesses, but GSM is vuln
   (can avoid a5/3)
+
+cryptographic hash functions
+
+- insecure: MD5, SHA1
+- secure: AES, RSA, SHA-256
+- message authentication code (MAC): keyed hash; TODO
+- message integrity code (MIC): TODO
+- HMAC: TODO
+
+block cipher modes
+
+- TODO
+- insecure: electronic codebook (ECB)
+- secure: output feedback (OFB), cipher feedback (CFB)
+- cipher block chaining (CBC), propagating CBC (PCBC)
 
 cracking
 
