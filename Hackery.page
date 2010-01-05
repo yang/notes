@@ -998,7 +998,12 @@
   - when starting to send a message you'll get a ping from that person (this
     doesn't seem to show up in barnowl by default)
 
+- proxies
+  - HTTP: for web traffic; analyzes headers to determine dst; eg squid
+  - SOCKS: general TCP/UDP proxy
+
 - ssh
+  - tun-based VPN: <https://help.ubuntu.com/community/SSH_VPN>
   - ProxyCommand: the command to use to connect to the remote sshd (instead of
     plain ssh)
     - example given in man page is nc to connect via an http proxy
