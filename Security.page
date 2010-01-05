@@ -457,8 +457,13 @@ block cipher modes
 
 - TODO
 - insecure: electronic codebook (ECB)
-- secure: output feedback (OFB), cipher feedback (CFB)
+- output feedback (OFB), cipher feedback (CFB)
+  - don't repeat _initialization vector (IV)_ for same encryption key
 - cipher block chaining (CBC), propagating CBC (PCBC)
+  - use this if msg authenticity is not an issue
+- authenticated encryption (AE): simultaneously protect confidentiality and
+  integrity
+  - CCM, CWC, OCB, EAX, GCM: TODO
 
 cracking
 
