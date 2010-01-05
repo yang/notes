@@ -144,3 +144,26 @@ Graphics architecture (Angstrom group meeting, jrk@mit.edu, 4/24/08)
 - Cell is painful
 - abstract model: asynchronous dataflow with kernels and queues
 - paper on same stuff from Sequoia folks
+
+video compression
+
+- early codecs: intel indeo, motion jpeg, mpeg-1
+  - cinepak: QT and WMV; aimed at <320x240 on CDROM, or 2.2Mbps on 1.2Mbps stream
+    (50%)
+- MPEG-2: much better than early codecs; 1:30 compression; full-res NTSC on
+  CDROM at 1Mbps; 1080p at 2Mbps, but with bad blocking artifacts
+  - encoding is easy for recent OMAP CPUs and intel/amd CPUs; that's why tivo
+    still records in MPEG-2
+  - real-time decoding is do-able for GHz CPUs at smaller resolutions
+- MPEG-4 part 2: half MPEG-2 bandwidth; decoding requires video card, done by
+  portable players
+  - impls: xvid, divx, 3ivx, QT6
+- H.264 aka MPEG-4 part 10 aka advanced video codec (AVC)
+  - 4x MPEG-4/2; bcast-quality std def at 1.5Mbps; squeeze HD into DVD;
+    VHS-quality video at 600Kbps
+  - in blu-ray, itunes video store, youtube HD
+  - 2003 ATSC bcast std, wrapped in MPEG-2 container
+  - no cable/satellite impls; requires beefier set-top boxes; directv, dish are
+    equipping satellites with support
+- H.265: still in dev
+- <http://arstechnica.com/gadgets/guides/2009/12/from-cinepak-to-h265-a-survey-of-video-compression.ars?utm_source=rss&utm_medium=rss&utm_campaign=rss>
