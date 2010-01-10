@@ -84,6 +84,7 @@
     git archive --format=tar --prefix=foo-1.1/ COMMIT | gzip > foo-1.1.tgz
 
   - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
+    - like svn externals, but can't track HEAD
   - _subtree merge_: actually merge in another proj but isolated in its own
     subdir
 
@@ -1033,6 +1034,12 @@
     - `ec2-register <bucket>/<manifest>`: returns AMI ID
 
 - svn
+  - `svn:externals`: foreign repo (fixed commit or HEAD-tracking) linked to
+    from a dedicated subdir
+  - vendor branches: usu. in `/vendors/`; a way to track external software
+    - import files from vendor releases to its own dir, tagging the versions
+    - then merge diff btwn versions into current project trunk: `svn merge
+      https://repo/vendors/foo/1.{0,1}`
   - `svn log -rHEAD:1 ...`: really show all log entries; default range is
     BASE:1, which means since last svn update
   - `svn cat -r 1 https://project.com/file.txt@HEAD`: cat the file that is
