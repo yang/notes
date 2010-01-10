@@ -2,12 +2,22 @@
   - eulerian circuit iff all nodes have even degrees
   - eulerian non-circuit tour iff only 2 nodes have odd degrees
 
-statistics
-==========
+statistical learning
+====================
 
 - kernel density estimator: basically place a small kernel everywhere you have
   a sample, resulting in somtehing much smoother than a histogram (where bins
   can make all the difference in interpretation)
+
+statistics
+==========
+
+- TODO
+- (paired) student t-test
+- distributions
+  - student t-distribution: something about normals for small populations where
+    variance is unknown
+  - chi-square distribution
 
 combinatorics
 =============
