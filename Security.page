@@ -380,12 +380,19 @@ network hijacking
   - bugs in eg BIND allowed the above to slip by; now fixed
   - still, no signing means easy to do MITM
   - DNSSEC signs responses with PKI
-- DNS rebinding: TODO
-  - attacker gets user to use his DNS server
-  - attacker's DNS server first maps bank.com to attacker's IP, then maps
-    bank.com to bank.com's IP
-  - attacker's code loaded in first request can send request to second IP
-  - user-agent must be able to notice the changed IP
+- DNS rebinding: trick browser into combining diff hosts into 1 origin
+  - circumvent firewalls; access internal sites
+  - steps
+    - register domain
+    - use own DNS server; set short TTL (1s)
+    - attract traffic (run ads)
+    - serve page w JS that issues another request to domain after TTL (2s),
+      triggering DNS query
+    - rebind hostname to internal IP (10.10.10.10)
+    - send response to attacker
+  - DNS pinning: some browsers (IE) cache for add'l min time (30m)
+    - still re-queries if can't connect to host
+    - hence, after initial page load, firewall off the client; rebind works
 
 brute-force DOS
 
