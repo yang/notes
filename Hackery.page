@@ -26,9 +26,28 @@
   - ILP32: int, long, ptr are 32 bits
   - LP64: long, ptr are 64 bits
 
+- other RDBMSs
+  - main-memory hsqldb: only `read uncommitted`
+
 - mysql
   - grant tables: user, db, host, tables_priv, columns_priv
     - created by mysql_upgrade and mysql_install_db
+  - "engine" is newer term for "type"
+    - `create table t (i int) engine=innodb`
+    - `--default-storage-engine=innodb`
+    - built-ins
+      - myisam: non-txn'l; default; fast
+      - memory: non-txn'l; non-persistent
+      - merge: non-txn'l; read-only
+        - merges identical myisam's into 1 logical table
+        - insert into physical table; query from merged
+      - innodb: txn'l; foreign key integrity
+      - bdb: txn'l; removed in 5.1
+      - ndbcluster: for mysql cluster; partitioned tables
+      - archive: large data, no indexes, small footprint (compressed)
+      - example: stub dev reference
+      - csv: dev example
+      - blackhole: takes writes but reads are empty
 
 - postgresql
   - rules: query rewriting, eg let you insert/update a view and redirect to
