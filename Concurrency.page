@@ -996,6 +996,18 @@ List](http://www.stanford.edu/class/ee392c/list.html)
 Databases
 ---------
 
+Concurrency Control and Recovery in Database Systems (Phil Bernstein, MSR)
+
+- multiversion concurrency control (MVCC)
+  - each write produces new version of object
+  - need never reject read; normally, value may be overwritten
+    - eg `read x; read x` (self-join): `x` may have changed
+    - eg `read x; read y` and `write y; write x`: `y` may have changed but not
+      `x`
+  - may be needed anyway for recovery ("before" images)
+  - visible to DM, not user txns
+  - requires GC
+
 Concurrency Control and Recovery (MJF 97)
 
 - book chapter; solid overview/ref
