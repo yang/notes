@@ -305,31 +305,67 @@ read committed        impossible  possible     possible
 repeatable read       impossible  impossible   possible
 snapshot/ser          impossible  impossible   impossible
 
-- TODO: understand relationships with the 2PLs
 - undesirable phenomena
   - _dirty read_: read an uncommitted value (which may be rolled back)
   - _nonrepeatable read_: read committed values, but multiple reads may each
     return different values (if multiple other updates were committing)
-  - _phantom read_: when reading sets of values twice, second set different
+  - _phantom read_: when reading *sets* of values twice, second set different
     from first (a more general nonrepeatable read)
+- more anomalies
+  - _lost update_: in repeatable reads
+    - `A=0; T1: A++ & T2: A++` can end with `A=1` instead of `A=2`
 - implementing isolation levels
-  - read uncommitted: no read locks
-  - read committed: read locks, but acquired/released around each read
-  - repeatable read: read locks, acquired on read and held for xact duration
-  - snapshot: read locks on *predicates* rather than values; acquired at xact
-    start
-- _snapshot isolation_
-  - weaker than serializable because write skews can happen
-  - oracle's and postgresql's "serializable" is in fact snapshot isolation
+  - read uncommitted: no snapshots; no intra-query consistency
+  - read committed: per-query snapshots; no inter-query consistency; may see
+    changes to previously read values
+  - repeatable read: per-query snapshots that remain in effect just for the
+    read values; may see newly inserted values (phantoms) and lose updates
+  - snapshot: per-txn snapshots; won't see things inserted later; almost always
+    implemented using MVCC
+  - serializable: read-write conflicts
+- _snapshot isolation_: weaker than serializable; only write-write conflicts
   - _write skew_: two transactions read a value each, then change the other's
     value, but neither sees the result of the other's update
-    - example: `A=B=0; T1: B=A-1 & T2: A=B-1` violates invariant `A>=0 &&
-      B>=0`
-    - postgresql doc's example: two classes miss each other
+    - because system doesn't track reads; no read-write conflicts; eg MVCC
+    - example: `A=B=0; T1: A=B+1 & T2: B=A+1` can result in `A=B=1` (no 2)
+    - example: `A=B=1; T1: if A=1 then B=0 & T2: if B=1 then A=0` can violate
+      implicit invariant `A+B>=1`
+    - easy to avoid: whenever reading `A,B` for writing `B`, also write `A`;
+      this is what `select for update` does
+    - example from PG docs: two classes that miss each other
       - `insert into r (x,class) values
         ((select sum(x) from r where class = 1), 2)`
       - `insert into r (x,class) values
         ((select sum(x) from r where class = 2), 1)`
+      - harder to avoid; this also affects the next level of isolation i
+        called "better than snapshot"
+  - _read-only anomaly_ example
+    - `X=Y=0; T1: Y+=1 & T2: X+=1 if X+Y=0; T3: print X,Y` may print
+      `0,1` when final values are `1,1`
+    - just T1,T2 is serializable; `1,1` and `0,1` are both valid final values
+    - read-only T3 causes observable anomaly: should never get `1,1` after
+      seeing `0,1`
+  - TODO: read "serializable isolation for snapshot databases", SIGMOD08
+- "better than snapshot" (unnamed): track reads (eg read locks or read sets),
+  but fail to track newly inserted values that should be tracked (eg we're
+  reading from a set restricted by a predicate, and a newly inserted value
+  matches)
+  - should really have read-locked the entire table, but that may be
+    prohibitively expensive
+  - alternatively, monitor new incoming values for matching values; i
+    imagine this can be difficult for complex queries with
+    joins/aggs/udf/etc, but how difficult? doesn't seem uncomputable
+  - this is sort of a read skew; the PG example from above falls into this
+    category
+- serializable: need full read-write concurrency control; typically implemented
+  using 2PL in RDBMSs
+- implementations
+  - oracle, postgresql: "serializable" is snapshot isolation
+  - mysql "repeatable read" is actually "read committed", "serializable" is
+    serializable
+  - postgresql: "read uncommitted" is "read committed", "repeatable read" is
+    "serializable"
+- ref: <http://evanjones.ca/db-isolation-semantics.html>
 
 OCC Techniques TODO
 
@@ -1005,7 +1041,6 @@ Concurrency Control and Recovery in Database Systems (Phil Bernstein, MSR)
     - eg `read x; read y` and `write y; write x`: `y` may have changed but not
       `x`
   - may be needed anyway for recovery ("before" images)
-  - visible to DM, not user txns
   - requires GC
 
 Concurrency Control and Recovery (MJF 97)
