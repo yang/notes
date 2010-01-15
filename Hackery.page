@@ -2,6 +2,10 @@
   - link rel canonical: the canonical URL for this page; useful for eg search
     engines, sharing, bookmarking, etc
 
+- glibc
+  - buffering: fully buffered (default), line buffered (tty), unbuffered
+    - see `setbuf(3)`, `stdbuf(1)`
+
 - pdf
   - <http://www.adobe.com/devnet/livecycle/articles/lc_pdf_overview_format.pdf>
   - <http://www.mactech.com/articles/mactech/Vol.15/15.09/PDFIntro/>
@@ -947,6 +951,19 @@
   - quantcast: not sure, but i recall stats aren't so interesting
 
 - gnuplot
+  - stacked bar charts:
+
+      set boxwidth 0.75
+      set datafile missing '-'
+      set style data histogram
+      set style fill solid
+      set style histogram rowstacked
+      plot 'data2' using 2:xtic(1), '' using 3
+
+      "hello there" 5 3
+      goodbye 2 9
+      wowza 4 4
+
   - must exit or `set output ...` or `unset output` to flush incomplete output
     files (eg pdfs may be incomplete)
   - use `set term ... size SIZE` to set the canvas size (see `help canvas`)
