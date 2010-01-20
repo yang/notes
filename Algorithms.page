@@ -218,7 +218,6 @@ compression
   - permits multiple compression algos, but deflate dominant
   - can take collections of files, but compresses each individually, so can't
     exploit redundancy across files
-- gzip: deflate; compresses single files (freq. tar); not parallelizable
 - LZMA: lempel-ziv markov chain
   - used in 7z
 - burrows-wheeler transform (BWT)
@@ -237,6 +236,9 @@ compression
   - zippy: 300MB/s encode, 600MB/s decode, 2-4X compression
   - gzip: 25MB/s encode, 200MB/s decode, 4-6X compression
   - <http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf>
+- implementations:
+  - gzip: uses zlib
+  - zlib: deflate; compresses single files (freq. tar); not parallelizable
 
 [On Reducing the Size of Compressed Javascript (by up to 20%)](http://timepedia.blogspot.com/2009/08/on-reducing-size-of-compressed.html)
 
