@@ -107,7 +107,7 @@ Google SPDY (Alyssa (Rzeszutek) Wilk, talk at MIT 12/8/2009)
   - HTTP over SCTP
   - SST
 
-social standards TODO
+decentralized identity/auth/social standards
 
 - types
   - identity/SSO: manage a single centralized identity; need only sign on once
@@ -115,25 +115,13 @@ social standards TODO
   provider
 - openauth: identity/SSO; access authorization
   - by AOL; auth AOL/AIM users
-- openid: identity/SSO
-  - use case
-    - when user registers for a service, he provides his openid URL
-    - service makes request to openid provider through browser
-    - taken to openid provider's page asking user to confirm request
-  - attribute exchange: eg profile pic, location, other fields
-- oauth: lets user authorize a requestor to access API
-  - whenever 
-  - tokens grant access to specific resources for time duration
-  - twitter's default auth
-- facebook connect
-  - lets sites use fb login, get acct info, get social graph, publish feed
-    stories
-  - overlaps with openid, openid attribute exchange, portable contacts
-- opensocial: from myspace, google/orkut; based on google gadgets
-  - uses 
-  - user and social graph
-  - defines common API for social apps across multiple websites
-- google friend connect: something about AJAX widgets
+- openid: authentication
+- oauth: authentication and authorization
+- opensocial: social network API (JS for gadgets, REST for else)
+- friend connect: opensocial router and gadgets
+- facebook connect: links acounts elsewhere with facebook accts
+- facebook platform: everything
+- ref: <http://y_z.scripts.mit.edu/wp/2010/01/19/making-sense-of-openid-oauth-opensocial-google-friend-connect-facebook-connect-and-more/>
 
 latency costs
 
