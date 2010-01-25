@@ -724,6 +724,7 @@
   - `-march=native`: new option since gcc at least 4.3.2
 
   - __attribute__: general metadata attached to funcs, vars, etc.
+    - `__attribute__ ((constructor))`: have a function get run before `main`
   - __inline__: force inline
     - XXX: same as always_inline?
     - `static __inline __attribute__((always_inline, no_instrument_function))`
