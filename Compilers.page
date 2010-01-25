@@ -65,6 +65,8 @@ TODO merge in notes from CS164
     - linear time (unlike GLR)
   - no ambiguity because alternative productions are ordered
     - that's also a downside: can't tell when you have ambiguous grammar
+  - all LL grammars are PEGs but not vice versa
+  - top-down parsing; no left recursion
 - code generation
   - division is slow integer operation
     - gcc (among others) uses trickery involving non-div instrs, but only works
