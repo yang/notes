@@ -74,6 +74,10 @@
   - main-memory hsqldb: only `read uncommitted`
 
 - mysql
+  - monitoring/mgmt
+    - `show engine innodb status`
+    - `show processlist`
+    - `kill 3` kills process 3 in processlist
   - grant tables: user, db, host, tables_priv, columns_priv
     - created by mysql_upgrade and mysql_install_db
   - "engine" is newer term for "type"
