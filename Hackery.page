@@ -81,6 +81,13 @@
   - examples of why mysql blows vs postgresql
     - http://stackoverflow.com/questions/324935/mysql-with-clause
     - http://bugs.mysql.com/bug.php?id=10327
+    - scoping is broken
+
+       mysql> create table t(a int, b int);
+       Query OK, 0 rows affected (3.30 sec)
+       mysql> select a, (select count(*) from (select b from t where a = u.a group by b) v) from t u;
+       ERROR 1054 (42S22): Unknown column 'u.a' in 'where clause'
+
     - optimizer sucks
 
         mysql> SELECT distinct t1.tableid FROM transactionlog t1 JOIN transactionlog t2 ON t1.tableid=t2.tableid AND t1.tupleid=t2.tupleid AND t1.partition!=t2.partition LIMIT 100;
