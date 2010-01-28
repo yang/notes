@@ -28,6 +28,27 @@ optimization algo families
   - cuckoo hashing
 - genetic algos
 
+clustering
+
+- difference from partitioning: clustering is on points that have coordinates
+  or distances, rather than shapeless graphs
+- hierarchical
+  - agglomerative: bottom-up merging
+  - divisive: top-down splitting
+- partitional: determine all clusters at once; can be used in divisive
+  - $k$-means: assign each point to cluster with closest centroid; initialize with random centroids
+  - locality sensitive hashing (LSH): TODO
+    - also used in nearest neighbor search
+    - feature space vectors are sets
+    - jaccard distance
+    - min-hash
+- density-based: discover arbitrary shapes
+- 2-way-/co-/bi-clustering: objects are clustered but also their features; if
+  data in matrix, then rows and columns clustered simultaneously
+- distance measures: euclidian/2-norm, manhattan/1-norm, maximum norm aka
+  infinity norm, hamming, inner product/cosine similarity
+- many clustering algos require number of clusters as input; 
+
 machine learning
 
 - linear classif, perceptron, SVM
