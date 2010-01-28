@@ -78,6 +78,29 @@
     - `show engine innodb status`
     - `show processlist`
     - `kill 3` kills process 3 in processlist
+  - examples of why mysql blows vs postgresql
+    - http://stackoverflow.com/questions/324935/mysql-with-clause
+    - http://bugs.mysql.com/bug.php?id=10327
+    - optimizer sucks
+
+        mysql> SELECT distinct t1.tableid FROM transactionlog t1 JOIN transactionlog t2 ON t1.tableid=t2.tableid AND t1.tupleid=t2.tupleid AND t1.partition!=t2.partition LIMIT 100;
+        +-----------+
+        | tableid   |
+        +-----------+
+        | warehouse |
+        | district  |
+        +-----------+
+        2 rows in set (48 min 15.52 sec)
+
+        mysql> SELECT distinct tableid FROM transactionlog GROUP BY tableid,tupleid HAVING count(distinct partition)>1;
+        +-----------+
+        | tableid   |
+        +-----------+
+        | district  |
+        | warehouse |
+        +-----------+
+        2 rows in set (36.33 sec)
+
   - grant tables: user, db, host, tables_priv, columns_priv
     - created by mysql_upgrade and mysql_install_db
   - "engine" is newer term for "type"
