@@ -180,6 +180,8 @@
     # create an archive of the repo from tree 'COMMIT'
     git archive --format=tar --prefix=foo-1.1/ COMMIT | gzip > foo-1.1.tgz
 
+  - in merge, `git show :1:file` selects ancestor, `:2:` selects ours, `:3:`
+    selects theirs
   - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
     - like svn externals, but can't track HEAD
   - _subtree merge_: actually merge in another proj but isolated in its own
