@@ -513,6 +513,7 @@ cracking
       - advise using ophcrack's rainbow tables instead
 - OpenVPN ALS: web-based SSL VPN server written in Java; derived from Adito,
   SSL-Explorer
+  - provides in-browser HTTPS client access with java applets for tunneling
 - misc
   - rainbow tables: sets of precomputed hashes as a time-memory tradeoff
 - <http://revision3.com/hak5/asleap>
