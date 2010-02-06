@@ -60,13 +60,14 @@ TODO merge in notes from CS164
     have this gray area where they can't tell whether the grammar is ambiguous
   - but at least GLR can notify you of this when it happens
 - parsing expression grammar (PEG)
+  - recursive descent (top-down) parsers: no left recursion
   - packrat parsers
-    - memoizing parsers; use much more space TODO how much?
+    - a memoizing parsers; use much more space TODO how much?
     - linear time (unlike GLR)
+    - rewriting extension can handle left recursion
   - no ambiguity because alternative productions are ordered
     - that's also a downside: can't tell when you have ambiguous grammar
   - all LL grammars are PEGs but not vice versa
-  - top-down parsing; no left recursion
 - code generation
   - division is slow integer operation
     - gcc (among others) uses trickery involving non-div instrs, but only works
