@@ -74,6 +74,55 @@
   - main-memory hsqldb: only `read uncommitted`
 
 - mysql
+  - explain/optimization
+    - select types
+      - simple: no union or subqueries
+      - primary: outermost select
+      - subquery
+      - dependent subquery: correlated subquery
+      - derived: subquery in `from`
+      - uncacheable subquery: must re-evaluate for each outer tuple
+    - join/access types, best to worst
+      - const: index lookup yielding exactly 1 row; can turn the result of this
+        index lookup into constant
+
+          SELECT * FROM tbl_name WHERE primary_key=1;
+
+          SELECT * FROM tbl_name
+            WHERE primary_key_part1=1 AND primary_key_part2=2;
+
+      - eq_ref: ref where the inner table yields exactly 1 row
+
+          SELECT * FROM ref_table,other_table
+            WHERE ref_table.key_column=other_table.column;
+
+          SELECT * FROM ref_table,other_table
+            WHERE ref_table.key_column_part1=other_table.column
+              AND ref_table.key_column_part2=1;
+
+      - ref: index join
+
+          SELECT * FROM ref_table WHERE key_column=expr;
+
+          SELECT * FROM ref_table,other_table
+            WHERE ref_table.key_column=other_table.column;
+
+          SELECT * FROM ref_table,other_table
+            WHERE ref_table.key_column_part1=other_table.column
+              AND ref_table.key_column_part2=1;
+
+      - index_merge: use multiple indexes
+      - unique_subquery: non-dependent (non-correlated) subquery using unique
+        index; turn index lookups into constants
+      - index_subquery: non-correlated subquery using non-unique index; turn
+        index lookups into constants
+      - range: use index to select a range; 
+      - index: index scan (per outer row); only if predicate and selected
+        columns are covered by index
+      - all: full table scan (per outer row)
+    - columns
+      - key: the key used by this join/access type
+      - ref: which outer columns are compared against `key`
   - monitoring/mgmt
     - `show engine innodb status`
     - `show processlist`
