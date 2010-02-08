@@ -130,6 +130,8 @@
   - examples of why mysql blows vs postgresql
     - http://stackoverflow.com/questions/324935/mysql-with-clause
     - http://bugs.mysql.com/bug.php?id=10327
+    - no sort merge join (certainly no map-reduce contender), let alone
+      hash-join
     - scoping is broken
 
        mysql> create table t(a int, b int);
