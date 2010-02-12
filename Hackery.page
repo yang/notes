@@ -123,6 +123,18 @@
     - columns
       - key: the key used by this join/access type
       - ref: which outer columns are compared against `key`
+  - innodb
+    - storage format
+      - if table has int primary key, use that as tuple id; otherwise add tuple
+        id for each tuple
+      - var-len cols
+        - compact/redundant ("antelope"): up to 768B in record (for prefix
+          indexes), rest in overflow page
+          - at least 2 rows + some metadata must fit in each 16KB page, so
+            limit for whole row is ~8KB
+        - dynamic/compressed ("barracuda"): 20B ptr whenever not fit; prefix
+          index can be built separately
+        - each value has exclusive overflow pages; no sharing
   - monitoring/mgmt
     - `show engine innodb status`
     - `show processlist`
@@ -945,6 +957,10 @@
     - `figure*`, `table*`: float across columns
     - `fullpage`: simple way to use full page layout (instead of the highly
       narrow default)
+  - text formatting/layout
+    - `\centerline`, `center` env
+    - `\hfill`
+    - `\vskip`
 
 - ps/pdf
   - conversion to pdf
