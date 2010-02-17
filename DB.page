@@ -51,10 +51,11 @@ companies
   - kognitio
   - greenplum
   - aster data: customers: myspace; hadoop interop
-  - infobright
+  - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
+  - infobright: wants multicore queries, ACID
   - netezza: db hw
   - datallegro/ms
-  - xtremedata
+  - xtremedata: plugs into cpu socket for cpu bus bandwidth
   - groovy: main mem
   - vertica: column store
     - stonebraker
