@@ -141,6 +141,12 @@ How To Share A Secret (Shamir 79)
 statistics
 ==========
 
+- correlation
+  - Pearson's product-moment coefficient: most popular
+
+    $$\rho_{X,Y} = \frac{ \cov(X,Y) }{ \sigma_X \sigma_Y }$$
+
+    - always in $[-1, 1]$
 - T-test: TODO
 
 signals, information theory
