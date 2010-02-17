@@ -828,9 +828,23 @@
     - XXX: same as always_inline?
     - `static __inline __attribute__((always_inline, no_instrument_function))`
 
+  - global offset table (GOT): in PIC, constants are accessed via this;
+    resolves the GOT entries by OS's dynamic loader
+  - procedure lookup table (PLT): used to resolve procedure call relocation
+    placeholders; used alongside GOT in ELF
+  - symbol visibility
+    - default visibility: importing exe can override functions referenced by
+      lib; useful for eg changing behavior of malloc
+    - hidden/internal visibility: not visible to outside
+    - protected visibility: visible to outside, but internal references use
+      lib's def'n
+      - slower at link time due to C requirement that ptrs to same function
+        must be equal
+
 - ld
   - `-l` order matters: dependents before dependencies (e.g. `-l` should follow
     sources)
+
 
 - compilation
   - multilibs: multiple versions of libraries for different target options (for
