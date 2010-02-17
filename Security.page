@@ -32,6 +32,9 @@ misc terms
     (page-aligning password), etc
 - _drive-by download_: browser (or extension) exploit triggered on simply
   displaying a page
+- security assurance techniques: pentesting, code review, platform defenses,
+  training, architectural/design analysis
+- advanced persistent threat (APT): eg chinese gov attacking google
 
 security models
 
