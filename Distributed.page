@@ -7,6 +7,25 @@ resources
 
 - <http://marcua.net/notes/6.824/>
 
+core
+
+- distributed concurrency control: serializability
+- distributed commit: agree to do something or abort
+- consensus: agree on a value
+- replication: for availability, durability
+  - paxos/viewstamped replication
+  - virtual synchrony (spread)
+- CAP theorem's semantics
+  - assume partition of 5 nodes, with X,Y in non-quorum and Z in quorum; X
+    holds lock on resource, and Y and Z get request for resource
+  - if consistent & available, then Y can reach X to acquire
+  - if consistent & partition-tolerant, then Z can acquire, breaking X's lock
+  - TODO what if lock were on quorum side? TODO tie in with "req" vs "node"
+    failure
+  - consistency: 
+  - <http://pl.atyp.us/wordpress/?p=2521>
+  - <http://pl.atyp.us/wordpress/?p=2532>
+
 MPI/PVM
 
 - MPI
@@ -22,6 +41,15 @@ MPI/PVM
 - PVM
   - also supporting heterogeneous computing and diff approach to extensibility
   - provide portable, heterogeneous env for using clusters over TCP
+
+MPI
+
+- system objects: apps have handles to these
+  - _group_: set of $n$ processes; each process has a _rank_ in $[0,n)$; group
+    routines mainly for specifying processes for communicator ctor
+  - _communicator_: always associated 1:1 with a group; a "tag" passed in MPI
+    calls; `MPI_COMM_WORLD` represents all tasks
+- organize tasks into task groups
 
 industry
 
@@ -121,6 +149,14 @@ BFT
   - what was the point about fork consistency in SUNDR and log hashes?
   - isn't the all-to-all comm necessary since the primary could lie?
 
+queueing systems
+
+- AMQP
+  - rabbitmq: erlang impl;
+    <http://developian.blogspot.com/2009/11/drizzle-replication-using-rabbitmq-as.html>
+- SQS: AWS offering
+- yahoo/apache hedwig: for PNUTS replication
+
 datacenter
 ==========
 
@@ -133,6 +169,7 @@ microsoft chicago
 
 FAWN (dga, sosp09)
 
+- best paper; vijay presented
 - low-power embedded CPUs + small flash storage
   - increasing CPU/IO gap: reduce CPU
   - power grows super-linearly with speed
@@ -373,12 +410,16 @@ mapreduce TODO
 
 - [work underappreciated for its answers to systems issues like stragglers and
   query fault-tolerance]
+- [issues]
+  - pull-based reducers mean lots of disk seeks; $O(mr)$, where $m$ is mapper
+    count, $r$ is reducer count
 
 hadoop
 
-- _jobtracker_: master node that splits jobs into tasks and assigns them to
-  nodes
-- _tasktracker_: on each node; manages task execution
+- _job_: full map-reduce; _task_: an execution slice
+- _jobtracker_: master node that accepts jobs from clients, splits jobs into
+  tasks, and assigns them to _slaves_ (workers)
+- _tasktracker_: on each slave; manages task execution
 - map task execution
   - _split_: portion of input file for a task; defaults to 1 chunk (64MB)
   - mapper interface
@@ -418,6 +459,17 @@ mapreduce online (tyson condie, nconway, ..., jmh, cal TR 2009)
   task output with "committed"
 - online agg: snapshot accuracy is hard; report simple progress metric along
   with snapshot results
+
+dryad
+
+- TODO
+- DAGs, pipelining, explicit materialization
+- iterative algos incl. k-means, matrix power iteration, and graph traversal
+- cosmos distributed file system
+- ecosystem
+  - scope: sql-like language; by bing team
+  - dryadlinq: academic release
+  - nebula: a distributed shell with file descriptors as connectors
 
 Filesystems
 ===========
@@ -494,8 +546,6 @@ Replication in the Harp File System (Liskov, Ghemawat, et al)
     - promoted witnesses may not have resources (eg FS) so must never trunc log
     - TODO left off here
 
-TODO Concurrency Control and Recovery in Database Systems
-
 The Google File System
 
 - 3x replication
@@ -511,6 +561,18 @@ GFS Evolution
 Don't Give Up On Distributed File Systems
 
 - specify hints about consistency
+
+CloudStore aka Kosmos File System (KFS)
+
+- from kosmix auto-portal site
+- hadoop/hypertable/hbase integration [compat with HDFS?]
+- for: mainly write-once/read-many loads; Ms of big files; mostly seq access
+- replication (configurable per-file) with async re-replication on failure
+- periodic chunk rebalancing; elasticity
+- for data integrity, verify checksum on read; re-replicate to recover
+- leases for client cache consistency
+- chunk versioning to detect stale chunks
+- C++, STL, boost, aio, log4cpp; solaris, linux; fuse
 
 DHTs
 ====
@@ -1039,7 +1101,9 @@ dynamo
 
 - works across DCs
 - eventual consistency
-- hinted handoff
+- hinted handoff: if a node that should receive a write is down, Cassandra will
+  send that write to another node with a "hint" saying that when the
+  destination node becomes available again, the write should be forwarded there
 - vector clocks to detect conflicts
 - quorum consensus: if R+W>N then [usu.] consistent reads [but see critique]
 - sloppy quorums?
@@ -1065,14 +1129,18 @@ dynamo
 
 hbase
 
-- sits atop HDFS
+- bigtable clone for HDFS (or KFS); apache hadoop subproject
 - _region_: key range in consistent hashing (a shard/partition)
+  - rows stored in byte-lexicographic order [first bytes must be key]
 - similar to HDFS: master:namenode :: regionserver:datanode (usu. deployed
   alongside each other on same hosts)
   - regionserver: assigned regions
   - master: manages assignments, notices failures
 - memstore: fast random writes
-- column family data model provides user-controlled locality and versioning
+- column family data model provides user-controlled locality and versioning and
+  semi structure
+  - think of sparse columns, so fields stored as key-values
+  - separate column families stored in separate files
 - hbase 0.20: fast random reads
 - in-progress:
   - multi-master WAN replication
@@ -1127,24 +1195,48 @@ velocity
 
 mongodb
 
-- C++
 - data model/organization
   - server can manage multiple isolated DBs
-  - each DB has 1+ collections; collections have documents (objects) + ACL
+  - each DB has 1+ collections; collections have documents (schema-less objects
+    with fields) + ACL
   - all objects have `_id` field; always indexed
 - BSON: like JSON data model; general binary serialization format; primitives,
   objects, arrays
-- dynamic queries: JSON-like notation; equality and gt/lt comparators;
-  generates plan, uses indexes; cursors
+- dynamic queries
+  - JSON-like notation; equality and gt/lt comparators
+  - atomic update modifiers via `set` operators (constrained to same document)
+  - generates plan, uses indexes; cursors
 - indexing on inner objects and embedded arrays; compound keys; specify sorting
-  order; unique indexes
+  order; indexes support `unique`
 - query profiler
-- master-slave replication: async; both manual and auto (replica pairs; auto
-  failover)
+- master-slave replication: async; both manual and auto
+  - replica pairs (sets): node 1 is master 1 slave 2, node 2 is master 2 slave 1
+  - auto failover
 - efficient storage of binary data incl. large objects (photos, videos)
 - auto-sharding for high scalability
   - each shard is replica pair and manages some chunks
   - chunk: continuous range of objects from particular collection, ordered by a
     key (specified similarly as index)
   - other components: frontend coordinators; config/metadata servers
+- aggregation (group by); support for large map-reduce operations
+- more features: capped collections, gridfs for large blobs
+- focus on performance
+  - C++; mmap'd files
+  - no REST; binary TCP protocol
+- many supported langs, platforms
 - no txns
+
+sinfonia (HP including mehul shah, sosp07)
+
+- application nodes & storage nodes are separate
+- data model: raw linear address space; accessed directly by client libs
+- minitransaction: a single-shot txn containing compare, read, and write phases
+  - batchable; can be executed within phase 1 of 2PC; in par with replication
+
+RAMcloud (ousterhout, HPTS09)
+
+- goal: low latency
+- rationale
+  - 64GB RAM/server w 1M ops/s, 5-10us RPC; 1TB RAM in 5-10 yrs
+  - $60/GB today; $4/GB in 5-10 yrs
+  - lower latency reduces txn durations, conflicts
