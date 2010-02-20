@@ -181,7 +181,8 @@ low-level exploits
     - address space layout randomization (ASLR): randomize codes, heap, stacks
       - against return-to-libc (arbitrary code can still detect things)
 - null pointer exploits: TODO
-- heap overflow: overwrite eg a struct's function pointer
+- heap overflow: overwrite eg a struct's function pointer or malloc block
+  header
 - heap spray: give you a place to place executable code, eg if stack is NX or
   your overriding return addr is constrained somehow
   - spray it everywhere to increase chances of landing in it
@@ -207,6 +208,7 @@ low-level exploits
 - return-to-libc: execute existing code; eg `system`
   - just supply data; no need to inject code, unaffected by NX
   - ASLR defends against this
+- _continuation of execution_: resume app normally after exploit payload
 
 same-origin policy (SOP)
 
@@ -1176,3 +1178,47 @@ forcehttps
 - prohibit mixed http/https
 - simple url rewriting rules: //foo.com/blah gets the current http/https
   prepended
+
+low-level
+---------
+
+MODERN EXPLOITATION AND MEMORY PROTECTION (alexander sotirov)
+
+- memory corruption vulns: stack cookies/canaries, NX mem, ASLR
+- windows mitigations: GS, SafeSEH, DEP, ASLR, SEHOP
+- vuln classes: stack overflows, heap overflows, fmt strings, int overflows
+- assumptions
+  - fixed addrs of stack & exes
+  - fn ptrs at well-known locs
+  - heap allocator that trusts heap metadata
+  - executable data on stack and heap
+- mitigations
+  - GS: stack cookies, var reordering, strict_gs_check
+  - safeseh: handler chain, validation
+  - heap protection: safe unlinking, safe lookaside lists, heap metadata cookies, heap metadata encryption
+  - DEP: NX support, permanent DEP, optout mode by default
+  - ASLR: PEB/TEB, heap, stack, images
+- detect mem corruption: GS stack cookies, SEH chain validation (SEHOP), heap
+  corruption detection
+- stop common exploitation patterns: GS var reordering, safeseh, DEP, ASLR
+  - rand cookie is generated every run; xor fn ptrs w rand cookie; code that
+    uses the fn ptr xor's
+- cookies
+  - perf impact to cookies
+  - ways to bypass; addressed by reordering; still a few special case vulns (eg
+    overriding EHs, fmt strings)
+- safeseh is a list of valid exception handlers which is checked before jumping
+  to an exception handler
+  - however, requires all DLLs to be compiled using SEH; single non-compat DLL
+    is enough to bypass protection
+  - control flow modification still possible
+- SEH chain validation (SEH override protection aka SEHOP)
+  - each stack frame is chained by a linked list
+  - put random cookie at end of linked list
+  - on exception, walk entire list and validate that the end of list has cookie
+  - if SEH record is overwritten, SEH chain will break and cookie won't be found
+  - no known bypasses
+  - exception handling is already pretty slow by design
+- DEP: off by default for compat reasons (eg JVM)
+  - IE8 finally turned on DEP for plugins
+  - return oriented shellcode (ret2libc): DEP w/o ASLR is completely useless
