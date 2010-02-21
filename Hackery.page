@@ -144,6 +144,9 @@
     - http://bugs.mysql.com/bug.php?id=10327
     - no sort merge join (certainly no map-reduce contender), let alone
       hash-join
+    - optimizer only recently started working properly with certain subqueries
+    - auto_increment jumps up to next power of 2 but inconsistently across
+      versions (platforms?); this is undocumented
     - scoping is broken
 
        mysql> create table t(a int, b int);
@@ -189,6 +192,48 @@
       - example: stub dev reference
       - csv: dev example
       - blackhole: takes writes but reads are empty
+
+- DB tools
+  - EnterpriseDB Migration Wizard: migrates mysql to postgresql
+    - failed to handle basic `enum` type
+
+        Source database connectivity info...
+        conn =jdbc:mysql://wrench.csail.mit.edu:3307/tpcc
+        user =remotecarlo
+        password=******
+        Target database connectivity info...
+        conn =jdbc:edb://localhost:5432/tpcc
+        user =yang
+        password=******
+        Importing mysql schema...
+        Dropping Schema: tpcc 
+        Creating Schema...tpcc 
+
+        Migrating Tables for Schema tpcc: 'metarelcloud_transactionlog','metarelcloud_graph','metarelcloud_graphsupport'
+        The data type enum is not handled in Column querytype of Table metarelcloud_transactionlog
+        Creating Tables...
+        Creating Table: tpcc.metarelcloud_transactionlog
+        Error Creating Table metarelcloud_transactionlog:ERROR: type "enum" does not exist
+        Creating Table: tpcc.metarelcloud_graph
+        Creating Table: tpcc.metarelcloud_graphsupport
+        Created 2 tables.
+        Loading Table Data in 8 MB batches...
+        Loading Table: metarelcloud_graph ...
+        Table Data Load Summary: Total Time(s): 0.014 Total Rows: 0
+        Loading Table: metarelcloud_graphsupport ...
+        Table Data Load Summary: Total Time(s): 0.008 Total Rows: 0
+        Data Load Summary: Total Time (sec): 0.022 Total Rows: 0 Total Size(MB): 0.0
+        Creating Constraint: PRIMARY
+        Error Creating Constraint PRIMARY
+        Creating Constraint: PRIMARY
+        Creating Constraint: PRIMARY
+        Creating Index: transactionid
+        Error Creating Index transactionid: ERROR: relation "metarelcloud_transactionlog" does not exist
+        Creating Index: tableid
+        Error Creating Index tableid: ERROR: relation "metarelcloud_transactionlog" does not exist
+        Creating Index: nodeid
+        Error Creating Index nodeid: ERROR: relation "metarelcloud_transactionlog" does not exist
+        One or more schema objects could not be imported during the migration process. Please review the migration output for more details.
 
 - postgresql
   - rules: query rewriting, eg let you insert/update a view and redirect to
