@@ -144,6 +144,8 @@
     - http://bugs.mysql.com/bug.php?id=10327
     - no sort merge join (certainly no map-reduce contender), let alone
       hash-join
+    - <http://www.dbms2.com/2008/07/10/how-is-mysqls-join-performance-these-days/>
+    - <http://www.mysqlperformanceblog.com/2006/06/09/why-mysql-could-be-slow-with-large-tables/>
     - optimizer only recently started working properly with certain subqueries
     - auto_increment jumps up to next power of 2 but inconsistently across
       versions (platforms?); this is undocumented
@@ -194,6 +196,7 @@
       - blackhole: takes writes but reads are empty
 
 - DB tools
+  - mysql2pgsql: pretty good
   - EnterpriseDB Migration Wizard: migrates mysql to postgresql
     - failed to handle basic `enum` type
 
@@ -236,6 +239,8 @@
         One or more schema objects could not be imported during the migration process. Please review the migration output for more details.
 
 - postgresql
+  - monitoring
+    - `select current_query from pg_stat_activity`
   - rules: query rewriting, eg let you insert/update a view and redirect to
     underlying table(s)
   - triggers: executed in-transaction
