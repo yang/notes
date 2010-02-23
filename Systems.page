@@ -683,6 +683,7 @@ Generalized Filesystem Dependencies; Featherstitch (Kohler) *
 
 - user provides hints about file system operation dependencies to let FS work
   more optimally
+- TODO
 
 Exokernel: An Operating System Architecture for Application-Level Resource Management (MIT 1995)
 
