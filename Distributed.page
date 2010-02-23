@@ -393,6 +393,11 @@ The Chubby Lock Service for Loosely-Coupled Distributed Systems
 
 Rethink the Sync
 
+- TODO
+- basically: bluefs allows for speculative IO assuming that cached data is
+  still valid; allow computations to proceed while buffering linux IO so that
+  speculative output is not released until data is validated
+
 Tra (Russ Cox)
 
 - sync time >= mod time; time btwn is guaranteed to have no changes
