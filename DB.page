@@ -50,10 +50,12 @@ companies
   - paraccel
   - kognitio
   - greenplum
-  - aster data: customers: myspace; hadoop interop
+  - aster data: customers: myspace; hadoop interop; COTS
   - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
   - infobright: wants multicore queries, ACID
   - netezza: db hw
+    - twinfin: well-designed proprietary hw appliance
+    - twinfini: parallel
   - datallegro/ms
   - xtremedata: plugs into cpu socket for cpu bus bandwidth
   - groovy: main mem
