@@ -643,7 +643,19 @@ web
 robust defenses for CSRF (adam barth, collin jackson, john c mitchell, CCS 2008)
 
 - login CSRF
-- 
+- TODO
+
+sound and precise analysis of web applications for injection vulnerabilities (ucdavis, pldi07)
+
+- prev static approaches use tainted information flow tracking
+  - don't model precise semantics: even 'sanitizers' like `escape_quotes` could
+    fail to sanitize inputs
+  - require manual specifications bc systems don' track string value sources
+  - not fully automated and may require user intervention at various points in
+    analysis
+- consider as attacks those queries for which user input changes the intended
+  syntactic structure of the generated query
+- implemented for PHP; analyzed large (100KLOC) progs; few false positives
 
 DOS
 ---
