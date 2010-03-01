@@ -1,3 +1,8 @@
+- R
+  - to run an R file from cmd line
+    - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
+    - will be replaced with `Rscript`
+
 - xen
   - dom0: hypervisor kernel
   - domU: guest kernel
