@@ -397,6 +397,8 @@ Efficient Provenance Storage
 parallel/distributed olap
 -------------------------
 
+"query evaluation techniques for large databases" TODO
+
 HARBOR (Lau, VLDB06)
 
 - intro
