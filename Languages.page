@@ -328,6 +328,11 @@ flapjax (leo meyerovich, shriram krishnamurthy, OOPSLA09 best student paper)
   - cycles should be broken with delays [no argument there; makes sense]
 - in use since 10/06 (pretty early)
 
+Dependent Types
+---------------
+
+why dependent types matter TODO
+
 Parsing
 -------
 
@@ -470,6 +475,8 @@ dhard (formerly dihard, umass)
 
 Systems
 -------
+
+"safe systems programming languages" TODO
 
 BitC
 
