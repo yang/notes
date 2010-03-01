@@ -1,3 +1,7 @@
+- xen
+  - dom0: hypervisor kernel
+  - domU: guest kernel
+
 - hadoop
   - containers (sources/sinks)
     - files
@@ -37,6 +41,10 @@
     - <http://code.google.com/p/thrift-protobuf-compare/wiki/Benchmarking>
   - <http://archive.cloudera.com/docs/>
   - setup: <y_z.scripts.mit.edu/wp/2010/01/20/no-nonsense-standalone-hadoop-and-dumbo-on-ubuntu/>
+
+- scala
+  - `@tailrec`
+  - `@cps`
 
 - html
   - link rel canonical: the canonical URL for this page; useful for eg search
@@ -149,6 +157,9 @@
     - optimizer only recently started working properly with certain subqueries
     - auto_increment jumps up to next power of 2 but inconsistently across
       versions (platforms?); this is undocumented
+    - crappy EXPLAIN output
+    - innodb auto-extends ibdata1 file; only way to trim (garbage collect) is
+      dumping and loading
     - scoping is broken
 
        mysql> create table t(a int, b int);
@@ -176,6 +187,11 @@
         +-----------+
         2 rows in set (36.33 sec)
 
+  - tips
+    - `set global general_log = 'ON'` or `'OFF'`
+    - `set session sql_log_off = 1`
+    - `load data infile` 20x faster `insert`; else, use txns, `insert delayed`,
+      multi-valued `insert`
   - grant tables: user, db, host, tables_priv, columns_priv
     - created by mysql_upgrade and mysql_install_db
   - "engine" is newer term for "type"
@@ -240,7 +256,7 @@
 
 - postgresql
   - monitoring
-    - `select current_query from pg_stat_activity`
+    - `select * from pg_stat_activity`
   - rules: query rewriting, eg let you insert/update a view and redirect to
     underlying table(s)
   - triggers: executed in-transaction
@@ -713,9 +729,15 @@
   - <http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/>
   - <http://www.boost.org/doc/libs/1_40_0>
     - ptrs, concepts, optional, variant, any, io, format, date time, utility
-      (noncopyable, base_from_member)
+      (noncopyable, base_from_member), format, range
     - sys: fs, threads, asio, program_options, system (errors)
     - lesser: spirit (safe_bool), tribool, value_init
+    - range ex
+
+        typedef iterator_range<list<int>::const_iterator> range_t;
+        range_t it = make_iterator_range(xs)
+        BOOST_FOREACH (range_t::reference s, it) ...
+
     - build on win: `bjam --build-type=complete --with-program_options
       toolset=msvc-10.0`
   - <http://pocoproject.org/docs/>
