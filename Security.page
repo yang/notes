@@ -477,50 +477,104 @@ block cipher modes
   integrity
   - CCM, CWC, OCB, EAX, GCM: TODO
 
-cracking
+VPNs
 
-- MS-CHAPv2, LEAP, PPTP
-  - protocols
-    - challenge handshake authentication protocol (MS-CHAPv2)
-      - only authentication protocol for windows PPTP
-      - uses DES
-      - weaknesses known by 1999; bruce schneier and l0pht wrote a
-        cryptanalysis
-      - username is in plaintext
-    - lightweight extensible authentication protocol (LEAP): extension of EAP;
-      in cisco ap's
-    - point-to-point tunneling protocol (PPTP): microsoft's default VPN
-      protocol
-      - there are alts eg RADIUS but PPTP is default for client back-compat
-  - tools
-    - ASLEAP: cracks LEAP and PPTP; updated to crack MS-CHAPv2
-      - given MS-CHAPv2 challenge and response, return last 2 bytes of password
-        hash (username already in plaintext)
-    - CUPP: common user password profiler; wizard-like dictionary generator
-      that asks for info about user
-    - genkeys: generates hashes of a wordlist using DES
-    - cowpatty: cracks pre-shared key (PSK) WPA networks based on the TKIP
-      protocol
-- MD5
-  - BarsWF: CUDA-based MD5 cracker; 4B hashes/s with quad SLI;
-    <http://3.14.by/en/md5>
-- windows
-  - 2 ways windows stores acct credentials: LAN Manager and NTLM
-    - LAN Manager: weak; brute force, rainbow tables
-    - NTLM: time-memory tradeoff attacks
-  - tools
-    - pwdump: outputs LM and NTLM account password hashes from the Security
-      Account Manager (SAM)
-    - CUDA-based NTLM brute forcer for linux:
-      <http://3.14.by/forum/viewtopic.php?f=8&t=60&>
-    - ophcrack: crack windows passwords using rainbow tables
-    - usbophcrack: downloads some rainbow tables and creates boot usb
-      - advise using ophcrack's rainbow tables instead
+- point-to-point tunneling protocol (PPTP): microsoft's default VPN
+  protocol
+  - remains popular
+  - protoco-independent, but main usage: TCP control stream, GRE data stream
+    (many firewalls don't support GRE)
+  - there are alts eg RADIUS but PPTP is default for client back-compat
+  - doesn't require PKI, unlike L2TP/IPsec
+  - provides confidentiality, not integrity or authentication
+  - encapsulates PPP
+- layer 2 tunneling protocol (L2TP)
+  - derived from PPTP
+  - combines control & data channels
+  - protocol-indep, but mainly used over UDP 500
+  - standards bodies attn shifting toward L2TP from PPTP
+  - uses IPsec ESP by default
+  - also provides user auth
+  - encapsulates PPP
+- IPsec
+  - provides confidentiality, integrity, authentication
+  - uses PKI and machine-level certs
+  - doesn't provide user auth
+  - TODO
+- secure sockets tunneling protocol (SSTP): tunnels over HTTPS (TCP 443)
+  - provides confidentiality, integrity, authentication
+  - encapsulates PPP
+- IKEv2: uses IPsec
+  - provides confidentiality, integrity, authentication
+  - supports the latest ipsec encryption algos
+  - supports mobility (MOBIKE); resilient to changing network connectivity; can
+    switch APs or even wired/wireless
 - OpenVPN ALS: web-based SSL VPN server written in Java; derived from Adito,
   SSL-Explorer
   - provides in-browser HTTPS client access with java applets for tunneling
 - misc
-  - rainbow tables: sets of precomputed hashes as a time-memory tradeoff
+  - PPTP, L2TP, SSTP depend heavily on features orig for PPP
+  - built in to windows: PPTP2, L2TP/IPsec, SSTP, IKEv2
+  - SSTP, IKEv2, maybe others: don't require client-side PKI deployment or pre-shared key
+  - SSTP, IKEv2, maybe others: integrate well w EAP
+- refs
+  - <http://www.intranetjournal.com/foundation/tunneling.shtml>
+  - <http://technet.microsoft.com/en-us/library/dd469817(WS.10).aspx>
+  - <http://blogs.technet.com/rrasblog/archive/2009/02/10/do-we-still-need-pptp-l2tp-ipsec-after-windows-7.aspx>
+
+authentication protocols
+
+- EAP
+  - authentication framework, not specific mechanism; over 40 methods
+  - used in wireless networks and point-to-point conns
+  - adopted by WPA, WPA2
+- challenge handshake authentication protocol (MS-CHAPv2)
+  - the only authentication protocol for windows PPTP
+  - uses DES
+  - weaknesses known by 1999; bruce schneier and l0pht wrote a
+    cryptanalysis
+  - username is in plaintext
+- lightweight extensible authentication protocol (LEAP): cisco-proprietary
+  extension of EAP; in cisco ap's
+  - uses modified version of MS-CHAP
+- newer: EAP-FAST, PEAP, EAP-TLS
+- EAP-TLS: TODO
+- u-prove: maintain privacy while proving that i can pay
+  - TODO can't tell if same person made txns?
+
+windows security
+
+- 2 ways windows stores acct credentials: LAN Manager and NTLM
+  - LAN Manager: weak; brute force, rainbow tables
+  - NTLM: time-memory tradeoff attacks
+
+cracking techniques
+
+- brute force
+- rainbow tables: sets of precomputed hashes as a time-memory tradeoff
+
+cracking tools
+
+- MS-CHAPv2, LEAP, PPTP
+  - ASLEAP: cracks LEAP and PPTP; updated to crack MS-CHAPv2
+    - given MS-CHAPv2 challenge and response, return last 2 bytes of password
+      hash (username already in plaintext)
+  - CUPP: common user password profiler; wizard-like dictionary generator
+    that asks for info about user
+  - genkeys: generates hashes of a wordlist using DES
+  - cowpatty: cracks pre-shared key (PSK) WPA networks based on the TKIP
+    protocol
+- MD5
+  - BarsWF: CUDA-based MD5 cracker; 4B hashes/s with quad SLI;
+    <http://3.14.by/en/md5>
+- windows: LAN Manager, NTLM
+  - pwdump: outputs LM and NTLM account password hashes from the Security
+    Account Manager (SAM)
+  - CUDA-based NTLM brute forcer for linux:
+    <http://3.14.by/forum/viewtopic.php?f=8&t=60&>
+  - ophcrack: crack windows passwords using rainbow tables
+  - usbophcrack: downloads some rainbow tables and creates boot usb
+    - advise using ophcrack's rainbow tables instead
 - <http://revision3.com/hak5/asleap>
 
 windows system security
