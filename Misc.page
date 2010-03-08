@@ -61,13 +61,15 @@ academia
 standard bodies
 
 - ecma: they submit things to iso
-- iso/iec: big kahuna
+- iso/iec: big kahuna; international
 - ietf: internet standards, rfcs; works with w3c, iso
 - w3c: web standards; works with iso
 - whatwg: w3c too slow; made html5; w3c agreed to adopt
 - iana: IP addrs, AS numbers, media types, IP protos/ports/etc; runs dns root
   and some TLDs; op'd by icann
 - icann: iana stuff, TLDs, root servers
+- ansi: american; official US representative to ISO/IEC, via USNC
+- itu-t: the standards-making body of the itu
 
 - theory folks seem to use single-column articles, probably because math
   lines grow long (as I encountered in my machine learning report) and
