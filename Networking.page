@@ -17,6 +17,15 @@ general terms
 
 - anycast: send to 1 of many; useful for HA/load-bal/geoloc; used in BGP, DNS
 
+subnet notations
+
+- /0 = mask 0.0.0.0 (any address)
+- /24 = mask 255.255.255.0
+- /32 = mask 255.255.255.255 (specific host)
+- 0.0.0.0/0 or 123.123.123.123/0: any address
+- 192.168.0.1/24: typical LAN
+- 4.3.2.1/32: specific host
+
 MACs
 
 - time division multiple access (TDMA)
@@ -212,9 +221,15 @@ ipsec
 - implementations
   - freeswan: orig ipsec for linux; dead
   - openswan: freeswan fork; targets more than linux
-  - strongswan: freeswan fork
-  - netkey: native linux ipsec; in linux now
+  - strongswan: freeswan fork; focus on good support for certs, smartcards
+  - netkey: native linux ipsec; in linux 2.6+; see ipsec-tools aka kame-tools
   - windows server
+  - refs: <http://www.jacco2.dds.nl/networking/freeswan-l2tp.html>
+
+PPP
+
+- login protocol for dial-up access
+- some encryption: CHAP and PAP password encryption algos
 
 RADIUS
 
@@ -234,30 +249,31 @@ Cellular
 - 2G: generic term for the second generation networks
 - 3G: generic term for the third generation networks
 - CDMA: a 2G network; launched in 1995
+  - pioneered/still very controlled by qualcomm
   - leader in USA until recent surge by competitor GSM
-  - Verizon, Sprint
+  - used by Verizon, Sprint, MetroPCS
 - CDMA2000: succeeds CDMA
   - comprises 1xRTT (2.5G), 1xEVDO (3G), 1xEVDV (3G)
 - Enhanced Data-rates for GSM Evolution (EDGE): 2.5G replacement for GSM
   - theoretical top speed of 200Kbps
 - Evolution Data-Only (EVDO): subset of CDMA2000
   - peaks at 2.4Mbps; averages at 300-600Kbps
-  - Sprint, Verizon
+  - used by Sprint, Verizon
 - Global System for Mobile Communications (GSM): 2G (9.6Kbps) network
-  - popular because it's international standard
-  - ATT, T-Mobile
+  - popular because it's international standard (eg europe, asia)
+  - used by ATT, T-Mobile
   - has security vulns even when using KASUMI
 - High-Speed Downlink Packet Access (HSDPA): enhancement for 3G UMTS networks
-  - ATT
+  - used by ATT
 - Universal Mobile Telephone Service (UMTS): 3G network that GSM carriers use
   - developed by GSM community; one of ITU's family of 3G systems
   - peaks at 2Mbps; averages at 300-400Kbps
   - W-CDMA
-  - ATT
+  - used by ATT
 - WiMax: high-perf Wi-Fi 802.16
   - potential cornerstone of 4G networks
 - Advanced Wireless Service (AWS): 3G
-  - T-Mobile
+  - used by T-Mobile
 
 wireless
 
