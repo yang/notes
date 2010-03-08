@@ -137,6 +137,9 @@
       - key: the key used by this join/access type
       - ref: which outer columns are compared against `key`
   - innodb
+    - perf
+      - trx_commit, binlog, sync_bin
+        <http://www.mysqlperformanceblog.com/2010/02/28/maximal-write-througput-in-mysql/>
     - storage format
       - if table has int primary key, use that as tuple id; otherwise add tuple
         id for each tuple
@@ -153,8 +156,18 @@
     - `show processlist`
     - `kill 3` kills process 3 in processlist
   - examples of why mysql blows vs postgresql
+    - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
     - http://stackoverflow.com/questions/324935/mysql-with-clause
     - http://bugs.mysql.com/bug.php?id=10327
+    - postgresql also supported multiple storage engines in 80s; concentrated
+      on one
+      - mysql's engine arch is poor; bad to opt/plan/tune
+    - only recently
+      - per-stmt triggers
+      - procedural lang support
+    - only own internal auth system; pg supports a wide array
+    - no referential integrity
+    - no constraints (`check`)
     - no sort merge join (certainly no map-reduce contender), let alone
       hash-join
     - <http://www.dbms2.com/2008/07/10/how-is-mysqls-join-performance-these-days/>
@@ -162,6 +175,10 @@
     - optimizer only recently started working properly with certain subqueries
     - auto_increment jumps up to next power of 2 but inconsistently across
       versions (platforms?); this is undocumented
+    - crappy errors: "Incorrect key file for table 'stock'; try to repair it"
+      on "alter table stock add constraint pk_stock primary key (s_w_id,
+      s_i_id);" where `stock` is in InnoDB (which has no "repair table") means
+      I have no `/tmp` space (no Google answers)
     - crappy EXPLAIN output
     - innodb auto-extends ibdata1 file; only way to trim (garbage collect) is
       dumping and loading
