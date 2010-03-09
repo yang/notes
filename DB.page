@@ -474,8 +474,9 @@ Multiprocessor Environment (DeWitt, SIGMOD '89)
 
 chained declustering (dewitt 92)
 
-- shared nothing dbs
-- compared against
+- problem space: distributed data placement (replication, clustering, etc.)
+  strategies for high availability, reliability in shared nothing dbs
+- compared against:
   - tandem: mirrored disks
     - each partition mirrored on 2 disks that are each connected to same 2
       controllers that are each connected to same 2 cpu's
@@ -486,24 +487,51 @@ chained declustering (dewitt 92)
         as the single partition they're storing, and replicate each such
         partition onto 2 machines
       - and that would be obv. stupid
-  - teradata: in $n$ node system, break up each partition into $n-1$ pieces and
-    scatter over the other nodes
+  - teradata
+    - each partition has primary and backup copies
+    - in $n$-node system, fragment the backup copy into $n-1$ pieces scattered
+      over the other nodes
     - good innate load redistribution on failure
     - but expensive writes in normal operation
-  - RAID5: check (parity) bytes
-    - writing one sector of a block requires 4 accesses (R/W disk/parity)
+  - RAID5: maintain (parity) bytes
+    - even a blind write of one sector of a block requires 4 accesses (1 extra
+      "round"): read all 3 other disks then write parity
 - chained declustering
   - eg
     - node 1: part 1 primary + part $n$ backup
     - node 2: part 2 primary + part 1 backup
     - node 3: part 3 primary + part 2 backup
     - etc
-  - on failure, evenly redistribute work over all other hosts
+  - on failure, evenly redistribute the partition over all other hosts
   - in larger systems, don't spread across all nodes; partition up system
     (called "relation clusters")
 - [this was not designed for high scaling distributed systems]
   - assuming indep failures
   - back to inefficient system if nodes $i$ and $i+2$ fail
+  - compared against weird old architectures, not giant commodity pc clusters
+    in datacenters
+
+hybrid-range partitioning strategy: a new declustering strategy for
+multiprocessor database machines (dewitt, vldb90)
+
+- partitionings in gamma: round-robin, range, hash
+  - for small range queries, range partitioning can localize execution to only
+    relevant processors and is faster
+  - for large range queries consuming significant CPU/IO resources, hash/RR can
+    parallelize, lowering response time
+- hybrid-range partitioning strategy (HRPS): do query analysis to get optimal
+  degree of intra-query parallelism, balancing range and hash/RR
+  - fragments contain $FC$ tuples and fragments contain unique range of values
+    of partitioning attr
+  - collect some stats on avg query characteristics, plugging into formulas for
+    first derivatives to optimize (e.g.) # servers to distributed across
+- The hybrid-range partitioning strategy is an alternative to hash-
+  and range-partitioning that uses query analysis to compute the typical
+  resource consumption requirements of queries and from this determines the
+  optimal partition size for range-partitioning. The scheme attempts to reduce
+  resource consumption by localizing small range queries while declustering and
+  parallelizing long-running range queries; however, HRPS is only applicable to
+  range queries.
 
 gamma (project dewitt led 8x-92)
 
@@ -576,12 +604,14 @@ rose: compressed, log-structured replication (russell sears, VLDB08)
   - adds overhead to lookups
   - appends: append to each col; buffered staging space
 
-adaptively parallelizing distributed range queries (vldb09)
+adaptively parallelizing distributed range queries (adam silberstein, brian
+cooper, vldb09)
 
 - problem space: parallelizing range queries
   - traditionally, lay out data to achieve highest throughput/max parallelism
   - in high-scaling systems like PNUTS/bigtable, maximizing server parallelism
     produces too much throughput for 1 client
+- assumption: tables are range-partitioned
 - proposal: adaptive approach
   - step 1: adaptive server allocation
     - find ideal parallelism for single query execution
