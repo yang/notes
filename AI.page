@@ -153,3 +153,33 @@ trending algorithms
 decision tree learning algorithms TODO
 
 - NP complete
+
+generalization error
+
+- cross validation, bootstrapping: methods to estimate generalization error;
+  based on "resampling"
+  - often used to choose among different models; e.g. different neural network
+    architectures; choose one with lowest gen error
+- cross validation
+  - $k$-fold cross validation: divide data into $k$ subsets of roughly same
+    size (folds)
+  - train $k$ times, each time leaving out one of the subsets, then testing on
+    one subset
+  - LOOCV: when $k$ is the sample size ($k=n$ where $n$ is data size)
+  - leave v out cross validation: more elaborate and expensive that leaves out
+    all possible subsets
+  - diff from "split-sample"/"hold-out" method commonly used for early stopping
+    in neural networks
+    - only 1 fixed subset (the validation set) used to estimate generalization
+      error, not $k$ subsets; no "crossing"
+  - cross-validation to split-sample is superior for small datasets
+  - LOOCV good for continuous error functions/model-selection methods, bad for
+    discontinuous ones
+- jackknifing: LOOCV but for estimating bias not gen error
+  - compute some statistic of interest in each subset
+  - compare avg of these to avg of entire sample to estimate the latter's bias
+- bootstrapping: seems to work better than CV in many cases
+  - repeatedly analyze subsamples of the data rather than subsets
+  - ea subsample is a random sample with replacement from full sample
+  - TODO
+- ref: <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
