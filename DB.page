@@ -576,6 +576,27 @@ rose: compressed, log-structured replication (russell sears, VLDB08)
   - adds overhead to lookups
   - appends: append to each col; buffered staging space
 
+adaptively parallelizing distributed range queries (vldb09)
+
+- problem space: parallelizing range queries
+  - traditionally, lay out data to achieve highest throughput/max parallelism
+  - in high-scaling systems like PNUTS/bigtable, maximizing server parallelism
+    produces too much throughput for 1 client
+- proposal: adaptive approach
+  - step 1: adaptive server allocation
+    - find ideal parallelism for single query execution
+    - depends on: query selectivity, client load, client-server BW, etc
+    - min # servers $K_q$ for query $q$ is adjusted as scanning proceeds
+  - step 2: multi-query scheduling
+    - even after knowing $K_q$, must avoid contention (assigning too many
+      queries to same server simultaneously)
+    - # concurrent scans on a server to avoid random IO can result in faster
+      execution for all queries
+    - minimize disk contention and ensure all queries get good perf
+    - max # queries $L_s$ on server $s$ 
+- tunable: can favor short vs long queries or high vs low priority
+- implemented & evaluated in PNUTS
+
 OLTP
 ----
 
