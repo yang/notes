@@ -827,3 +827,17 @@ roomy: disk-based computation (talk at MIT 12/21/09)
   - random accesses are delayed until they can be done in batch
 - [what if he used B+ trees instead? then he could make LSM trees happen
   transparently; would be neat]
+
+symbolic execution
+==================
+
+TODO
+
+- catchconv
+- stp (vijay ganesh)
+- tmp? tpm?
+- dmolnar's work?
+- what's used by armando/jeanyang?
+- what's used by klee?
+- what's used by akcheung?
+- what's used by the two guys working on auto exploit generation?
