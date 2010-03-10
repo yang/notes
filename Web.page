@@ -32,6 +32,18 @@ flash RTFMP
   - only enables sending media from mic/cam to other flash player endpoints
     that subscribe to media streams
 
+session continuity
+
+- persistence
+  - cookies
+  - window.name: only for this tab session
+  - HTTP authentication
+  - flash local shared objects (LSOs)
+  - HTML5
+- message passing
+  - hidden form fields
+  - URL query string
+
 misc
 
 - `rel=nofollow`: indicates to search engine that a link should not influence
