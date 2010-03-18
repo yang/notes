@@ -44,6 +44,17 @@ Exploding Software-Engineering Myths
   with precision & recall of 85%
 - geo distance doesn't matter much
 
+writing solid code
+
+- use warnings, static checkers, unit tests
+- use assertions and debug-only backup algos
+- use subsystem integrity checks: dangling ptrs, lost mem blocks, use of uninitialized mem
+- use debugger and step
+- use good design to create simple single-purpose functions
+- use safer alternatives to risky algos/lang idioms
+- avoid bad practices
+- attitude & habits
+
 companies
 ---------
 
