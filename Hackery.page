@@ -50,6 +50,7 @@
 - scala
   - `@tailrec`
   - `@cps`
+  - util.control.Exception.catching
 
 - html
   - link rel canonical: the canonical URL for this page; useful for eg search
