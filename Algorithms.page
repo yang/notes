@@ -146,6 +146,18 @@ spatial indexing
   - can translate (x,y) to hilbert curve pos
 - <http://blog.notdot.net/2009/11/Damn-Cool-Algorithms-Spatial-indexing-with-Quadtrees-and-Hilbert-Curves>
 
+bin packing
+
+- NP-hard
+- items of diff sizes must be packed into identical bins; minimize # bins
+- formally: given bin size $V$ and item sizes $a_1,\dots,a_n$, find int $B$ and
+  $B$-partition $S_1 \cup \dots \cups S_B$ of ${1,\dots,n}$ such that $\sum_{i
+  \in S_k} a_i \le V$ for all $k \in 1,\dots,B$
+
+integer linear programming
+
+- maximize $\mathbf{c}^T \mathbf{x}$ subject to $A \mathbf{x} \le \mathbf{b}$
+
 randomized
 ==========
 
