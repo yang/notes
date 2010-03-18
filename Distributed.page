@@ -26,6 +26,11 @@ core
   - <http://pl.atyp.us/wordpress/?p=2521>
   - <http://pl.atyp.us/wordpress/?p=2532>
 
+NAS/SAN
+
+- SAN: block protocols, eg scsi, FC, iscsi, ataoe
+- NAS: remote FS, eg CIFS, NFS; NAS heads can be atop SANs
+
 MPI/PVM
 
 - MPI
@@ -159,6 +164,11 @@ queueing systems
 
 datacenter
 ==========
+
+amazon aws
+
+- ebs: volumes can only be mounted from 1 instance at a time, so no consistency issues
+  - behaves like SAN
 
 microsoft chicago
 
