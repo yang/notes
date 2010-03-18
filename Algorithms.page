@@ -154,9 +154,17 @@ bin packing
   $B$-partition $S_1 \cup \dots \cups S_B$ of ${1,\dots,n}$ such that $\sum_{i
   \in S_k} a_i \le V$ for all $k \in 1,\dots,B$
 
-integer linear programming
+integer linear programming aka integer programming
 
+- NP-hard
 - maximize $\mathbf{c}^T \mathbf{x}$ subject to $A \mathbf{x} \le \mathbf{b}$
+
+linear programming
+
+- simplex algorithm: simplest; usu efficient but poor worst-case behavior
+- both simplex-based methods and interior point methods have similar efficiency
+  for routine linear programs
+- in P with ellipsoid algorithm or interior point methods
 
 randomized
 ==========
