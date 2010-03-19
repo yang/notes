@@ -474,6 +474,17 @@ mapreduce online (tyson condie, nconway, ..., jmh, cal TR 2009)
   task output with "committed"
 - online agg: snapshot accuracy is hard; report simple progress metric along
   with snapshot results
+- continuous mr: continuous online agg
+  - circular buffer of spillfiles
+- [db group meeting discussion]
+  - they claim that they can't overlap/pipeline mapreduce jobs, but unclear why
+  - for regular non-online-agg MR jobs, unclear how much pipelining benefits
+    perf
+  - seems to be pushing the disk-writing to the reducer
+    - mappers send smaller sorted units to reducers; reducers are reading from
+      many input file descriptors
+    - but reducers need to buffer these somehow; most likely need to spill to
+      disk
 
 dryad
 
