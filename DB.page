@@ -806,6 +806,96 @@ greenplum
 alternative DBs
 ---------------
 
+nimbusdb (jim starkey, ieee/acm talk at mit, 3/18/10)
+
+- consistency is overloaded
+- serializability: sufficient for consistency, but not necessary
+  - expensive; "almost serializable" is useless (no guarantees and all cost)
+  - serializable -> sequential txn order -> at every point, db has definitive
+    state
+- keeps relating to relativity
+  - time is seq of events, not just clock
+  - comm requires latency
+  - 2 nodes just can't see same events in same order
+  - not a bug, but a fact of life
+- mvcc/si: alternative to serializability
+  - row updates create new versions pointing to old versions
+  - each version tagged with creating txn
+  - a txn sees a version consistent w when it started
+  - a txn can't update a version it can't see
+  - each txn sees stable, consistent state
+- nimbusdb: elastic, scalable, acid, sql rdbms
+  - modest goals:
+    - very high perf in data center
+    - high perf geographically dispersed
+    - fault tol: sw, hw, geological
+  - less modest goals:
+    - put DBAs outta work: 0 admin; dynamic, self-tuning
+    - arbitrary redundancy; multi-tenant; of, for, in the cloud
+- _chorus_: set of nodes that instantiate a db
+  - _txn nodes_: do sql
+  - _archive nodes_: maintain a persistent disk archive; have copy of entire db
+- a nimbus db composed of distributed objs called _atoms_
+  - can be serialized to net/disk
+  - can be on any # of chorus nodes
+  - all insts of atom know of each other
+  - atoms replicate p2p
+  - every atom has a _chairman_ node: enforces consistency
+    - deterministically chosen; if chairman disappears, everyone knows who next
+      one is
+  - [partition/replica group]
+- examples of types of nimbus atoms
+  - txn mgr: start/end txns
+  - table: metadata for a relational table
+  - data: container for user data
+  - catalog: tracks atom locations
+- comm is fully connected, async, ordered, batched
+- messaging
+  - most data is archival and inactive
+  - small fraction is active but stable (eg what was best seller 2 yrs ago)
+  - smaller fraction is volatile but local (customer's shopping cart or account
+    in active use)
+  - even less data is volatile and global
+  - replicate only to those who care
+- nodes are autonomous: choose where to get an atom, which atoms to keep, which
+  to drop
+- txn control
+  - record version based
+  - txn sees only the results of txns reported committed when & _where_ it
+    started
+  - consistency maintained by atom chairman
+    - eg can't insert dupe into unique index
+    - eg can't update record 42 if another txn updating it
+  - atom updates bcast repl msgs; repl msgs precede commit msg
+- nimbusdb is relativistic
+  - db/consistency viewed only thru txns; no single definitive db state
+  - nodes may differ due to msg skew
+- archive nodes provide durability
+  - see all atom updates followed by a pre-commit msg
+  - bcast the actual commit
+  - txn nodes retain 'dirty' atoms till an archive node reports the atoms
+    archived
+  - multiple archive nodes provide redundancy
+- txn nodes provide scalability
+  - any txn node can do anything
+  - conn key is client session #
+  - conn broker can give effect of sharding
+  - txn nodes tend to request atoms from local nodes
+  - data dynamically trends toward locality
+- misc features
+  - semantic extensions eg structural inheritance
+  - unbounded strs, unbounded nums
+  - all metadata is dynamic
+  - chorus members platform indep, rolling sw updates, 24/365
+- network partitions, CAP, nimbusdb
+  - certain archive nodes are designated as _commit agents_ (really, canaries)
+  - subsets of commit agents form into _coteries_
+    - subsets where no 2 are disjoint
+  - a pre-commit must be received at least one commit agent in every coterie to commit
+  - post partition, the partition that contains a coterie survives
+- [this was a very details-free talk and we all think that jim has no idea what
+  he's talking about]
+
 Alternative DBs
 
 - key‐value‐cache:  memcached, repcached, coherence, infinispan, eXtreme scale, jboss cache, velocity, terracoqa
