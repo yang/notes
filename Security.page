@@ -19,6 +19,13 @@ people
 - niels provos: principal engr at google; libevent, libio, openssh privsep;
   malware work
 
+industry
+
+- infrastructure (network/host) vs (web) application security
+  - infrastructure: $9.1B to secure $98.5B assets (9.23%)
+  - application: $750M to secure $64.4B assets (1.2%)
+  - <http://jeremiahgrossman.blogspot.com/2010/02/infrastructure-vs-application-security.html>
+
 vulnerability databases
 
 - MITRE Common Vulnerabilities and Exposures (CVE)
