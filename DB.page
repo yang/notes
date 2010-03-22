@@ -11,6 +11,9 @@ vocab
 
 - PDBMS = MPP
 - data cube: hypercube of multi-dim info; analytical aggregation along dims
+- a predicate is _sargable_ if DBMS can use index to speed up execution
+  - usu. requires invertible, order-preserving (monotonic) function on indexed
+    attribs
 
 fields
 
