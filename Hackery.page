@@ -306,6 +306,19 @@
 
 - git
 
+    # bundle up a whole repo (for sending)
+    git bundle create repo.bundle master
+    # clone from bundle (rather than server)
+    git clone repo.bundle -b master repo
+
+    # bundle up some commits
+    git bundle create commits.bundle master ^9a466c5
+    # fetch from bundle (rather than server)
+    git fetch ../commits.bundle master:other-master
+
+    # replace one commit in your hist
+    git replace 81a708d c6e1e95
+
     # undo last commit (implies --soft)
     git reset HEAD^
     # change the last commit; also: git reset --soft HEAD^, ..., git commit -c ORIG_HEAD
