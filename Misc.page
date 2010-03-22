@@ -23,6 +23,12 @@ industry
     - john hennessy
     - orkut
 - entrepreneurs/investors
+  - kai li: princeton cs faculty; founded data domain
+  - gideon yu: former cfo of fb/yt
+  - chris hughes: fb cofounder; coordinator of online organizing for obama; eir
+    at general catalyst
+  - marc benioff: salesforce ceo
+  - Fred Wilson: co-founder of Union Square Ventures; NYC investor
   - andy bechtolsheim: sun; granite systems; highbar VC; invested in google,
     onfiber, wildblue, magma design automation; stanford ee phd
     - most shrewd/succesful "angel investor," esp in electronic design
@@ -40,8 +46,8 @@ industry
   - other bloggers
     - <http://onstartups.com/>
     - <http://www.startable.com/>
-  - caterina fake: flickr cofounder; hunch cofounder
-  - chris dixon: hunch cofounder
+  - caterina fake: flickr cofounder; hunch cofounder; NYC entrepreneur
+  - chris dixon: hunch cofounder; NYC serial entrepreneur
 - finance
   - david e. shaw: hedge fund; comp bio/chem research lab; columbia prof; stanford cs phd
 - misc
@@ -51,6 +57,21 @@ industry
     - led creation of MS tablet PC prototype
     - MS technical fellow
     - helped setup MSR Cambridge UK
+
+companies
+
+- hunch
+  - series b: $10M, led by khosla ventures, also general catalyst, bessemer venture partners, ron conway
+- data domain
+  - sold appliances that could replace tape drives, plug in to netapp/emc
+  - acquired by emc for $2.1B; netapp was also bidding
+  - <http://www.usenix.org/events/fast08/tech/full_papers/zhu/zhu_html/index.html>
+- netapp
+  - flagship filer product line
+  - much smaller than emc
+- ooyalah
+- flightcaster
+- aardvark
 
 academia
 
@@ -215,3 +236,110 @@ Software
   - expression blend: design silverlight/wpf apps; like flash professional
   - expression design: graphics editor
   - expression encoder
+
+Games
+=====
+
+Jesse Schell: future of games from DICE 2010
+
+- facebook is strange
+- lead generation can bring in more revenue than direct payment
+  - lead generation: "sign up for credit card in return for farm cash"
+  - direct payment: also strange bc of microtransactions
+- club penguin: bought by disney; used 'psychological trick'
+  - kid plays games, gets virtual $, but can't spend at store bc need to be a paying subscriber to spend
+  - mom refuses to pay $6
+  - 6 weeks later, kid asks again, "look at all my virtual $"
+  - mom thinks "wow still at it, oh well only $6"
+  - of course it's a recurring $6 for $72/yr
+- webkinz: imaginary character to each stuffed animal; put on screen in MMO
+  - On Webkinz World, the Secret Code allows the user to own a virtual version
+    of the pet for online play for a limited time. To maintain long-term access
+    to an account, the user must continue to purchase additional stuffed
+    toys.[1]
+  - to parents, $12 = $20; ~same
+- mafia wars: text based mafia game competing with your friends
+  - spend time or $20 to get ahead
+- these all have psychological games
+- but main common theme: busting through to reality
+  - eg: reality tv, organic groceries, mcdonald's angus ('real' burger)
+  - ppl once wanted to escape; now want to hang on to reality
+- technology may fix this through convergence (facebook on xbox, set-top boxes
+  to consoles)
+  - but tech actually diverges (except for iphone -- that's the pocket rule
+    exception)
+- examples of crossing to reality
+  - fantasy football: everyone plays it
+  - geocaching: fun to walk in woods if there's treasure
+  - simpson's: scavenger hunt; watch all shows, find ref, get prize
+  - darpa network challenge
+  - weight watchers: points system
+  - ford hybrid: the more saved gas, the more a virtual plant grows; it's a
+    "pet"
+- not designed by skilled game designers; imagine if they got their hands on
+  this
+- future: everything monitors us everywhere, giving us points
+  - if we design right, can motivate us to become better ppl
+- <http://www.wired.com/beyond_the_beyond/2010/02/jesse-schell-future-of-games-from-dice-2010/>
+
+VC firms
+========
+
+greylock
+
+- oodle
+- pandora
+- opendns
+- cuil
+- redfin
+- digg
+- doubleclick
+- rev3
+- facebook
+- staples
+- farecast
+- wildtangent
+- linkedin
+- cloudera
+- data domain
+- iss
+- kickfire
+- cygnus
+- redhat
+
+matrix
+
+- apple
+- aruba networks
+- buywithme
+- jboss
+- tivoli
+- sycamore networks
+- apollo computer
+- gilt groupe
+- hubspot
+- theladders
+- sandisk
+- xilinx
+
+sutter hill ventures
+
+- feedburner
+- yext
+- linear tech
+- nvidia
+- data domain
+- bix: UGC for talent competitions
+- farecast
+- palm
+- shutterfly: pic gallery
+- misc
+  - intacct: quickbooks saas
+  - seesaw: digital video ads
+  - virobay: hep c treatment
+  - data robotics: robot arm for storage
+  - buzz media: niche music site
+  - return path: spam
+  - glassdoor: epinions for jobs/companies
+  - youku: chinese youtube
+  - webvisible: 
