@@ -405,6 +405,12 @@ network hijacking
   - DNS pinning: some browsers (IE) cache for add'l min time (30m)
     - still re-queries if can't connect to host
     - hence, after initial page load, firewall off the client; rebind works
+- wifi
+  - karma: listen for wifi client probes so that you can eg pretend to be a
+    familiar AP
+  - airdrop-ng: deauthorization tool to disassociate APs and clients
+- dhcp exhaustion: silence the orig dhcp server, then become mitm dhcp server
+  that dishes out your own gateway, dns, etc; there's a metasploit module
 
 brute-force DOS
 
