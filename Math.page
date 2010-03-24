@@ -109,6 +109,35 @@ symmetric positive definite, positive semi-definite, negative definite, indefini
     - $M$ is neither pos semi-def nor neg semi-def
     - $M$ has pos and neg evals
 
+foundations
+
+- gaussian elimination: use _elementary row operations_ to get _row
+  echelon form_
+  - ie subtract rows from each other till lower zero triangle
+- invertible = non-singular
+- matrix mult: associative, non-commutative
+- gauss-jordan elimination: extension of gaussian elimination to get _reduced
+  row echelon form_
+  - useful for finding inverse
+  - $[AI] \Rightarrow [IA^{-1}]$
+- LU factorization aka LU decomposition: factorize matrix into product of
+  _lower-triangular_ and _upper-triangular_ matrices
+  - $A^{-1} = U^{-1} L^{-1}$
+  - find using extension of gaussian elim
+- $(AB)^{-1} = B^{-1} A^{-1}$; $(A^\mathrm{T})^{-1} = (A^{-1})^\mathrm{T}$
+- _symmetric_: transpose is self; inverse is also symmetric
+- _vector space_: eg $\mathbf{R}^2$ (set of all 2-dim vecs)
+  - _subspace_: subset of vector space closed under linear combination
+    - subspaces of $\mathbf{R}^2$: $\mathbf{R}^2$, any line through origin, and
+      $\{(0,0)\}$
+    - subspaces of $\mathbf{R}^3$: $\mathbf{R}^3$, any plane through origin,
+      any line through origin, and $\{(0,0)\}$
+  - _column space_ $C(A)$ is set of all linear combinations of $A$'s columns
+    - if not fully linearly indep, then fewer dimensions spanned then #columns
+    - $Ax=b$ can be solved iff $b \in C(A)$
+  - _null space_ $N(A)$ is set of all solutions to $Ax=0$
+    - solutions $x$ always form a subspace, i.e. linear combos of $x$s are 0
+
 - TODO
   - characteristic polynomial: $\det(A - lambda I) = 0$
   - stochastic matrix
