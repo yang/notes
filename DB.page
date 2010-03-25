@@ -1292,6 +1292,31 @@ facebook, 2009 talk at UCSD
   - personalization
 - <http://idleprocess.wordpress.com/2009/11/24/presentation-summary-high-performance-at-massive-scale-lessons-learned-at-facebook/>
 
+facebook & hive, 3/23/10 talk at qcon
+
+- 5800 cores, 8.7TB storage capacity (div by 3 for replication), 12TB/node
+- 2-level network topology: 1Gb/s node-to-rack switch, 4Gb/s top-level rack
+  switch
+- stats
+  - 12TB/day compressed new data, 135TB/day compressed scanned data
+  - 7500+ hive jobs/day, 80K compute hrs/day, 95% jobs are hive jobs
+  - used by analysts/non-engrs
+- apps
+  - reporting
+    - daily/weekly aggs of impression/click counts
+    - measures of user engagement
+    - microstrategy dashboards
+  - ad-hoc analysis: # group admins broken down by state/country
+  - machine learning (assembling training data)
+    - ad optimization
+    - user engagement as function of user attribs
+  - many others
+- challenges: space constraints, resource scheduling, job isolation
+  - RAID-like parity scheme for less replication space
+  - implementing columnar compression
+  - using fair share scheduler
+- <http://www.infoq.com/presentations/Facebook-Hive-Hadoop>
+
 myspace
 
 - claimed to have moved entirely from HDDs to SSDs
