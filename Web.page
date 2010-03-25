@@ -148,3 +148,10 @@ online advertisement
 - cost per click (CPC)
 - cost per action (CPA): per purchase
 - cost per engagement (CPE): interact with ad
+
+caching
+
+- edge side includes (ESIs): small markup lang for dynamic web content in
+  caches
+  - developed by a group of companies incl. akamai, bea, oracle)
+  - eg `<esi:include src="http://example.com/1.html" alt="http://bak.example.com/2.html" onerror="continue"/>`
