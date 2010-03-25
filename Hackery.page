@@ -1300,6 +1300,9 @@
       - text/data: must relink with `-Wl --hugetlbfs-align`
         - then `hugectl --text --data --bss ./target-application`
     - nothing for stack
+  - tmpfs/ramfs
+    - tmpfs: fixed size, may swap
+    - ramfs: dynamic size (may have cap, or kernel will stall if OOM), no swap
 
 - linkage
   - if a library contains an _init symbol or function marked with __attribute__((constructor)), it will be immediately when loaded. There's no way to "pause" the library loading, switch seccomp on, and then allow the library loading to continue. (<http://stackoverflow.com/questions/1019707/sandboxing-in-linux>)
