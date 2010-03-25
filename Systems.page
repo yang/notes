@@ -1053,6 +1053,13 @@ semantic file systems (david gifford 1991)
   - other projs: arbitrary file/dir semantics (files can be anything)
 - indexing process
 
+Storage
+=======
+
+failure trends in a large disk drive population (google, fast07)
+
+- TODO
+
 DVCS
 ====
 
