@@ -343,3 +343,28 @@ sutter hill ventures
   - glassdoor: epinions for jobs/companies
   - youku: chinese youtube
   - webvisible: 
+
+IP law
+
+- issues
+  - licenses (eg GPL) are interpreted differently worldwide
+    - eg can BSD be added to GPL without explicit sublicensing clause?
+    - big players need to document explicitly
+  - outbound licensing: eg GPL + non-GPL in project
+  - inbound licensing: eg accepting contribs wo copyrights/licenses
+- GPL enforcement
+  - software freedom law center (SFLC): nonprofit that helps enforcement
+  - entities have options:
+    - include src w bin: simplest; immediately ends obligation
+    - offer to send src on request: common; companies bet on this
+    - release via P2P system
+  - often settle; violator pays legal fees too
+- trademarks
+  - earned/strengthened by usage; no reg needed; no expiration (into public
+    domain) while in use
+    - should do TM search first, but no willful infringement
+    - if reg, then reg as group, not individual
+  - nominative use: protects factual references
+  - vs copyright: granted on create; has fair use doctrines
+  - limited by political geography
+- <http://lwn.net/Articles/375071/>
