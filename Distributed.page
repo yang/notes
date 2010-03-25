@@ -455,6 +455,31 @@ hadoop
   - _sort phase_: group records with same key
   - _reduce phase_: apply reducer to each key and corresponding list of values
 
+hive
+
+- TODO (below is just starter)
+- hiveql
+  - from subqueries, inner/outer equijoins, multi-group-by, multi-table
+    inserts, UDFs
+  - sampling
+  - nested collections: arrays, maps, UDTs
+- query optimizer
+  - predicate pushdown
+    - left outer join: left side preds pushed
+    - right outer join: right side preds pushed
+    - full outer join: none pushed
+    - non-det functions not pushed (rand; specified with java annot)
+  - map joins: user-specified small in-mem hash tables on mappers; no
+    sort/reduce needed
+  - group by optimizations: map-side partial aggs, load balancing for data skew
+- extensibility
+  - disk data formats: text, sequence, ...
+  - in-mem ('serde') data formats: java, hadoop writable, thrift, ...
+  - user map-reduce scripts
+  - UDFs: substr, trim, from_unixtime, ...
+  - user-defined agg functions: sum, average, ...
+  - user-defined table functions: explode, ...
+
 mapreduce online (tyson condie, nconway, ..., jmh, cal TR 2009)
 
 - built hadoop online prototype (HOP); submitting to hadoop project
