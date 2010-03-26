@@ -363,6 +363,13 @@ snapshot/ser          impossible  impossible   impossible
   - oracle, postgresql: "serializable" is snapshot isolation
   - mysql "repeatable read" is actually "read committed", "serializable" is
     serializable
+  - mysql, sybase, mssql, db2 also support true serializability
+    - bc they have few access paths, all closely tied to index structures
+    - so they can implement predicate locking, which is the tricky part
+      - prevents inserts from slipping past read-locks
+    - pg has many diff access paths, and indexes are plugin-replaceable w
+      limited interface
+    - <http://osdir.com/ml/pgsql-hackers/2009-12/msg02209.html>
   - postgresql: "read uncommitted" is "read committed", "repeatable read" is
     "serializable"
 - ref: <http://evanjones.ca/db-isolation-semantics.html>
