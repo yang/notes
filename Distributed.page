@@ -821,15 +821,16 @@ ec2
 - vm's (~2-3 min to start)
 - can't run arbitrary os; must be linux 2.6-based with paravirt (for xen)
 
-s3
+s3 TODO
 
 - storage service
 
-simpledb
+simpledb TODO
 
 - similar to bigtable
 - objects with loose set of multi-valued attrs
-- simple query lang
+- simple query lang: `select ATTRS from DOMAIN where PREDS`
+- eventual consistency
 - queries capped at 5 sec runtime
 - $1.50 / gb-month
 - $0.14 / cpu-hr consumed by queries
