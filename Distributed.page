@@ -1158,9 +1158,14 @@ cassandra (facebook, 2008)
   - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
   - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
 
-riak TODO
+riak (basho)
 
-- richer data model than voldemort
+- erlang; primary key lookup only; json fmt; consistent hashing; vnodes
+- eventual consistency w vector clocks & app conflict resolution
+- pluggable storage backend (in-mem, etc)
+- allows replicas to be temporarily inconsistent (tunable RW quora)
+- [basho founded by former akamai ppl; brewer joined BOD]
+- <http://riak.basho.com/nyc-nosql/>
 
 perf comparisons with key-value usage model
 
