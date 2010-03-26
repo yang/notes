@@ -1107,13 +1107,16 @@ teradata
 misc db
 -------
 
-couchdb
+couchdb (apache, 2008)
 
 - b-tree storage
 - append-only
 - MVCC, lockless
 - REST API
 - incremental map-reduce
+- async replication
+- queries are called _views_, defined with JS to specify field constraints
+- erlang
 - <http://sitr.us/2009/09/13/couchdb-notes.html>
 - <http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html>
 
