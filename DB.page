@@ -1007,6 +1007,11 @@ redis
 - impl in C; single-threaded event-driven
 - simple async master/slave replication out of the box
 
+scalaris
+
+- in-mem erlang kv store w sync replication; multi-hop chord-style lookups; not
+  much community/support
+
 memcachedb
 
 - supports replication
