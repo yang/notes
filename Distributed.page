@@ -603,11 +603,39 @@ The Google File System
 
 GFS Evolution
 
+- main problem: master has memory index of all files' metadata
 - orig master per cell per DC, but isolation was difficult and 1-master not
-  scalable (no more mem); moved to multi-cell, multi-master
-- batch processing to online apps like gmail: more available and performant
-- loose/eventual consistency: biggest issue was with client failures, since clients are responsible for resolving
+  scalable in # files; moved to multi-cell, multi-master
+  - multi-cell: multiple masters (isolated FSs) over shared pool of
+    chunkservers; app must manually partition over masters
+  - namespaces: static partitioning of one FS namespace over multi-cell
+- started having more online apps like gmail
+  - 64MB chunks too big but smaller chunks -> more files; 1MB compromise; see
+    above discussion on master scalability
+  - orig GFS was for throughput not latency
+  - also needed more availability; 1-master is SPOF
+    - orig master failover was manual: cell could be down for an hr
+    - then auto, but slow (minutes); now down to 10s
+  - generally, bigtable solves a bunch of problems
+    - bigtable is very failure-aware & responds faster
+- multihoming
+  - bigtable txn log: have 2 logs, write to one and failover to other, merging
+    later
+  - gmail uses multihoming, for availability and to hide gfs problems
+- many disks claimed to linux driver that they supported a range of ide
+  protocol versions but actually responded reliably only to more recent ones, silently corrupting data
+  - motivated GFS checksums, but these were E2E so covered everything (eg TCP
+    corruption)
+- loose/eventual consistency
+  - apps can read stale data
+  - client failures are big issue
+  - multi-writers are problematic; eg RecordAppend interface (dupes, ordering)
+- general google approaches
+  - get things working reasonably well, then focus on scaling, not so much on
+    efficiency; usually never focus on a binary, except for GFS master perf
+  - had flexibility since apps & infrastructure all by google
 - <http://queue.acm.org/detail.cfm?id=1594206>
+- <http://cacm.acm.org/magazines/2010/3/76283-gfs-evolution-on-fast-forward/fulltext>
 
 Don't Give Up On Distributed File Systems
 
