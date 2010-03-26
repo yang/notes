@@ -351,6 +351,7 @@
     - like svn externals, but can't track HEAD
   - _subtree merge_: actually merge in another proj but isolated in its own
     subdir
+  - porcelain: easygit, yap, pyrite (hg-like)
 
 - name resolution on linux
   - /etc/nssswitch.conf indicates what /lib/libnss* to use for resolving
