@@ -141,6 +141,7 @@
     - perf
       - trx_commit, binlog, sync_bin
         <http://www.mysqlperformanceblog.com/2010/02/28/maximal-write-througput-in-mysql/>
+    - implements MVCC; has true serializability bc of shared index locks
     - storage format
       - if table has int primary key, use that as tuple id; otherwise add tuple
         id for each tuple
@@ -1383,6 +1384,87 @@
   - mb()/barrier() in Linux kernel
 
 - css
+  - designed for horizontal layout/flow layout, not vertical
+  - css3
+    - border-radius, border-image, box-shadow/text-shadow, rgba()/opacity,
+      @font-face, attribute selectors, sibling combinator, pseudoclasses,
+      columns, multiple backgrounds, word-wrap, box-sizing, media queries
+    - <http://www.smashingmagazine.com/2009/01/08/push-your-web-design-into-the-future-with-css3/>
+    - <http://www.smashingmagazine.com/2009/06/15/take-your-design-to-the-next-level-with-css3/>
+    - <http://sixrevisions.com/css/css3-techniques-you-should-know/>
+  - `box-sizing: border-box` (or `content-box`)
+  - `word-wrap: break-word` (or `normal`)
+  - columns: column-count, column-gap, column-rule, column-span, ...
+  - media queries:
+    - `@media all and (max-width:480px) {...}`: view narrower than 480px; no
+      longer need JS adaptive fluid layout
+    - `@media screen and (color) {...}`: color screens
+  - combinators
+    - sibling: `div~img {...}`
+  - attribute selectors: `a[title$="tweetCC"] {...}`
+  - `border-image: url(/images/border-image.png) 5 repeat`
+  - `box-shadow: 2px 2px 10px #ccc` (xoff yoff blur color)
+  - `text-shadow: rgba(...) 0 1px 0` (color xoff yoff blur)
+  - `rgba(100, 100, 155, 0.2)`
+  - `@font-face` example
+
+      @font-face {
+        font-family: 'Anivers';
+        src: url('/images/Anivers.otf') format('opentype');
+      }
+
+  - horizontal align: make margin-left, margin-right `auto`
+  - make elt screen-height: `height: 100%`
+  - height, line-height, top/bottom margins, width (default 100%) can be set
+    only for block elts
+  - min-width, min-height
+  - `display: none` takes up no space; `visibility: hidden` still takes space
+  - pseudoclasses
+    - `a`: link, visited, hover, active
+    - `p:first-child`: the first `p` instance (ignore `child`)
+    - `p > i:first-child`: the first `i` in any `p`
+    - `q:lang(no)`: a norwegion quote (`<q lang="no">`)
+    - css3
+      - `nth-child(n)`, `nth-last-child(n)`, `last-child`, `checked`, `empty`, `not(s)`
+      - pseudoelements: `::selection`
+  - CSS expressions: IE-only reactive property-setting
+  - inheritance: eg `color` is inherited (setting on `body` will color
+    everything)
+  - can't vertical-align block elements like divs, floats
+    - vertical-align only applies to inline elts & table cells (diff meanings)
+    - until css3 advanced layout:
+      <http://www.css3.info/advanced-layout-module-gets-a-refresh/>
+    - workarounds:
+      - <http://blog.themeforest.net/tutorials/vertical-centering-with-css/>
+      - <http://phrogz.net/CSS/vertical-align/index.html>
+      - inline-block & line-height
+    - <http://csscreator.com/node/30624>
+    - <http://archivist.incutio.com/viewlist/css-discuss/86031>
+  - `line-height`: height of line box (note: can't be of inline box)
+    - values: `normal`, `inherit`, %, float, and absolute unit measure
+    - % and float are ratios of the font size
+      - %: inheritance propagates calculated value, not orig %
+      - float: inheritance propagates orig float, not calculated value
+  - box model: blocks contain lines contain inlines
+    - containing/block-level boxes: top-level
+    - line boxes: height is that of tallest contained inline box
+    - inline boxes: eg inline elts; everything else are anonymous inline boxes
+    - content area aka em-boxes: tightly surrounds the text; set by font-size
+    - _leading_: line-height - font-size
+    - content area is middle-aligned in (in)line box
+    - content area can be smaller than actual font size if constrained by
+      containing line-height
+    - <http://www.w3.org/TR/css3-box/>
+    - <http://www.slideshare.net/maxdesign/line-height>
+    - <http://meyerweb.com/eric/css/inline-format.html>
+  - pre-IE6 _quirks mode_ aka _box model hack_: border/padding *included* in
+    width/height; unfortunately, this is arguably more intuitive, hence
+    reintroduced in `box-sizing`
+  - `position: relative` makes all children that have `position: absolute`
+    actually framed in this elt's coords (origin)
+  - background images: `background: url(widget-image.gif) no-repeat`
+  - `position: fixed` fixes something in place regardless of scroll pos
+  - wildcards: `* { margin: 0; padding: 0; }`
   - nice header style:
 
       h1 {
