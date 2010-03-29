@@ -1,5 +1,38 @@
 TODO merge in notes from 6.824
 TODO beep
+TODO csfq core stateless fair queueing
+TODO mrd multi radio diversity
+TODO srm scalable reliable multicast: rand # from (C1+C2 r) d
+TODO igmp tree-building; slotting/damping; routers can prune its subtree out of the group
+TODO crossbar
+
+- LPM
+- sched: all are maximal matching
+  - wavefront
+  - PIM: rand
+  - iSLIP: round-robin
+
+TODO wireless mac
+
+- hidden terminal problem: A -> B <- C
+- exposed terminal problem: A <- B   C -> D
+- approaches
+  - 802.11 CSMA: rand in [0, cw], ack
+  - reserv: MACA: RTS/CTS; MACAW: adds more features (DS, etc)
+  - TDMA: when high traffic
+
+TODO i3, doa
+
+TODO etx
+
+- expected # transmissions is $\frac{1}{d_f d_r}$, where $d_f, d_r$ are probs
+- better than hop count
+
+routing
+
+- DSDV: seq no
+- DSR: best; "plz tell me route to x"; store in mem; src-route
+- OAODV: ad-hoc route discovery; uses DV
 
 people
 
@@ -738,6 +771,11 @@ chen, berkeley, 2009)
 
 Wireless
 ========
+
+exor TODO
+
+- greedy algo: node closest to dest fwds packets
+- src routing; src knows where all nodes are & sets up batch map ordering
 
 MACAW: a media access protocol for wireless lan's
 
