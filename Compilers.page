@@ -227,3 +227,22 @@ lexing/regular expression matching
   - sucks (exp-time) for wide-branching cases? can't think of them right now
 - backreferences trivial in backtracking, but make parallel exp-time
 - <http://swtch.com/~rsc/regexp/regexp1.html>
+
+tracing JITs
+
+- tracing vs per-method JIT
+  - tracing: tracemonkey
+  - method: nitro (safari), v8 (but v8 guesses by looking at src)
+  - tracing faster on numeric but slower on object-manip
+  - <http://lambda-the-ultimate.org/node/3851>
+- type-specializing vs non-type-specializing JIT
+  - not yet any real per-method type-specializing JITs
+    - hard to fully specialize bc these only check arg types, making
+      input-specialized versions, but not dealing w internal types (eg getting
+      obj props)
+- tracemonkey: only loops that iterate at least 3x
+  - type specialization is biggest fruit; interp is less
+  - branch specialization: cap at 32 traces to avoid using too much mem
+  - nanojit: the actual compiler
+  - 22x on numerical; 2-5x on object manip
+  - stages: monitoring (loop counting), recording, compiling, native execution
