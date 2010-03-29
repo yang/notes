@@ -1221,6 +1221,23 @@ wikipedia 2007
 - 18M objects in english version
 - <http://perspectives.mvdirona.com/2008/12/28/WikipediaArchitecture.aspx>
 
+youtube, 2007 seattle conference on scalability
+
+- apache -> lighttpd
+- mini-clusters (partitions/replica groups)
+- CDNs for most popular
+- squid: perf degraded w load
+- netscaler load balancer
+- most scaling issues in db
+  - mysql w async master-slave replication
+  - mysql slaves replay logs in serial order w 1 CPU, 1 disk; master can zoom ahead with multiprocessor and multidisk
+    - warmed up buffer by reading in relevant pages first before the log could get replayed
+  - split DB into 2 instances: video watch and general
+    - video watch higher priority than general
+  - initially served off RAID 10, but linux only sees 1 vol so doesn't schedule too many parallel disk IOs
+    - changed to software RAID 0 (striping) over 5 RAID 1 pairs (mirroring), ie manual RAID 10
+  - ultimately partitioned by user
+
 facebook, 2009 talk at MSR
 
 - 300M active users
