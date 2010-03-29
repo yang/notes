@@ -360,18 +360,23 @@ snapshot/ser          impossible  impossible   impossible
 - serializable: need full read-write concurrency control; typically implemented
   using 2PL in RDBMSs
 - implementations
-  - oracle, postgresql: "serializable" is snapshot isolation
+  - oracle, postgresql: "serializable" is a form of snapshot isolation
+    - still get write conflicts, but inserts of new tuples that would've
+      matched an earlier read can slip by
   - mysql "repeatable read" is actually "read committed", "serializable" is
     serializable
   - mysql, sybase, mssql, db2 also support true serializability
     - bc they have few access paths, all closely tied to index structures
-    - so they can implement predicate locking, which is the tricky part
-      - prevents inserts from slipping past read-locks
+    - so they can implement shared locks on index, to prevent ghost inserts
     - pg has many diff access paths, and indexes are plugin-replaceable w
       limited interface
+    - predicate locking could be faster, since index locks = more locks
     - <http://osdir.com/ml/pgsql-hackers/2009-12/msg02209.html>
+    - <http://lists.mysql.com/mysql/221073>
   - postgresql: "read uncommitted" is "read committed", "repeatable read" is
     "serializable"
+    - claims to need to implement predicate locking for true serializability
+      [but other systems don't]
 - ref: <http://evanjones.ca/db-isolation-semantics.html>
 
 OCC Techniques TODO
