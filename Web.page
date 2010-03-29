@@ -1,5 +1,17 @@
 mark pilgrim: google's html5 evangelist
 
+safe fonts
+
+- sans-serif
+  - arial
+  - verdana
+  - helvetica?
+- monospace
+  - courier new
+- serif
+  - georgia
+  - times new roman
+
 rss
 
 - some web-based feed readers include subscriber counts in their user agent
