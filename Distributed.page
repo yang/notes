@@ -1047,6 +1047,7 @@ transactions across datacenters (google io 2009)
   "master-slave replication != paxos" (!) and "master-slave replication means
   == weak/eventual consistency." that, and "multihoming." (google managed to do
   it before with "sharding.")
+- <http://code.google.com/events/io/2009/sessions/TransactionsAcrossDatacenters.html>
 
 CAP theorem
 
