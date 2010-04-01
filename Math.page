@@ -178,8 +178,8 @@ statistics
     - always in $[-1, 1]$
 - T-test: TODO
 
-signals, information theory
-===========================
+signals, coding, information theory
+===================================
 
 Audio & Video Compression (Keith Winstein's SIPB cluedump 2008/11/06)
 
@@ -187,3 +187,10 @@ Audio & Video Compression (Keith Winstein's SIPB cluedump 2008/11/06)
 - keithw: slides
 - entropy coding
 - arithmetic coding can get us flatter?
+
+general
+
+- Shannon's theorem: describes _channel capacity_, the max information rate at
+  which reliable comm is possible over a channel that has a certain error prob
+  or SNR
+  - only existential, not constructive, hence actual capacity depends on algo
