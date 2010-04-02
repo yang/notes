@@ -61,7 +61,7 @@ companies
     - twinfini: parallel
   - datallegro/ms
   - xtremedata: plugs into cpu socket for cpu bus bandwidth
-  - groovy: main mem
+  - groovy sql switch: mem oltp rdbms, appliance & sw
   - vertica: column store
     - stonebraker
     - h-store
@@ -256,6 +256,10 @@ sqlite
       implementations for events on this table
 - storage
   - data stored directly in btree
+
+distributed postgresql
+
+- postgres-r: master-master replication
 
 distributed mysql
 
