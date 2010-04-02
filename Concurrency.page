@@ -425,6 +425,17 @@ Memory model
 - fence instructions give us sequential consistency when we need it
   - gcc: `__sync_synchronize()`
 - [ref](http://www.youtube.com/watch?v=mrvAqvtWYb4)
+- From <http://igoro.com/archive/volatile-keyword-in-c-memory-model-explained/>
+  - x86, x64: strong memory model where memory access (loads/stores) are all
+    effectively volatile
+    - `volatile` only forces the compiler to avoid high level optimizations,
+      hence 0 perf penalty for just marking sthg `volatile`
+    - fence instrs: `lfence`, `sfence`, `mfence`
+      - `lfence`, `sfence` apparently unneeded
+      - `mfence`: if core writes then reads, the read may be served from the
+        store buffer even though the write has not yet been written to memory;
+        this forces a flush
+  - itanium: weaker mem model; requires `ld.acq`/`st.rel` not `ld`/`st`
 
 Techniques
 
