@@ -1,4 +1,5 @@
 TODO merge in notes from CS192, 6.829
+TODO comparison of database replication techniques based on total order broadcast
 
 Background
 ==========
@@ -23,8 +24,19 @@ core
   - TODO what if lock were on quorum side? TODO tie in with "req" vs "node"
     failure
   - consistency: 
+  - one-copy serializability
+  - linearizability
   - <http://pl.atyp.us/wordpress/?p=2521>
   - <http://pl.atyp.us/wordpress/?p=2532>
+- consistency
+  - staleness
+  - strict cons
+  - event cons
+    - RYOW, session cons
+    - causal cons
+- design patterns
+  - tombstones: for deletes in eventually consistent systems
+  - vector timestamps
 
 NAS/SAN
 
@@ -361,6 +373,10 @@ Paxos
   - what this effectively means is that nodes must record their variable
     updates to disk
 
+life beyond distributed transactions: an apostate's opinion (pat helland)
+
+- dtxns are fragile
+
 Storage & Consistency
 =====================
 
@@ -421,13 +437,16 @@ Tra (Russ Cox)
 MapReduce
 =========
 
-mapreduce TODO
+mapreduce
 
 - [work underappreciated for its answers to systems issues like stragglers and
   query fault-tolerance]
 - [issues]
-  - pull-based reducers mean lots of disk seeks; $O(mr)$, where $m$ is mapper
-    count, $r$ is reducer count
+  - pull-based reducers mean lots of disk seeks
+    - $O(mr)$, where $m$ is mapper count, $r$ is reducer count; on single disk,
+      $O(r)$
+    - bc after each mapper sorts locally, all reducers read a slice from each
+      sorted map output
 
 hadoop
 
@@ -524,6 +543,21 @@ dryad
 
 Filesystems
 ===========
+
+farsite distributed file system (MSR, 2000)
+
+- replicates each file onto multiple desktops
+
+Reclaiming Space from Duplicate Files in a Serverless Distributed File System (2002) [32 citations — 2 self]
+
+- over half of all consumed space is occupied by duplicate files
+- convergent encryption: coalesce duplicates to take single file's space
+- database for aggregating file content and location information in
+  decentralized, scalable, fault-tolerant manner
+
+frangipani: scalable distributed file system (1997)
+
+- built on petal block storage
 
 xtreemfs
 
@@ -637,7 +671,7 @@ GFS Evolution
 - <http://queue.acm.org/detail.cfm?id=1594206>
 - <http://cacm.acm.org/magazines/2010/3/76283-gfs-evolution-on-fast-forward/fulltext>
 
-Don't Give Up On Distributed File Systems
+wheelfs: Don't Give Up On Distributed File Systems (strib)
 
 - specify hints about consistency
 
@@ -1149,16 +1183,32 @@ cassandra (facebook, 2008)
 - designed by one of the authors of dynamo, avinash lakshman
 - richer data model than voldemort
 - ![data model and physical storage layout](cassandra-data-model)
+  - KeySpace > CF > Key > SuperColumn > SubColumn
+  - with range partitioning, can range_slice to range-query on keys and
+    columns; with random partitioning, can range-query on columns
   - cluster: the machines in a logical cassandra instance; set of keyspaces
   - keyspace: a namespace for column families; typically one per app
   - column families: ordered list of columns; analogous to relational table
     - rows have column name, value, timestamp; referenced by row keys
     - each stored in separate file, in row (i.e. key) major order
   - supercolumns: columns that have subcolumns
+- writes in LSMs
+- usage
+  - serialization
+    - thrift, avro added in 2010
+    - expects column names in network order (eg for ordering)
+  - nodetool: check nodes, decommission, trigger compaction
+  - working on compressed LSMs
+  - need to regularly schedule major compactions to free up disk space
 - no mem caching
+- WIP
+  - session level consistency
+  - avro instead of thrift
+  - backend for hive
 - refs
   - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
   - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
+  - <https://www.cloudkick.com/blog/2010/mar/02/4_months_with_cassandra/>
 
 riak (basho)
 
