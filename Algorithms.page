@@ -1,4 +1,5 @@
 TODO merge in notes from CS170
+TODO http://www.catonmat.net/blog/summary-of-mit-introduction-to-algorithms/
 
 TODO
 
@@ -83,6 +84,7 @@ hash functions
 bloom filter
 
 - TODO
+- TODO scalable bloom filters
 
 prime sieve
 
