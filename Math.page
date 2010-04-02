@@ -18,6 +18,8 @@ statistics
   - student t-distribution: something about normals for small populations where
     variance is unknown
   - chi-square distribution
+- $\mathrm{Correlation}(X, Y) = \frac{ \mathrm{Covariance}(X, Y) }{ \sigma_X
+  \sigma_Y }$ where $\sigma$ is the SD
 
 combinatorics
 =============
@@ -108,6 +110,16 @@ symmetric positive definite, positive semi-definite, negative definite, indefini
   $M$ is indef iff any of:
     - $M$ is neither pos semi-def nor neg semi-def
     - $M$ has pos and neg evals
+
+misc
+
+- A matrix $A$ is diagonalizable if there exists a non-singular matrix $B$ and
+  a diagonal matrix $D$ such that $A = BDB^{-1}$.
+- _singular value decomposition (SVD)_: important factorization of a
+  rectangular real or complex matrix
+  - many applications in signal processing, statistics
+  - eg computing the pseudoinverse, least squares fitting of data, matrix
+    approximation, and determining the rank, range and null space of a matrix
 
 foundations
 
