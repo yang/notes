@@ -837,7 +837,23 @@ TODO
 - stp (vijay ganesh)
 - tmp? tpm?
 - dmolnar's work?
+- klee
 - what's used by armando/jeanyang?
 - what's used by klee?
 - what's used by akcheung?
 - what's used by the two guys working on auto exploit generation?
+
+static checking
+===============
+
+first-order contracts
+
+- this talk: compare the two types of contracts
+  - latent contracts: contractrs and types (if any) are separate
+  - manifest contracts: contracts *are* types
+- dependent contracts: can relate input args to each other
+- abusive contracts: contract is self-contradictory (eg require arg to be a Pos->Int but then pass it 0)
+  - picky checking: complain about the contract
+  - lax checking: don't complain about it
+  - only higher order contracts can be abusive, since one contract is violating another contract
+- TODO incomplete
