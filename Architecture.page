@@ -405,3 +405,15 @@ Petabytes on a budget: How to build cheap cloud storage (Backblaze blog post 200
   - 4 GB RAM $50
 - software: https, JFS, 3 RAID6 volumes
   - IBM JFS is journaling file system...curious why they chose this
+
+Misc
+----
+
+from facebook engineering blog post on web app benchmarking system "dyno"
+
+> After testing several generations of processors and micro-architectures, we
+> determined that the most significant limiting factor of request throughput is
+> typically memory access contention. On web nodes, our application typically
+> allocates 25MB per request. When we compare several generations of processors
+> under high load, we see dramatic gains in the maximum throughput of the node
+> when the hardware has a more advanced memory architecture.
