@@ -3,6 +3,13 @@
     - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
     - will be replaced with `Rscript`
 
+- ruby web app infrastructure
+  - monit: monitors mongrel processes (and unicorn masters)
+  - mongrel: ruby web server
+  - unicorn: request queue for server load balancing; based on mongrel
+    - features 0-downtime app deployment (incremental rollout)
+  - stormcloud: monitors unicorn workers
+
 - xen
   - dom0: hypervisor kernel
   - domU: guest kernel
@@ -51,6 +58,7 @@
   - `@tailrec`
   - `@cps`
   - util.control.Exception.catching
+  - Stream.continually
 
 - html
   - link rel canonical: the canonical URL for this page; useful for eg search
