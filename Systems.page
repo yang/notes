@@ -23,6 +23,10 @@ people
 - time of check to time of use (TOCTTOU): race condition btwn checking a
   condition and using the result of the check; problem is absence of atomicity
 
+design patterns
+
+- bloom filters before reading from disk
+
 Servers
 
 - reverse proxy: server-side (Varnish, Squid can be, mod_proxy)
