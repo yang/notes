@@ -216,8 +216,11 @@ nat TODO
 - simple traversal of udp through nat (STUN)
   - UDP
 - traversal using relay nat/traversal using relays around nat (TURN)
+  - use intermediate server; written for SIP; introduces lag
   - TCP/UDP
   - proxy: 
+- ICE: direct connection with another peer
+  - written for SIP; fall back on TURN
 
 vpn
 
