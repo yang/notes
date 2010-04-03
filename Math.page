@@ -206,3 +206,26 @@ general
   which reliable comm is possible over a channel that has a certain error prob
   or SNR
   - only existential, not constructive, hence actual capacity depends on algo
+
+game theory
+===========
+
+- pareto efficiency aka pareto optimality: a possibly local optimum
+  - can't improve one person without worsening another
+- nash equilibrium: nobody can improve by changing only own strategy
+  unilaterally
+  - assumes each player knows equilibrium strategies of others
+  - doesn't mean there aren't strategies that are better for all
+    - eg competing businesses forming cartel to increase profits
+  - may appear irrational to 3rd party, since not necessarily pareto optimal
+
+puzzles
+
+- pirates
+- prisoner's dilemma
+  - if A testifies against B and B is silent, A goes free and B gets full 10yr
+  - if both silent, both get 6mo
+  - if both testify, both get 5yr
+  - regardless of what opponent chooses, you always are better off betraying
+  - nash equilibrium not nec pareto-optimal
+  - non-0-sum game
