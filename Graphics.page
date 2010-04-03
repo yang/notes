@@ -167,3 +167,36 @@ video compression
     equipping satellites with support
 - H.265: still in dev
 - <http://arstechnica.com/gadgets/guides/2009/12/from-cinepak-to-h265-a-survey-of-video-compression.ars?utm_source=rss&utm_medium=rss&utm_campaign=rss>
+
+real-time ray-tracing software
+
+- openrt: quake 3/4 demo
+- industry working on RTRT: intel, nvidia
+
+raytracing vs rasterization
+
+- rasterization: each triangle is independently analyzed, plotted, colored,
+  lighted, textured, painted
+  - linear in # triangles; sublinear with z/depth culling, hierarchical culling
+  - but most effects require access to 2+ triangles
+  - requires complex shader programming to get eg shadows to look right
+  - eg reflection maps instead of real reflection; assumes fixed environ
+  - uses z-buffer
+- raytracing: model rays of light passing from each pixel into camera
+  - indep of scene size
+  - abstracts geometry into trees
+  - very parallelizable
+  - long list of advantages over rasterization
+- both can harness GPU, but specialized for rasterization today
+  - rasterization-specific HW is <5% GPU core area
+  - but overall architecture must also lend itself better to raytracing
+
+raytracing features
+
+- ambient occlusion
+- radiosity
+- reflections, refractions, shadows (softened)
+
+raytracing techniques
+
+- photon-mapping
