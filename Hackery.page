@@ -410,8 +410,15 @@
     - uses 8 bits; assigns 80-9F displayable chars (not control chars)
   - UTF-7: for encoding unicode in ascii, eg in email; security issues
   - UTF-8: superset of ASCII; everything else -> multibyte
+    - 00-7F (7 bits): 0_______
+    - 0080-07FF (11 bits): 110_____ 10______
+    - 0800-FFFF (16 bits): 1110____ 10______ 10______
+    - 010000-10FFFF (21 bits): 11110___ 10______ 10______ 10______
+    - because "continuation bytes" are 10______, easy to start reading from
+      middle of a file by looking for next non-continuation byte
+    - <http://research.swtch.com/2010/03/utf-8-bits-bytes-and-benefits.html>
   - <http://intertwingly.net/stories/2004/04/14/i18n.html>
-  - UTF-16: still multi-byte ("surrogate pairs")
+  - UTF-16: still multi-byte ("surrogate pairs"); requires BOM
 
 - x86 calling conventions
   - <http://unixwiz.net/techtips/win32-callconv.html>
