@@ -75,6 +75,24 @@ companies
 - groupon, buywithme, scoopst, yipit
 - foursquare
 - flightcaster
+- slide: fb apps
+- enterprise
+  - docverse: acq by goog; live collab for office
+  - jive software: deps on docverse for jive connect
+  - socialtext
+  - statusnet: OSS; ostatus; geoloc; twitter oauth; fb connect; ldap integration
+  - threadbox
+  - socialcast
+  - yammer
+    - status
+    - presently
+    - wizehive
+    - producteev
+    - wiggio
+    - logmytask
+    - shoutitout
+    - shoutem
+  - novell pulse
 
 academia
 
