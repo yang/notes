@@ -341,7 +341,11 @@ feed-forward bloom filters (dga)
 - high-level idea: for 2-phase exact pattern matching on some target, first
   filter the target with bloom filter built from the patterns, then
   traditional-grep smaller datasets
+- assumes that the matches are all of the same len (else what are the target
+  extracts that you should be hashing against the bloom filter?)
+  - take the min len; if too small then handle those patterns separately
 - feed-forward bloom filters are regular bloom filters but where each positive
   test flips on bits in a second "shadow" array (initially zeroed), which can
   then be used to filter out irrelevant *patterns*
-- paper analysis shows this has good prob of pattern-filtering being useful
+- paper analysis shows high prob that there will be only few patterns in second
+  array that don't get any matches
