@@ -1,6 +1,7 @@
 TODO mege in notes from CS182, 6.867
 TODO generalized/weighted least squares -> local linear regression with kernels -> density estimation
 TODO Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
+TODO kalman filters, smoothing
 
 - case-based reasoning
   - knowledge-based ai
@@ -185,3 +186,10 @@ generalization error
   - ea subsample is a random sample with replacement from full sample
   - TODO
 - ref: <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
+
+nlp
+===
+
+- segmentation: figuring out word boundaries
+  - simplest: over all possible segmentations, return seg w max prod over all
+    words of P(word)
