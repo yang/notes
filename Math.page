@@ -207,6 +207,26 @@ general
   or SNR
   - only existential, not constructive, hence actual capacity depends on algo
 
+probability
+===========
+
+- poisson process: stream of continuous & independent events occurring at const
+  avg rate
+  - characterized by rate param $\lambda$
+- bernoulli process: stream of discrete & independent events, usu binary
+
+distributions
+
+- bernoulli: heads/tails
+- poisson: # events over fixed time in poisson process
+- exponential: time btwn events in poisson process
+- gamma: sum of fixed # exponentially dist vars
+  - eg total time for some # ppl to arrive
+
+misc
+
+- $P(X < min(Y,Z)) = P(X > max(Y, Z)) + 1 – P(X > Y) – P(X > Z)$
+
 game theory
 ===========
 
