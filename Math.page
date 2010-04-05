@@ -120,6 +120,11 @@ misc
   - many applications in signal processing, statistics
   - eg computing the pseudoinverse, least squares fitting of data, matrix
     approximation, and determining the rank, range and null space of a matrix
+- a matrix is invertible iff all its eigenvalues are non-zero
+- if $M$ is pos def then $z^* M z > 0$ for any vector z
+- a pos def matrix has pos def inverse
+- all eigenvalues of pos def are positive
+- a real sym matrix has real sym inverse
 
 foundations
 
