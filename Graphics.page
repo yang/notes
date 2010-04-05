@@ -181,7 +181,7 @@ raytracing vs rasterization
   - but most effects require access to 2+ triangles
   - requires complex shader programming to get eg shadows to look right
   - eg reflection maps instead of real reflection; assumes fixed environ
-  - uses z-buffer
+  - uses z-buffer or scanline algos
 - raytracing: model rays of light passing from each pixel into camera
   - indep of scene size
   - abstracts geometry into trees
@@ -200,3 +200,17 @@ raytracing features
 raytracing techniques
 
 - photon-mapping
+
+opengl
+
+- pipeline
+  - fixed-function pipeline
+  - programmable pipeline: for shaders
+- shaders
+  - vertex shader: modify vertex before use in actual surface calc
+  - pixel shader: modify pixel before writing to output; more interesting
+- steps
+  - construct shapes from primitives: pts, lines, polygons, imgs, or bmps
+  - arrange objs in 3D space; select vantage pt
+  - calc colors from app assignments, lighting, textures; via shaders or FFP
+  - rasterization: convert math descrip of objs & color info to pixels
