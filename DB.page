@@ -1111,6 +1111,20 @@ teradata
 misc db
 -------
 
+talk on mcore systems (nedbday08, anastasia)
+
+- total latency going up
+- larger aggregate l2 cache due to more l2 per core => higher-latency access times into l2
+  - due to reaching across cores
+- only thing to do is to write sw that explicitly manages memory locality
+- dss is more cache-friendly than oltp
+  - [what distinguishes these 2 workloads?]
+- contribution of
+  - travel grows log-linearly
+  - access drops log-linearly
+- move to shared-nothing arch
+- see also: gamma machine (uwisc, dewitt)
+
 couchdb (apache, 2008)
 
 - b-tree storage
