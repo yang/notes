@@ -167,3 +167,17 @@ caching
   caches
   - developed by a group of companies incl. akamai, bea, oracle)
   - eg `<esi:include src="http://example.com/1.html" alt="http://bak.example.com/2.html" onerror="continue"/>`
+
+html5
+
+- simpler doctype, charset
+- tags
+  - section: group related content
+  - article: section that can stand alone
+  - header: heading, intro, nav, etc; non-recursive
+  - hgroup: special header that contains only 2+ h1-h6 elts
+  - nav: section of nav links
+  - aside: section of tangentially related content
+  - figure: essential content but not nec inline
+  - footer: add'l info: signature, related links, copyright; non-rec
+  - address: email contact info
