@@ -1,5 +1,3 @@
-TODO Locating Cache Performance Bottlenecks Using Data Profiling -alex pesterev
-
 Background
 ----------
 
@@ -1692,3 +1690,59 @@ A View From Berkeley
     migration (hardware failures)
   - Rosenblum: OSes should be libraries linked by app atop thin VMM
   - VMs enable end apps to select only portion of OS capabilities needed
+
+Locating Cache Performance Bottlenecks Using Data Profiling (alex pesterev, pdos talk)
+
+- focus
+  - apps bottlenecked by cache accesses
+  - how to find these bottlenecks
+  - how to find their causes
+- motivating example
+  - producer to queue to consumer
+  - if prod, cons on sep cores, and prod writes to queue (onto own cache), then
+    cons has to pull data in from prod, resulting in misses
+  - want prod, cons on same core; this is actually faster
+- memory levels and access times in cycles on amd opteron
+  - L1 3, L2 14, L3 50, mem 250, L1-to-L1 120
+- detecting the problem
+  - profiler can detect cache misses, but reason unknown: capacity? sharing?
+  - need tool to help find sources of cache miss problems
+  - hard bc requires finding 2 events: cache miss and cache
+    invalidation/eviction
+- dprof profiles data accesses and presents to user:
+  - which data types suffer cache misses
+  - for each data type, how much space it takes up in cache
+  - classifies the cache miss reason
+  - which set of functions access a data type
+- design
+  - data cache misses: core expects data to be in cache but it's not
+  - cache miss types/causes and solutions
+    - false sharing: separate falsely shared cache line into 2+ cache lines
+    - true sharing: factor data into multiple pieces or assign to single CPU
+    - conflict (in $n$-way caches): allocate over a wider set of associativity
+      sets
+    - capacity: try to extract some locality or establish admission control
+      (limit how much work CPU does at a time)
+  - views
+    - data profile view: data types ordered by # misses
+    - classification view: which of the 4 kinds of misses (see above)
+    - working set view: which data types most active, how many of each at any
+      given time, and what cache assoc sets used by each
+    - flow view: seq of functions that access data type
+      - shows how a data type is processed
+      - indicates pts at which data migrates btwn cores
+- profiling memcached
+  - 16 memcached's, ea pinned to 1 core, and 1 off-host client per core
+  - single memcached perf: 1.1M req/s, 80 L2 misses/req, 1.4% L2 miss rate, 70
+    L3 misses/req, 1.2% L3 miss rate
+  - oprofile report: not very helpful
+  - dprof: reports high-miss data types as bouncing a lot; then track down to
+    transmission control flow in flow view
+- dprof impl
+  - 2 kernel modules
+  - path traces built from access samples and obj access histories
+  - access samples: amd instruction-based profiling
+    - [this seems to be the key to everything]
+  - for each obj access: offset into obj, L1/L2/L3 misses, avg miss latencies,
+    timestamp, CPU change
+- overhead
