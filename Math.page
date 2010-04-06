@@ -254,3 +254,8 @@ puzzles
   - regardless of what opponent chooses, you always are better off betraying
   - nash equilibrium not nec pareto-optimal
   - non-0-sum game
+
+misc
+====
+
+- harmonic series: $\sum_{n=1}^{\infty}\frac{1}{n}=\infty$
