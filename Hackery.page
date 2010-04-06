@@ -313,7 +313,72 @@
 - networking
   - 4.2.2.1: level3 ns server
 
+- quilt: manage stack of patches outside of a VCS; these just "hover around";
+  mq in hg, stgit in git
+
+    cd some_existing_hg_repository
+
+    # setup the patch queue directory (Deprecated in 1.5)
+    hg qinit
+
+    # create a new patch named firstpatch
+    hg qnew firstpatch
+
+    # edit some files
+    vi filename
+
+    # update the patch to contain your changes
+    hg qrefresh
+
+    # vi .hg/patches/firstpatch to see the result
+    # print the current patch to the screen
+    hg qdiff
+
+    # make some more changes
+    vi filename
+
+    # see the differences not yet stored in the patch
+    hg diff
+
+    # update the patch
+    hg qrefresh
+
+    # create another patch
+    hg qnew secondpatch
+
+    # Make more changes, and update the new patch
+    vi filename
+    hg qrefresh
+
+    # Look at the patches you have applied
+    # Look at all the patches in the queue
+    hg qapplied
+    hg qseries
+
+    # remove the top patch
+    hg qpop
+
+    # apply the patch again
+    hg qpush
+
+    # remove all patches
+    hg qpop -a
+
+    # apply all patches
+    hg qpush -a
+
 - git
+
+    # publish history to svn (note the `trunk` dir)
+    svn mkdir protocol:///path/to/repo/PROJECT/trunk -m 'importing git'
+    git svn init protocol:///path/to/repo/PROJECT -s
+    git svn fetch
+    git rebase trunk
+    git svn dcommit
+
+    # equivalent to svn export
+    git archive master | tar -x -C /somewhere/else/
+    git checkout-index -a -f --prefix=/destination/path/
 
     # bundle up a whole repo (for sending)
     git bundle create repo.bundle master
@@ -1141,6 +1206,12 @@
 
 - posix
   - IEEE Std 1003.1 aka POSIX.1
+  - daemonizing
+    - <http://www.enderunix.org/docs/eng/daemon.php>
+    - <http://www.itp.uzh.ch/~dpotter/howto/daemonize>
+    - <http://code.activestate.com/recipes/278731-creating-a-daemon-the-python-way/>
+    - <http://0pointer.de/lennart/projects/libdaemon/>
+    - <http://www.developerweb.net/forum/showthread.php?t=3025>
   - signals
     - synchronous: SIGSEGV, SIGFPE, ...
     - asynchronous: SIGUSR1, ...
