@@ -1131,7 +1131,7 @@ source depot
   - there's actually a set of these trees; the roots are called _trunks_
 
 distributed oltp databases
---------------------------
+==========================
 
 bigtable
 
@@ -1387,3 +1387,19 @@ RAMcloud (ousterhout, HPTS09)
   - 64GB RAM/server w 1M ops/s, 5-10us RPC; 1TB RAM in 5-10 yrs
   - $60/GB today; $4/GB in 5-10 yrs
   - lower latency reduces txn durations, conflicts
+
+gizzard (twitter)
+
+- middleware sharding framework
+- for any storage system, not just sql
+- specify range routing table; more control than consistent hashing
+- each shard is a replication tree
+  - each partition can have distinct replication tree
+  - better fault tolerance
+- async replication only
+- writes are buffered till shard or replica available again
+- requires writes to be idempotent; retry-later strategy can apply ops OOO (eg
+  newer ops before older failed ops)
+- handles migrations by applying WriteOnly shard in front of new node and
+  replicating ops to both
+- <http://engineering.twitter.com/2010/04/introducing-gizzard-framework-for.html>
