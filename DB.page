@@ -219,7 +219,8 @@ mysql
 - engines
   - myisam
   - innodb
-  - percona's xtradb
+  - percona's xtradb: innodb replacement that scales better to mcores and
+    better utilizes mem
   - mariadb's maria: evolve myisam toward innodb; adds txns, crash safety, etc
 - forks
   - mariadb: founder's community-oriented fork; dissatisfied with sun procedure
