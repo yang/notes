@@ -170,10 +170,14 @@ web
 - flash: `<embed...allowScriptAccess="always">` instead of `"sameDomain"`
 - _HTTP parameter pollution (HPP)_ variants: multi-value, OOO value, malformed
   value, malformed request methods
+- clickjacking: tricking the user into clicking something on a target site
+  - eg by loading target in transparent iframe overlaid atop an enticing
+    button, with a form submission button positioned exactly at the right place
+  - mitigations: framekiller or framebuster: check `top==self`
 
 low-level exploits
 
-- buffer overflow: return to libc, eg call system("bash")
+- buffer overflow
   - defenses
     - stack canaries: choose random int at process start and insert before
       return addr
@@ -214,9 +218,21 @@ low-level exploits
     write a function ptr (flash exploit)
   - if the ptr is dereferenced and fields are accessed, first prep by writing
     to those fields
-- return-to-libc: execute existing code; eg `system`
-  - just supply data; no need to inject code, unaffected by NX
+- return-to-libc: execute existing code via return ptr, circumventing NX
+  - eg `system("bash")`
   - ASLR defends against this
+  - techniques to make multiple function calls:
+    - `%esp` lifting: for `-fomit-frame-pointer`
+      - functions end in `addl $LOCAL_VARS_SIZE, %esp; ret`
+      - after args to function, pad enough so that next function ptr is where
+        %esp would point and thus the system would return to
+    - frame faking: for programs w frame pointer
+      - functions end in `leave; ret`
+      - put in fake `ebp`s (frame ptrs) that point to function, followed by a
+        ptr to a `leave;ret`
+      - the very first return should point to a `leave;ret`
+return oriented programming
+
 - _continuation of execution_: resume app normally after exploit payload
 
 same-origin policy (SOP)
