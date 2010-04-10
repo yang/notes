@@ -563,6 +563,8 @@
 
 - Hotspot
 
+  - objects 64-bit aligned, have 2-word header (word = native ptr size)
+
   - From <http://java.sun.com/products/hotspot/whitepaper.html>
 
     > In the Java HotSpot VM, no handles are used by Java code. Object
@@ -930,6 +932,7 @@
     - <http://www.airs.com/blog/archives/52>
 
 - java
+  - jstack: print thread stacks of a running process or core file
   - interface fields are all static
   - initial heap size = 1/64 phy, max heap size = 1/4 phy (cap 1gb)
   - System.out, System.err are PrintStreams that by default auto-flush; they
