@@ -37,6 +37,20 @@ core
 - design patterns
   - tombstones: for deletes in eventually consistent systems
   - vector timestamps
+- version vectors, vector clocks
+  - version vectors
+    - after sync, both vectors are same: component-wise max
+  - vector clocks and vector timestamps
+    - all msgs include vector timestamp (snapshot of global vector clock)
+    - on update, increment own component
+    - on msg send, increment own component
+    - on msg recv, increment own component and use component-wise max
+    - time is more advanced on receiver than sender
+  - only for detecting conflicts; resolving is still separate, hard problem
+    - eg commonly need to maintain complete history, e.g. with counters or
+      version control (ancestor info needed)
+    - easier cases include unioning sets
+  - Lamport timestamps: 
 
 NAS/SAN
 
@@ -390,6 +404,19 @@ life beyond distributed transactions: an apostate's opinion (pat helland)
 
 Storage & Consistency
 =====================
+
+Errors in Database Systems, Eventual Consistency, and the CAP Theorem (Michael
+Stonebraker, cacm blog)
+
+- <http://cacm.acm.org/blogs/blog-cacm/83396-errors-in-database-systems-eventual-consistency-and-the-cap-theorem/fulltext>
+- most NoSQL disallow multi-partition txns, so consistency applies only to
+  replication
+- LAN partns rare, esp w redundant LANs
+- disasters: no eventual WAN consistency since you'll never recover (no
+  durability)
+- app/dbms bugs: corruption/byzantine
+- single-node failures: easily survived by many algos
+- WANs are redundantly connected
 
 From <http://www.allthingsdistributed.com/2008/12/eventually_consistent.html>:
 
@@ -1204,6 +1231,11 @@ cassandra (facebook, 2008)
     - each stored in separate file, in row (i.e. key) major order
   - supercolumns: columns that have subcolumns
 - writes in LSMs
+- consistency
+  - every kv pair has a *client-managed* timestamp
+    - no version vectors or vector clocks or server-managed timestamps
+    - clients must have synchronized clocks
+  - can specify replication degree per request
 - usage
   - serialization
     - thrift, avro added in 2010
@@ -1211,6 +1243,8 @@ cassandra (facebook, 2008)
   - nodetool: check nodes, decommission, trigger compaction
   - working on compressed LSMs
   - need to regularly schedule major compactions to free up disk space
+  - keyspaces, column families statically specified; changes require restarts
+  - 0.6 allows direct access from hadoop
 - no mem caching
 - WIP
   - session level consistency
@@ -1223,10 +1257,16 @@ cassandra (facebook, 2008)
 
 riak (basho)
 
+- faithful impl of dynamo, incl all key components + extra features below
 - erlang; primary key lookup only; json fmt; consistent hashing; vnodes
 - eventual consistency w vector clocks & app conflict resolution
 - pluggable storage backend (in-mem, etc)
 - allows replicas to be temporarily inconsistent (tunable RW quora)
+- raw speed slower than cassandra
+- buckets are buckets are dynamically created
+- extra features
+  - links: lightweight ptrs among data; can select along these paths
+  - map-reduce over data in js
 - [basho founded by former akamai ppl; brewer joined BOD]
 - <http://riak.basho.com/nyc-nosql/>
 
