@@ -261,6 +261,7 @@ sqlite
 distributed postgresql
 
 - postgres-r: master-master replication
+- pgcluster: synchronous multi-master replication
 
 distributed mysql
 
@@ -1380,6 +1381,22 @@ stackoverflow (8/2009)
 
 twitter
 
+- stats revealed at Chirp 2010
+  - # of registered users: 105,779,710 (1,500% growth over the last three
+    years.)
+  - # of new sign-ups per day: ~ 300,000 (More recently, 60% of new accounts
+    were from outside the U.S.)
+  - # of new tweets per day: 55 million
+  - # of unique daily visitors to the site twitter.com: ~ 180 million. (That's
+    actually dwarfed by the traffic that flows through twitter's API -- 75% of
+    traffic is through the API.)
+  - # of API requests per day: 3 billion
+  - # of registered apps: 100,000 (from 50,000 in Dec/2009)
+  - # of search queries per day: 600 milion
+  - Twitter's instance, of their recently open-sourced graph database
+    (FlockDB), has 300 billion edges and handles 100,000 reads per second.
+  - # of servers: "... in the hundreds"
+  - <http://radar.oreilly.com/2010/04/twitter-by-the-numbers.html>
 - use pig and hadoop <http://www.slideshare.net/kevinweil/hadoop-pig-and-twitter-nosql-east-2009>
   - basic stats
     - # reqs/day
