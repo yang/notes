@@ -1,7 +1,23 @@
-TODO mege in notes from CS182, 6.867
-TODO generalized/weighted least squares -> local linear regression with kernels -> density estimation
-TODO Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
-TODO kalman filters, smoothing
+TODO
+
+- mege in notes from CS182, 6.867
+- generalized/weighted least squares -> local linear regression with kernels -> density estimation
+- Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
+- kalman filters, smoothing
+- <http://measuringmeasures.com/blog/2010/3/12/learning-about-machine-learning-2nd-ed.html>
+- separating hyperplane
+- sigmoid kernel function
+- k-means++
+- <http://hunch.net/?p=224>
+- <http://googleresearch.blogspot.com/2010/04/lessons-learned-developing-practical.html>
+
+supervised learning
+
+- old statistically inspired linear methods
+- artificial neural networks
+- decision trees
+- support vector machines
+- Gaussian processes
 
 - case-based reasoning
   - knowledge-based ai
