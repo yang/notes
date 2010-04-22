@@ -1,3 +1,6 @@
+- php
+  - `php -a`: if built w readline support, then behave as console
+
 - R
   - to run an R file from cmd line
     - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
@@ -287,6 +290,7 @@
         One or more schema objects could not be imported during the migration process. Please review the migration output for more details.
 
 - postgresql
+  - 2PC: `prepare transaction`, `commit prepared`, `rollback prepared`
   - monitoring
     - `select * from pg_stat_activity`
   - rules: query rewriting, eg let you insert/update a view and redirect to
@@ -314,7 +318,8 @@
   - 4.2.2.1: level3 ns server
 
 - quilt: manage stack of patches outside of a VCS; these just "hover around";
-  mq in hg, stgit in git
+  mq in hg, stgit in git; git rebase is superior; workflow: update to new
+  package then reapply patch stack, resolving conflicts 1-by-1
 
     cd some_existing_hg_repository
 
@@ -1474,6 +1479,12 @@
 
 - css
   - designed for horizontal layout/flow layout, not vertical
+  - cross-browser gradient
+
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#000000'); /* for IE */
+      background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000)); /* for webkit browsers */
+      background: -moz-linear-gradient(top,  #ccc,  #000); /* for firefox 3.6+ */
+
   - css3
     - border-radius, border-image, box-shadow/text-shadow, rgba()/opacity,
       @font-face, attribute selectors, sibling combinator, pseudoclasses,
