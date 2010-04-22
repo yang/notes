@@ -181,3 +181,33 @@ html5
   - figure: essential content but not nec inline
   - footer: add'l info: signature, related links, copyright; non-rec
   - address: email contact info
+
+misc
+====
+
+sync kit (marcua, edbenson, www10)
+
+- idea: easier way to utilize client-side db caching
+- sync primitives: sets, queues
+- instead of:
+
+    template = Template('index.template')
+    results = db.query('select * from users where ...')
+    return template.render(results)
+
+  or "flying templates" (shipping just the data, relying on client cache of
+  template):
+
+    template = Template('index.template')
+    results = db.query('select * from users where ...')
+    return flying([template, results])
+
+  return:
+
+    template = Template('index.template')
+    return synckit([template,
+        Queue(table='users', order='DESC', filter='predicate', ...)])
+
+- perf eval: higher tput, competitive (slightly better) latency
+  - higher tput from network-bound workloads
+  - latency comes from client-side processing + local db queries
