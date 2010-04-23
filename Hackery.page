@@ -17,6 +17,9 @@
   - dom0: hypervisor kernel
   - domU: guest kernel
 
+- kvm
+  - uses qemu
+
 - hadoop
   - containers (sources/sinks)
     - files
