@@ -171,6 +171,9 @@ video compression
 real-time ray-tracing software
 
 - openrt: quake 3/4 demo
+- Interactive Ray Tracer (IRT) for Cell Broadband Engine
+  - <http://www.alphaworks.ibm.com/tech/irt>
+- intel: quake wars raytraced <http://www.qwrt.de/>
 - industry working on RTRT: intel, nvidia
 
 raytracing vs rasterization
