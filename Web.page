@@ -77,6 +77,11 @@ browser plugins
 - must desynchronize for responsiveness, but windowless
 gtk, moz moving to eliminate widgets in own native windows
 
+session management
+
+- 3 techniques to pass around session IDs: URLs, cookies, and hidden fields
+  (for POSTs only)
+
 x drawables TODO
 
 xt: ancient toolkit for windowed plugins
