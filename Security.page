@@ -318,6 +318,10 @@ web application security
   - see examples on <https://wiki.mozilla.org/Security/CSP/Spec>
 - html5 sandboxing
   - sandbox tag treats its contents as different-origin
+- session attacks to obtain session ids
+  - prediction
+  - capture
+  - fixation: get user to use an attacker-chosen sid
 
 secure javascript
 
