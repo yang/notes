@@ -36,6 +36,7 @@ industry
   - marc andreessen: mosaic/netscape; ning; andreessen-horowitz VC; invested in
     digg, netvibes, twitter
   - paul graham: viaweb; ycombinator
+  - vinod khosla: KPCB
   - dave mcclure: FF Angel, fbFund REV, Startup2Startup, "lean startup"
     <http://500hats.typepad.com/>
   - jeff hammerbacher: cloudera; harvard math bs/wall st quant
@@ -60,6 +61,8 @@ industry
 
 companies
 
+- tellapart: targeted ads in return for deep customer info; competitor to hunch
+- box.net: secure file hosting/sharing
 - hunch
   - series b: $10M, led by khosla ventures, also general catalyst, bessemer venture partners, ron conway
 - data domain
@@ -77,6 +80,7 @@ companies
 - flightcaster
 - slide: fb apps
 - plancast: bcast where you're going/what you're doing or tag along
+- factual: accountable data tables for the web
 - enterprise
   - docverse: acq by goog; live collab for office
   - jive software: deps on docverse for jive connect
@@ -126,6 +130,24 @@ companies
   - rethinkdb
   - divvyshot: acq by fb
 
+investors
+
+- VCs
+  - respected, early-stage, SV
+    - Kleiner Perkins
+    - sequoia
+    - khosla ventures
+  - bad
+    - Me2
+  - unsorted
+    - dfj
+- seed funds
+  - techstars
+  - y-combinator
+  - alphalab
+  - gangplank
+  - bootup labs: wasn't able to secure money for the enterpreneurs
+
 academia
 
 - assistant professor: 5-6 years, then tenure/promote to associate
@@ -138,6 +160,7 @@ numbers 2/10/10
   - 100M+ fb mobile users
   - 1B tweets/mo; 50M tweets/day
   - fb $700M in 09 $1.1B in 10
+  - twitter api rate limit: 150 req/hr
 - products
   - 3M kindles sold as of 1/29/10 (techcrunch)
   - amazon sales at $9.5B as of 1/28/10
