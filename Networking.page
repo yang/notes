@@ -276,6 +276,9 @@ Wi-Fi
 - 802.11a: 54Mbps, 5GHz band, OFDM, 35m
 - 802.11b: 11Mbps, 2.4GHz band, DSSS, 38m
 - 802.11g: 54Mbps, same 2.4GHz band as 802.11b, OFDM, 38m
+- 10 beacons per second
+- implementations
+  - ath5k is the newest atheros driver
 
 Cellular
 
