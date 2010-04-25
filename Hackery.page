@@ -18,6 +18,7 @@
   - domU: guest kernel
 
 - kvm
+  - great linux success story
   - uses qemu
 
 - hadoop
@@ -65,6 +66,7 @@
   - `@cps`
   - util.control.Exception.catching
   - Stream.continually
+  - `breakable`: somehow faster than simple Exceptions
 
 - html
   - link rel canonical: the canonical URL for this page; useful for eg search
@@ -474,6 +476,16 @@
   - Unicode
     - 1.0: 1991; 16 bits; UCS-1, UCS-2, UCS-4
     - 2.0: 1996; 21 bits; UTF-8, UTF-16, UTF-32
+  - Unicode is basically identical to Universal Multi-Octet Coded Character Set (UCS or ISO/IEC 10646)
+    - but UCS goes up to 31 bits instead of 20.1
+    - the two standards weren’t always the same — in the 90s, there was a lot
+      of disagreement between the computer companies who backed Unicode and
+      proposed a simple 16-bit character set, and the standards mavens behind
+      UCS, who wanted to accommodate more languages than 65,536 characters
+      would allow. The two sides eventually compromised on the current 20.1-bit
+      character set, but some historical differences still linger between the
+      two “official” specifications
+    - <http://blog.ksplice.com/2010/03/longest-tweet/>
   - ASCII: 7 bits
   - ISO/IEC 8859-1 aka Latin-1: superset of ASCII; 191 chars
   - ISO-8859-1: superset of ISO/IECS 8859-1
