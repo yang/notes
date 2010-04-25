@@ -4,6 +4,8 @@ TODO clojure (esp concurrency)
 
 TODO F#, axum, join patterns
 
+TODO http://research.microsoft.com/apps/pubs/?id=115390 ConScript: Specifying and Enforcing Fine-Grained Security Policies for JavaScript in the Browser
+
 analysis TODO
 
 - differences btwn pointer analysis and CFA?
