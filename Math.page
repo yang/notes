@@ -224,6 +224,7 @@ distributions
 
 - bernoulli: heads/tails
 - poisson: # events over fixed time in poisson process
+  - mean = variance
 - exponential: time btwn events in poisson process
 - gamma: sum of fixed # exponentially dist vars
   - eg total time for some # ppl to arrive
@@ -231,6 +232,8 @@ distributions
 misc
 
 - $P(X < min(Y,Z)) = P(X > max(Y, Z)) + 1 – P(X > Y) – P(X > Z)$
+- Jensen's inequality: If f is convex and $X$ is a random variable, $f( E(X) )
+  \le E( f(X) )$.
 
 game theory
 ===========
@@ -259,3 +262,8 @@ misc
 ====
 
 - harmonic series: $\sum_{n=1}^{\infty}\frac{1}{n}=\infty$
+- for density function $f(x)$ with one hump, choose $a,b$ on opposite sides of
+  the hump with $f(a) = f(b)$, then $[a, b]$ is the shortest interval with its
+  mass
+  - useful in statistics and more
+  - <http://www.johndcook.com/blog/2009/02/23/finding-shortest-confidence-interval/>
