@@ -1403,7 +1403,6 @@
   - `ulimit` can only lower not raise for non-root; root can raise;
     `/etc/security/limits.conf` can set global cap for non-roots
   - scheduler works on threads
-  - eclone: extended clone
   - huge pages
     - oldest/simplest huge-page interface: shmget() with SHM_HUGETLB and
       huge-page-aligned size; see hugetlbpage.txt
@@ -1425,6 +1424,21 @@
   - tmpfs/ramfs
     - tmpfs: fixed size, may swap
     - ramfs: dynamic size (may have cap, or kernel will stall if OOM), no swap
+  - syscalls
+    - eclone: extended clone
+    - madvise: how to handle paging
+      - MADV_RANDOM, MADV_SEQUENTIAL, MADV_WILLNEED (expect access again soon),
+        MADV_DONTNEED (expect no access; free up cache)
+    - fadvise: how to handle file IO
+      - FADV_RANDOM, FADV_SEQUENTIAL, FADV_WILLNEED, FADV_DONTNEED,
+        FADV_NOREUSE (access data only once; no cache)
+    - for reading, madvise to create a shared buffer w system file cache is
+      preferable to having reading privately with O_DIRECT, but (blind) writes
+      are faster w O_DIRECT (no need to read), and also more control over
+      writeback (instead of playing w mlock/munlock)
+      <http://kerneltrap.org/node/7563>
+    - open
+      - O_DIRECT: bypass cache; doesn't imply O_SYNC
 
 - linkage
   - if a library contains an _init symbol or function marked with __attribute__((constructor)), it will be immediately when loaded. There's no way to "pause" the library loading, switch seccomp on, and then allow the library loading to continue. (<http://stackoverflow.com/questions/1019707/sandboxing-in-linux>)
