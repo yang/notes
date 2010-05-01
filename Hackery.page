@@ -1,3 +1,14 @@
+- email
+  - MUA: client for reading/composing messages
+    - mutt
+  - MTA: program that handles transferring messages to/from this host
+    - exim is officially supported on ubuntu; also sendmail (older, famously
+      insecure)
+  - MDA: program that receives messages destined for a user on this host and
+    delivers it to the actual inbox
+    - procmail
+  - thunderbird, evolution, kmail combine (parts of) MUA, MTA, MDA
+
 - php
   - `php -a`: if built w readline support, then behave as console
 
