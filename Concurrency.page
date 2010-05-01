@@ -392,6 +392,19 @@ Lock-free and wait-free algorithms
 - _universal_ synchronization primitives: powerful enough to implement any
   lock-/wait-free data structure (Herlihy)
 
+Read-Copy-Update (RCU) Locks
+
+- key idea: leave old data for readers, don't update in-place
+  - no need for reader locks if they don't see changes in-place
+  - fundamentally removes need for feedback from readers to updaters!
+- instead, update by copying data items, atomically change pointers
+  - versions form a linked list; old readers free old version when done
+- benefits
+  - reader code simpler, avoids locking issues and bus ops to notify updaters
+  - writer code simpler than lock-free data structures
+  - good performance for read-heavy workloads
+- <http://pdos.csail.mit.edu/6.828/2009/lec/l-rcu.html>
+
 Low-level hardware primitives
 
 - test and set: non-universal (proved cannot implement lock-/wait-free algos
@@ -1642,9 +1655,6 @@ OS related
 
 - Berkeley Parallel Computing Research
   - <http://www.eecs.berkeley.edu/Pubs/TechRpts/2006/EECS-2006-183.html>
-
-- RCU
-  - McKenney-RCU_OLS.pdf
 
 - Memory Allocation
   - Mckenney-ParallelMemAlloc.pdf
