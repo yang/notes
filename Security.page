@@ -365,9 +365,15 @@ XSRF (cross-site request forgery)
     - requires user to be authenticated
   - post img to bank site forum whose src is a GET that (eg) withdraws money
 - fixes
-  - referer checking: subject to SOP implementation vulnerabilities,
-    referer-filtering
-  - use eg nonces: more complex
+  - referer checking: subject to SOP implementation vulnerabilities, but more
+    importantly referer-filtering (many enable this for privacy)
+  - use nonces to make each http response-http request a challenge-response
+    - as long as you use something secret to the outside world, you're fine
+    - so you can either generate random numbers
+    - or you can use the session ID (or a hash of it to reduce the chances that
+      it gets leaked)
+    - GET requests are tricky because you can read the URL out of the location
+      bar
 
 - PEM: privacy-enhanced mail; a format of base64-encoded DEM certificates
   between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----"
