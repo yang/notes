@@ -1,3 +1,4 @@
+TODO current landscape
 TODO merge in notes from 6.824
 TODO beep
 TODO csfq core stateless fair queueing
@@ -285,8 +286,13 @@ Cellular
 - CDMA vs GSM: two main competing techs
 
 - general packet radio service (GPRS): packet data service for GSM; TODO
-- 2G: generic term for the second generation networks
-- 3G: generic term for the third generation networks
+- generic terms for $n$-th generation networks
+  - 1G: all-analog
+  - 2G: digital, with small provision for data networking at slower-than-dial-up speeds
+  - 2.5G: stopgap of 100-200-Kbps data networking
+  - 3G: data and voice managed separately; 2+-Mbps downstream data
+  - 4G: all IP w low latency; targeting voice & video
+  - <http://arstechnica.com/telecom/news/2010/03/faster-mobile-broadband-driven-by-congestion-not-speed.ars>
 - CDMA: a 2G network; launched in 1995
   - pioneered/still very controlled by qualcomm
   - leader in USA until recent surge by competitor GSM
@@ -313,6 +319,7 @@ Cellular
   - potential cornerstone of 4G networks
 - Advanced Wireless Service (AWS): 3G
   - used by T-Mobile
+- cell tower area: ~10 sq mi
 
 wireless
 
