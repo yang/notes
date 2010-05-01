@@ -1397,6 +1397,31 @@ twitter
     (FlockDB), has 300 billion edges and handles 100,000 reads per second.
   - # of servers: "... in the hundreds"
   - <http://radar.oreilly.com/2010/04/twitter-by-the-numbers.html>
+- big data in real-time at twitter (qcon 2010-04-20)
+  - tweets
+    - partitioned by time
+    - future: cassandra; back to partitioning by tweet id, but this time
+      maintain index from user id to list of tweet ids
+    - memcached for 90+% of reads
+  - timeline: what user sees when they log in (relevant tweets from friends)
+    - materialize messages in followers' inbox caches
+  - social graph: set operations (eg intersect) can't be pre-computed
+    - store fwd & bwd edges, partitioned by user
+    - flockdb: real-time, distributed graph store
+  - search: real-time indexing
+    - currently partitioning by (term id, doc id) by time in mysql
+    - poor write tput; rare terms hit many partitions; poor space efficiency
+    - future: partition by document and time; may switch to lucene
+  - stats
+    - reads/s, writes/s, cardinality, bytes/item, durable?
+    - tweets: 100K, 850, 12B, 300, yes
+    - timelines: 80K, 1.2M, a lot, 3.2K, no
+    - graphs: 100K, 20K, 13B, 110, yes
+    - search: 13K, 21K, 315M, 1K, yes
+  - principles
+    - all reads must be from mem; disk for writes only
+    - can precompute some problems but not all
+  - <http://www.slideshare.net/nkallen/q-con-3770885>
 - use pig and hadoop <http://www.slideshare.net/kevinweil/hadoop-pig-and-twitter-nosql-east-2009>
   - basic stats
     - # reqs/day
@@ -1422,6 +1447,15 @@ twitter
     - retweets, retweet depths
     - duplicates
     - language detection
+- nosql eu 2010
+  - collect data using scribe
+  - <http://www.slideshare.net/kevinweil/nosql-at-twitter-nosql-eu-2010>
+
+yahoo
+
+- Hadoop infrastructure, 2010-04-26
+  - 30,000 nodes (16GB RAM, 8cores); 250,000 cores; 100,000 MR jobs perday
+  - <http://twitter.com/marin_dimitrov/status/12900368052>
 
 NYSE (brian clark's talk at linux foundation end user summit 2009)
 
