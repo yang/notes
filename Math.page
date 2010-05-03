@@ -236,6 +236,12 @@ misc
 - Jensen's inequality: If f is convex and $X$ is a random variable, $f( E(X) )
   \le E( f(X) )$.
 
+problems
+
+- expected # flips before HTH > that of HTT, because HTH overlaps with itself
+  - sketch: with a million flips, same # HTH and HTT, but HTH are more clumped,
+    so more space btwn them
+
 game theory
 ===========
 
@@ -262,6 +268,13 @@ puzzles
   - 2 competing hot dogs $(i,j)$ stand on beach that ranges over $[-1, 1]$
   - customers go to nearest stand
   - stands will naturally go to $(0,0)$, even though social opt is $(-.5,.5)$
+
+number theory
+=============
+
+- fermat's last theorem: no 3 pos ints $a,b,c$ can satisfy $a^n+b^n=c^n$ for
+  any int $n>2$
+  - long-standing conjecture; proven in 1995
 
 misc
 ====
