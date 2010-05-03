@@ -1023,6 +1023,14 @@ memcachedb
 - supports replication
 - thread pool
 
+bitcask
+
+- simple backend introduced in 4/2010 by riak guys for riak
+- on-disk log files of CRC'd key-val pairs
+- in-mem _keydir_ maps keys to log file/offset; is a complete mapping
+- reads req disk seek; rely on OS file cache
+- periodically merge/compact logs
+
 tokyo cabinet
 
 - successor to GDBM, QDBM
@@ -1456,6 +1464,14 @@ yahoo
 - Hadoop infrastructure, 2010-04-26
   - 30,000 nodes (16GB RAM, 8cores); 250,000 cores; 100,000 MR jobs perday
   - <http://twitter.com/marin_dimitrov/status/12900368052>
+- Yahoo!'s 10k+ Hadoop cluster had 1 namenode failure in 6 years during normal
+  operation; 15 failures during upgrades
+  <http://twitter.com/dataspora/status/13154690071>
+
+zynga
+
+- 200-node Vertica data warehouse: 40M players/day, 3TB/day
+  <http://twitter.com/bigdata/status/13109356141>
 
 NYSE (brian clark's talk at linux foundation end user summit 2009)
 
