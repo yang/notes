@@ -1,3 +1,11 @@
+- android
+  - processes can be shared by multiple apps
+  - on backgrounding, apps are signaled to save their state
+  - OS will kill bg procs under pressure
+  - philosophy: don't distinguish btwn background/stopped apps
+  - broadcast receivers: given 10 seconds to handle broadcast events like alarms and arrived-at-location
+  - services: longer-running bg ops
+
 - email
   - MUA: client for reading/composing messages
     - mutt
