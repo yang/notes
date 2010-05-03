@@ -28,8 +28,13 @@ core
   - linearizability
   - <http://pl.atyp.us/wordpress/?p=2521>
   - <http://pl.atyp.us/wordpress/?p=2532>
+- PACELC: if there is a partition (P) how does the system tradeoff between
+  availability and consistency (A and C); else (E) when the system is running
+  as normal in the absence of partitions, how does the system tradeoff between
+  latency (L) and consistency (C)
 - consistency
-  - staleness
+  - eventual consistency: stale reads (OOO if read from diff nodes), divergent
+    writes (clocks and conflicts)
   - strict cons
   - event cons
     - RYOW, session cons
@@ -37,20 +42,29 @@ core
 - design patterns
   - tombstones: for deletes in eventually consistent systems
   - vector timestamps
-- version vectors, vector clocks
-  - version vectors
-    - after sync, both vectors are same: component-wise max
-  - vector clocks and vector timestamps
+- logical clocks
+  - happened-before relationship
+    - $a \rightarrow b$ if $a$ happened before $b$ in same process
+    - $a \rightarrow b$ if $a,b$ are the send, recv of a msg
+  - Lamport clocks/timestamps
+    - timestamp = (counter, process ID); all msgs have unique timestamp; total
+      order possible
+    - on msg send, first incr then stamp
+    - on msg recv, set counter = max(msg.counter, counter)
+    - $a \rightarrow b \implies L(a) < L(b)$ but not vice versa
+  - vector clocks/timestamps
     - all msgs include vector timestamp (snapshot of global vector clock)
     - on update, increment own component
-    - on msg send, increment own component
-    - on msg recv, increment own component and use component-wise max
+    - on msg send, first incr own component
+    - on msg recv, incr own component and use component-wise max
     - time is more advanced on receiver than sender
+    - $a \rightarrow b \iff V(a) < V(b)$
+  - version vectors: for syncing replicas
+    - after sync, both vectors are same: component-wise max
   - only for detecting conflicts; resolving is still separate, hard problem
     - eg commonly need to maintain complete history, e.g. with counters or
       version control (ancestor info needed)
     - easier cases include unioning sets
-  - Lamport timestamps: 
 
 NAS/SAN
 
@@ -756,7 +770,7 @@ UsenetDHT (Emil Sit, NSDI08)
     - syncs expensive
     - TODO
   - in paper
-    - limited disk cap: can cpurious repairs be avoided
+    - limited disk cap: can spurious repairs be avoided
     - rand disk IO
 - Passing Tone
   - $r_L$ reps for durab
@@ -1217,7 +1231,8 @@ voldemort (linkedin, 2009)
 
 cassandra (facebook, 2008)
 
-- based on dynamo's eventual consistency, bigtable's column family data model
+- based on dynamo's eventual consistency, P2P arch, DHT, gossip mgmt
+- based on bigtable's column family data model, SSTables, hadoop integration
 - designed by one of the authors of dynamo, avinash lakshman
 - richer data model than voldemort
 - ![data model and physical storage layout](cassandra-data-model)
@@ -1233,9 +1248,17 @@ cassandra (facebook, 2008)
 - writes in LSMs
 - consistency
   - every kv pair has a *client-managed* timestamp
-    - no version vectors or vector clocks or server-managed timestamps
+    - no version vectors or vector clocks or server-managed timestamps (vclocks
+      may be added in 0.7)
     - clients must have synchronized clocks
+    - latest timestamp wins
   - can specify replication degree per request
+- flexible replication
+  - RackUnaware: place replicas on $n-1$ subsequent nodes around ring
+  - RackAware: place replica 2 in other DC, then rest on other racks in same DC
+  - DatacenterShard: place $m$ of $n$ reps in other DC, rest on nodes in other
+    racks in same DC
+  - use Snitches, mappings from node (IP) to physical location (DC, rack)
 - usage
   - serialization
     - thrift, avro added in 2010
@@ -1246,6 +1269,9 @@ cassandra (facebook, 2008)
   - keyspaces, column families statically specified; changes require restarts
   - 0.6 allows direct access from hadoop
 - no mem caching
+- gossip-based distributed failure detection & membership protocol
+  - sync membership & partitioning info w random node every sec
+  - preserves symmetry among nodes
 - WIP
   - session level consistency
   - avro instead of thrift
@@ -1262,6 +1288,8 @@ riak (basho)
 - eventual consistency w vector clocks & app conflict resolution
 - pluggable storage backend (in-mem, etc)
 - allows replicas to be temporarily inconsistent (tunable RW quora)
+  - read-repair, anti-entropy
+  - full single server durability
 - raw speed slower than cassandra
 - buckets are buckets are dynamically created
 - extra features
@@ -1298,11 +1326,11 @@ dynamo
   - eg if first 3 are down then just take next 3 on the list; if first 3 came back, inconsistency
   - but then: "Using hinted handoff, Dynamo ensures that the read and write operations are not failed due to temporary node or network failures. Applications that need the highest level of availability can set W to 1, which ensures that a write is accepted as long as a single node in the system has durably written the key it to its local store."
   - so, if W < N, then N - W writes can be written using hinted handoff to nodes other than the final destination, and forwarded when the natural nodes come back online. BUT the W writes specified by the requested consistency level do have to be to the right nodes or everything falls apart.
-- 3 levels of repair: read-repairs, hinted handoffs, replica synchronization
+- 3 levels of repair: read-repairs, hinted handoffs, replica synchronization/anti-entropy
   - read-repairs and hinted handoffs are near-realtime, minimizing drift
-  - read repair deals with stale data on a per-key/per-op basis; coord can identify nodes with stale data and update them accordingly
+  - read repair: when reading from quorum, update any stale replicas
   - hinted handoffs: bulk op done on node rejoin
-  - replica sync: complete merge once a day using merkel trees
+  - replica sync/anti-entropy: complete merge once a day using merkel trees
 - critique: <http://jsensarma.com/blog/2009/11/dynamo-a-flawed-architecture-part-i/>
   - inconsistency: actually asymmetric when claiming to be symmetric; symmetry is a flawed goal because nothing else in the datacenter architecture is symmetric
   - disaster recovery: lack of point-in-time consistency pushes complicated recovery onto app
@@ -1333,10 +1361,16 @@ hbase
   - multi-master WAN replication
   - rewrite the master to leverage zookeeper more
   - need HDFS appends to avoid data loss
+- no durability: no sync disk writes
 
 http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
 http://stackoverflow.com/questions/1189911/non-relational-database-design
 http://www.google.com/search?hl=en&rlz=1C1GGLS_enUS337US337&q=voldemort+cassandra+hbase+hypertable+tyrant+dynomite&aq=f&oq=&aqi=
+
+google app engine (GAE) data store
+
+- entity groups are units of partitioning
+- supports optional stale reads
 
 megastore
 
@@ -1406,6 +1440,7 @@ mongodb
     key (specified similarly as index)
   - other components: frontend coordinators; config/metadata servers
 - aggregation (group by); support for large map-reduce operations
+- no durability: no sync disk/replica writes
 - more features: capped collections, gridfs for large blobs
 - focus on performance
   - C++; mmap'd files
