@@ -833,15 +833,51 @@ roomy: disk-based computation (talk at MIT 12/21/09)
 symbolic execution
 ==================
 
+KLEE (engler, osdi08)
+
+- generate tests that achieve high coverage for real-world OS-heavy programs
+- works with LLVM
+- architecture
+  - state = (storage, PC) where storage = (regs, stack, heap, ...)
+  - KLEE may be executing many states at a time
+  - select a state and interpret instr; loop till no states left or timeout
+  - storage locations are expressions (trees) instead of raw values
+    - leaves are symbolic vars/consts; interior are LLVM bytecode ops
+  - uses STP constraint solver at branches
+    - potentially dangerous instrs (eg ld/st, division) implicitly generate
+      branches to check if any value could cause error
+  - doesn't model one process-wide memory array, but as separate objects
+    - dramatically improves perf by allowing obj sharing (using COW)
+  - STP time dominates; simplify exprs & elim queries before STP
+    - expr rewriting: as in compilers; arith simplif (`x+0=0`), strength
+      reduction (`x*2**n=x<<n`), linear simplif (`2*x-x=x`)
+    - constraint set simplification: add `x<10`, later `x=5`, so `true`
+    - implied value concretization: `x+1==10` implies `x=9`
+    - constraint independence: elim irrelevant constraints from query
+    - counter-example cache: interesting map data structure that yields
+      satisfying example assignments for constraints, but also works with
+      supersets of these constraints
+  - state scheduling heuristics
+    - random path selection: binary tree records program path for all states;
+      leaves are current states, interior are forks
+      - randomly walk down the tree; this favors states high in tree
+      - avoids starvation when some part is fork-bombing
+    - coverage-optimized search: heuristics choose state likely to cover new
+      code soon
+      - heuristics: min dist to uncovered instr, call stack of state, whether
+        state recently covered new code
+- model environment
+- eval: beat devs' coverage in coreutils, busybox; found 56 bugs in 430K LOC
+- predecessor: EXE
+  - used one process per state rather than internalized object-granularity repr
+
 TODO
 
 - catchconv
-- stp (vijay ganesh)
+- stp (vijay ganesh; used by klee)
 - tmp? tpm?
 - dmolnar's work?
-- klee
 - what's used by armando/jeanyang?
-- what's used by klee?
 - what's used by akcheung?
 - what's used by the two guys working on auto exploit generation?
 
