@@ -1543,6 +1543,17 @@
 - fences/barriers
   - mb()/barrier() in Linux kernel
 
+- fonts
+  - WOFF: repackaging of old sfnt/TrueType/OpenType format
+    - gzipped TTF file + opt'l sections for XML and 'private data'
+    - no need for WOFF to exist
+      - TrueType has tables; opt'l sections could've been tables
+      - HTTP already uses gzip
+    - but having this was how the industry was able to get type foundries and
+      MS on board
+      - didn't want ppl using, even though trivial to convert to TTF
+      - <http://www.imperialviolet.org/2010/05/03/woff.html>
+
 - css
   - designed for horizontal layout/flow layout, not vertical
   - cross-browser gradient
