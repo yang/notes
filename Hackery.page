@@ -949,6 +949,24 @@
     - named RVO (NRVO)
     - empty base optimization (EBO)
 
+- c++0x
+  - is an upgrade to tr1
+    - shared_ptr
+    - hash_map
+    - tuple
+  - concurrency
+    - memory model
+    - static init
+    - async: futures, promises
+    - atomic
+  - auto
+  - rvalue refs: moves, forwards
+  - variadic templates
+  - lambdas
+  - uniform init syntax, init lists
+  - regex, regex literals
+  - dropped: concepts, GC
+
 - g++
   - warnings
     - `-Wall -Wextra -Werror -Woverloaded-virtual -Wconversion -Wpointer-arith
