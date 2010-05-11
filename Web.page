@@ -19,7 +19,12 @@ rss
   - eg "Bloglines/3.1 (http://www.bloglines.com; 602 subscribers)"
 - <http://www.rss4lib.com/2007/05/counting_rss_subscribers.html>
 
-encodings:
+3D
+
+- webgl: low-level JS API based on opengl es 2.0
+- O3D: scene graph; built on webgl & js as of 5-2010; was originally a plugin
+
+encodings
 
 - url encoding: `user%40domain.com`, `hello%20world`, `%6A` for `j`
 - html encoding: `1 &lt; 2`, `&#x6A` for `j`
