@@ -194,6 +194,8 @@
     - `kill 3` kills process 3 in processlist
   - examples of why mysql blows vs postgresql
     - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
+    - multiple storage engines has always restricted progress:
+      <http://www.mysqlperformanceblog.com/2010/05/08/the-doom-of-multiple-storage-engines/>
     - http://stackoverflow.com/questions/324935/mysql-with-clause
     - http://bugs.mysql.com/bug.php?id=10327
     - postgresql also supported multiple storage engines in 80s; concentrated
@@ -419,8 +421,15 @@
     # fetch from bundle (rather than server)
     git fetch ../commits.bundle master:other-master
 
+    # revert a file
+    git checkout FILE
+    git checkout -- FILE # if FILE has same name as branch
+
     # replace one commit in your hist
     git replace 81a708d c6e1e95
+
+    # add another origin
+    git remote add origin ssh://...
 
     # undo last commit (implies --soft)
     git reset HEAD^
@@ -2199,6 +2208,19 @@
 
     where
     tlist
+
+- why google presentations sucks
+
+  - can't change master slide formatting
+  - no anti-aliasing
+  - no keyboard friendliness
+  - can't group objects together
+  - ugly default themes
+  - no image editing capabilities, e.g. cropping
+  - rudimentary drawing tools
+  - no animations
+  - no paste special
+  - stability issues: fatal errors
 
 general kernel hackery
 ======================
