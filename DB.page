@@ -52,7 +52,12 @@ companies
   - XSPRADA/Algebraix
   - paraccel
   - kognitio
-  - greenplum
+  - enterprisedb: postgresql company
+    - major contributor to postgresql
+    - postgresql plus standard server: extensions, eg connectors, geospatial,
+      replication, caching
+    - postgresql plus advanced server: deeper oracle compat; infinite cache
+  - greenplum: postgresql based
   - aster data: customers: myspace; hadoop interop; COTS
   - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
   - infobright: wants multicore queries, ACID
@@ -787,8 +792,8 @@ hybrid approaches
   - vertica
 - <http://dbmsmusings.blogspot.com/2009/09/tour-through-hybrid-columnrow-oriented.html>
 
-olap
-----
+distributed olap
+----------------
 
 hadoopdb
 
@@ -803,6 +808,7 @@ hadoopdb
 
 greenplum
 
+- postgresql based
 - table storage options
   - traditional pg
   - row-oriented append-only: compressible, scan-optimized
@@ -811,6 +817,16 @@ greenplum
 - compression: LZ, gzip
 - no need for joins to get multi columns
 - no: columnwise compression options, in-mem compression, late materialization
+- greenplum chorus: some new kind of ETL
+
+teradata
+
+- major customers, 10/2008
+  - ebay: 5 PB
+  - walmart: 2.5 PB
+  - bofa: 1.5 PB
+  - anon financial services co: 1.4 PB
+  - dell: 1 PB
 
 alternative DBs
 ---------------
@@ -1101,22 +1117,6 @@ FluidDB
 - basic data types
 - CQL-like query lang: `has sara/rating and (tim/rating > 5 or mike/comment
   matches fantastic or mary/product-reviews/keywords contains "kids")`
-
-distributed olap databases
---------------------------
-
-greenplum
-
-- shared-nothing MPP built on postgresql
-
-teradata
-
-- major customers, 10/2008
-  - ebay: 5 PB
-  - walmart: 2.5 PB
-  - bofa: 1.5 PB
-  - anon financial services co: 1.4 PB
-  - dell: 1 PB
 
 misc db
 -------
