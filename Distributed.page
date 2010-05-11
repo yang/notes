@@ -1218,7 +1218,7 @@ voldemort (linkedin, 2009)
   - repairs stale data at read time (??)
   - can add user strategies, eg only do synchronous ops on nodes in local DC
     (??)
-- storage: bdb, mysql, mmap, or memory for testing
+- storage: bdb (default), mysql, mmap, or memory for testing
 - limitations: no elasticity
 - offline processing
   - parallel extract from voldemort with throttling to respect live workload
@@ -1276,10 +1276,13 @@ cassandra (facebook, 2008)
   - session level consistency
   - avro instead of thrift
   - backend for hive
+- adoption: fb, twitter, digg, rackspace
 - refs
   - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
   - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
   - <https://www.cloudkick.com/blog/2010/mar/02/4_months_with_cassandra/>
+  - perf bench v voldemort:
+    <http://blog.medallia.com/2010/05/choosing_a_keyvalue_storage_sy.html>
 
 riak (basho)
 
