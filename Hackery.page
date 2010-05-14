@@ -196,8 +196,8 @@
     - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
     - multiple storage engines has always restricted progress:
       <http://www.mysqlperformanceblog.com/2010/05/08/the-doom-of-multiple-storage-engines/>
-    - http://stackoverflow.com/questions/324935/mysql-with-clause
-    - http://bugs.mysql.com/bug.php?id=10327
+    - <http://stackoverflow.com/questions/324935/mysql-with-clause>
+    - <http://bugs.mysql.com/bug.php?id=10327>
     - postgresql also supported multiple storage engines in 80s; concentrated
       on one
       - mysql's engine arch is poor; bad to opt/plan/tune
@@ -1263,6 +1263,7 @@
   - for profiling, need to specify ghc-opts: -auto-all (or else specify your
     own "cost-centers" using those `scc` annotations)
   - TODO space leaks
+  - `cabal install --global`
 
 - profilers
   - gprof *can* handle multi-threaded apps, but doesn't play well with
@@ -1397,7 +1398,48 @@
 - downloading media
   - google: intitle:"index of" [whatever you're looking for]
 
+- nginx: web server, caching reverse proxy, http load balancer
+  - epoll-based fork of apache 1.3; supports fastcgi; modules for eg WSGI
+  - as with any async IO system, good for many concurrent (low-activity)
+    connections (eg comet)
+  - 
+
+- HAProxy: tcp/http load balancer
+
+- varnish: caching reverse proxy, http load balancer
+  - faster than nginx?
+
+- linux virtual server: lots of software
+  - IPVS: tcp/udp load balancer
+  - KTCPVS: app-level load balancing
+  - linux-ha heartbeat: monitors & informs (on failure) 2-node clusters
+  - keepalived: monitoring
+  - <http://www.linuxvirtualserver.org/software/index.html>
+
+- python
+  - greenlets
+    - stackless spinoff
+    - each switch = 2x memcpy, realloc, free (copying 20-100+K of mem)
+    - eventlet, gevent built on this
+    - doesn't work w C extensions; relies on monkey-patching
+    - can't switch greenlets from C: event-loop/coroutine scheduler must be
+      Python
+    - violates amd64 abi
+    - doesn't correctly maintain PyThreadState per greenlet, so can eg drop
+      exceptions
+  - coev
+    - uses ucontext.h; works w C extensions; GIL = incr/decr
+    - can switch from C extensions
+  - WSGI
+    - based on CGI; agnostic as to whether persistent/fastcgi-like or CGI-like invocations
+    - synchronous; not designed for event-based IO
+  - uWSGI: looks janky?
+    - uGreens: ucontext.h
+
 - apache
+  - MPMs
+    - prefork: multi-process, single-threaded; default on *x
+    - worker: multi-process, multi-threaded; added in apache2
   - .htaccess
     - reloaded on each access, which is bad for perf
     - generally not so bad for security
