@@ -1,6 +1,12 @@
 TODO merge in notes from CS192, 6.829
 TODO comparison of database replication techniques based on total order broadcast
 
+comparisons
+
+- <http://grydz.com/grid/show/nosql-open-source-and-commercial-nosql-data-storage-systems>
+- <http://spreadsheets.google.com/ccc?key=0Ale_YaCwKEUVclVFVFlrUWt5aWhQaGQ0OXVCMUl4Vmc&hl=en#gid=0>
+- <http://en.wikipedia.org/wiki/NoSQL>
+
 Background
 ==========
 
@@ -1253,7 +1259,7 @@ cassandra (facebook, 2008)
     - clients must have synchronized clocks
     - latest timestamp wins
   - can specify replication degree per request
-- flexible replication
+- flexible replication: sync or async
   - RackUnaware: place replicas on $n-1$ subsequent nodes around ring
   - RackAware: place replica 2 in other DC, then rest on other racks in same DC
   - DatacenterShard: place $m$ of $n$ reps in other DC, rest on nodes in other
@@ -1365,10 +1371,12 @@ hbase
   - rewrite the master to leverage zookeeper more
   - need HDFS appends to avoid data loss
 - no durability: no sync disk writes
+- async replication
 
 http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
 http://stackoverflow.com/questions/1189911/non-relational-database-design
 http://www.google.com/search?hl=en&rlz=1C1GGLS_enUS337US337&q=voldemort+cassandra+hbase+hypertable+tyrant+dynomite&aq=f&oq=&aqi=
+http://research.yahoo.com/files/ycsb.pdf
 
 google app engine (GAE) data store
 
@@ -1411,6 +1419,50 @@ DRKP: working on "mul-tree-cast" membership service
 - problem: what if you send different subsets of the membership to each tree?
 
 memcached
+
+- cmds: set, add, replace, append, prepend, get, gets/cas, delete, incr/decr,
+  stats*, flush_all, get_multi
+- all ops atomic; can set expiration time (impl: lazy on-access expiration);
+  LRU
+- max key 250B; max value 1MB; slab mem allocator
+- TCP and UDP, ASCII and binary wire protocols
+- non-blocking; multi-threaded parsing, but not cache access; may be future
+  work
+- interesting use cases
+  - flood control: allow user attempt to post iff put with 60s expire succeeds
+- advantages vs db caching
+  - size: no need for 1:1 balance btwn cache nodes and db nodes
+  - efficiency: RDBMSs have a lot of other engineering (buffer manager, etc.);
+    also, eg, mysql writes invalidate buffer
+  - control: build very efficient caches, at the level application desires
+    (cache not just DB accesses but the result of arbitrary
+    computations/accesses)
+- pains, greatest to least
+  - requires manual invalidation; del or put new value (usu preferred)
+    - typically used as read-only cache, so only worry about staleness
+    - though, causality can be easily guaranteed with version numbers
+  - stampedes: overload backing DB on expiry/invalidation (if highly requested)
+    - reduce window by:
+      - using app-level expiry timestamp; on get, if expired, immediately put
+        back with extended deadline to prevent others from stampeding; then hit
+        DB and update cache
+      - use probabilistic app-level expiry timestamps
+      - somewhat helps: invalidate via cron instead of on-demand
+      - somewhat helps: for invalidation, update eagerly instead of delete
+    - avoid by: issue a unique work queue item to hit DB & update cache, eg
+      using gearman
+    - [ideally: allow the above "notify-one" expiry, informing later requests
+      that a request is already working on it; then the others can wait a while
+      for the value to appear in memcache, trying again if they still don't see
+      it after the delay, in case the first requestor failed to hit DB &
+      update]
+  - see note on facebook's fancier invalidation experiences
+  - no secondary indexing: can't reference multiple keys to one value; must do
+    this app-level
+- tips
+  - scalable lists
+    - maintain lists of keys instead of data; can spread load too
+    - chunk up the lists
 
 velocity
 
