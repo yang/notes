@@ -47,6 +47,10 @@ Virtual machines
   - DAISY: dynamic compilation
   - Fluke: nested processes
 
+Numbers
+
+- thread/process context switch: 1-10 us
+
 Kernel architecture
 
 - microkernels
@@ -737,6 +741,7 @@ MapJAX (James Cowling, RQE practice talk, 4/29/08)
 
 Scheduler Activations (UW 1992)
 
+- N:M mapping of user to kernel threads (vs. 1:1 or N:1)
 - **user-level threads: performance advantages and functionality limitations**
   - perf of user threads inherently better than kernel threads, not artifact of
     existing impls
@@ -935,6 +940,15 @@ Structure of Linux (Geoffrey Thomas, SIPB cluedump, 2008-12-11)
 
 File Systems
 ============
+
+btrfs
+
+- zfs for linux
+
+logfs (linux 2010)
+
+- designed for flash devices, to replace jffs2
+- jffs2 works for small devices, but gets slow and hogs mem
 
 unix fast file system (FFS) (1984)
 
