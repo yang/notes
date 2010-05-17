@@ -265,8 +265,9 @@ sqlite
 
 distributed postgresql
 
-- postgres-r: master-master replication
-- pgcluster: synchronous multi-master replication
+- postgres-r: async master-master replication
+- pgcluster: sync multi-master replication
+- pgpool-II: sync 
 
 distributed mysql
 
@@ -1229,6 +1230,9 @@ ebay
   - arch lessons: partition everything, use async, automate everything,
     tolerate failures, embrace inconsistency, expect evolution, understand
     dependencies, cache, save everything, invest in infrastructure
+- article 5/2008
+  - SOA; horizontal partitioning; avoid dtxns; async; virtualize; cache
+  - <http://www.infoq.com/articles/ebay-scalability-best-practices>
 
 amazon 9/2007
 
@@ -1290,6 +1294,11 @@ facebook, 2009 talk at MSR
 - last year "20 percent more photo servers and 50 percent more upload servers" to process Halloween traffic, adding up to an additional 40 terabytes (that's 40,000,000,000,000 bytes) of storage. That was when the site had 140 million users, less than half its current active user base of more than 300 million.
   <http://www.datacenterknowledge.com/archives/2009/10/30/facebooks-spooktacular-scaling-for-halloween/>
 
+datacenter sizes, 2010-04-03
+
+- google 1M+, intel 100K, 1&1 Internet 70K, akamai 61K, rackspace 57K, FB 30K
+- <http://www.intac.net/a-comparison-of-dedicated-servers-by-company_2010-04-13/>
+
 facebook, 2009 talk at UCSD
 
 - general
@@ -1327,13 +1336,19 @@ facebook, 2009 talk at UCSD
 - WAN replication in west/east (master/slave) US DCs
   - layer 7 load balancer routes to west (master) any requests that perform
     writes (based on a hard-coded list)
-  - problem: propagated update won't invalidate memcache at replica
-    - soln: updates specify what memcached keys to invalidate
-    - eg: `REPLACE INTO profile (`first_name`) VALUES ('Monkey') WHERE
-      `user_id`='jsobel' MEMCACHE_DIRTY 'jsobel:first_name'`
+  - problem
+    - async (cross-country) master-slave DB stmt replication
+    - originally, invalidate both memcaches on update at master
+    - but remote (slave) memcache could get repopulated with stale value from
+      remote DB before new stmt arrives at remote DB (under load, up to 20s)
+    - soln: don't invalidate remote from master, invalidate on stmt receipt
+      - replicated stmts must thus carry info on what memcached keys to
+        invalidate
+      - eg: `REPLACE INTO profile (`first_name`) VALUES ('Monkey') WHERE
+        `user_id`='jsobel' MEMCACHE_DIRTY 'jsobel:first_name'`
   - problem: read stale values after updating at master due to lag
-    - soln: on write, set cookie w current time; load balancer routes all reqs
-      to master for 20s
+    - soln: on write, set cookie w current time; app-aware load balancer routes
+      all reqs to master for 20s
   - <http://www.facebook.com/note.php?note_id=23844338919&id=9445547199&index=0>
 - future work
   - load balancing
