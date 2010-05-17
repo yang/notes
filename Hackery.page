@@ -36,10 +36,6 @@
   - dom0: hypervisor kernel
   - domU: guest kernel
 
-- kvm
-  - great linux success story
-  - uses qemu
-
 - hadoop
   - containers (sources/sinks)
     - files
@@ -1321,18 +1317,6 @@
 - terminals
   - <http://www.linusakesson.net/programming/tty/index.php>
 
-- system
-  - threading
-    - NTPL: modern threading system for Linux
-    - LinuxThreads: separate processes per thread; doesn't follow POSIX semantics in various ways (eg signals)
-  - _scheduler activations_: N:M mapping of user to kernel threads (vs. 1:1 or N:1)
-  - _aio_: TODO
-  - `epoll`: TODO
-  - _futex_: fast user-space mutex
-    - single atomic instr (eg CAS)
-    - kernel involved only on contention
-    - TODO is this used anywhere?
-
 - automake
   - `SUBDIRS` order matters
 
@@ -1471,7 +1455,19 @@
 
 - freedesktop: formerly known as the x desktop group (XDG)
 
+- freebsd
+  - kqueue/kevent: handles signals, FS (vnode) changes, AIO, monitoring processes
+
 - linux
+  - threading
+    - NTPL: modern threading system for Linux
+    - LinuxThreads: separate processes per thread; doesn't follow POSIX semantics in various ways (eg signals)
+  - _aio_: TODO
+  - `epoll`: TODO
+  - _futex_: fast user-space mutex
+    - single atomic instr (eg CAS)
+    - kernel involved only on contention
+    - TODO is this used anywhere?
   - `top`: shows 100% per core; procs exceeding this only show up as 99.9 as
     there's only so much char space
   - use `make V=1` to see the gcc commands (verbose)
@@ -1516,6 +1512,18 @@
       <http://kerneltrap.org/node/7563>
     - open
       - O_DIRECT: bypass cache; doesn't imply O_SYNC
+  - default stack size: 32K
+
+- linux kernel
+  - kprobes: get runtime info of any kernel routine; used by systemtap
+  - systemtap: kernel instrumentation with awk-like scripts (handlers attached
+    to events, eg function return)
+  - perfcounters: rich abstraction over hardware counters
+    - perf: user program to work with perfcounters
+  - kevent/eventfs: WIP; merges socket io, network AIO, poll, inotify, timers
+  - FSs: ext?, btrfs, logfs, ceph
+  - kvm: great linux success story; uses qemu
+  - lvm
 
 - linkage
   - if a library contains an _init symbol or function marked with __attribute__((constructor)), it will be immediately when loaded. There's no way to "pause" the library loading, switch seccomp on, and then allow the library loading to continue. (<http://stackoverflow.com/questions/1019707/sandboxing-in-linux>)
