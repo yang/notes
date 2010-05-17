@@ -42,9 +42,34 @@ core
   - eventual consistency: stale reads (OOO if read from diff nodes), divergent
     writes (clocks and conflicts)
   - strict cons
-  - event cons
-    - RYOW, session cons
-    - causal cons
+  - event cons: staleness
+    - monotonic read cons aka timeline cons: can be stale but always in-order
+    - RYOW aka RYW aka session cons: not nec implies (subset of) timeline cons
+    - causal cons: use version numbers (lamport)
+    - immediate cons
+  - event cons: multi-writer
+- replication: quorums, primary-backup, master-master
+  - $R+W>N$; no guarantees unless joins/leaves incur synchronization barriers
+  - primary-backup: $R=1,W=2,N=3$; only need ack from majority (2), but write
+    to all 3
+  - quorums stronger guarantee: always read latest; PB read can be stale (if
+    read from a replica that hasn't applied update yet)
+  - PB gives in-order, since all updates serialized through primary
+  - quorums require app-specified ordering, eg cassandra's app timestamps,
+    since different clients write directly to their quorums (no global
+    ordering)
+  - with viewstamped replication, joins/leaves change views; this is when sync
+    should happen (to bring new node up to speed)
+    - but sync barriers are expensive, eg full merkle tree comparison or log
+      shipping
+  - dynamo uses sloppy quorums, bc trad'l strict quorums implies unavailability
+    on failures/partitions
+    - replicate to first $N$ healthy nodes, not first $N$ nodes; hence, the $N$
+      may change or be entirely different
+    - dynamo tries to spread quorum across datacenters
+    - cassandra claims to use strict quorums
+  - multi-master: requires dist commit and dist concurrency control or eventual
+    cons
 - design patterns
   - tombstones: for deletes in eventually consistent systems
   - vector timestamps
@@ -58,6 +83,7 @@ core
     - on msg send, first incr then stamp
     - on msg recv, set counter = max(msg.counter, counter)
     - $a \rightarrow b \implies L(a) < L(b)$ but not vice versa
+    - however, key utility: $L(a) \nless L(b) \implies a \nrightarrow b$
   - vector clocks/timestamps
     - all msgs include vector timestamp (snapshot of global vector clock)
     - on update, increment own component
