@@ -1,5 +1,6 @@
 TODO merge in notes from CS192, 6.829
 TODO comparison of database replication techniques based on total order broadcast
+TODO http://bytepawn.com/readings-in-distributed-systems/
 
 comparisons
 
@@ -51,7 +52,7 @@ core
 - replication: quorums, primary-backup, master-master
   - $R+W>N$; no guarantees unless joins/leaves incur synchronization barriers
   - primary-backup: $R=1,W=2,N=3$; only need ack from majority (2), but write
-    to all 3
+    to all 3; majority prevents divergence in case of partition
   - quorums stronger guarantee: always read latest; PB read can be stale (if
     read from a replica that hasn't applied update yet)
   - PB gives in-order, since all updates serialized through primary
@@ -625,8 +626,46 @@ dryad
   - dryadlinq: academic release
   - nebula: a distributed shell with file descriptors as connectors
 
+Block stores
+============
+
+DRBD TODO
+
 Filesystems
 ===========
+
+ceph (sage weil, osdi06) TODO incomplete
+
+- in linux 2.6.34; weil's ucsd phd thesis, then founded new dream/dreamhost
+- near-POSIX semantics; has linux VFS client
+  - extends interface & selectively relaxes consistency for app needs & for
+    perf
+  - O_LAZY: don't need to disable read caching & write buffering when file
+    opened by multiple clients
+  - HPC community proposed extensions to posix
+- metadata server (MDS) cluster manages namespace and coordinates security,
+  consistency, and coherence
+  - _dynamic subtree partitioning_: can redundantly replicate portions for perf
+  - measure metadata popularity using exponentially decaying counters; each op
+    affects parent dir up to root
+  - 2PC subtree authority transfers
+- CRUSH distribution function designed for heterogeneous, unreliable _object
+  storage devices_ (OSDs, i.e. backends)
+  - file broken into objects mapped into placement groups (PGs) using simple
+    hash fn
+  - PGs assigned to OSDs using CRUSH
+- ceph monitor cluster manages MDS clusters
+  - just has to handle MDS heartbeats
+  - uses Paxos w leasing mechanism
+- largest scalabality test: 430 nodes, 128 MDS, per-MDS perf 50% of 1-MDS cluster, ~250K metadata ops/s (enough for 1000s of OSDs)
+- OSDs only comm w peers
+- actively migrates data to new nodes and re-replicates data on failed nodes
+- uses (and contributes to) btrfs; orig used own EBOFS (extent and b-tree
+  object file system)
+  - tuned for obj semantics & other features eg async notif of commits to disk
+- other features: snapshots; file/capacity accounting at dir level
+
+pohmelfs TODO
 
 farsite distributed file system (MSR, 2000)
 
@@ -1315,6 +1354,11 @@ cassandra (facebook, 2008)
   - <https://www.cloudkick.com/blog/2010/mar/02/4_months_with_cassandra/>
   - perf bench v voldemort:
     <http://blog.medallia.com/2010/05/choosing_a_keyvalue_storage_sy.html>
+
+scalien keyspace TODO
+
+- KV + PaxosLease [seems interesting]
+- supports safe reads from master and dirty reads from any replica
 
 riak (basho)
 
