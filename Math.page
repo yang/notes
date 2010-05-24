@@ -21,6 +21,16 @@ statistics
 - $\mathrm{Correlation}(X, Y) = \frac{ \mathrm{Covariance}(X, Y) }{ \sigma_X
   \sigma_Y }$ where $\sigma$ is the SD
 
+statistical significance
+
+- p-value: significance level; P(observation|null hypothesis)
+  - eg P(14+ heads of 20 flips|fair coin)
+- how to efficiently calc prob of *at least* $h$ H in $n$ flips?
+- type I error: false pos; rej null hyp when it's actually true
+- type II error: false neg; acc null hyp when it's actually false
+- don't stop experiment as soon as significant results are detected
+  - <http://www.evanmiller.org/how-not-to-run-an-ab-test.html>
+
 combinatorics
 =============
 
