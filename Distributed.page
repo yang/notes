@@ -253,6 +253,7 @@ amazon aws
 
 - ebs: volumes can only be mounted from 1 instance at a time, so no consistency issues
   - behaves like SAN
+- autoscaling: set conditions eg CPU, network, disk util
 
 microsoft chicago
 
@@ -1452,6 +1453,9 @@ google app engine (GAE) data store
 
 - entity groups are units of partitioning
 - supports optional stale reads
+- separate blobstore for storing large objects
+- supports secondary indexes
+- built on megastore
 
 megastore
 
@@ -1465,6 +1469,17 @@ megastore
     inconsistent state)
 - means that apps now get to deal with eventual consistency (the alternative
   being unavailability)
+- multi-row txns limited to rows sharing the same key prefix
+  - optimistic concurrency control: a separate "row" contains the version
+    number that clients check before and after that operation
+- asynchronous replication but durable commit log at master
+  - if master fails before replication, then fresh read requests fail
+  - later attempts to access fresh will replay the log
+  - probably delay replay till subsequent access to give transient errors time
+    to go away
+- supports secondary indexes
+  - like replication, these are updated asynchronously, hence may be stale
+  - commit log also replays these
 
 infinispan (data grid)
 
