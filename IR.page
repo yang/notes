@@ -1,4 +1,34 @@
-vik singh: key engineer on yahoo boss
+general
+
+- worry about search index sizes; get very big very easily
+
+google mustang
+
+- multi-stage ranking: first filter on each child node, send to root, rank
+- few hundred from each children
+
+lucene
+
+- library
+- solr: server around lucene
+  - incremental updates
+- indexing: 20MB/m; 1MB heap; incremental indexing same as batch; index ~20-30%
+  of text
+- uses bm-25
+- looks at all matching documents to rank
+- IndexReaders and IndexWriters
+  - exposes delete(id, document) and index(id, document)
+  - separate commit() flushes to disk
+  - instantiating IndexReader gets a snapshot of what's on disk
+  - instanti
+
+sphinx
+
+- supports distributed index
+- in-memory attribute map
+  - supports live updates
+- on-disk index and document stor
+- main selling point: mysql integration
 
 Structured Querying of Web Text (Mike Cafarella)
 
