@@ -322,6 +322,14 @@ web application security
   - prediction
   - capture
   - fixation: get user to use an attacker-chosen sid
+- web application firewalls (WAFs)
+  - modsecurity: for apache; supports negative & positive rule models; has core rule set; non-learning
+    - http compliance
+    - automation detection
+    - owasp top 10 attacks (sql, xss, os cmds, filenames, cf/asp/php, email, response splitting, pdf)
+    - comm w trojans/backdoors that have already broken in
+    - app error hiding
+    - external patching
 
 secure javascript
 
