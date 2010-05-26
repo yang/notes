@@ -99,6 +99,14 @@ core
       version control (ancestor info needed)
     - easier cases include unioning sets
 
+rsync
+
+- directed (one-way) synchronization
+- receiver sends rolling checksums of each non-overlapping block
+- sender compares these with its checksums of every (incl. overlapping) block
+  - rolling checksums efficient to incrementally update
+  - if match, calculate and compare MD5
+
 NAS/SAN
 
 - SAN: block protocols, eg scsi, FC, iscsi, ataoe
@@ -1441,8 +1449,11 @@ hbase
   - multi-master WAN replication
   - rewrite the master to leverage zookeeper more
   - need HDFS appends to avoid data loss
-- no durability: no sync disk writes
-- async replication
+- writes: WAL is HDFS file
+  - commit after in mem on 3 replicas, but flushed to disk asynchronously
+  - fast writes, but no durability
+- HDFS is rack-aware
+- <http://hstack.org/why-were-using-hbase-part-2/>
 
 http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
 http://stackoverflow.com/questions/1189911/non-relational-database-design
