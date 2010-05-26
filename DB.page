@@ -729,6 +729,21 @@ h-store concurrency control (evan jones)
 - speculation is on the success of a 2PC
   - unlike concurrency control, it assumes all txns conflict
 
+voltdb
+
+- 1.0
+  - server-compiled java stored procedures
+  - specify partitioning columns for each table
+  - $k$-safety; not viewstamped replication; static config
+  - supports DB-wide replicated (read-mostly) tables
+  - no concurrency control; strictly sequential operation
+  - statements can't do joins on 2 partitioned tables
+  - supports aggs
+  - periodic/continuous snapshots to disk
+  - 2PC for dtxns?
+  - early beta w 150 customers featured bunch of web gaming companies and bunch
+    of use cases resembling stream processing
+
 Data Integration
 ----------------
 
@@ -1523,3 +1538,12 @@ blizzard
 - 68 admins/ops; monitored from global NOC (GNOC), "which like many NOCs,
   features televisions tuned to the weather stations to track potential uptime
   threats across its data center footprint"
+
+adobe
+
+- uses hbase
+- need sub-50ms accesses, no downtime, no data loss
+- mirrors git repository
+  - faces transient bugs eg ZK byte-loss bug
+- preferred over cassandra despite its complexity; argues complexity is non-accidental
+- <http://hstack.org/why-were-using-hbase-part-2/>
