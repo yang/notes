@@ -66,3 +66,14 @@ facebook software engineering
 - PHP, memcached, mysql, hadoop, scribe, hive, hipal, haystack, thrift
 - user:dev ratio is ~1.1M
 - <http://cacm.acm.org/blogs/blog-cacm/51564-extreme-agility-at-facebook/fulltext>
+
+linux
+-----
+
+- mostly-hierarchical graph of development trees
+  - tree per subsystem
+  - staging trees: -mm, linux-next
+  - <http://ldn.linuxfoundation.org/book/24-staging-trees>
+- maintainers
+  - david miller, greg kroah-hartman, andrew morton, ingo molnar
+  - stats: <http://lwn.net/Articles/385949/>
