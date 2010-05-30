@@ -1488,9 +1488,10 @@ megastore
   - later attempts to access fresh will replay the log
   - probably delay replay till subsequent access to give transient errors time
     to go away
-- supports secondary indexes
+- supports declarative secondary indexes
   - like replication, these are updated asynchronously, hence may be stale
   - commit log also replays these
+  - system understands protocol buffers; eg can index a PB's repeated fields
 
 infinispan (data grid)
 
