@@ -119,6 +119,9 @@ storage
   - mature tech?  cost/availability?  still very early, but results are
     promising and should scale up to disks in size
 - others: carbon nanotube, nano-ionic
+- PCI, SAS (serial-attached SCSI), SATA
+  - PCI has biggest pipe and lowest CPU overhead; no need for block layer
+- see also: google flash talk
 
 Concurrency
 ===========
@@ -793,6 +796,8 @@ midori
 
 Linux
 =====
+
+concepts
 
 - `spin_lock`: memory barrier + busy wait on SMP, nop on UP (since kernel code
   doesn't get preempted, except by interrupts)
