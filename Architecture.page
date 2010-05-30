@@ -21,6 +21,15 @@ intel atom
 
 - good low-power chip but currently no 64-bit mem or ECC
 
+power mgmt
+
+- cpu idle
+  - 3 modes ("C states")
+    - C1: 1us exit latency, 1000mW; turns off CPU clock
+    - C2: 1us exit latency, 500mW; turns off other clocks
+    - C3: 57us exit latency, 100mW; power down parts of CPU; most time spent here
+  - <http://lwn.net/Articles/384146/>
+
 nvidia GPUs
 
 - _Parallel Thread eXecution (PTX)_ layer: bytecode; helps portability; no legacy machine code
@@ -405,6 +414,11 @@ Petabytes on a budget: How to build cheap cloud storage (Backblaze blog post 200
   - 4 GB RAM $50
 - software: https, JFS, 3 RAID6 volumes
   - IBM JFS is journaling file system...curious why they chose this
+
+Nimbus Data Systems
+
+- 100TB NAND, iSCSI, NFS, CIFS (SAN/NAS)
+- <http://www.theregister.co.uk/2010/04/26/nimbus_s_class/>
 
 Misc
 ----
