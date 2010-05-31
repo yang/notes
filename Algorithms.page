@@ -85,6 +85,8 @@ bloom filter
 
 - TODO
 - TODO scalable bloom filters
+- $m = -n*ln(p)/(ln(2)^2)$, where $m$ is # bits given $n$ elts, desired false prob $p$
+- $k = 0.7*m/n$, where $k$ is # hash fns
 
 prime sieve
 
@@ -324,7 +326,7 @@ error correcting code (ECC): usu. mean FEC
   - block codes: block-by-block
     - early, inefficient
       - repetition codes
-      - Hamming codes
+      - Hamming codes: single bit errors
       - multi-dimensional parity-check (MDPC) codes: put msg in grid & calc
         parity for each row & col
     - efficient
@@ -332,6 +334,7 @@ error correcting code (ECC): usu. mean FEC
         symbols
       - turbo codes: near-optimal
       - low-density parity-check (LDPC) codes: near-optimal
+      - BCH codes: handles random and burst errors
 
 misc
 ====
