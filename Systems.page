@@ -101,6 +101,33 @@ storage
       - cost, latency falls 50%/yr
       - density, tput grows 2x/yr
       - interfaces moving from SATA to PCIe
+    - single layer cell (SLC): 100K writes/cell; higher cost
+      - primarily in industrial/military ops; best suited for enterprise
+      - 1.5ms erase, 200us write, 25us read
+      - 16Gb max density (32Gb coming)
+    - multi layer cell (MLC): 10K writes/cell; lower cost
+      - primarily in consumer electronics
+      - half perf of SLC
+      - 32Gb max density (64Gb coming)
+      - higher bit error rates, wear rate
+    - adjacent cells prone to bit flips from elevated voltage stress on R/W
+      - read disturb: same block, diff page
+      - write disturb: same block, same/diff page
+    - bad blocks
+      - initial bad blocks: 2% SLC, 5% MLC
+      - accumulated bad blocks: due to multiple program/erase cycles
+    - controller reliability mgmt: poor media + great controller = great SSS
+      - wear leveling & spare capacity (eg spare blocks) using LBA
+      - ECC, internal RAID, data integrity field (DIF)
+    - write amplification = amt physically write / amt logically write
+    - write combining: parallelize by striping, incl. writes of unrelated data
+      (i.e. batching)
+      - disadv: worsens write amplification for unrelated data
+    - be careful about perf assumptions given asymmetric R/W perf
+      - all-read very fast, but even 10% write drastically reduces reads too
+    - TRIM: notify controller that page is "deleted"
+      - on write, reduces # pages that need to be copied to a blank block
+      - also can do idle time GC
   - history TODO
     - flash disks internally remap
     - MLC/SLC
@@ -110,18 +137,19 @@ storage
   - refs
     - <http://www.rethinkdb.com/blog/>
     - <http://perspectives.mvdirona.com/2009/10/26/AndyBechtolsheimAtHPTS2009.aspx>
+    - <http://cmrr.ucsd.edu/education/workshops/documents/KhaledAmer_.pdf>
+    - google flash talk
 - phase change memory (pcm): samsung got a bunch of hype in 9/2009
   - read: 100s of ns; write: ms
-  - OOM faster than flash, OOMs faster than disk
+  - OOM faster than flash, OOMs faster than disk, lower wear
   - actually a bunch of different non-NAND NVRAM techs that are
     byte-addressable, including something from HP that sounded like 'mem
     registers'
   - mature tech?  cost/availability?  still very early, but results are
     promising and should scale up to disks in size
-- others: carbon nanotube, nano-ionic
+- others: carbon nanotube, nano-ionic, memristors
 - PCI, SAS (serial-attached SCSI), SATA
   - PCI has biggest pipe and lowest CPU overhead; no need for block layer
-- see also: google flash talk
 
 Concurrency
 ===========
