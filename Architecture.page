@@ -99,15 +99,18 @@ disks
   - obsoletes PATA tagged command queueing (TCQ), which was CPU intensive
 - extensible firmware interface (EFI)
   - intel's proposal to replace PC BIOS, one of few remaining parts of orig IBM PC
-
-- BIOS: de facto standard in defining a firmware interface
-  - performs bootstrapping: identify, test, initialize system devices like display card, HDD
-  - stored on chip
-
 - hard disk layout
   - MBR: 512 B
     - 0-445: boot loader (eg GRUB)
     - 446-511: partition table
+- logical block addressing (LBA): controller manages mapping to virtualize
+  physical locations of logical blocks; keep bad block table; requires spare
+  blocks
+  - ECC: controller calculates ECC and stores together w data
+
+- BIOS: de facto standard in defining a firmware interface
+  - performs bootstrapping: identify, test, initialize system devices like display card, HDD
+  - stored on chip
 
 - programmable interrupt controller (PIC): device that allows pri level to be
   assigned to its interrupt outputs
