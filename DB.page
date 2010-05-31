@@ -1219,6 +1219,7 @@ google
   - apps: 99.9%ile latency, disk queueing, is ~100ms
   - experimented with flash as cache on GFS chunkservers
     - simulated traces of bigtable tablet servers for several apps
+    - write-heavy
   - 16GB cache: 130 misses/s; 512GB: 450; logarithmic (exponential increase yields linear reduction)
   - write perf highly variable/chaotic
     - seq writes fine, rand writes kill perf & lifetime
