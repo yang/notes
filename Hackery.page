@@ -1,3 +1,5 @@
+- net booting, old to new: etherboot (95), intel PXE (99, TFTP), gPXE (SAN)
+
 - android
   - processes can be shared by multiple apps
   - on backgrounding, apps are signaled to save their state
@@ -455,11 +457,18 @@
 
   - in merge, `git show :1:file` selects ancestor, `:2:` selects ours, `:3:`
     selects theirs
-  - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
-    - like svn externals, but can't track HEAD
-  - _subtree merge_: actually merge in another proj but isolated in its own
-    subdir
-  - porcelain: easygit, yap, pyrite (hg-like)
+  - porcelains: easygit, yap, pyrite (hg-like)
+  - working with multiple projects
+    - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
+      - like svn externals, but can't track HEAD; must explicitly update
+      - the tracked versions is a data file that itself is tracked in the
+        master git repo, so concurrent changes to it result in conflicts
+    - _subtree merge_: actually merge in another proj but isolated in its own
+      subdir
+    - repo: google's tool; works with gerrit; expects workflow of creating
+      topic branches and code reviews
+    - braid
+    - <http://thread.gmane.org/gmane.comp.version-control.git/148034>
 
 - name resolution on linux
   - /etc/nssswitch.conf indicates what /lib/libnss* to use for resolving
