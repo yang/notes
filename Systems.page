@@ -1111,6 +1111,14 @@ semantic file systems (david gifford 1991)
 Storage
 =======
 
+flashcache (facebook 2010)
+
+- write-back block cache for linux
+- FIFO or LRU replacement
+- built for innodb
+- can help with writes but poor high-tput write perf
+- <http://github.com/facebook/flashcache/blob/master/doc/flashcache-doc.txt>
+
 failure trends in a large disk drive population (google, fast07)
 
 - TODO
