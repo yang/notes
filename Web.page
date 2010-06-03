@@ -31,6 +31,13 @@ encodings
 - javascript escaping: eg for json
 - css escaping
 
+HTTP
+
+- cookies
+  - subdomains can set for parent domains, *except* for TLDs (edu) due to dot restriction
+  - domains must contain at least 2-3 dots, depending on what kind of TLD (.com, .va.us)
+  - <http://curl.haxx.se/rfc/cookie_spec.html>
+
 flash RTFMP
 
 - udp only (RTMP is the tcp-based one)
