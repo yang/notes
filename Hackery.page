@@ -458,6 +458,7 @@
   - in merge, `git show :1:file` selects ancestor, `:2:` selects ours, `:3:`
     selects theirs
   - porcelains: easygit, yap, pyrite (hg-like)
+  - GCs after 1 month
   - working with multiple projects
     - _submodule_: foreign repo (fixed commit) embedded in a dedicated subdir
       - like svn externals, but can't track HEAD; must explicitly update
