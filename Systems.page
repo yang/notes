@@ -128,16 +128,11 @@ storage
     - TRIM: notify controller that page is "deleted"
       - on write, reduces # pages that need to be copied to a blank block
       - also can do idle time GC
-  - history TODO
-    - flash disks internally remap
-    - MLC/SLC
-    - why they moved to block-level abstraction instead of byte-addressible; erases
-    - firmware sequentializes everything
-    - <http://arstechnica.com/hardware/news/2009/11/biography-solid-state-disk.ars>
   - refs
     - <http://www.rethinkdb.com/blog/>
     - <http://perspectives.mvdirona.com/2009/10/26/AndyBechtolsheimAtHPTS2009.aspx>
     - <http://cmrr.ucsd.edu/education/workshops/documents/KhaledAmer_.pdf>
+    - <http://arstechnica.com/hardware/news/2009/11/biography-solid-state-disk.ars>
     - google flash talk
 - phase change memory (pcm): samsung got a bunch of hype in 9/2009
   - read: 100s of ns; write: ms
