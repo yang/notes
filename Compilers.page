@@ -30,24 +30,30 @@ TODO merge in notes from CS164
     - second L/R means left-to-right/right-to-left derivation
       (leftmost/rightmost)
     - (k) = k-token lookahead
-  - LL(k) aka top-down
+  - LL(k) aka top-down: simplest
     - produces leftmost derivation top-down
     - LL(1): need to examine 1 token to determine which rule to apply
     - animation: http://www.cs.wm.edu/~noonan/animations/llparse.html
     - ANTLR
     - LL is a subset of LR
+  - non-commutative LL(*): most hand-written parsers, combinators
+    - memoized non-commutative LL(*): packrat parsers, scala 2.8 parser
+      combinators
+    - harder theoretical analysis vs. LR, but probably weaker
   - LR(k)
     - k is the number of tokens to lookahead at the end of a rule
     - produces rightmost derivation in reverse bottom-up TODO
     - don't get used much; internal tables tend to get too big
     - handles left-recursion
   - LALR(k)
-    - YACC
+    - YACC, bison
   - SLR(k)
     - LR(0) + followsets TODO
   - GLR aka generalized LR
     - handles nondeterministic and ambiguous grammars by returning *all*
       possible interpretations
+    - also: GLL aka generalized LL
+    - tomita's algorithm is the best
 - grammar forms
   - Backus-Naur Form (BNF): TODO
   - Extended BNF (EBNF): TODO
@@ -116,6 +122,12 @@ Derivations
   - a derivation: E => -E => -(E) => -(id)
   - leftmost derivation: E => E+E => id+E => id+id
   - rightmost derivation: E => E+E => E+id => id+id
+
+Grammar issues
+
+- ambiguity
+- left recursion
+  - hidden left recursion: even tomita's GLR can't handle
 
 Grammar transformations
 
