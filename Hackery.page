@@ -398,6 +398,11 @@
 
 - git
 
+    # push your new locally created branch to remote
+    git push origin origin:refs/heads/new_feature_name
+    # verify
+    git branch -r
+
     # publish history to svn (note the `trunk` dir)
     svn mkdir protocol:///path/to/repo/PROJECT/trunk -m 'importing git'
     git svn init protocol:///path/to/repo/PROJECT -s
