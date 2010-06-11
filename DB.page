@@ -342,6 +342,7 @@ RDBMSs
 amazon relational database as a service (RDS)
 
 - mysql 5.1
+- synchronous wan repl (multi-az)
 - TODO how does it scale?
 
 OLTP Through the Looking Glass, and What We Found There (stavros, dna, madden, stonenbraker)
