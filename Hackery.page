@@ -1412,6 +1412,8 @@
   - IPVS: tcp/udp load balancer
   - KTCPVS: app-level load balancing
   - linux-ha heartbeat: monitors & informs (on failure) 2-node clusters
+    - heartbeat: clustering and communication layer TODO
+    - pacemaker: resources manager TODO
   - keepalived: monitoring
   - <http://www.linuxvirtualserver.org/software/index.html>
 
