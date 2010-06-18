@@ -57,11 +57,17 @@ clustering
   - divisive: top-down splitting
 - partitional: determine all clusters at once; can be used in divisive
   - $k$-means: assign each point to cluster with closest centroid; initialize with random centroids
-  - locality sensitive hashing (LSH): TODO
+  - locality sensitive hashing (LSH): hash similar values to similar values
+    - a form of dimensionality reduction
     - also used in nearest neighbor search
     - feature space vectors are sets
     - jaccard distance
-    - min-hash
+    - random projection:
+      - each value is a vector in hyperspace
+      - divide hyperspace with a hyperplane to classify the values in 1 bit
+      - repeat for more bits
+    - min-hash/sim-hash is an instance of this
+    - <http://knol.google.com/k/simple-simhashing>
 - density-based: discover arbitrary shapes
 - 2-way-/co-/bi-clustering: objects are clustered but also their features; if
   data in matrix, then rows and columns clustered simultaneously
