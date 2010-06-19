@@ -205,6 +205,13 @@ statistics
     - always in $[-1, 1]$
 - T-test: TODO
 
+outlier elimination
+
+- chauvenet's criterion
+- pierce's criterion: "if you need rigor, generality, and the ability to reject more than one data point"
+  - process involves multiple steps and lookup tables
+  - <https://web.chemistry.ohio-state.edu/~coe/research/documents/error_distributions_new2.pdf>
+
 signals, coding, information theory
 ===================================
 
