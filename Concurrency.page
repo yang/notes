@@ -491,6 +491,7 @@ Formal concurrency models
 - actor model
   - models dataflow
   - directly address processes (rather than channels)
+  - asynchronous
 - process calculi
   - named (sync/async) channels, anon processes, par, seq, reductions
   - guarded choice
@@ -503,6 +504,10 @@ Formal concurrency models
     - algebra of communicating process (ACP)
 - join calculus
   - basically, queues + pattern matching
+- comparisons
+  - CSP v actors
+    - CSP: sync 0-buffering rendezvous, anon procs, explicit channels
+    - actors: async, named procs, per-actor mailboxes
 - TODO bisimulation
 
 Misc hardware
