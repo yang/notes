@@ -1407,6 +1407,8 @@
 
 - varnish: caching reverse proxy, http load balancer
   - faster than nginx?
+  - uses (tons of) threads (and large addr space; designed for 64-bit)
+  - already tuned by default
 
 - linux virtual server: lots of software
   - IPVS: tcp/udp load balancer
