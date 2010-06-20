@@ -1,3 +1,21 @@
+- pylons
+  - `paster setup-app`
+    - `paster setup-app development.ini` sees that `development.ini` points to
+      egg for your app ("myapp")
+    - myapp's `setup.py` specifies egg entry point for `paste.app_install`
+      pointing to `pylons.util.PylonsInstaller`; paste finds this via
+      PEAK's `pkg_resources.load_entry_point`
+    - `Installer` objects run `setup_app` (or `setup_config`) in `websetup`
+      - passes paste `appconfig()` into `setup_app`
+    - <http://pylonsbook.com/en/1.1/pylons-internal-architecture.html>
+  - `paster serve`
+    - uses entrypoint `paste.appfactory`, points to `myapp.config.middleware`
+    - `middleware` is passed `global_config` (`[DEFAULT]` in .ini) and
+      `app_config` (`[app:main]` in .ini)
+    - calls `load_environment`: creates/returns `pylons.config =
+      pylons.configuration.PylonsConfig`
+    - creates `PylonsApp` as stack of middleware initialized by `config`
+
 - net booting, old to new: etherboot (95), intel PXE (99, TFTP), gPXE (SAN)
 
 - android
