@@ -47,7 +47,9 @@ companies
     - column store, execution, compression
     - FPGA for data- and task-parallelism
     - targeting mysql
-  - sybase iq
+  - sybase iq: data mining
+    - scale-out; C++ UDFs; embedded data mining/predictive analytics lib (modeling & scoring)
+  - sas: has own internal db
   - teradata
   - XSPRADA/Algebraix
   - paraccel
