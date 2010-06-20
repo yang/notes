@@ -391,7 +391,15 @@ XSRF (cross-site request forgery)
 - MAC: integrity and authenticity; TODO
 - HMAC: hashed MAC; TODO
 - cryptographic hash functions: TODO
-- diffie-hellman: TODO
+- diffie-hellman key exchange
+  - allow 2 parties w no prior knowledge of ea other to establish shared secret
+    key over insecure channel
+  - uses discrete logarithm problem: compute discrete logs module an
+    appropriate prime (a bit harder/slower than factoring "hard" ints of same
+    size)
+  - followed shortly by RSA
+- secure remote password (SRP)
+  - structurally similar to D-H
 
 - salting: decorating a password (eg prefix/suffix) and hashing that as the
   "password" (for storage/comparison); similar to nonce
@@ -496,20 +504,24 @@ block ciphers
 - des: early highly influential; ibm; 1997; insecure to brute force
   - EFF DES cracker aka "deep crack": cracking machine
   - with distributed.net, decryted challenge 3 after just 22h
+  - controversy over NSA's opaque involvement in design
 - 3des: 1998; applies des 3x per block; used by electronic payments industry
   - simply increases key size 3x to defend against brute force
   - pseudocde: des_enc(k1) -> des_dec(k2) -> des_enc(k3)
 - blowfish: bruce schneier; 1993; fast; no known cryptanalysis; widely used,
   but aes overshadows it
-- aes: successor to des; 2001
+- aes aka rijndael: successor to des; 2001
   - 128, 192, 256 bit key sizes; all 128 bit block sizes
 - KASUMI aka a5/3 in GSM aka GEA3 in GPRS: no known weaknesses, but GSM is vuln
   (can avoid a5/3)
 
-cryptographic hash functions
+security status of cryptographic tools
 
 - insecure: MD5, SHA1
 - secure: AES, RSA, SHA-256
+
+cryptographic hash fns
+
 - message authentication code (MAC): keyed hash; TODO
 - message integrity code (MIC): TODO
 - HMAC: TODO
