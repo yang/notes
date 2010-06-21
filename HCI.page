@@ -2,6 +2,11 @@ people
 
 - marissa mayer: all google changes go through her; she's backlogged majorly
 
+laws
+
+- fitts' law: time to point to target area is fn of target size/distance
+- steering law: time to steer through 2D tunnel; applied to cascading menus
+
 Processing (Ben Fry's talk at CSAIL 5/16/08)
 
 - looks like a system for making slick "interactive animated visualization"
