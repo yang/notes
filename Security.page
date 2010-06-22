@@ -389,7 +389,15 @@ XSRF (cross-site request forgery)
 - PKI: pub keys, certs, and all that
 
 - MAC: integrity and authenticity; TODO
-- HMAC: hashed MAC; TODO
+- message authentication code (MAC): keyed hash; TODO
+- message integrity code (MIC): TODO
+- hash-based MAC (HMAC)
+  - uses 1-way hash (eg SHA), but incorporates shared secret key (for
+    authenticity) and re-hashing the hash of the key + message (to prevent
+    append attacks)
+  - masks key with consts ipad (0x3636..) and opad (0x5c5c..)
+  - hmac(key, msg) = hash((key xor opad) + hash((key xor ipad) + msg))
+  - <http://dev.ionous.net/2009/03/hmac-vs-raw-sha-1.html>
 - cryptographic hash functions: TODO
 - diffie-hellman key exchange
   - allow 2 parties w no prior knowledge of ea other to establish shared secret
@@ -522,9 +530,18 @@ security status of cryptographic tools
 
 cryptographic hash fns
 
-- message authentication code (MAC): keyed hash; TODO
-- message integrity code (MIC): TODO
-- HMAC: TODO
+- SHA: NIST-approved
+- blowfish: bruce shneier
+  - expensive key setup phase
+
+crypt
+
+- uses hash fn, encodes salt, records which hash fn used
+  - by default, uses DES on data=0, key=truncated pass
+  - other versions exist that use md5, blowfish, sha
+- eksblowfish (provos, mazieres, 1999)
+  - take adv of expensive key setup phase of blowfish
+  - introduce configurable # rounds to make validation arbitrary expensive
 
 block cipher modes
 
