@@ -158,6 +158,20 @@ decentralized identity/auth/social standards
   - by AOL; auth AOL/AIM users
 - openid: authentication
 - oauth: authentication and authorization
+  - 3-legged: normal auth flow; requires access token
+  - 2-legged: domain admin authorizes req for all users; no access token
+    - server-to-server, no user
+  - flow:
+    - all app.com to platform.com requests are https and signed for app.com
+      authenticity; valid methods are hmac-sha1 w key = shared-secret,
+      rsa-sha1, plaintext
+    - user goes to app.com/welcome w button to app.com/connect
+    - /connect requests reqtoken, reqsecret from https://platform.com/initiate;
+      this also sets callback for the reqtoken to be http://app.com/ready
+    - /connect redirects to https://platform.com/authorize?reqtoken=blah
+    - user redirected to app.com/ready?reqtoken=blah&verifier=blah
+    - /ready requests platform.com to verify (reqtoken, verifier) and return
+      accesstoken
 - opensocial: social network API (JS for gadgets, REST for else)
 - friend connect: opensocial router and gadgets
 - facebook connect: links acounts elsewhere with facebook accts
