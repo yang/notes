@@ -1,20 +1,41 @@
-- pylons
-  - `paster setup-app`
-    - `paster setup-app development.ini` sees that `development.ini` points to
-      egg for your app ("myapp")
-    - myapp's `setup.py` specifies egg entry point for `paste.app_install`
-      pointing to `pylons.util.PylonsInstaller`; paste finds this via
-      PEAK's `pkg_resources.load_entry_point`
+- pylons/paster
+  - paster
+    - `sys.exit(load_entry_point('PasteScript','console_scripts','paster'))`
+    - main code calls `get_commands` to find all paster plugins (uses
+      entrypoints?)
+    - `--plugin` for extensibility
+  - pylons
+    - `appconfig` loads config
+    - `loadapp` loads config and creates app
+    - `loadserver` loads config and creates server
+    - all above take URLs like `config:development.ini`
+  - `paster setup-app development.ini`
+    - `[app:main]` in .ini points to egg for your app ("myapp")
+    - myapp's `paste.app_install` entrypoint is `pylons.util.PylonsInstaller`
     - `Installer` objects run `setup_app` (or `setup_config`) in `websetup`
-      - passes paste `appconfig()` into `setup_app`
-    - <http://pylonsbook.com/en/1.1/pylons-internal-architecture.html>
-  - `paster serve`
-    - uses entrypoint `paste.appfactory`, points to `myapp.config.middleware`
-    - `middleware` is passed `global_config` (`[DEFAULT]` in .ini) and
-      `app_config` (`[app:main]` in .ini)
-    - calls `load_environment`: creates/returns `pylons.config =
-      pylons.configuration.PylonsConfig`
-    - creates `PylonsApp` as stack of middleware initialized by `config`
+      - passes paste's `appconfig()` into `setup_app`
+  - `paster serve development.ini`
+    - serve command calls `loadapp` and `loadserver`
+    - `loadapp` uses entrypoint `paste.app_factory`, points to
+      `myapp.config.middleware`
+    - `middleware` is passed `global_conf` (`[DEFAULT]` in .ini) and `app_conf`
+      (`[app:main]` in .ini)
+      - calls `load_environment`: creates/returns `pylons.config =
+        pylons.configuration.PylonsConfig`
+      - creates `PylonsApp` as stack of middleware initialized by `config`
+    - the config is then registered into `pylons.config` by `PylonsApp` via
+      `paste.registry.register` (pushed onto a stacked proxy object)
+    - config has local_conf and global_conf sub-dicts
+  - <http://pylonsbook.com/en/1.1/pylons-internal-architecture.html>
+  - <http://wiki.pylonshq.com/display/pylonscookbook/Pylons+Execution+Analysis+0.10>
+
+- python packages/eggs
+  - distributed/pip: successor to setuptools/easy_install
+  - pkg_resources: most of the meat is in this module
+  - entry points: simple global registry for all modules to declare what
+    interfaces they provide (and for others to find them by these interfaces)
+  - egg metadata stored in ./package.egg_info/ or
+    site-packages/package.egg/EGG-INFO
 
 - net booting, old to new: etherboot (95), intel PXE (99, TFTP), gPXE (SAN)
 
