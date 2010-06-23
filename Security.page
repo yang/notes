@@ -386,7 +386,12 @@ XSRF (cross-site request forgery)
 - PEM: privacy-enhanced mail; a format of base64-encoded DEM certificates
   between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----"
 
-- PKI: pub keys, certs, and all that
+PKI
+
+- TLS/SSL certificates
+  - standard: cheaper, faster; just shows padlock
+  - extended: more rigorous issuing policy; also shows company name
+  - CAs sell packages: single domain, $n$ domains, wildcard (subdomains)
 
 - MAC: integrity and authenticity; TODO
 - message authentication code (MAC): keyed hash; TODO
