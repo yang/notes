@@ -361,8 +361,11 @@ snapshot/ser          impossible  impossible   impossible
   using 2PL in RDBMSs
 - implementations
   - oracle, postgresql: "serializable" is a form of snapshot isolation
-    - still get write conflicts, but inserts of new tuples that would've
-      matched an earlier read can slip by
+    - SI still get write conflicts to same data, but inserts of new tuples that
+      would've matched an earlier read can slip by
+    - eg race among sessions running `select col from onerow; if no res, insert
+      into onerow values (0);`
+    - constraints preserved, though (eg if onerow used col as PK, fail)
   - mysql "repeatable read" is actually "read committed", "serializable" is
     serializable
   - mysql, sybase, mssql, db2 also support true serializability
