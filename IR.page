@@ -9,26 +9,38 @@ google mustang
 
 lucene
 
-- library
+- java library
 - solr: server around lucene
-  - incremental updates
-- indexing: 20MB/m; 1MB heap; incremental indexing same as batch; index ~20-30%
-  of text
-- uses bm-25
-- looks at all matching documents to rank
+- incremental updates only; removed batch updates early on
+- indexing speed (from homepage): 20MB/m; 1MB heap; incremental indexing same
+  as batch; index ~20-30% of text
+- uses VSM model for scoring/ranking; not "academically approved"
+- filters w standard boolean model then ranks all matches
 - IndexReaders and IndexWriters
   - exposes delete(id, document) and index(id, document)
   - separate commit() flushes to disk
   - instantiating IndexReader gets a snapshot of what's on disk
-  - instanti
+- scoring TODO
 
 sphinx
 
+- c++ library and server
 - supports distributed index
+- uses BM25 (not BM25F?)
 - in-memory attribute map
   - supports live updates
-- on-disk index and document stor
+- on-disk index and document store
 - main selling point: mysql integration
+
+vector space model
+
+- represent docs as vectors: a dim is non-0 if corresponding term present (eg
+  tf-idf weight)
+- similarity is angle btwn vectors; cosine is sufficient and easier to calc
+
+standard boolean model
+
+- simplest, exact-match
 
 Structured Querying of Web Text (Mike Cafarella)
 
