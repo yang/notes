@@ -96,6 +96,7 @@ dns
   - MX records: where MTAs should send email for this domain
     - mailers try sending to the MX-indicated servers in the order that they're
       listed
+    - backup MXs do store-and-fwd (tmp intermediate hold)
   - internet-scale cached storage, eg email blacklists, software updates
     (latest version checks), sender policy framework/domainkeys (use TXT
     records)
@@ -148,6 +149,18 @@ dns
 - general advice
   - should not mix CNAMEs and MX, or mail servers will just use CNAME
     <http://www.ferris.com/2008/09/08/why-you-shouldnt-mix-cname-and-mx/>
+
+SMTP
+
+- architecture deals w transient failures
+- cmds: mail (set return addr), rcpt (set dest addr), data (actual hdrs+msg)
+  - bcc's are rcpt'd but not in data
+- sender policy framework (SPF): use DNS to list IPs allowed to send from a
+  domain (a "senders' MX")
+  - thus, gmail (which can send from other domains) requires they be included,
+    if this is set
+  - implemented by spamassassin, courier, exchange, patches for
+    postfix/sendmail/exim/qmail
 
 zeroconf
 
