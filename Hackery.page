@@ -1,3 +1,37 @@
+- LDAP
+  - hierarchical directory of entries of KV attr pairs (defined by schema)
+    - schemas define _object classes_; published at a base DN in
+      subschemaSubentry _operational attr_ (system attr)
+    - obj ID is _distinguished name (DN)_
+  - topmost levels usu. reflect DNS (eg `dc=example,dc=org`)
+  - directory system agent (DSA): an LDAP server; default port 389
+  - can refer to other servers
+  - request types
+    - start TLS
+    - bind: authenticate w user DN and passwd, specify version (normally LDAPv3)
+    - search: base obj, scope, filter, deref aliases?, attrs (projection),
+      size/time limits, types only?
+    - compare: check DN has attr pair
+    - add/delete/modify: takes DN and list of attrs
+    - extended ops: eg cancel, passwd modify
+    - abandon: abort an operation named by a msg ID; unfortunately no response,
+      so cancel extension was introduced
+    - unbind: abandon ops, close conn
+
+- active directory
+  - LDAP, modified KRB, DNS, SSO, app roaming storage, admin/policy/deploy
+    SW/etc
+  - AD includes 1+ domains, each w 1+ _domain controller (DC)_ (can scale)
+  - AD app mode (ADAM): lightweight impl on 2k3/XP; same but no need for domain
+    - primary DC, backup DC, or domain member: older NT model
+    - now 1+ equal peer DCs; multi-master repl (configurable sync/async/etc)
+  - introduced in win2k
+
+- samba: impls SMB/CIFS and domain membership; v4 can serve as AD DC (future)
+  - NBT, SMB/CIFS, DCE/RPC, MSRPC, network neighborhood, WINS server called
+    NBNS, SAM, LSA, SPOOLSS, NTLM, AD logon
+  - `smbd` and `nmbd`
+
 - pylons/paster
   - paster
     - `sys.exit(load_entry_point('PasteScript','console_scripts','paster'))`
