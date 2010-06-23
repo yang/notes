@@ -81,16 +81,29 @@
   - broadcast receivers: given 10 seconds to handle broadcast events like alarms and arrived-at-location
   - services: longer-running bg ops
 
-- email
-  - MUA: client for reading/composing messages
-    - mutt
-  - MTA: program that handles transferring messages to/from this host
+- email agents
+  - MUA: client for reading/composing messages, eg mutt
+  - MSA: recv from MUA, send to MTA; most MTAs also MSAs
+    - uses: correct errors (eg missing date/msg-id/domain), simplify MTA
+      policies (refuse mail to non-locals, stricter spam setting)
+  - MTA aka relay: xfer msgs to/from this host; uses SMTP
     - exim is officially supported on ubuntu; also sendmail (older, famously
       insecure)
-  - MDA: program that receives messages destined for a user on this host and
-    delivers it to the actual inbox
-    - procmail
-  - thunderbird, evolution, kmail combine (parts of) MUA, MTA, MDA
+    - each MTA adds `Received` hdr
+    - major MTAs (monolithic = less secure)
+      - sendmail: popular, once-insecure, monolithic
+      - exim: monolithic, ok security record, sendmail drop-in
+      - postfix: modular, secure (by sec guy), performant, sendmail drop-in
+      - qmail: secure (by djb), updated in 99, modular, weird to use
+      - <http://shearer.org/MTA_Comparison>
+    - port 587 used for MUA-MSA; port 25 used for MTA-MTA; most servers just
+      use 25
+  - MDA: recv msgs to local user, store in inbox; eg procmail
+  - MRA: retrieve via POP, IMAP, etc; eg fetchmail, getmail (python successor)
+  - outlook, thunderbird, etc: MUAs that also have some MSA, MDA, MRA
+
+- fail2ban: scans logs and bans IPs w too many failed attempts
+  - update iptables FW or tcp wrapper's hosts.deny
 
 - php
   - `php -a`: if built w readline support, then behave as console
