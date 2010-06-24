@@ -392,6 +392,14 @@ PKI
   - standard: cheaper, faster; just shows padlock
   - extended: more rigorous issuing policy; also shows company name
   - CAs sell packages: single domain, $n$ domains, wildcard (subdomains)
+- SNI: extension to TLS that enables virtual hosting
+  - client requests name of virtual domain during TLS nego
+- certificate revocation list (CRL)
+  - published by the issuing CA on some periodic schedule
+  - clients download, cache, check against it
+- online certificate status protocol (OCSP): check online if cert still good
+  - less BW (don't DL all), real-time
+  - impl'd in major browsers
 
 - MAC: integrity and authenticity; TODO
 - message authentication code (MAC): keyed hash; TODO
