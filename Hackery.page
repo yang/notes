@@ -93,12 +93,16 @@
     - major MTAs (monolithic = less secure)
       - sendmail: popular, once-insecure, monolithic
       - exim: monolithic, ok security record, sendmail drop-in
-      - postfix: modular, secure (by sec guy), performant, sendmail drop-in
+      - postfix: modular, secure (by sec guy), performant, sendmail drop-in,
+        easy
       - qmail: secure (by djb), updated in 99, modular, weird to use
       - <http://shearer.org/MTA_Comparison>
+    - MTAs have configurable policies/processing; eg postfix can spawn a cmd,
+      pipe to a persistent cmd, etc
     - port 587 used for MUA-MSA; port 25 used for MTA-MTA; most servers just
       use 25
-  - MDA: recv msgs to local user, store in inbox; eg procmail
+  - MDA: recv msgs to local user, store in inbox; eg procmail (old; most MTAs
+    are also MDAs)
   - MRA: retrieve via POP, IMAP, etc; eg fetchmail, getmail (python successor)
   - outlook, thunderbird, etc: MUAs that also have some MSA, MDA, MRA
 
@@ -1483,25 +1487,37 @@
 - downloading media
   - google: intitle:"index of" [whatever you're looking for]
 
-- nginx: web server, caching reverse proxy, http load balancer
-  - epoll-based fork of apache 1.3; supports fastcgi; modules for eg WSGI
-  - as with any async IO system, good for many concurrent (low-activity)
-    connections (eg comet)
-  - 
+- web serving architecture
+  - nginx: web server, caching reverse proxy, http load balancer
+    - epoll-based fork of apache 1.3; supports fastcgi; modules for eg WSGI
+    - as with any async IO system, good for many concurrent (low-activity)
+      connections (eg comet)
+  - mongrel: ruby web server by zed shaw
+  - god: monitors mongrel
+  - unicorn: mongrel core + pull balancing (unlike load balancers)
+    - all forked workers listen on same socket, but leads to 'thundering herd'
+      of all waking up
+  - a reasonable full setup: ldirectord -> varnishes -> haproxy -> nginx
+  - gunicorn: Python greenlet unicorn
+  - HAProxy: tcp/http load balancer
+  - varnish: caching reverse proxy, http load balancer
+    - faster than nginx?
+    - uses (tons of) threads (and large addr space; designed for 64-bit)
+    - already tuned by default
 
-- HAProxy: tcp/http load balancer
+- web serving case studies
+  - github
+    - originally: nginx -> haproxy -> mongrel threads/processes
+    - now: nginx -> shared unix socket -> unicorn processes
 
-- varnish: caching reverse proxy, http load balancer
-  - faster than nginx?
-  - uses (tons of) threads (and large addr space; designed for 64-bit)
-  - already tuned by default
-
+- ldirectord: TCP load balancer; used by linux-ha
 - linux virtual server: lots of software
   - IPVS: tcp/udp load balancer
   - KTCPVS: app-level load balancing
   - linux-ha heartbeat: monitors & informs (on failure) 2-node clusters
     - heartbeat: clustering and communication layer TODO
     - pacemaker: resources manager TODO
+    - pacemaker/openais deprecates heartbeat?
   - keepalived: monitoring
   - <http://www.linuxvirtualserver.org/software/index.html>
 
