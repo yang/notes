@@ -1496,11 +1496,15 @@
     - used by lots of high-profile sites
     - filters: gzip, ranges, chunked responses, xslt, ssi, img resizing
       - parallel ssi
+    - architecture: NBIO, AIO, ...
+      - master process: respawns workers, handles signals, notifies workers
+      - worker: process conns
+      - signals/socketpairs, shared mem
   - mongrel: ruby web server by zed shaw
   - god: monitors mongrel
   - unicorn: mongrel core + pull balancing (unlike load balancers)
-    - all forked workers listen on same socket, but leads to 'thundering herd'
-      of all waking up
+    - all forked workers listen on same socket; leads to 'thundering herd' of
+      all waking up, but a problem only when idle
   - gunicorn: Python greenlet unicorn
   - HAProxy: tcp/http load balancer
   - varnish: caching reverse proxy, http load balancer
@@ -1517,6 +1521,17 @@
   - github
     - originally: nginx -> haproxy -> mongrel threads/processes
     - now: nginx -> shared unix socket -> unicorn processes
+
+- python web serving
+  - WSGI: either in-proc or out-of-proc
+  - passenger: supports wsgi as well as ruby/rails
+  - paste: elastic thread pool
+  - tornado: fast but not fastest
+  - fapws3: fastest wsgi, no HTTP/1.1
+  - uwsgi: fastest wsgi; has nginx modules
+  - gevent: fastest wsgi
+  - flup: obsoletes fcgi; a threaded fastcgi-to-wsgi server
+  - <http://nichol.as/benchmark-of-python-web-servers>
 
 - ldirectord: TCP load balancer; used by linux-ha
 - linux virtual server: lots of software
