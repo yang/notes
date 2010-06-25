@@ -1522,6 +1522,18 @@
     - originally: nginx -> haproxy -> mongrel threads/processes
     - now: nginx -> shared unix socket -> unicorn processes
 
+- message queues
+  - starling: ruby mq; no durability
+  - kestrel: starling in scala
+  - AMQP: standard protocol for reliable MQs; requires intermediate brokers
+    - 1.0 supports 2PC
+  - rabbitmq: reliable erlang AMQP; anecdotally unstable
+  - activemq: not a serious AMQP impl, more of a sandbox
+  - zeromq: fast; TODO <http://nichol.as/zeromq-an-introduction>
+  - qpid: TODO
+  - hedwig: reliable non-standard MQ; declarative, non-standard; used in pnuts;
+    research focus on wide-area topology
+
 - python web serving
   - WSGI: either in-proc or out-of-proc
   - passenger: supports wsgi as well as ruby/rails
