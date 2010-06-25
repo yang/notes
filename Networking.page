@@ -208,7 +208,7 @@ tcp
 
 more tcp
 
-- nagle's: wait to batch sends
+- nagle's: wait for acks, in order to batch sends
 - oob: send urgent data out of stream; unused; unreliable; poorly supported
 - delayed ACKs for batching; by default (on linux), wait up to 40ms
 
