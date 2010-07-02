@@ -567,7 +567,7 @@ cooper, vldb09)
   - step 2: multi-query scheduling
     - even after knowing $K_q$, must avoid contention (assigning too many
       queries to same server simultaneously)
-    - # concurrent scans on a server to avoid random IO can result in faster
+    - num concurrent scans on a server to avoid random IO can result in faster
       execution for all queries
     - minimize disk contention and ensure all queries get good perf
     - max # queries $L_s$ on server $s$ 
@@ -1350,7 +1350,7 @@ datacenter sizes, 2010-04-03
 facebook, 2009 talk at UCSD
 
 - general
-  - #2 property on internet, measuring time spent on site
+  - \#2 property on internet, measuring time spent on site
   - 200B hits/mo, >3.9T feed actions/day, 15K sites using FB content
   - exponential user growth; 70% users outside US
 - 20B photos in 4 resolutions; 2-3B uploads/mo; serve 600K photos/s
@@ -1453,20 +1453,20 @@ stackoverflow (8/2009)
 twitter
 
 - stats revealed at Chirp 2010
-  - # of registered users: 105,779,710 (1,500% growth over the last three
+  - registered users: 105,779,710 (1,500% growth over the last three
     years.)
-  - # of new sign-ups per day: ~ 300,000 (More recently, 60% of new accounts
+  - new sign-ups per day: ~ 300,000 (More recently, 60% of new accounts
     were from outside the U.S.)
-  - # of new tweets per day: 55 million
-  - # of unique daily visitors to the site twitter.com: ~ 180 million. (That's
+  - new tweets per day: 55 million
+  - unique daily visitors to the site twitter.com: ~ 180 million. (That's
     actually dwarfed by the traffic that flows through twitter's API -- 75% of
     traffic is through the API.)
-  - # of API requests per day: 3 billion
-  - # of registered apps: 100,000 (from 50,000 in Dec/2009)
-  - # of search queries per day: 600 milion
+  - API requests per day: 3 billion
+  - registered apps: 100,000 (from 50,000 in Dec/2009)
+  - search queries per day: 600 milion
   - Twitter's instance, of their recently open-sourced graph database
     (FlockDB), has 300 billion edges and handles 100,000 reads per second.
-  - # of servers: "... in the hundreds"
+  - servers: "... in the hundreds"
   - <http://radar.oreilly.com/2010/04/twitter-by-the-numbers.html>
 - big data in real-time at twitter (qcon 2010-04-20)
   - tweets
@@ -1495,7 +1495,7 @@ twitter
   - <http://www.slideshare.net/nkallen/q-con-3770885>
 - use pig and hadoop <http://www.slideshare.net/kevinweil/hadoop-pig-and-twitter-nosql-east-2009>
   - basic stats
-    - # reqs/day
+    - reqs/day
     - req latency
     - distribution of response codes
     - searches/day
