@@ -1162,6 +1162,12 @@ rpc chains (nsdi09)
   - also allow concurrent sub-chains using splits in the path
 - also ties in to efficient bandwidth usage a la GFS (chained replication)
 
+google storage (google io 2010)
+
+- like S3
+- all data WAN-replicated, RYW consistency, any size objects
+- REST API, ACLs
+
 transactions across datacenters (google io 2009)
 
 - google dubs it "multihoming"; focus on app engine datastore
