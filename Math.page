@@ -258,6 +258,12 @@ problems
 - expected # flips before HTH > that of HTT, because HTH overlaps with itself
   - sketch: with a million flips, same # HTH and HTT, but HTH are more clumped,
     so more space btwn them
+- st. petersburg's paradox <http://mindyourdecisions.com/blog/2010/06/07/the-st-petersburg-paradox-a-flimsy-critique-of-expectation-theory-by-people-who-dont-know-math-or-economics/>
+  - game: toss coin until H; payoff is $2 for 0T, $4 for 1T, $8 for 2T, ...
+  - expected payout is $1/2 * 2 + 1/4 * 4 + 1/8 * 8 + ... = \infty$
+  - but must consider realistic payouts (nobody has $\infty$), utility of
+    payout (e.g. log scale), and weight-vs-risk (why you don't play the
+    lottery)
 
 game theory
 ===========
