@@ -1262,10 +1262,11 @@ distributed oltp databases
 
 bigtable
 
-- in-memory memtable for holding pending writes
+- in-memory memtable LSM for holding pending writes
 - on write, flush WAL and update memtable
 - on reads, read memtable & multiple disktables, but first checking for
-  existence in their respective bloom filters (which may say "maybe" or "no")
+  non-existence in their respective bloom filters (which may say "maybe" or
+  "no")
 - when full, flush memtable to disk as a new disktable
 - periodically compact the disktables, merging them into a single disktable
 - not partition-tolerant
@@ -1363,12 +1364,14 @@ cassandra (facebook, 2008)
   - avro instead of thrift
   - backend for hive
 - adoption: fb, twitter, digg, rackspace
+- 14K writes/s, 7K reads/s; 15% write overhead from fsync (durable log)
 - refs
   - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
   - <http://arin.me/code/wtf-is-a-supercolumn-cassandra-data-model>
   - <https://www.cloudkick.com/blog/2010/mar/02/4_months_with_cassandra/>
   - perf bench v voldemort:
     <http://blog.medallia.com/2010/05/choosing_a_keyvalue_storage_sy.html>
+  - <http://www.dbms2.com/2010/07/06/cassandra-technical-overview/>
 
 scalien keyspace TODO
 
