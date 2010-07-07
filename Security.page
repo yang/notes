@@ -439,6 +439,32 @@ network attacks
 - ping of death: icmp packet that's >64KB in length
 - teardrop: mangled IP fragments with overlapping, over-sized payloads
 
+network reconnaissance
+
+- idle scan aka zombie scan: port scan that doesn't reveal scanner's IP to
+  target by using intermediate node ("zombie")
+  - attacker sends SYNACK to zombie to get its IP ID (eg 31337)
+  - attacker sends SYN to target spoofed from zombie; if port is open, target
+    sends SYNACK to zombie
+  - zombie sends RST to target since that's what TCP does on unsolicited
+    SYNACK; this has IP ID 31338
+  - attacker sends SYNACK to zombie again to get its new IP ID 31339
+  - if port wasn't open, attacker's subsequent SYNACK would get 31338
+
+network security tools
+
+- nessus: vuln scanner
+- wireshark: packet analyzer
+- snort: IDS
+- netcat: swiss army knife
+- metasploit: dev framework for exploits
+- hping, nmap: network probing
+- kismet: wifi sniffer
+- tcpdump: packet capture
+- cain & abel: windows password recovery
+- john the ripper: unix password recovery
+- <http://sectools.org/>
+
 network hijacking
 
 - TCP hijacking
