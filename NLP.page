@@ -7,6 +7,16 @@ stemming
   porter stemming: 
   exclusion lists
 
+general NLP problems
+
+- POS tagging
+- sentence detection
+- tokenization
+- chunking
+- parsing
+- named entity recognition
+- coreference
+
 term frequency inverse document frequency (TFIDF)
 
 - term frequency is num occurrences of term $t_i$ in doc $d_j$ over total num
