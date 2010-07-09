@@ -1,7 +1,6 @@
 TODO
 
 - merge in notes from CS162
-- failure trends in a large disk drive population
 - avoiding the disk bottleneck in the data domain deduplication file system
 
 Background
@@ -1117,6 +1116,20 @@ flashcache (facebook 2010)
 failure trends in a large disk drive population (google, fast07)
 
 - TODO
+
+Failures
+========
+
+characterizing cloud computing hardware reliability (MSR, SOCC10)
+
+- For every 100 machines, 9.5 machines recorded a failure annually
+- For every 100 machines, 20 failures were recorded annually (so 2 repairs per machine)
+- 70.7% of failures were disks, 6.5% raid controller, 5.1% memory, 17.6% other
+- When a failure occurs, there is a 20% chance another failure will occur within 1 day!
+- Failure probability is correlated with number of disks in a server, slope is greater than 1!
+- Many times, a faulty raid controller would cause failures to be reported as a disk failure
+- <http://sns.cs.princeton.edu/2010/06/acm-symposium-on-cloud-computing-socc-2010-day-2/>
+- <http://research.microsoft.com/pubs/120439/socc088-vishwanath.pdf>
 
 DVCS
 ====
