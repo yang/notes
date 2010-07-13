@@ -265,6 +265,18 @@ sqlite
 - storage
   - data stored directly in btree
 
+sql server 2008
+
+- integration services: ETL tools
+- reporting services
+- analysis services: BI tools
+- powerpivot for excel/sharepoint makes report designing easier/interactive
+- full text search engine
+- r2
+  - streaminsight: CEP
+  - master data management: dealing with multiple DBs/sources
+  - reporting services integration w sharepoint CMS: publish olap analytics
+
 distributed postgresql
 
 - postgres-r: async master-master replication
