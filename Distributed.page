@@ -1364,6 +1364,9 @@ cassandra (facebook, 2008)
   - avro instead of thrift
   - backend for hive
 - adoption: fb, twitter, digg, rackspace
+  - fb aborted adoption of cassandra, trying to move away but still
+    stuck with it for inbox search; this helped the 3 devs leave (spullara)
+  - twitter not planning to use cassandra for any critical data stores (7/7/10)
 - 14K writes/s, 7K reads/s; 15% write overhead from fsync (durable log)
 - refs
   - <http://blog.oskarsson.nu/2009/06/nosql-debrief.html>
