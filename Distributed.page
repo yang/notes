@@ -1463,7 +1463,7 @@ hbase
   - need HDFS appends to avoid data loss
 - writes: WAL is HDFS file
   - commit after in mem on 3 replicas, but flushed to disk asynchronously
-  - fast writes, but no durability
+  - fast writes; CDH3 adds single-server durability
 - HDFS is rack-aware
 - <http://hstack.org/why-were-using-hbase-part-2/>
 
