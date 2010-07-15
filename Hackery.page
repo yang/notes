@@ -1588,7 +1588,10 @@
   - authentication types: basic (base64) and digest (MD5)
     - most advanced authentication backends plug into basic (pam, external)
     - basic should be used only behind SSL
-    - external: uses any executable
+    - external: uses any executable; use pwauth for crypt/pam
+    - mod_authnz_external easier than mod_auth_pam, works with new apache arch,
+      actively maintained, and doesn't need apache to have read access to
+      /etc/shadow
 
 - ruby
   - must require 'rubygems' first
