@@ -1585,6 +1585,10 @@
     - generally not so bad for security
     - AllowOverride Options doesn't actually enable everything
       - eg "Option SymLinksIfOwnerMatch not allowed here"
+  - authentication types: basic (base64) and digest (MD5)
+    - most advanced authentication backends plug into basic (pam, external)
+    - basic should be used only behind SSL
+    - external: uses any executable
 
 - ruby
   - must require 'rubygems' first

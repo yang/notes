@@ -386,6 +386,10 @@ XSRF (cross-site request forgery)
 - PEM: privacy-enhanced mail; a format of base64-encoded DEM certificates
   between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----"
 
+pluggable authentication module (PAM)
+
+- first in linux (linux-pam from RH), but on other systems now
+
 PKI
 
 - TLS/SSL certificates
