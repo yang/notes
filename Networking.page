@@ -531,6 +531,8 @@ A Scalable, Commodity Data Center Network Architecture (amin vahdat, ucsd, sigco
 
 PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric (amin vahdat, ucsd, sigcomm09)
 
+- problems: DCs have: no scalability, mgmt difficulty, inflexible comm, limited
+  support for VM migration
 - assumptions: modern DCs are "fat trees" or multi-rooted hierarchies
   - core, agg, and edge switches
   - location discovery protocol (LDP): used by switches to determine position
