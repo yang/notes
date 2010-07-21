@@ -63,7 +63,9 @@ companies
   - aster data: customers: myspace; hadoop interop; COTS
   - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
   - infobright: wants multicore queries, ACID
-  - netezza: db hw
+  - netezza: row-based db hw with compression, clustering
+    - compression: prefix compression, huffman coding
+    - clustering: multi-dimensional simultaneous partitioning w space-filling hilbert curve
     - twinfin: well-designed proprietary hw appliance
     - twinfini: parallel
   - datallegro/ms
@@ -1186,6 +1188,8 @@ google
 
 - 2006: 400M queries/day
 - 9/2009: 12.8B queries/mo, 427M queries/day, 5K queries/s
+- 6/8/2010: index ~100PB, growing 100-999TB/day
+  - <http://googleblog.blogspot.com/2010/06/our-new-search-index-caffeine.html>
 - 11/2009 jeff dean LADIS talk
   - typical server: 16GB RAM, 2TB disk
     - easily hold full web index in mem with just 500K servers
