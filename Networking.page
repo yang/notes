@@ -104,6 +104,7 @@ dns
   _pointer records_
   - eg to find name of 1.2.3.4, lookup 4.3.2.1.in-addr.com (note topological
     addr reversal)
+  - populated along with forward entries
   - impractical since introduction of CIDR; see RFC 2317 (uses CNAMEs)
 - _resource record (RR)_: the basic data elt
   - contains: NAME (FQDN), TYPE, TTL, CLASS, type-specific data (RDLENGTH,
@@ -161,6 +162,11 @@ SMTP
     if this is set
   - implemented by spamassassin, courier, exchange, patches for
     postfix/sendmail/exim/qmail
+- domainkeys identified mail (DKIM): pub key
+  - each SMTP relay signs whole mail and specifies a _selector_ name
+  - PKs stored in DNS TXT record in SELECTOR._domainkey.example.com
+  - pushed by yahoo; used by gmail, many others
+  - comparable to sender id, which is a MS technology
 
 zeroconf
 
