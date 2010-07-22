@@ -1334,6 +1334,11 @@ youtube, 2007 seattle conference on scalability
     - changed to software RAID 0 (striping) over 5 RAID 1 pairs (mirroring), ie manual RAID 10
   - ultimately partitioned by user
 
+facebook, misc
+
+- <http://social.venturebeat.com/2010/07/07/facebook-like-buttons/>
+  - 3M like buttons served per day
+
 facebook, 2009 talk at MSR
 
 - 300M active users
@@ -1598,3 +1603,33 @@ adobe
   - faces transient bugs eg ZK byte-loss bug
 - preferred over cassandra despite its complexity; argues complexity is non-accidental
 - <http://hstack.org/why-were-using-hbase-part-2/>
+
+github
+
+- <http://github.com/blog/667-webpulp-tv-interview-with-tom-preston-werner>
+  - git repos on 6 file server pairs now
+- <http://github.com/blog/530-how-we-made-github-fast>
+  - ldirectord on active/standby pair of xens
+  - ships your request off to one of the four frontend machines
+  - 4 frontend machines w nginx -> 16 unicorns w rails
+  - mysql on 2 8-core 32GB RAM boxes w 15KRPM SAS HDDs, replicating over DRBD
+  - git access
+    - grit is ruby lib that speaks git
+    - swapped grit's FS backend to use the smoke RPC proxying service
+    - proxymachine layer 7 TCP routing proxy with ruby routing logic
+      - extracts username of specified repo
+      - uses chimney to look up route for that user; look up in redis
+      - each frontend runs 4 proxymachine instances behind haproxy
+  - 4 active/standby pairs of (git) file servers: 8 core, 16GB RAM, 6 * 300GB
+    15K RPM SAS HDDs in RAID10
+    - each has 2 ernie rpc servers spawning 16 ruby workers
+  - ssh
+    - sshd patched to look up PKs in mysql
+    - gerve (git serve) is smarter git-shell (restricts exec)
+      - grant access if you are owner or in ACL (in mysql)
+      - chimney for route lookup
+      - `exec ssh git@ROUTE COMMAND ARGS`
+  - git: only does clones (a public operation); handled by proxymachine
+  - sub-systems: job queue, archive downloads, billing, mirroring, svn
+    importer
+  - side-systems: github pages, gist, gem server, internal tools
