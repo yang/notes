@@ -889,6 +889,37 @@ kernel null pointer exploits
   single failure. That is certainly the case here."
 - <http://lwn.net/Articles/342330/>
 
+IFC
+===
+
+general
+
+- [autoescape makes taint mode obsolete for web apps?]
+
+taint mode for python via a library (2010)
+
+- dyntaint: nifty; only does basic taint
+- decorators: @untrusted, @ssink(TYPE), @cleaner(SQLI) where TYPE denotes
+  channel type with relevant attacks (SQLI, OSI)
+- <http://www.juanjoconti.com.ar/2010/07/06/talk-taint-mode-for-python-via-a-library-slides/>
+
+RESIN: Improving Application Security with Data Flow Assertions (alex yip sosp09)
+
+- python-taint: alexyip; requires new interpreter
+- _filter objects_ define data flow boundaries on functions, IO channels
+  - eg file objects, escape()
+  - default set on all standard libs
+  - eg filter on http output channel could check for attacks like crlfcrlf
+- annotate sensitive data w _policy objects_
+  - export_check(ctx) method checks that ctx is suitable to output data to
+  - eg for passwd
+    - policy object has an email field
+    - export_check(ctx) = ctx is email to matching recip, or ctx is http to admin
+  - eg user supplied inputs
+  - merge(policy_set) method is overridable; defaults to union
+- runtime tracks ints, strings (possibly down to individual chars)
+  - wraps sql db interfaces to persist policies (rewrites schemas)
+
 DIFC
 ----
 
