@@ -490,7 +490,7 @@ network hijacking
     unrelated domains
   - bugs in eg BIND allowed the above to slip by; now fixed
   - still, no signing means easy to do MITM
-  - DNSSEC signs responses with PKI
+  - DNSSEC signs responses with PKI-like infrastructure
 - DNS rebinding: trick browser into combining diff hosts into 1 origin
   - circumvent firewalls; access internal sites
   - steps
