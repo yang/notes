@@ -1117,6 +1117,25 @@ failure trends in a large disk drive population (google, fast07)
 
 - TODO
 
+nimble storage
+
+- capacity optimized snapshots, not backups
+- flash is used to give great perf
+- replication that is efficient and based on the primary info for fast recovery
+- CASL architecture
+  - inline compression and de-dup
+  - large adaptive flash cache, atop cheap SATA
+  - high-cap disk storage using large SATA drives
+  - integrated backup: 60-90d of delta compressed incremental snapshots
+  - replication: point in time snapshot replication
+- a log fs, but using flash instead of main mem for index/metadata, and
+  integrates closely into disk based FS
+- landscape
+  - write in place: emc, equallogic
+  - write anywhere: netapp wafl
+  - write sequentially: data domain, nimble casl
+- people: formerly sun, netapp, data domain
+
 Failures
 ========
 
