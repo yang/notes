@@ -383,9 +383,6 @@ XSRF (cross-site request forgery)
     - GET requests are tricky because you can read the URL out of the location
       bar
 
-- PEM: privacy-enhanced mail; a format of base64-encoded DEM certificates
-  between "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----"
-
 pluggable authentication module (PAM)
 
 - first in linux (linux-pam from RH), but on other systems now
@@ -404,6 +401,13 @@ PKI
 - online certificate status protocol (OCSP): check online if cert still good
   - less BW (don't DL all), real-time
   - impl'd in major browsers
+- X509 certificate formats
+  - pem: base64, with "BEGIN/END CERTIFICATE"; for DEM certs; originally for
+    privacy enhanced mail
+  - cer, crt, der: usually in binary DER format
+  - p12: PKCS12, may contain both public and private keys; published by RSA
+    - protected with password-based symmetric key
+    - successor to PFX from MS, criticized for complexity
 
 - MAC: integrity and authenticity; TODO
 - message authentication code (MAC): keyed hash; TODO
