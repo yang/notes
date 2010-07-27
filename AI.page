@@ -95,10 +95,10 @@ machine learning
 - inference, belief propagation
 - inference, junction trees
 - conditional models, structured prediction
+  - structured prediction: similar to classification but predicting an output
+    with many possible values but still tractable to learn, e.g. structures;
+    eg POS tags for a string of words
 - learning conditional models
-- current topics
-  - structured prediction: similar to classification but predicting a
-    structure instead of a label
 
 Developing a self-driving car for the 2007 DARPA Urban Challenge (Seth Teller's
 Angstrom talk, 5/1/08)
