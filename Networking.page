@@ -172,10 +172,14 @@ zeroconf
 
 - techniques for creating IP networks automatically
 - displaces DHCP and DNS services
-- _link-local addr assignment_: standard in IP; addr autoconfig; 169.254.0.0/16
-- _multicast DNS (mDNS)_: name resolution, service discovery (printers, shares)
+- _link-local addr assignment_: standard in IP; addr autoconfig;
+  169.254.0.0/16
+- uses _multicast DNS (mDNS)_ for name resolution, service discovery
+  (printers, shares)
+  - sent to bcast IP 224.0.0.251 on UDP port 5353
   - apple, DNS-SD: TODO
   - making IETF std
+- look up SERVICEID.SERVICENAME.domain.com
 - impls
   - bonjour: apple's
   - avahi: posix
