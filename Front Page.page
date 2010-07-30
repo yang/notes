@@ -6,7 +6,7 @@ industry, with a heavy focus on software systems (distributed systems, database
 systems, etc.).
 
 Table of Contents
-=================
+-----------------
 
 - [AI][]
 - [Algorithms][]
@@ -40,13 +40,13 @@ Table of Contents
 Watch your step. This place is really messy.
 
 Feeds
-=====
+-----
 
 The wiki has a [site-wide feed](_feed) and per-page feeds (e.g., for the
 [Concurrency]() page, use [_feed/Concurrency](_feed/Concurrency)).
 
 About
-=====
+-----
 
 I wiki-fied my notes to share them via a familiar read/write web interface.
 This wiki system, [Gitit](http://gitit.net/), is powered by Git, so I've cloned
