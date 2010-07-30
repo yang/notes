@@ -1,19 +1,58 @@
-# Welcome to Yang's Wiki
+Welcome to Yang's Wiki
+======================
 
 This is my collection of notes on computer science, research, programming, and
-industry, with a heavy focus on software systems. I wiki-fied this to share the
-information through a familiar read/write web interface. This wiki system,
-[Gitit](http://gitit.net/), is powered by Git, so I've cloned the repository
-[on github](http://github.com/yang/notes).
+industry, with a heavy focus on software systems (distributed systems, database
+systems, etc.).
 
-To see what's here, click on the [All Pages](_index) link at the left.
+Table of Contents
+=================
+
+- [AI][]
+- [Algorithms][]
+- [Architecture][]
+- [Compilers][]
+- [Complexity][]
+- [Concurrency][]
+- [DB][]
+- [Distributed][]
+- [Graphics][]
+- [Graphs][]
+- [HCI][]
+- [Hackery][]
+- [Hardware][]
+- [Help][]
+- [IR][]
+- [Languages][]
+- [Math][]
+- [Misc][]
+- [More Concurrency][]
+- [NLP][]
+- [Networking][]
+- [Projects][]
+- [Queue][]
+- [Security][]
+- [Sensornets][]
+- [Software Engineering][]
+- [Systems][]
+- [Web][]
+
+Watch your step. This place is really messy.
+
+Feeds
+=====
 
 The wiki has a [site-wide feed](_feed) and per-page feeds (e.g., for the
 [Concurrency]() page, use [_feed/Concurrency](_feed/Concurrency)).
 
-Watch your step. This place is really messy.
+About
+=====
 
-For more information about yours truly, see my [home page], [Google (Buzz)
+I wiki-fied my notes to share them via a familiar read/write web interface.
+This wiki system, [Gitit](http://gitit.net/), is powered by Git, so I've cloned
+the repository [on github](http://github.com/yang/notes).
+
+For more information about the author, see my [home page], [Google (Buzz)
 profile], or [blog].
 
 [home page]: http://yz.mit.edu/
