@@ -42,6 +42,25 @@ standard boolean model
 
 - simplest, exact-match
 
+evaluation measures
+
+- normalized discounted cumulative gain (NDCG)
+- mean avg precision (MAP)
+- mean reciprocal rank (MRR)
+- these are all non-smooth cost functions
+  - used to approximate, eg cross-entropy of prob that order of a result pair
+    is correct:
+    <http://research.microsoft.com/~cburges/papers/ICML_ranking.pdf>
+  - recent advances directly optimize these:
+    <http://research.microsoft.com/en-us/um/people/cburges/papers/LambdaRank.pdf>
+
+learning to rank (LETOR)
+
+- features
+  - query-dependent: tf-idf, bm25, # matches in linking-anchors/title/body/url,
+    # clicks on page for this query
+  - query-independent: PageRank, # clicks/visits, spam score
+
 Structured Querying of Web Text (Mike Cafarella)
 
 - ExDB: probabilistic DB for SQL-like queries over web text
