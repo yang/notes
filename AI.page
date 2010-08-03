@@ -19,6 +19,7 @@ supervised learning
 - decision trees
 - support vector machines
 - Gaussian processes
+- boosting; boosted trees
 
 - case-based reasoning
   - knowledge-based ai
@@ -211,6 +212,13 @@ generalization error
   - ea subsample is a random sample with replacement from full sample
   - TODO
 - ref: <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
+
+loss functions
+
+- 0-1 loss
+- pairwise cross entropy
+- lambda loss
+- pairwise + RMSE
 
 nlp
 ===
