@@ -1335,10 +1335,21 @@ youtube, 2007 seattle conference on scalability
     - changed to software RAID 0 (striping) over 5 RAID 1 pairs (mirroring), ie manual RAID 10
   - ultimately partitioned by user
 
+linkedin
+
+- hadoop summit 2010
+  - 120B relationships, 82 jobs/day 16TB tmp data, 2 engrs
+  - <http://mndoci.com/2010/06/30/massive-data/>
+
 facebook, misc
 
 - <http://social.venturebeat.com/2010/07/07/facebook-like-buttons/>
   - 3B like buttons served per day
+- hadoop summit 2010
+  - 36 PB uncompressed, 2250 boxes, 23K cores, 32GB RAM/box, 80-90TB/day
+  - <http://mndoci.com/2010/06/30/massive-data/>
+- <http://www.datacenterknowledge.com/archives/2010/06/28/facebook-server-count-60000-or-more/>
+  - 60K+ servers
 
 facebook, 2009 talk at MSR
 
@@ -1476,6 +1487,9 @@ stackoverflow (8/2009)
 
 twitter
 
+- hadoop summit 2010
+  - 7 TB/day into HDFS
+  - <http://mndoci.com/2010/06/30/massive-data/>
 - stats revealed at Chirp 2010
   - registered users: 105,779,710 (1,500% growth over the last three
     years.)
@@ -1548,6 +1562,14 @@ twitter
 
 yahoo
 
+- hadoop summit 2010
+  - 38K hadoop servers, 70 PB, 1M+ jobs/mo, 50% in pig
+  - 3 PB/day processed, 120 TB/day flow through hadoop
+  - 170 PB across world
+  - largest hadoop clusters at 4000/2300 nodes w 70/40 PB, full repl
+  - krb for multitenant hadoop clusters
+  - <http://perspectives.mvdirona.com/2010/07/03/HadoopSummit2010.aspx>
+  - <http://mndoci.com/2010/06/30/massive-data/>
 - Hadoop infrastructure, 2010-04-26
   - 30,000 nodes (16GB RAM, 8cores); 250,000 cores; 100,000 MR jobs perday
   - <http://twitter.com/marin_dimitrov/status/12900368052>
