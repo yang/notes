@@ -567,6 +567,7 @@ hadoop
     default 5 at a time)
   - _sort phase_: group records with same key
   - _reduce phase_: apply reducer to each key and corresponding list of values
+- oozie workflow engine uses DAG of hadoop, pig, ssh, http, email jobs
 
 hive
 
