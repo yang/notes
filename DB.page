@@ -47,6 +47,8 @@ companies
     - column store, execution, compression
     - FPGA for data- and task-parallelism
     - targeting mysql
+    - died, acquired by teradata at bargain price
+    - <http://dbmsmusings.blogspot.com/2010/08/thoughts-on-kickfires-apparent-demise.html>
   - sybase iq: data mining
     - scale-out; C++ UDFs; embedded data mining/predictive analytics lib (modeling & scoring)
   - sas: has own internal db
