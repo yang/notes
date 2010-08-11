@@ -1491,7 +1491,7 @@
   - google: intitle:"index of" [whatever you're looking for]
 
 - web serving architecture
-  - nginx: web server, caching reverse proxy, http load balancer
+  - nginx: web server, caching reverse proxy, round-robin http load balancer
     - epoll-based fork of apache 1.3; supports fastcgi; modules for eg WSGI
     - as with any async IO system, good for many concurrent (low-activity)
       connections (eg comet)
@@ -1509,7 +1509,8 @@
     - all forked workers listen on same socket; leads to 'thundering herd' of
       all waking up, but a problem only when idle
   - gunicorn: Python greenlet unicorn
-  - HAProxy: tcp/http load balancer
+  - HAProxy: tcp/http load balancer; very configurable; can do smart load
+    balancing; recommend in front of nginx
   - varnish: caching reverse proxy, http load balancer
     - faster than nginx?
     - uses (tons of) threads (and large addr space; designed for 64-bit)
