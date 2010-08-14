@@ -12,6 +12,10 @@ statistical learning
 statistics
 ==========
 
+- mean deviation: the mean absolute deviation from the mean
+  - harder to eval in closed form
+  - used by TPC To calculate large deviations from RTT by calcing EWM deviation
+
 - TODO
 - (paired) student t-test
 - distributions
