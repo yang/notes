@@ -318,6 +318,16 @@ error detection coding
   has checksum over UDP/IP headers (optional over IPv4), TCP has checksum over
   TCP/IP headers with ARQ via triple-ack or timeout
 
+checksums
+
+- internet checksum: 2 bytes; used in IPv4, TCP, UDP headers; very weak (amazon outage)
+- adler-32: 4 bytes; stronger; still efficient to compute; weak for short msgs
+- fletcher's checksum: slightly stronger than adler-32; slightly slower to compute
+- CRC: good middle ground; studied by mathematicians; easily implemented in HW
+  - CRC32C: particularly strong for communicating apps; implemented in SSE4.2
+    - slicing-by-8: best SW algo for CRC32C
+- <http://evanjones.ca/crc32c.html>
+
 error correcting code (ECC): usu. mean FEC
 
 - automatic repeat request (ARQ) aka backward error correction: use error
