@@ -1579,6 +1579,9 @@
     - synchronous; not designed for event-based IO
   - uWSGI: looks janky?
     - uGreens: ucontext.h
+  - mem mgmt
+    - ref-counted + cycle GC; `gc` module triggers cycle
+    - all objs (incl. ints) are heap objs; ints -1..99 are lazily interned
 
 - apache
   - MPMs
