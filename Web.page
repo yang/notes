@@ -213,6 +213,14 @@ html5
   - footer: add'l info: signature, related links, copyright; non-rec
   - address: email contact info
 
+meta tags
+
+- quirks mode: pre-IE7 behavior; specified with e.g. `<!DOCTYPE html PUBLIC>`
+- strict mode: IE7 behavior
+- standards mode: IE8 behavior
+- `x-ua-compatible`: implemented by IE8; aka "version targeting"
+  - eg `content="IE=EmulateIE7" causese IE8 to behavior like older version
+
 misc
 ====
 
