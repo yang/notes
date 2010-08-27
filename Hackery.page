@@ -1380,6 +1380,12 @@
   - google perftools cpu profiler does not like x86_64 (google for issues)
 
 - posix
+  - FS
+    - atime: originally when file was last read-accessed; now either disabled
+      (noatime) or only updated if atime<mtime (relatime) for tools that need
+      to know if file was accessed since modification
+    - mtime: when data was changed
+    - ctime: when data or metadata was changed
   - IEEE Std 1003.1 aka POSIX.1
   - daemonizing
     - <http://www.enderunix.org/docs/eng/daemon.php>
