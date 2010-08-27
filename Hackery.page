@@ -214,6 +214,7 @@
   - main-memory hsqldb: only `read uncommitted`
 
 - mysql
+  - innodb stores data in PK order
   - explain/optimization
     - select types
       - simple: no union or subqueries
