@@ -1,3 +1,10 @@
+- smart cards
+  - form factors: credit card, mini-SIM (most common), micro-SIM
+  - communication w PCs
+    - PC/SC (personal computer/smart card): serial protocol; in Win; PC/SC Lite
+      for Linux
+    - CCID, ICCD: USB protocols
+
 - ubuntu
   - `-dbgsym` packages have debug symbols for all binaries
 
