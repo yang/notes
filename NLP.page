@@ -17,6 +17,10 @@ general NLP problems
 - named entity recognition
 - coreference
 
+misc
+
+- $n$-grams of chars: useful for language guessing
+
 term frequency inverse document frequency (TFIDF)
 
 - term frequency is num occurrences of term $t_i$ in doc $d_j$ over total num
