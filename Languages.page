@@ -895,3 +895,36 @@ first-order contracts
   - lax checking: don't complain about it
   - only higher order contracts can be abusive, since one contract is violating another contract
 - TODO incomplete
+
+Exterminator (zorn, msr, pldi07)
+
+- intro
+  - memory debuggers, eg purify/valgrind: slow
+  - fail-stop systems, eg safec, suif ptr analysis: abort, need src, req
+    gc/pool alloc for dangling pointers
+  - failure-oblivious systems: same but manufacture read values and ignore bad
+    writes
+  - fault-tolerant systems: mask errors
+    - logging/replaying inputs in an environment that pads alloc reqs and
+      defers deallocs (rx)
+    - randomization + optional voting-based replication to reduce chances of
+      error having effect (diehard)
+- software architecture
+  - diehard overview
+    - allocator: miniheaps of same-sized objs, bitmaps of free slots
+      - overflows likely to clobber free slots (tolerate overflows)
+      - unlikely to reuse recently freed slots (tolerate dangling ptrs)
+    - process replicas vote on outputs
+  - exterminator's heap layout
+    - pad each obj with: obj seqno, alloc/dealloc sites, canary bitset (was obj
+      filled with canaries?)
+    - diefast
+      - use free space as fence-posts
+      - randomize canaries
+      - read-only dangling ptr errs don't necessarily crash; write canaries
+        with prob p to help isolate these errs (at expense of detection)
+      - verify canaries on alloc and neighboring canaries on dealloc
+  - modes of operation
+    - iterative, replicated, cumulative
+- reminders
+  - safec: uses enhanced ptr/arr repr
