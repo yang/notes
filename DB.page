@@ -1184,6 +1184,75 @@ couchdb (apache, 2008)
 - <http://sitr.us/2009/09/13/couchdb-notes.html>
 - <http://sitr.us/2009/06/30/database-queries-the-couchdb-way.html>
 
+dataspaces
+----------
+
+Indexing Dataspaces (Xin Dong, Alon Halevy, sigmod07)
+
+- INTRO
+  - users explore and use predicate queries and neighborhood
+  - keyword queries
+  - traditionally: inverted list or index tree or XML
+- PROBLEM DEFINITION
+  - INDEXING HETEROGENEOUS DATA
+    - eg: bibtex, word, ppt, email, www, xls, xml, rdb
+    - triples: (instance, attr, val) or (inst, assoc, inst)
+      (directional)
+    - how to extract from data sources to this model is a separate
+      topic
+    - synonyms among attrs & assocs
+    - hierarchies: 2 types (don't distinguish between them)
+      - sub-property: eg father < parent, contactAuthor < author
+      - sub-field: eg city < addr, firstName < name
+        - [not about complex structures' components, but see 4.4]
+        - [what happens when name is a unique inst? question of
+          extraction]
+  - QUERYING HETEROGENEOUS DATA
+    - predicate queries
+      - attr pred: matches on direct attr/sub-attr
+      - assoc preds: matches instances that have a (sub-)association
+        with another instance that has any matching attr
+      - [sub-attr/sub-assoc: either sub-property or sub-attr]
+      - [(firstName 'Yang') won't match an obj with name 'Yang']
+    - neighborhood keyword queries
+      - relevant inst: has direct attr
+      - associated inst: assoc with a relevant inst
+    - user need not have knowledge of exact schema
+    - ranking is a separate issue
+    - [both queries limited to 2 degrees]
+  - INVERTED LISTS
+    - store occurrence counts
+- INDEXING STRUCTURE
+  - INDEXING ATTRS
+    - attr inverted lists (ATIL): inverted list on (keyword//attr//)
+  - INDEXING ASSOCS
+    - attr-assoc inverted list (AAIL): ATIL + (keyword//assoc//)
+      entries too
+    - [doesn't count occurrences within each assoc inst]
+    - easy extension to support k-ary assocs
+- INDEXING HIERARCHIES
+  - INDEX WITH DUPLICATION
+    - dup-ATIL: duplicate (eg Yang//firstName//, Yang//name//)
+    - increases index size
+  - INDEX WITH HIERARCHY PATH
+    - hier-ATIL: eg Yang//name//firstName//
+    - use row-wise deltas to minimize space overhead
+    - prefix serach more expensive
+  - HYBRID INDEX
+    - summary rows shadow other rows and end in additional //
+    - [need to skip the shadowed rows somehow - easy problem]
+    - start with hier-ATIL; add summary row for prefix p if count of
+      other rows with prefix p exceeds threshold
+    - [what if: a/a/{a,b,c/{a,b,c}}?]
+  - SCHEMA-LEVEL SYNONYMS
+    - assoc in one src = attr in another: naturally handled
+    - term heterogeneity: have table mapping sets of synonyms to
+      canonical names, and use this replacement in index and queries
+  - NEIGHBORHOOD KEYWORD QUERIES
+    - keyword inverted list (KIL): hybrid-AAIL, but also summarize
+      prefixes that correspond directly to keywords, i.e. k//
+- EXPERIMENTAL EVALUATION
+
 site stats
 ----------
 
