@@ -776,6 +776,12 @@
       - stack allocation
       - object eplosion
 
+  - parallel GC: actually a stop-the-world on “young generation”
+    - “parallel” means implemented w threads for better speed
+  - ConcurrentMarkSweep GC = “Full GC”
+    - apart from initial mark and final cleanup phase, it is really concurrent,
+      meaning that it runs in parallel to the normal process
+
 - alignment
 
   - `posix_memalign`: useful for aligning to cache line sizes
