@@ -61,6 +61,19 @@ learning to rank (LETOR)
     # clicks on page for this query
   - query-independent: PageRank, # clicks/visits, spam score
 
+latent semantic indexing (LSI)
+
+- uncover the underlying concepts/themes in a document by analyzing cohesively
+  all docs in the collection, seeing what terms co-occur frequently
+  - allows us to retrieve documents even if the exact terms don't appear
+  - construct term-document matrix (eg TF-IDFs)
+  - then find low-rank approximation to the matrix (since orig too large);
+    result is that some dimensions are combined and depend on more than one
+    term, e.g. `${car),(truck),(flower)} -> {(1.3452*car +
+    0.2828*truck),(flower)}`; mitigates synonymy problem
+  - uses SVD
+- <http://www.knowledgesearch.org/lsi/lsa_definition.htm>
+
 Structured Querying of Web Text (Mike Cafarella)
 
 - ExDB: probabilistic DB for SQL-like queries over web text
