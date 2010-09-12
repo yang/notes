@@ -336,15 +336,20 @@ Cellular
   - popular because it's international standard (eg europe, asia)
   - used by ATT, T-Mobile
   - has security vulns even when using KASUMI
-- High-Speed Downlink Packet Access (HSDPA): enhancement for 3G UMTS networks
+- High-Speed (Downlink) Packet Access (HSDPA/HSPA): enhancement for 3G UMTS
+  networks
   - used by ATT
 - Universal Mobile Telephone Service (UMTS): 3G network that GSM carriers use
   - developed by GSM community; one of ITU's family of 3G systems
   - peaks at 2Mbps; averages at 300-400Kbps
   - W-CDMA
   - used by ATT
-- WiMax: high-perf Wi-Fi 802.16
-  - potential cornerstone of 4G networks
+- WiMax: high-perf Wi-Fi 802.16e open standard; 12Mbps; OFDMA
+  - once potential cornerstone of 4G networks
+  - once backed by sprint/clearwire/intel
+- long term evolution (LTE): 4G tech winner; 100/50Mbps; proprietary standard
+  - successor to HSPA; OFDMA
+  - <http://images.intomobile.com/wp-content/uploads/2010/05/wimax-lte-4g-mobile-broadband-shootout.jpg>
 - Advanced Wireless Service (AWS): 3G
   - used by T-Mobile
 - cell tower area: ~10 sq mi
