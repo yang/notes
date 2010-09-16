@@ -25,6 +25,12 @@ statistics
 - $\mathrm{Correlation}(X, Y) = \frac{ \mathrm{Covariance}(X, Y) }{ \sigma_X
   \sigma_Y }$ where $\sigma$ is the SD
 
+test accuracy
+
+- precision = relevant & retrieved / retrieved
+- recall = relevant & retrieved / relevant
+- F1 score aka F-measure: `F = 2 * (precision * recall) / (precision + recall)`
+
 statistical significance
 
 - p-value: significance level; P(observation|null hypothesis)
@@ -96,6 +102,10 @@ From <http://en.wikipedia.org/wiki/Sparse_matrix>:
 > matrix. The concept of sparsity is useful in combinatorics and application
 > areas such as network theory, of a low density of significant data or
 > connections.
+
+linear independence
+
+- vectors linearly dependent iff determinant of vectors as cols is 0
 
 symmetric positive definite, positive semi-definite, negative definite, indefinite, etc.
 
