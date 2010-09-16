@@ -7,6 +7,102 @@ google mustang
 - multi-stage ranking: first filter on each child node, send to root, rank
 - few hundred from each children
 
+query understanding at bing
+
+- <http://www.searchenginecaffe.com/2010/07/sigir-2010-industry-day-query.html>
+- two modes
+  - Best effort retrieval: Find the most relevant results for the user query
+    - Query segmentation
+    - Stemming and synonym expansion
+    - Term deletion
+  - Automated Query Reformulation: Modify the user query to produce more relevant
+    results for the inferred intent
+    - spell correction
+    - term deletion
+    - This takes more liberty with the user's intent
+- stemming: restaurant -> resturant, sf -> san francisco
+  - abbrevs: un -> united nations
+  - utilize co-click patterns to find un/united nations
+- term relaxation
+  - [what is a diploid chromosome] -> "what is a" is not important from the SE matching, it introduces noise
+  - [where can I get an iPhone 4] -> where is an important part of the query. Removing "where" misses the whole point of the query
+  - [bowker's test of change tutorial] -> test of symmetry is the correct terminology. How do you know that it is the incorrect terminology? If you relax it to "bowker's test" you get better results
+- key concepts
+  - win/loss ratio
+    - wins are queries whose results improve
+    - losses are queries whose results degrade
+    - Related to precision, but not all valid reformulations change results
+  - Pre vs. Post result analysis
+    - Query alternatives generated pre-results
+    - Blending decisions are post results
+- query evaluation
+  - "Matching" level 0/l1/l2 -> inverted index, matching and ranking. Reduce
+    billions to hundreds of thousands of pages. Much of the loss can occur here
+    because it never made it into the candidate set. Assume that the other
+    layers that use ML, etc... will bubble the correct results to the top.
+  - "Merge" layer L3 -> the blending with multiple queries will be brought
+    together
+  - Federation layer L4 -> top layer coordinating activity
+  - An important component is the query planner in L3 that performs annoation
+    and rewriting.
+- matching & ranking
+  - L0/l1 - 10^10 docs. l0 - boolean set operations, l1- ir score (a linear
+    function over simple features like bm25, simple and fast, but not very
+    accurate)
+  - L2 reranking - 10^5 docs - ML heavy lifting: 1500 features, proximity
+  - L3 reranking - 10^3 - federation and blending
+  - L4 -> 10^1
+  - Learning to rank Using Gradient Descent (for L2 layer)
+- query annotation
+  - NLP Query annotation: offline analysis; similar to a 'parse tree'
+  - Ambiguity preserving: multiple interpretations
+  - Backend independent: shared
+  - Structure & Attributes: Syntax & semantics (how to handle tree leaf nodes)
+- query planning
+  - [{un | "united nations"} jobs] -> l3-merge(l2-rank([un jobs]),
+    l2-rank(["united nations" jobs])
+  - OR
+  - [{un| "united nations"} jobs] -> l3-cascade(threshold, l2-rank([un jobs]),
+    l2-rank(["united nations" jobs])
+  - the second is less certain and conditional
+- design considerations
+  - Efficiency
+    - one user query may generate multiple backend queries that are merged in
+      L3
+    - Some queries are cheaper than others
+    - query reduction can improve performance
+  - Relevance: L3 merging has maximal information, but is costly
+  - Multiple query plan strategies: Depending on query analysis confidence
+- query analysis models
+  - Noisy Channel Model: `argmax{P(reqire | query) } = arg max{
+    P(rewrite)P(query| rewrite)}`
+  - bayes inversion
+  - example: spelling
+    - languagel model: likelihood of the correction
+    - translation model: likelihood of the error occurring
+- language models
+  - Based on Large-scale text mining
+    - unigrams and N-grams (to favor common previously seen things, they make sense)
+    - Probability of query term sequence
+    - favor queries seen before
+    - avoid nonsensical combinations
+  - 1T n-gram resource: see MS ngram work here in SIGIR
+  - Translation Models: training sets of aligned pairs (mispelling/correction;
+    surface/stemmed)
+  - Query log analysis
+    - session reformulation
+    - coclick-> associated queries
+    - manual annotation
+  - (missed the references, but see: Wei et al, Pang et al., Craswell)
+- summary
+  - 60-70% of queries are reformulated
+  - Can radically improve results
+  - Trade-off between relevance and efficiency
+    - rewrites can be costly
+    - win/loss ratio is the key
+  - Especially important for tail queries
+    - no metadata to guide matching and ranking
+
 lucene
 
 - java library
