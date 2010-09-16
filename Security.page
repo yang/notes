@@ -510,6 +510,8 @@ network hijacking
   - airdrop-ng: deauthorization tool to disassociate APs and clients
 - dhcp exhaustion: silence the orig dhcp server, then become mitm dhcp server
   that dishes out your own gateway, dns, etc; there's a metasploit module
+- DNSSEC: includes hashes ('fingerprints') of cert or full cert chain
+  - <http://www.imperialviolet.org/2010/08/16/dnssectls.html>
 
 brute-force DOS
 
