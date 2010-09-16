@@ -140,8 +140,19 @@ standard boolean model
 
 evaluation measures
 
+- see statistical test accuracy measures for basic ones
+  - precision, recall, F-measure are single-value metrics of entire result set
+- mean avg precision (MAP): unlike single-value metrics, considers ranking
+  - avg of precisions computed at the point of each of the relevant docs
+  - AveP = $\sum_{r=1}^N P(r) \mathrm{rel}(r)$ / |relevant|, where
+    - rel(r) = binary function on the relevance of a given rank
+    - P(r) = precision at given cut-off rank = relevant & retrieved & rank<r /
+      r
+- discounted cumulative gain (DCG): uses graded relevance scale instead of bool
+  - insight: penalize highly relevant documents of low rank
+  - DCG accumulated at rank p = $rel_1 + \sum_{i=2}^p \frac{rel_i}{\log_2 i}$
+  - intuitively: relevance of 1 + other relevances, discounted logarithmically
 - normalized discounted cumulative gain (NDCG)
-- mean avg precision (MAP)
 - mean reciprocal rank (MRR)
 - these are all non-smooth cost functions
   - used to approximate, eg cross-entropy of prob that order of a result pair
