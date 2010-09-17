@@ -845,26 +845,28 @@ cool techs
 - utrace: a better ptrace
 - kexec/kdump: boot into another kernel/boot into crash dump producer
 
-ext4 vs fsync
+ext4 vs fsync and disk durability
 
 - `rename` is used because it's atomic; established in posix std
-- however, system crashes are not at all specified by posix
-- ext4 may order metadata writes such that the rename is written but not the
+- ext3: defaults to `data=ordered` which causes a journal commit to wait for
+  all data related to the journaled inode changes to be committed first
+  - also defaults to committing every 5s
+  - also: data=journaled, data=writeback
+- ext4: may order metadata writes such that the rename is written but not the
   contents of the new file
-- fsync: flushes memory to disk, prevents above scenario
-  - if crash after fsync, increases prob of new file vs. old file
-  - for max prob, fsync the containing directory
+  - this behavior is called _delayed allocation_ and is in most other modern
+    FSs
+- fsync: flushes memory to disk; proper use required here
+- `open;write;close;rename` may leave you with empty (or partial) file if
+  updated dir is written before file data
+- `open;write;fsync;close;rename` gives you either new or old file, not empty
+  - wait for `fsync(dir)` for ultimate commit
+- other pitfalls
   - ultimately no guarantees, since eg hw may have its own buffers and lie to
     us, or fs may just not be robust, but it's as close as you can get
   - but it's a prohibitively big perf hit; in ext3, implies system-wide flush
-- ext4: eventually patched but not sure how
-- mjg:
-
-  > It's simple. open(),write(),close(),rename() and open(),write(),fsync(),close(),rename(), are not semantically equivalent. One is "give me either the original data or the new data"[2]. The other is "always give me the new data". This is an important distinction. fsync() means that we've sent the data to the disk[3]. And, in general, that means that we've had to spin the disk up.
-
-- tso:
-
-  > First of all, the squence above exactly provides desired “atomicity without durability”.   It doesn’t guarantee which version of the file will appear in the event of an unexpected crash; if the application needs a guarantee that the new version of the file will be present after a crash, it’s necessary to fsync the containing directory.
+- <http://thunk.org/tytso/blog/2009/03/15/dont-fear-the-fsync/>
+- <http://www.sqlite.org/lockingv3.html>
 
 Ksplice (jbarnold, 2008)
 
