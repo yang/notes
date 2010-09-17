@@ -145,6 +145,13 @@ storage
 - PCI, SAS (serial-attached SCSI), SATA
   - PCI has biggest pipe and lowest CPU overhead; no need for block layer
 
+AWS
+
+- EBS: .1-.5% AFR per 20GB; 10x better than HDs at ~4%
+  - sync's are durable:
+    <http://developer.amazonwebservices.com/connect/thread.jspa?messageID=111950&#111950>
+- S3: automatically replicated across AZs
+
 Concurrency
 ===========
 
