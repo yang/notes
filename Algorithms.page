@@ -25,6 +25,8 @@ TODO
   - min-cut of graphs
   - string matching
   - hashing
+  - gibbs sampling
+  - markov chain monte carlo (MCMC)
 - heuristic algos
   - local search
   - shotgun sequencing algorithm
