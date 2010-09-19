@@ -1727,3 +1727,5 @@ github
   - sub-systems: job queue, archive downloads, billing, mirroring, svn
     importer
   - side-systems: github pages, gist, gem server, internal tools
+
+- workday <http://www.dbms2.com/2010/08/22/workday-technology-stack/>
