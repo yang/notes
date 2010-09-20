@@ -479,6 +479,15 @@ Research (talk, Butler Lampson, 4/17/08)
 Operating Systems
 =================
 
+determinator (bryan ford, yale, 2010)
+
+- idea: remove non-deterministic concurrency (still accept non-deterministic IO)
+- private address spaces only; no shared state (all single-threaded procs)
+- deterministic synchronization/communication primitives only
+  - eg lock/unlock not ok (goes to arbitrary waiting thread)
+  - eg fork/join ok (goes just to parent)
+  - must choose right abstractions
+
 flux (utah 1995) TODO
 
 - _flux advanced security kernel (FLASK)_:
