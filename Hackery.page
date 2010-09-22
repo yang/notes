@@ -1523,6 +1523,9 @@
       - master process: respawns workers, handles signals, notifies workers
       - worker: process conns
       - signals/socketpairs, shared mem
+    - internals
+      - graceful restarts/upgrades w zero downtime: fork & hand off sockets
+        (`ngx_init_cycle`)
   - mongrel: ruby web server by zed shaw
   - god: monitors mongrel
   - unicorn: mongrel core + pull balancing (unlike load balancers)
