@@ -867,7 +867,8 @@ ext4 vs fsync and disk durability
 - ext3: defaults to `data=ordered` which causes a journal commit to wait for
   all data related to the journaled inode changes to be committed first
   - also defaults to committing every 5s
-  - also: data=journaled, data=writeback
+  - also: data=journaled (write all data to journal as well as metadata, before
+    writing to FS), data=writeback (data may be written to FS after metadata)
 - ext4: may order metadata writes such that the rename is written but not the
   contents of the new file
   - this behavior is called _delayed allocation_ and is in most other modern
@@ -881,6 +882,16 @@ ext4 vs fsync and disk durability
   - ultimately no guarantees, since eg hw may have its own buffers and lie to
     us, or fs may just not be robust, but it's as close as you can get
   - but it's a prohibitively big perf hit; in ext3, implies system-wide flush
+  - either mount (ext3?) partition with `barrier=1` or disable disk write
+    caching with `hdparm -W`
+    - `barrier=1` enables barriers after journal transactions, which guarantees
+      they make it to media past the write cache; enabled by default in ext4
+    - `hdparm -W1` enables the write cache; fsync actually work
+    - note that these are not honored when using LVM/RAID
+    - note also that you may still need to disable write caching, even if
+      barriers are enabled, since barriers only apply to journal ops, not data
+      (fsync's)
+      <http://www.mail-archive.com/linux-kernel@vger.kernel.org/msg272253.html>
 - <http://thunk.org/tytso/blog/2009/03/15/dont-fear-the-fsync/>
 - <http://www.sqlite.org/lockingv3.html>
 
