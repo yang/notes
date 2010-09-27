@@ -175,6 +175,11 @@ linear programming
 - both simplex-based methods and interior point methods have similar efficiency
   for routine linear programs
 - in P with ellipsoid algorithm or interior point methods
+- dual problem/duality: complement to the primal problem
+  - linear case
+    - primal objective function combines $n$ vars w $m$ upper-bound constraints
+    - dual function combines $m$ vars w $n$ lower-bound constraints
+  - lagrange duality/lagrange multiplier: TODO
 
 randomized
 ==========
