@@ -366,11 +366,12 @@ snapshot/ser          impossible  impossible   impossible
     - eg race among sessions running `select col from onerow; if no res, insert
       into onerow values (0);`
     - constraints preserved, though (eg if onerow used col as PK, fail)
-  - mysql "repeatable read" is actually "read committed", "serializable" is
+  - innodb "repeatable read" is actually "read committed", "serializable" is
     serializable
-  - mysql, sybase, mssql, db2 also support true serializability
+  - innodb, sybase, mssql, db2 also support true serializability
     - bc they have few access paths, all closely tied to index structures
     - so they can implement shared locks on index, to prevent ghost inserts
+    - in particular they implement "gap locks" to deal with phantoms
     - pg has many diff access paths, and indexes are plugin-replaceable w
       limited interface
     - predicate locking could be faster, since index locks = more locks
