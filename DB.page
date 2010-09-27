@@ -200,6 +200,9 @@ force                no undo, no redo     undo, no redo
   - each data page contains a _page LSN_, the LSN of the last log record for an
     update to that page
   - system keeps track of _flushed LSN_, the max LSN flushed so far
+- technique to ensure coherent page written to disk: include in commit marker
+  the CRC of the data
+  - add'l barriers vs CRCs: <http://lwn.net/Articles/283161/>
 - WAL: before page $i$ written to disk, log must satisfy pageLSN $\le$
   flushedLSN
 - log records
@@ -213,7 +216,7 @@ force                no undo, no redo     undo, no redo
     written by xact)
   - dirty page table: pageID (entry exists for each dirty page), recLSN (log
     record which first dirtied the page)
-- checkpointing
+- checkpoint periodically for faster recovery
 
 B+ trees TODO
 
