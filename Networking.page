@@ -115,7 +115,9 @@ dns
       - A (answer): translate name to IP
       - NS: list FQDNs of (more) authoritative NSs for zones
       - MX: specify the mail server
-      - CNAME: canonical name; specifies a FQDN
+      - CNAME: canonical name; specifies a FQDN; no other RRs allowed if this
+        is present; hence root domains (blah.com) can't be CNAMEs since they
+        must also have at least NS, SOA (problem for amazon ELB)
       - PTR (pointer): like CNAMEs, but semantically means just a pointer; used
         for reverse lookups
       - SOA (start of authority): start of DNS zone; the first record in a NS
