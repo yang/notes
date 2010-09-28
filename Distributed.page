@@ -639,7 +639,11 @@ dryad
 Block stores
 ============
 
-DRBD TODO
+DRBD
+
+- 2-node active/passive block-level replication only, either sync or async
+- supports online recovery
+- <http://lwn.net/Articles/329543/>
 
 Filesystems
 ===========
