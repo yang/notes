@@ -1844,6 +1844,9 @@
   - ebs
     - no device write caching (see `hdparm -W`, `barrier=1`); all fsync's are
       durable
+  - elb
+    - requires you to point to it via CNAME, hence root domains must eg
+      http-redirect to a www subdomain that CNAMEs to it; that's a SPOF
 
 - svn
   - `svn:externals`: foreign repo (fixed commit or HEAD-tracking) linked to
