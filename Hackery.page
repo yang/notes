@@ -1835,6 +1835,9 @@
     - `ec2-upload-bundle -b <bucket> -m /mnt/<manifest> -a <access> -s
       <secret>`
     - `ec2-register <bucket>/<manifest>`: returns AMI ID
+  - ebs
+    - no device write caching (see `hdparm -W`, `barrier=1`); all fsync's are
+      durable
 
 - svn
   - `svn:externals`: foreign repo (fixed commit or HEAD-tracking) linked to
