@@ -309,7 +309,13 @@
         - more details: <http://dev.mysql.com/doc/refman/5.5/en/replication-solutions-switch.html>
     - google's 5.5 patches add semisync replication
       - master confirms receipt & logging of update by at least one slave
-    - ndb supports scalable sync replication using 2PC but is in-mem
+      - only adds wait after commit completes; since commit actually happened,
+        master & slave are actually out of sync (eg if crash during wait,
+        committed txn may not have made it to slave)
+    - mysql cluster: ndb with mysql
+      - ndb is also some sort of standalone clustering solution
+      - ndb supports scalable sync replication & partitioning using 2PC
+      - in-mem; async disk log of redo records and chkpts (2s log write period)
       - much slower than standard replication
       - can replicate btwn ndb clusters or btwn ndb & other engines via
         standard replication
