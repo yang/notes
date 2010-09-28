@@ -291,6 +291,32 @@
     - `show engine innodb status`
     - `show processlist`
     - `kill 3` kills process 3 in processlist
+  - clustering
+    - built-in async stmt-/row-based replication
+      - ship stmts/rows/mixed via binary log
+        - log after update completion but before lock release/commit to ensure
+          log is in execution order
+      - mixed: rows automatically used when non-deterministic queries executed
+      - single thread on slave replays log updates
+      - only innodb synchronizes w the binary log
+      - row-based supported by innodb in some cases
+      - auto-inc fields lock table for non-simple inserts
+      - setup/resync of slave is a bit complicated
+        - manual monitoring/failover with `stop slave; reset master` on
+          promotee and `change master to` on new slaves
+        - first, wait for `stop slave io_thread; show processlist` to say "Has
+          read all relay log"
+        - more details: <http://dev.mysql.com/doc/refman/5.5/en/replication-solutions-switch.html>
+    - google's 5.5 patches add semisync replication
+      - master confirms receipt & logging of update by at least one slave
+    - ndb supports scalable sync replication using 2PC but is in-mem
+      - much slower than standard replication
+      - can replicate btwn ndb clusters or btwn ndb & other engines via
+        standard replication
+    - tungsten replicator
+      - simple setup, stmt-based, sync, global txids, cross-dbms
+      - supports mysql, oracle, jdbc; future: postgresql, others
+    - <http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL#Replication_and_High_Availability>
   - examples of why mysql blows vs postgresql
     - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
     - multiple storage engines has always restricted progress:
@@ -415,7 +441,43 @@
         One or more schema objects could not be imported during the migration process. Please review the migration output for more details.
 
 - postgresql
-  - 2PC: `prepare transaction`, `commit prepared`, `rollback prepared`
+  - clustering
+    - built-in async streaming record-based replication in 9.0; sync in 9.1
+      - warm standby: can't be queried; hot standby: can be queried (limited)
+      - manual failover
+      - manual recovery
+        - <http://www.postgresql.org/docs/current/static/continuous-archiving.html>
+        - <http://developer.postgresql.org/pgdocs/postgres/functions-admin.html>
+        - <http://archives.postgresql.org/pgsql-general/2010-08/msg00264.php>
+        - <http://momjian.us/main/writings/pgsql/hot_streaming_rep.pdf>
+        - pgpool-II
+    - has had async WAL-shipping replication, but this ships WAL segments
+      instead of records
+      - only ships archived WAL segments; controlled with eg `archive_timeout`
+      - lag is on order of minutes; uses commands like `scp` or `cp`
+    - to check for stale reads, can compare `pg_current_xlog_location()` and
+      `pg_last_xlog_replay_location()`
+    - slony: built by jan weick, postgresql core team member; main option
+      - much slower/uses more resources than mysql built-in replication
+      - $O(n^2)$ communication costs
+      - sql-/trigger-based replication
+      - auto failover
+    - 2PC: `prepare transaction`, `commit prepared`, `rollback prepared`
+    - pgpool-II
+      - synchronous replication, auto failover, connection pooling/load
+        balancing, online recovery
+      - sync replication: 30% write overhead, avoid non-pure queries
+      - 9.0 async replication: provides auto failover, conn pooling, load bal,
+        etc.
+    - pgbouncer: simple, lightweight connection and transaction pooling
+    - skytools
+      - pgq: efficient transactional queue
+      - londiste: async replication via pgq; cross-version support
+      - plproxy: partitioning/rpc
+  - WAL
+    - segments are separate 16MB files
+    - checkpoints taken by default every 3 WAL segments or 5m
+  - has async api
   - monitoring
     - `select * from pg_stat_activity`
   - rules: query rewriting, eg let you insert/update a view and redirect to
