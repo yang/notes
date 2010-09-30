@@ -176,6 +176,10 @@ decentralized identity/auth/social standards
 - friend connect: opensocial router and gadgets
 - facebook connect: links acounts elsewhere with facebook accts
 - facebook platform: everything
+- saml: common in enterprise settings
+  - SAML2.0 supported by MS ADFS 2.0 (since windows server 2008?)
+  - used by google apps
+  - saml vs openid: <http://identitymeme.org/doc/draft-hodges-saml-openid-compare.html>
 - ref: <http://y_z.scripts.mit.edu/wp/2010/01/19/making-sense-of-openid-oauth-opensocial-google-friend-connect-facebook-connect-and-more/>
 
 latency costs
