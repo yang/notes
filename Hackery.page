@@ -1843,17 +1843,24 @@
     - `ec2-register <bucket>/<manifest>`: returns AMI ID
     - `ec2-register <ami>`: returns AMI ID
   - ebs
-    - acct limits: <=100 EBS vols, <=20TB
+    - max 100 EBS vols, max 20TB
     - no device write caching (see `hdparm -W`, `barrier=1`); all fsync's are
       durable
   - elb
+    - max 5 ELBs
     - requires you to point to it via CNAME, hence root domains must eg
       http-redirect to a www subdomain that CNAMEs to it; that's a SPOF
   - instances
     - each inst has 2 interfaces, public and internal
-    - acct limits: # running, # overall (non-terminated; 4x # running)
+    - max 20 running; max overall = 4 * max running
     - can _lock_ inst to prevent termination via mgmt console or api, only
       via cmd line
+  - elastic IPs
+    - takes less than a few mins to remap
+    - only 1:1 public/elastic:private NATings
+    - max 5 without appeal; $.01/h for unmapped; $.01/GB for mapped; $.10/remap
+      if >100 remaps that month
+    - reverse DNS can be applied for
   - ami's
     - backed by ebs or s3; public/private/shared (ACL)/paid
     - ebs: <=1TB, <1m boot, can stop, costs more to run
