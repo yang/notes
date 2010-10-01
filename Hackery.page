@@ -1,3 +1,7 @@
+- monitoring
+  - nagios: configure for a static set of servers
+    - not good for EC2-like places where instances are expected to fail
+
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
   - communication w PCs
