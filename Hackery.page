@@ -1649,11 +1649,36 @@
   - IPVS: tcp/udp load balancer
   - KTCPVS: app-level load balancing
   - linux-ha heartbeat: monitors & informs (on failure) 2-node clusters
-    - heartbeat: clustering and communication layer TODO
-    - pacemaker: resources manager TODO
-    - pacemaker/openais deprecates heartbeat?
+    - heartbeat: clustering and communication layer
+    - heartbeat 1: simple 2-node clustering system; manage resources running on either node
+    - heartbeat 2: monolithic
+    - heartbeat 3: just cluster membership; refactored cluster resource mgmt into pacemaker
+      - backed by linbit; halted dev, maintenance mode now
+    - pacemaker: cluster resource mgmt
+      - engine is either heartbeat or corosync; corosync recommended
+      - engine provides: reliable inter-node msging, consistent membership set and notifications
+      - uses _resource agents_
+        - LSB RAs: just LSB init scripts
+        - OCF RAs: extensions of LSB RAs (eg: `monitor`, `promote`, much more)
+        - legacy heartbeat RAs: same as LSB RAs but with odd `status` ops
+    - openais whitetank: infrastructure + impl of SA Forum APIs (AIS standards)
+    - openais wilson: SA Forum APIs only; refactored infrastructure into
+      corosync
+    - corosync: infrastructure refactored from openais, eg IPC/networking
+      - pacemaker's preferred engine
+      - also manages GFS, OCFS2 partitions
+      - backed by RH, novell
+    - ipvs
+    - cman: redhat's clustering system; cman 1 sucked, entirely replaced by cman 2
+      - cman's distributed locking implemented in-kernel; fragile
+    - clvm: shares single disk among multiple boxes
+      - supported clustering systems: cman, openais, corosync, gulm
+      - prone to deadlocks
   - keepalived: monitoring
-  - <http://www.linuxvirtualserver.org/software/index.html>
+  - refs
+    - <http://www.linuxvirtualserver.org/software/index.html>
+    - <http://coolerq.livejournal.com/89739.html>
+    - <http://clusterlabs.org/wiki/FAQ>
 
 - python
   - greenlets
