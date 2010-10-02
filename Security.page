@@ -393,6 +393,7 @@ PKI
   - standard: cheaper, faster; just shows padlock
   - extended: more rigorous issuing policy; also shows company name
   - CAs sell packages: single domain, $n$ domains, wildcard (subdomains)
+  - only one https virtual host per IP, since SSL is before the `Host:` header
 - SNI: extension to TLS that enables virtual hosting
   - client requests name of virtual domain during TLS nego
 - certificate revocation list (CRL)
