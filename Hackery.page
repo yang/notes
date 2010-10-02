@@ -1606,6 +1606,7 @@
   - gunicorn: Python greenlet unicorn
   - HAProxy: tcp/http load balancer; very configurable; can do smart load
     balancing; recommend in front of nginx
+    - ssl, keep-alive are WIP
   - varnish: caching reverse proxy, http load balancer
     - faster than nginx?
     - uses (tons of) threads (and large addr space; designed for 64-bit)
@@ -1879,13 +1880,17 @@
     - max 5 ELBs
     - requires you to point to it via CNAME, hence root domains must eg
       http-redirect to a www subdomain that CNAMEs to it; that's a SPOF
+    - only provides DNS; can't map an (elastic) IP to an ELB
   - instances
     - each inst has 2 interfaces, public and internal
     - max 20 running; max overall = 4 * max running
     - can _lock_ inst to prevent termination via mgmt console or api, only
       via cmd line
   - elastic IPs
-    - takes less than a few mins to remap
+    - takes minutes for assignment to propagate
+      - <http://developer.amazonwebservices.com/connect/thread.jspa?messageID=85617&#85617>
+      - <http://developer.amazonwebservices.com/connect/thread.jspa?messageID=173789&#173789>
+      - <http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1346&categoryID=112>
     - only 1:1 public/elastic:private NATings
     - max 5 without appeal; $.01/h for unmapped; $.01/GB for mapped; $.10/remap
       if >100 remaps that month
