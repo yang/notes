@@ -957,8 +957,8 @@ nimbusdb (jim starkey, ieee/acm talk at mit, 3/18/10)
     - subsets where no 2 are disjoint
   - a pre-commit must be received at least one commit agent in every coterie to commit
   - post partition, the partition that contains a coterie survives
-- [this was a very details-free talk and we all think that jim has no idea what
-  he's talking about]
+- [this talk did not convince me that this system would actually work; others
+  felt similarly]
 
 Alternative DBs
 
