@@ -1701,6 +1701,19 @@ adobe
 - preferred over cassandra despite its complexity; argues complexity is non-accidental
 - <http://hstack.org/why-were-using-hbase-part-2/>
 
+microsoft
+
+- ieee computing article <http://glinden.blogspot.com/2010/09/insights-into-performance-of-microsofts.html>
+  - hotmail
+    - several PBs in 10,000s of servers
+    - typical server: 2 CPU, 2 disks, add'l storage enclosure of up to 40 SATAs
+  - typical cosmos server: 2 CPU, 16-24GB RAM, up to 4 SATAs
+  - bing
+    - 10,000s of servers
+    - use RAM of 1,000s of servers
+    - typical server: 2 CPU, 2-3GB RAM/core, 2-4 SATAs
+  - odd: bing/cosmos servers CPU bound; bc of data compression?
+
 github
 
 - <http://github.com/blog/667-webpulp-tv-interview-with-tom-preston-werner>
