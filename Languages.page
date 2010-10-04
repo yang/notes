@@ -357,6 +357,14 @@ higher order abstract syntax (HOAS)
 - not scalable: depends on number of free vars, and can't analyze (only apply)
 - ref: <http://lambda-the-ultimate.org/node/3627>
 
+Capabilities
+------------
+
+E
+
+- basically java wo globals; can't import; objects get everything passed by ref
+- one root parent obj starts w access to everything
+
 Extensible
 ----------
 
