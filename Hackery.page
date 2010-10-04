@@ -2046,6 +2046,7 @@
   - pre-IE6 _quirks mode_ aka _box model hack_: border/padding *included* in
     width/height; unfortunately, this is arguably more intuitive, hence
     reintroduced in `box-sizing`
+    - `border-box`: tells browser to behave like IE6
   - `position: relative` makes all children that have `position: absolute`
     actually framed in this elt's coords (origin)
   - background images: `background: url(widget-image.gif) no-repeat`
