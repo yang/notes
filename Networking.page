@@ -177,6 +177,13 @@ SMTP
   - pushed by yahoo; used by gmail, many others
   - comparable to sender id, which is a MS technology
 
+SNMP
+
+- _agents_ running on managed devices comm w network mgmt system (NMS) on UDP
+- packet types: get requests, set requests, get next requests, get bulk
+  requests, responses, traps (asynchronous notifications), inform requests
+  (trap acks)
+
 zeroconf
 
 - techniques for creating IP networks automatically
