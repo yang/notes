@@ -1895,6 +1895,14 @@
     - max 5 without appeal; $.01/h for unmapped; $.01/GB for mapped; $.10/remap
       if >100 remaps that month
     - reverse DNS can be applied for
+  - cloudwatch
+    - ~$10/mo/inst
+    - monitors cpu, disk, network
+    - autoscale
+      - launch configuration: img, inst type
+      - auto scaling group: launch config, AZs, min size, max size
+      - trigger: measure (cpu), stat (avg), period, lo/hi thresh & scale
+        increments
   - ami's
     - backed by ebs or s3; public/private/shared (ACL)/paid
     - ebs: <=1TB, <1m boot, can stop, costs more to run
