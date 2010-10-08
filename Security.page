@@ -568,6 +568,8 @@ block ciphers
   - pseudocde: des_enc(k1) -> des_dec(k2) -> des_enc(k3)
 - blowfish: bruce schneier; 1993; fast; no known cryptanalysis; widely used,
   but aes overshadows it
+- rc5: rivest cipher
+- AES finalists: RC6, twofish, rijndael, serpent, MARS
 - aes aka rijndael: successor to des; 2001
   - 128, 192, 256 bit key sizes; all 128 bit block sizes
 - KASUMI aka a5/3 in GSM aka GEA3 in GPRS: no known weaknesses, but GSM is vuln
