@@ -461,6 +461,11 @@ Haskell Type Constraints
 Scala
 -----
 
+scala
+
+- users: yammer, twitter, linkedin, foursquare, the guardian, xerox, sony,
+  siemens, novell
+
 PiLib: A Hosted language for Pi-Calculus Style Concurrency *
 
 - TODO: review this and take notes
