@@ -285,6 +285,11 @@ sql server 2008
   - master data management: dealing with multiple DBs/sources
   - reporting services integration w sharepoint CMS: publish olap analytics
 
+postgresql
+
+- users: disqus, skype, debian, omniti
+  - <http://www.postgresql.org/about/users>
+
 distributed postgresql
 
 - postgres-r: async master-master replication
@@ -1743,5 +1748,33 @@ github
   - sub-systems: job queue, archive downloads, billing, mirroring, svn
     importer
   - side-systems: github pages, gist, gem server, internal tools
+
+disqus (djangocon 2010)
+
+- ~100 servers, 30% web, 10% db, 25% memcache, 20% HAProxy/heartbeat, 15% util
+- syslog-ng, pgbouncer, apache+mod_wsgi, ganglia, libmemcached
+- db: postgresql, slony-i (trigger-based) replication
+  - pgfouine log analyzer, slow query logging
+  - app-level partitioning (tables/vert, rows/horiz), replayed by slony
+  - non-transactional; not sure how they deal with concurrency control,
+    atomicity
+  - single row atomic updates done on db, not in python
+    (`row.update(attr=val)`)
+- prevent thundering herd on memcached objects that have a predetermined
+  lifespan with mintcache approach
+  - have _stale date_ as well as expire date
+  - when stale, first requester is told to refresh the data
+  - returning invalidate value instead of deleting then missing
+- cont deployment, fabric, hudson, selenium, redmine
+  - can easily revert to earlier vers; can toggle features (for % users)
+  - interesting idea: sentry aggregates their exceptions (instead of one per
+    email)
+- <http://www.slideshare.net/zeeg/djangocon-2010-scaling-disqus>
+
+flickr
+
+- @sampullara: replicates objs to shards where they're needed
+
+others
 
 - workday <http://www.dbms2.com/2010/08/22/workday-technology-stack/>
