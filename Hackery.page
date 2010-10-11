@@ -329,6 +329,11 @@
     - <http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL#Replication_and_High_Availability>
   - examples of why mysql blows vs postgresql
     - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
+    - pg now has async replication; that was mysql's only strong pt against pg
+      - neither has synchronous replication, but pg's is coming
+      - semisync still unsafe; waiting after commit, not before commit
+      - recovery is complex
+    - crappy concurrency, >3 sucks vs pg <http://spyced.blogspot.com/2006/12/benchmark-postgresql-beats-stuffing.html>
     - multiple storage engines has always restricted progress:
       <http://www.mysqlperformanceblog.com/2010/05/08/the-doom-of-multiple-storage-engines/>
     - <http://stackoverflow.com/questions/324935/mysql-with-clause>
@@ -1872,6 +1877,9 @@
       <secret>`
     - `ec2-register <bucket>/<manifest>`: returns AMI ID
     - `ec2-register <ami>`: returns AMI ID
+  - rds
+    - multi-az replication: synchronous to inaccessible failover; probably DRBD
+    - read replicas: async replication; probably built-in mysql replication
   - ebs
     - max 100 EBS vols, max 20TB
     - no device write caching (see `hdparm -W`, `barrier=1`); all fsync's are
