@@ -36,6 +36,8 @@ HTTP
 - cookies
   - subdomains can set for parent domains, *except* for TLDs (edu) due to dot restriction
   - domains must contain at least 2-3 dots, depending on what kind of TLD (.com, .va.us)
+  - session cookies may be persisted when using browsers' "restore sessions"
+    features (eg firefox)
   - <http://curl.haxx.se/rfc/cookie_spec.html>
 
 flash RTFMP
