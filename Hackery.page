@@ -120,6 +120,11 @@
   - MRA: retrieve via POP, IMAP, etc; eg fetchmail, getmail (python successor)
   - outlook, thunderbird, etc: MUAs that also have some MSA, MDA, MRA
 
+- email configuration
+  - /etc/mailname: the domain of this machine
+    - eg cron jobs are from/to this domain
+    - this is what postfix should set as mydestination
+
 - fail2ban: scans logs and bans IPs w too many failed attempts
   - update iptables FW or tcp wrapper's hosts.deny
 
