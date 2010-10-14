@@ -215,6 +215,24 @@
     - logical volume managers (LVMs) can create virtual volumes; eg concat or
       stripe partitions
 
+- lvm
+  - features: live PV adds/removes; resize partitions; snapshots; span many
+    disks; RAID0/1
+  - _physical volumes (PVs)_ are real partitions or whole disks
+  - _volume groups (VGs)_ of PVs are logical disks
+  - _logical volumes (LVs)_ are partitions of VGs
+  - can resize LVs; just first resize FS to be same/smaller
+  - reiserfs has fast resizing, unlike ext3
+  - lvm2: read-write snapshots; fragile, don't be too fancy
+  - default extent ('chunk') size 4MB
+  - keeps metadata header at start of each PV; each PV has UUID
+    - complete copy of entire VG layout, incl other PV UUIDs
+    - LVM implemented in terms of the _device mapper_; simplifies LVM code; all
+      in user space
+  - /boot can't be in LVM; / not recommended
+  - recommend LVM above RAID
+  - <http://www.ntlug.org/Articles/LVM>
+
 - gdb
   - mostly implemented using ptrace
 
@@ -1824,7 +1842,6 @@
   - kevent/eventfs: WIP; merges socket io, network AIO, poll, inotify, timers
   - FSs: ext?, btrfs, logfs, ceph
   - kvm: great linux success story; uses qemu
-  - lvm
   - cpuidle: governs when system enters which C states
 
 - linkage
