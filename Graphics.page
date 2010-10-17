@@ -6,6 +6,32 @@ Basics
 - triangulation
   - subdividing surfaces is useful for many things
   - Delaunay triangulation: maximizes angles; yields most-equilateral triangles
+- modeling
+  - cage modeling: start with base ("cage") mesh overlaid on photo/drawing
+- texturing
+  - UV mapping: map texture coordinates onto polygons
+  - bump maps: simple grayscale mapping to depth
+  - normal maps: more info than bump maps; maps RGB spectrum to direction as
+    well
+  - displacement maps: game engines can't use these; they generate true height,
+    thus casting realistic shadows, unlike bump/normal maps which are rendering
+    tricks, but are much more expensive
+  - ambient occlusion: attenuates light in crevices/between objects; key to
+    photorealism; aka "dirt maps" bc looks like dirt
+    - expensive and only in advanced engines; often "baked in" to textures
+- rigging
+  - joints
+  - IK handles
+  - skin vertex weights: paint relationship btwn skin & bone
+  - wire controllers: simple NURBS surfaces that give you control over joints
+- dynamics solvers/physics engines: fields and forces, soft-/rigid-body
+  collisions
+  - hard to parallelize
+  - game-oriented solvers (physx, havok) not accurate enough for film
+  - bullet physics: FLOSS, fast, handles soft/rigid/cloth
+- shading/rendering
+- <http://arstechnica.com/apple/guides/2009/12/intro-to-3d-part-1.ars>
+- <http://arstechnica.com/apple/guides/2010/09/an-intro-to-3d-on-the-mac-part-ii-animation-and-rendering.ars>
 
 Definitions
 
