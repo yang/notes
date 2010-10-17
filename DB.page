@@ -66,7 +66,7 @@ companies
     - ncluster: row-based MPP DBMS based on PG; supports map-reduce
   - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
   - infobright: wants multicore queries, ACID
-  - netezza: row-based db hw with compression, clustering
+  - netezza: row-based db hw with compression, clustering; acquired by ibm
     - compression: prefix compression, huffman coding
     - clustering: multi-dimensional simultaneous partitioning w space-filling hilbert curve
     - twinfin: well-designed proprietary hw appliance
