@@ -602,6 +602,9 @@ block cipher modes
 - output feedback (OFB), cipher feedback (CFB)
   - don't repeat _initialization vector (IV)_ for same encryption key
 - cipher block chaining (CBC), propagating CBC (PCBC)
+  - each plaintext block XORed w prev ciphertext block before encryption
+  - encryption sequential, but decryption *can* parallelize
+  - PCBC: also XOR the prev plaintext block
   - use this if msg authenticity is not an issue
 - authenticated encryption (AE): simultaneously protect confidentiality and
   integrity
