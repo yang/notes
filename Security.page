@@ -597,10 +597,12 @@ crypt
 
 block cipher modes
 
-- TODO
 - insecure: electronic codebook (ECB)
-- output feedback (OFB), cipher feedback (CFB)
+- output feedback (OFB), cipher feedback (CFB), counter (CTR)
   - don't repeat _initialization vector (IV)_ for same encryption key
+  - turns block ciphers into self-synchronizing stream cipher
+  - CFB: identical to CBC encryption done in reverse
+  - OFB: gen keystream blocks that are XORed w plaintext blocks
 - cipher block chaining (CBC), propagating CBC (PCBC)
   - each plaintext block XORed w prev ciphertext block before encryption
   - encryption sequential, but decryption *can* parallelize
@@ -608,7 +610,7 @@ block cipher modes
   - use this if msg authenticity is not an issue
 - authenticated encryption (AE): simultaneously protect confidentiality and
   integrity
-  - CCM, CWC, OCB, EAX, GCM: TODO
+  - CCM, CWC, OCB, EAX, GCM
 
 VPNs
 
