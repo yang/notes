@@ -163,7 +163,7 @@ SMTP
   - RCPT: set dest addr
   - DATA: actual hdrs + msg
 - notes
-  - bcc's are rcpt'd but not in data
+  - BCCs are just RCPT TOs that aren't in the data
   - routing protocol deals w transient failures
 - sender policy framework (SPF): use DNS to list IPs allowed to send from a
   domain (a "senders' MX")
@@ -176,6 +176,11 @@ SMTP
   - PKs stored in DNS TXT record in SELECTOR._domainkey.example.com
   - pushed by yahoo; used by gmail, many others
   - comparable to sender id, which is a MS technology
+- security
+  - SASL: the usual authentication mechanism
+  - SMTP port 25: no TLS enforcement
+  - SMTPS port 465: unofficial & obsolete
+  - Submission port 587: require STARTTLS
 
 SNMP
 
