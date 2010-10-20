@@ -61,7 +61,7 @@ companies
     - postgresql plus standard server: extensions, eg connectors, geospatial,
       replication, caching
     - postgresql plus advanced server: deeper oracle compat; infinite cache
-  - greenplum: postgresql based
+  - greenplum: postgresql based; acquired by emc
   - aster data: customers: myspace; hadoop interop; COTS; investors: sequoia
     - ncluster: row-based MPP DBMS based on PG; supports map-reduce
   - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
