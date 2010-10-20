@@ -11,6 +11,7 @@
 
 - ubuntu
   - `-dbgsym` packages have debug symbols for all binaries
+  - user adm is for viewing system logs; user admin is for sudo
 
 - LDAP
   - hierarchical directory of entries of KV attr pairs (defined by schema)
