@@ -1555,14 +1555,19 @@ myspace
   - james hamilton: "in every company I’ve ever worked or visited, the vast
     majority of the persistent disk resident data is cold"
 
-stackoverflow (8/2009)
+stackoverflow
 
-- asp.net, C#, LINQ
-- 2 * (4 core, 2.83 GHz, 12 MB L2, 500 GB datacenter RAID1, 8 GB RAM)
-- sql server 2008 on 1 * (8 core, 3.5 GHz, 24 MB L2, 48 GB RAM)
-  - CPU surprisingly important; 1.86 to 2.5 to 3.5 GHz scales linearly typical
-    query times
-- scaled up instead of out
+- 8/2009
+  - asp.net, C#, LINQ
+  - 2 * (4 core, 2.83 GHz, 12 MB L2, 500 GB datacenter RAID1, 8 GB RAM)
+  - sql server 2008 on 1 * (8 core, 3.5 GHz, 24 MB L2, 48 GB RAM)
+    - CPU surprisingly important; 1.86 to 2.5 to 3.5 GHz scales linearly typical
+      query times
+  - scaled up instead of out
+  - <http://highscalability.com/blog/2009/8/5/stack-overflow-architecture.html>
+  - <http://blog.stackoverflow.com/2008/09/what-was-stack-overflow-built-with/>
+- 5/2010 <http://blog.serverfault.com/post/633403731/phase-two>
+  - datacenter hardware details
 
 twitter
 
