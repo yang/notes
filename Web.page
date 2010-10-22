@@ -39,6 +39,10 @@ HTTP
   - session cookies may be persisted when using browsers' "restore sessions"
     features (eg firefox)
   - <http://curl.haxx.se/rfc/cookie_spec.html>
+- chunked transfer encoding
+  - break body up into chunks; each specifies size; end w 0-length chunk
+  - so, know when done receiving whole body; Content-Length unneeded
+  - in 1.1
 
 flash RTFMP
 
