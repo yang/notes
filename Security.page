@@ -86,6 +86,19 @@ security
 - integrity: eg phishing, MITM, hijacking, forgery
 - availability: eg DOS
 
+incorrect/missing MIME type exploits
+
+- example from <http://osvdb.org/show/osvdb/54773>
+
+  > Simple Machines Forum contains a flaw that allows a remote cross site
+  > scripting attack. This flaw exists because the application uses the
+  > incorrect MIME type 'image/bmp'. The unknown header triggers MIME sniffing
+  > in Internet Explorer, allowing an image to be falsely identified as
+  > text/html. This could allow a user to create a specially crafted image
+  > that would execute arbitrary code in a user's browser within the trust
+  > relationship between the browser and the server, leading to a loss of
+  > integrity.
+
 S/MIME: TODO
 
 - http://en.wikipedia.org/wiki/S/MIME
