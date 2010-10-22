@@ -473,6 +473,20 @@ network reconnaissance
   - attacker sends SYNACK to zombie again to get its new IP ID 31339
   - if port wasn't open, attacker's subsequent SYNACK would get 31338
 
+anti-IDS HTTP scanning
+
+- libwhisker: Perl scanner with anti-IDS techniques
+  - IDSs look for certain things; avoid them
+  - GET -> HEAD, URL encoding, double slashes, .. traversal, . traversal, \ on
+    Windows, `\0`, case sensitivity on Windows
+  - premature request ending: to fool smart IDS systems that try to decode
+    too aggressively; `GET / HTTP/1.0\r\n...` -> `GET /%20HTTP/1.0%0D%0A`
+  - param hiding: `foo.cgi?...` -> `foo.cgi%3F...`
+  - misformatting: eg Apache tolerates tabs in the GET line instead of spaces
+  - long URLs to bump off what the IDS scans
+  - splice session across multiple packets
+  - <http://www.wiretrip.net/rfp/txt/whiskerids.html>
+
 network security tools
 
 - nessus: vuln scanner
