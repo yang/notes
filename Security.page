@@ -88,6 +88,16 @@ security
 
 incorrect/missing MIME type exploits
 
+- from <http://code.google.com/p/skipfish/wiki/KnownIssues>
+
+  > Missing or mismatched MIME types on any files with user-controlled contents
+  > may easily lead to cross-site scripting flaws. This is because of browser
+  > content sniffing logic, a problem is particularly pronounced in Microsoft
+  > Internet Explorer - where even something as subtle as returning image/jpeg
+  > on a GIF file may cause HTML detection to be attempted, possibly
+  > interpreting any HTML stuffed in the EXIF fields of an otherwise valid
+  > image.
+
 - example from <http://osvdb.org/show/osvdb/54773>
 
   > Simple Machines Forum contains a flaw that allows a remote cross site
