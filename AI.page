@@ -223,6 +223,18 @@ loss functions
 - lambda loss
 - pairwise + RMSE
 
+adaboost
+
+- idea: combine weak classifiers
+
+  initially, all examples equally weighted
+  for some number of rounds,
+    find a weak classifier that minimizes weighted error
+    if weighted error >=50% accuracy, break
+    down-weight correct examples, up-weight incorrect examples
+  combine subordinate models into final model,
+    each weighted inversely by training error
+
 nlp
 ===
 
