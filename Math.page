@@ -25,6 +25,10 @@ statistics
 - $\mathrm{Correlation}(X, Y) = \frac{ \mathrm{Covariance}(X, Y) }{ \sigma_X
   \sigma_Y }$ where $\sigma$ is the SD
 
+- Kendall tau rank correlation coefficient $\tau$
+  - similarity of orderings of data
+  - TODO uses p-value somewhere
+
 test accuracy
 
 - precision = relevant & retrieved / retrieved
@@ -33,8 +37,16 @@ test accuracy
 
 statistical significance
 
+- standard score: number of SDs; aka z-value, z-score, normal score
 - p-value: significance level; P(observation|null hypothesis)
+  - prob of mistakenly rejecting null hyp < p-value
+  - the lower, the less likely the result if the null hyp is true, thus the
+    more statistically significant the result is
+  - if < .05 or .01, corresponding to a 5% or 1% chance of rejecting the null
+    hyp when it's actually true (type I error)
+  - 5% is a typical value
   - eg P(14+ heads of 20 flips|fair coin)
+- E-value: expected num tests until a certain observation, assuming null hyp
 - how to efficiently calc prob of *at least* $h$ H in $n$ flips?
 - type I error: false pos; rej null hyp when it's actually true
 - type II error: false neg; acc null hyp when it's actually false
