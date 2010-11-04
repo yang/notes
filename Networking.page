@@ -171,16 +171,81 @@ SMTP
     if this is set
   - implemented by spamassassin, courier, exchange, patches for
     postfix/sendmail/exim/qmail
+  - may set Received-SPF header
 - domainkeys identified mail (DKIM): pub key
+  - context
+    - used by gmail, many others
+    - DomainKeys is different; pushed by yahoo
+    - comparable to sender id, which is a MS technology
   - each SMTP relay signs whole mail and specifies a _selector_ name
-  - PKs stored in DNS TXT record in SELECTOR._domainkey.example.com
-  - pushed by yahoo; used by gmail, many others
-  - comparable to sender id, which is a MS technology
+    - PKs stored in DNS TXT record in SELECTOR._domainkey.example.com
+    - may set DomainKey-Status header
+  - DKIM-Signature
+    - `h=` headers included in hash; ordered, so can't reorder headers, despite
+      RFC2822
+    - `c=` canonicalization (`simple` is strict, `relaxed` tolerates whitespace
+      changes, header rewrapping, etc)
+    - ``
+  - author domain signing practices (ADSP)
+    - optional extension to DKIM
+    - author address is From/Sender
+    - author domain signature: DKIM sig by domain that is author's domain
+    - practices: published in _adsp._domainkey.workping.com TXT
+      - unknown: same as not defining any record
+      - all: all mail is signed with author domain sig
+      - discardable: all, and drop any mail that isn't
+    - registered with Authentication-Results as `dkim-adsp`
+      - none, pass, unknown, fail, discard, nxdomain, temperror, permerror
+- internet message format RFC5322
+  - comments are parenthesized strings
 - security
   - SASL: the usual authentication mechanism
   - SMTP port 25: no TLS enforcement
   - SMTPS port 465: unofficial & obsolete
   - Submission port 587: require STARTTLS
+- Authentication-Results RFC5451
+  - subsumes Received-SPF and DomainKey-Status
+  - always prepended
+  - Authentication-Results: AUTHSERV-ID; METHOD=RESULT PTYPE.PROPERTY=PVALUE ...; ...
+  - DKIM/DomainKeys
+    - results: none, pass, fail, policy, neutral, temperror, permerror
+    - DKIM properties: header.d, header.i
+    - DomainKeys properties: header.d, header.from, header.sender
+  - SPF/Sender-ID
+    - results: none, neutral, pass, policy, hardfail, softfail, temperror, permerror
+    - SPF properties: smtp.mailfrom, smtp.helo
+  - SMTP AUTH
+    - results: none, pass, fail, temperror, permerror
+    - properties: smtp.auth
+  - examples:
+    - no auth done: Authentication-Results: example.org; none
+    - could've been combined:
+
+        Authentication-Results: example.com;
+                  auth=pass (cram-md5) smtp.auth=sender@example.com;
+                  spf=pass smtp.mailfrom=example.com
+        Authentication-Results: example.com;
+                  sender-id=pass header.from=example.com
+        Received: ...
+
+    - diff MTAs
+
+        Authentication-Results: example.com;
+                  sender-id=hardfail header.from=example.com;
+                  dkim=pass (good signature) header.i=sender@example.com
+        Received: from mail-router.example.com
+                      (mail-router.example.com [192.0.2.1])
+                  by auth-checker.example.com (8.11.6/8.11.6)
+                      with ESMTP id i7PK0sH7021929;
+                  Fri, Feb 15 2002 17:19:22 -0800
+        Authentication-Results: example.com;
+                  auth=pass (cram-md5) smtp.auth=sender@example.com;
+                  spf=hardfail smtp.mailfrom=example.com
+        Received: from dialup-1-2-3-4.example.net
+                      (dialup-1-2-3-4.example.net [192.0.2.200])
+                  by mail-router.example.com (8.11.6/8.11.6)
+                      with ESMTP id g1G0r1kA003489;
+                  Fri, Feb 15 2002 17:19:07 -0800
 
 SNMP
 
