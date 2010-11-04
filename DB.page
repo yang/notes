@@ -1420,6 +1420,58 @@ linkedin
   - 120B relationships, 82 jobs/day 16TB tmp data, 2 engrs
   - <http://mndoci.com/2010/06/30/massive-data/>
 
+facebook, 2010-11-02 talk at facebook on "mysql at scale"
+
+- stats
+  - Query response times: 4ms reads, 5ms writes.
+  - Rows read per second: 450M peak
+  - Network bytes per second: 38GB peak
+  - Queries per second: 13M peak
+  - Rows changed per second: 3.5M peak
+  - InnoDB disk ops per second: 5.2M peak
+- operations
+  - 99.9th percentile metrics
+  - lots of query optimization
+- performance
+  - extensive, redundant monitoring: error logs, frequent show variables
+    sampling, slow query logs, client error logs, sampled query logs
+  - look at macro trends: by day, by week
+- engineering: fb patch for mysql: lots of non-general changes
+  - ppl: vamsi ponnekanti, mark callaghan, (someone else)
+  - features:
+    - online schema changes (OSC): eg add col, add/change index
+      - setup triggers to track changes; briefly lock table
+      - copy data to new table w desired schema
+        - break up into small copies; see openarkkit
+      - replay changes on new table
+      - rename new table sa target table; again briefly lock table
+      - updates can happen except during table locks
+    - support major upgrades
+    - fixed many stalls
+    - fixed many bugs
+    - perf improvements
+  - current changes
+    - incremental hot backup w xtrabackup
+      - fast binary backup with innobackup + fast compression (qpress)
+      - incremental w xtra to save space, working w percona
+        - enhance w remote/streaming
+      - fast selective table restore
+        - sys tablespace ibdata1
+        - per table tablespaces foo.ibd
+    - single-threaded replication: want multi-threaded slaves
+  - non-stored procedures
+    - problem: want to reduce lock contention
+    - trad'l approaches: SPs, triggers
+      - thousands of DBs, 20 hards each, 50 edge tables each
+      - millions of SPs to maintain
+    - soln: pass CLIENT_MULTI_STATEMENTS to mysql_connect()
+      - `insert into counts on duplicate key `
+  - Insights
+    - hadoop to mysql, then advertisers can see analytics
+    - didn't really follow this
+- <http://www.livestream.com/facebookevents/video?clipId=flv_cc08bf93-7013-41e3-81c9-bfc906ef8442>
+- <http://highscalability.com/blog/2010/11/4/facebook-at-13-million-queries-per-second-recommends-minimiz.html>
+
 facebook, misc
 
 - <http://social.venturebeat.com/2010/07/07/facebook-like-buttons/>
