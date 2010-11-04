@@ -1791,8 +1791,15 @@
   - `top`: shows 100% per core; procs exceeding this only show up as 99.9 as
     there's only so much char space
   - use `make V=1` to see the gcc commands (verbose)
-  - `/proc/sys/fs/binfmt_misc`: register different ways to run different binary
-    formats
+  - interesting things in /proc:
+    - PID/stack: stack trace
+    - PID/pagemap: virtual to physical page mapping
+    - PID/status: lots of interesting bits of info
+    - interrupts: IRQ to CPU map
+    - irq/NUMBER/smp_affinity: set individual IRQs
+    - sys/kernel/core_pattern: where to output core dumps (or pipe to command)
+    - sys/fs/binfmt_misc: register different ways to run different binary
+      formats
   - `ulimit` can only lower not raise for non-root; root can raise;
     `/etc/security/limits.conf` can set global cap for non-roots
   - scheduler works on threads
@@ -1844,6 +1851,19 @@
   - FSs: ext?, btrfs, logfs, ceph
   - kvm: great linux success story; uses qemu
   - cpuidle: governs when system enters which C states
+  - set timer interrupt frequency
+
+      CONFIG_HZ_100=y
+      CONFIG_HZ=100
+
+  - connector kernel module is useful for process monitoring; when procs die,
+    kernel notifies you; you can restart, recover, etc.
+
+      CONFIG_CONNECTOR=y
+      CONFIG_PROC_EVENTS=y
+
+  - intel xeons can offload network data coying to DMA engine with intel I/OAT
+    DMA engine; see also DCA
 
 - linkage
   - if a library contains an _init symbol or function marked with __attribute__((constructor)), it will be immediately when loaded. There's no way to "pause" the library loading, switch seccomp on, and then allow the library loading to continue. (<http://stackoverflow.com/questions/1019707/sandboxing-in-linux>)
