@@ -346,14 +346,19 @@ web application security
   - capture
   - fixation: get user to use an attacker-chosen sid
 - web application firewalls (WAFs)
-  - modsecurity: for apache; supports negative & positive rule models; has
-    core rule set; non-learning
-    - http compliance
-    - automation detection
-    - owasp top 10 attacks (sql, xss, os cmds, filenames, cf/asp/php, email, response splitting, pdf)
-    - comm w trojans/backdoors that have already broken in
-    - app error hiding
-    - external patching
+  - a type of IDS/IPS
+  - modsecurity: for apache; supports negative & positive rule models; has core
+    rule set; non-learning
+    - very simple rules that give rise to false positives
+    - users expected to tweak rules and initially use as IDS only
+    - CRS
+      - http compliance
+      - automation detection
+      - owasp top 10 attacks (sql, xss, os cmds, filenames, cf/asp/php, email,
+        response splitting, pdf)
+      - comm w trojans/backdoors that have already broken in
+      - app error hiding
+      - external patching
 
 secure javascript
 
@@ -502,7 +507,6 @@ network security tools
 
 - nessus: vuln scanner
 - wireshark: packet analyzer
-- snort: IDS
 - netcat: swiss army knife
 - metasploit: dev framework for exploits
 - hping, nmap: network probing
@@ -511,6 +515,14 @@ network security tools
 - cain & abel: windows password recovery
 - john the ripper: unix password recovery
 - <http://sectools.org/>
+
+IDS/IPS
+
+- snort: network-based; has GUIs (BASE, ACID) built on LAMP
+  - requires promiscuous sniffing off ethernet hubs or configure to SPAN
+    (Switched Port Analyzer) a switch port via port mirroring
+- ossec: host-based
+  - file integrity checking, log monitoring, rootkit detection, active response
 
 network hijacking
 
