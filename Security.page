@@ -346,7 +346,8 @@ web application security
   - capture
   - fixation: get user to use an attacker-chosen sid
 - web application firewalls (WAFs)
-  - modsecurity: for apache; supports negative & positive rule models; has core rule set; non-learning
+  - modsecurity: for apache; supports negative & positive rule models; has
+    core rule set; non-learning
     - http compliance
     - automation detection
     - owasp top 10 attacks (sql, xss, os cmds, filenames, cf/asp/php, email, response splitting, pdf)
