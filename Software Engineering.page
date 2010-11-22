@@ -67,6 +67,11 @@ facebook software engineering
 - user:dev ratio is ~1.1M
 - <http://cacm.acm.org/blogs/blog-cacm/51564-extreme-agility-at-facebook/fulltext>
 
+google chrome
+
+- trybot farms; can submit your changelists
+- use gtest, gmock, valgrind, thread sanitizer
+
 linux
 -----
 
