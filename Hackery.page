@@ -303,7 +303,14 @@
     - perf
       - trx_commit, binlog, sync_bin
         <http://www.mysqlperformanceblog.com/2010/02/28/maximal-write-througput-in-mysql/>
-    - implements MVCC; has true serializability bc of shared index locks
+    - implements MVCC; has true serializability bc of shared index locks,
+      unlike PG (and future locks or gap locks can be taken on these)
+      - each row has 3 new fields
+        - 7-byte ID of last updating (or deleting) txn
+        - 7-byte ptr to undo log record (undo log is called the _rollback
+          segment_)
+        - 6-byte monotonically increasing row ID
+      - <http://dev.mysql.com/doc/refman/5.0/en/innodb-multi-versioning.html>
     - storage format
       - if table has int primary key, use that as tuple id; otherwise add tuple
         id for each tuple
