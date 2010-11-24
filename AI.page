@@ -235,6 +235,13 @@ adaboost
   combine subordinate models into final model,
     each weighted inversely by training error
 
+graphical models
+
+- bayesian networks
+  - HMMs
+- markov networks
+- <http://cacm.acm.org/magazines/2010/12/102122-bayesian-networks/fulltext>
+
 nlp
 ===
 
