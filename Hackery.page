@@ -416,6 +416,9 @@
     - no constraints (`check`)
     - no sort merge join (certainly no map-reduce contender), let alone
       hash-join
+    - postgresql has more supple `alter table` impl
+    - mysql doesn't support ASC/DESC clauses for indexes
+      <http://explainextended.com/2010/11/02/mixed-ascdesc-sorting-in-mysql/>
     - <http://www.dbms2.com/2008/07/10/how-is-mysqls-join-performance-these-days/>
     - <http://www.mysqlperformanceblog.com/2006/06/09/why-mysql-could-be-slow-with-large-tables/>
     - optimizer only recently started working properly with certain subqueries
