@@ -241,6 +241,15 @@ mysql
   - mariadb: founder's community-oriented fork; dissatisfied with sun procedure
   - drizzle: complete refactoring/slimming by brian aker, long-time mysql dev
 
+innodb
+
+- index-organized tables
+  - full row data in PK index; saves space
+  - 2ary indexes refer to PK value, not phys loc (can change due to splitting)
+  - can't add/drop/change PK def'n without full-table rewrite
+  - can't scan in physical page order; must scan in key order
+- supports index-only scans; covering indexes run faster
+
 sqlite
 
 - concurrency
@@ -287,8 +296,23 @@ sql server 2008
 
 postgresql
 
+- table data and PK index are separate
+  - can scan in physical page order; fast
+  - supports changing PKs wo full-table rewrite; even allows concurrent writes
+- no index-only scans yet; covering indexes don't help
+  - adding more cols to indexes slows things down
 - users: disqus, skype, debian, omniti
   - <http://www.postgresql.org/about/users>
+
+postgresql vs mysql
+
+- table org: PK index & table data sep vs same (see sections)
+  - neither can scan index in physical order, only in key order
+  - <http://rhaas.blogspot.com/2010/11/mysql-vs-postgresql-part-1-table.html>
+
+oracle
+
+- table data and PK index can be same (mysql) or sep (pg)
 
 distributed postgresql
 
