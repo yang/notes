@@ -636,6 +636,53 @@ dryad
   - dryadlinq: academic release
   - nebula: a distributed shell with file descriptors as connectors
 
+manimal: relational optimization for data-intensive programs (mcafarella, webdb10, talk at cloudera)
+
+- dbms efficient, mr slow but flexible
+- given unmodified mr programs as bytecode
+- apply well understood opts like indexes, col stores
+- analyzer -> optimizer -> executor
+- special handling of regexes; eg constant regex must start w chars
+- eval 16 programs: 4 from pavlo, 12 from mahout
+  - detected 3/4 sel opt oppty's
+    - couldn't handle hashtable, but that's popular enough for special handling
+- counters, log msgs, etc - we're fine for abusing
+- opts: sel, proj, delta compression, dict compression w direct operation
+  - dict compression can use the compressed value directly if you're just doing
+    e.g. equality comparisons; no need to decompress/look up in dictionary
+  - sel: 1% selectivity -> 1% runtime
+  - proj: huge data reductions
+  - compression: delta compression not worth the trouble; too small gains
+    - need semantic analysis of the code
+- outstanding problems
+  - indexing time overhead is another mr job; only makes sense for repeat jobs
+- details
+  - works w writables and text
+  - overridden recordreader can use the index
+- mentioned haloop from uw on optimizing gradient ascent mr jobs
+- discussion
+  - what % of mr programs are java or pig/hive?
+    - karmasphere: most (90%) mr jobs are in java
+    - amr thinks it's the other way around; some even ban java
+    - 99% are python streaming at fb, visa
+  - flumejava/plume: closer to linq; java lib for mr jobs
+    - craig chambers' uw project -> google
+  - hive has indexes
+  - optimizer is rule-based; cost-based optimizers that take runtime feedback
+    would be nice
+- extra cloudera work (not part of webdb talk)
+  - learnavro: 'zero to olap in 60s'; mcaf's cloudera hacking
+    - based on at&t learnpads paper; python done; java wip
+    - go from raw data files to structured data
+  - schemadictionary
+    - inputs: anon structured data + previously seen datasets
+    - find $k$-closest datasets to anon, + schema mappings
+      - schema type info, data statistics
+      - "how likely is it that this data was drawn from the same distrib?"
+    - after user picks one of the 3, label anon data using mapping
+    - dist computation function
+  - tool to auto pick the correct visualization
+
 Block stores
 ============
 
