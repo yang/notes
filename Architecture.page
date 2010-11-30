@@ -361,6 +361,10 @@ x86
   - distinct from windows IRQLs
 - rings 0-3; usu. only 0 and 3 used
 
+x86_64 abi
+
+- function args go into: rdi rsi rdx rcx r8 r9 stack (must end on 16-byte boundary)
+
 PC architecture
 
 - <http://arstechnica.com/hardware/news/2009/09/intel-launches-all-new-pc-architecture-with-core-i5i7-cpus.ars>
