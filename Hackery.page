@@ -1330,6 +1330,17 @@
       http://archives.postgresql.org/pgsql-hackers/2007-11/msg01083.php
   - select into is dead; long live create table as
 
+- elf
+  - .text
+  - .plt: stub code that helps to resolve absolute function addrs
+  - .gotplt: absolute function addresses; used by .plt entries
+  - .debug_info
+  - .gnu_debuglink: checksum and filename for debug info
+  - .dynsym: maps _exported_ symbol names to offsets
+  - .dynstr: stores _exported_ symbol name strings
+  - .symtab: maps symbol names to offsets
+  - .strtab: symbol name strings
+
 - gcc
   - -march, -mtune, -mcpu:
 
