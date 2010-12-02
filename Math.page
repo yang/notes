@@ -276,8 +276,8 @@ misc
 
 - $P(X < min(Y,Z)) = P(X > max(Y, Z)) + 1 – P(X > Y) – P(X > Z)$
 - Chebyshev's inequality: $P(|X-\mu| \ge k \sigma) \le \frac{1}{k^2}$ for any real $k>0$
-- Jensen's inequality: If f is convex and $X$ is a random variable, $f( E(X) )
-  \le E( f(X) )$.
+- Jensen's inequality: If $f$ is convex and $X$ is a random variable, $f(E(X))
+  \le E(f(X))$.
 
 problems
 
