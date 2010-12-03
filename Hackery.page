@@ -1,3 +1,33 @@
+- nagios
+
+  - pros/features/highlights
+    - event processing system; events can be restarts, alerts, logging, etc.
+    - large ecosystem; biggest of all monitoring systems; many existing plugins
+    - web interface to see current status
+    - passive as well as active plugins; not just cron
+    - simple plugin API: any command line tool
+    - results caching, service dependencies, adaptive monitoring
+    - on-call notification rotations, escalations
+  - cons
+    - very easy to re-implement these checks
+    - yet another system to learn, with its own config labyrinth
+      (self-advertised as complex)
+    - everything is periodic, has delay
+    - no integration with trend monitoring systems; no data accumulation
+    - how is it for EC2-like places where instances are expected to fail?
+  - details
+    - define hosts, cmds, services (what cmds to run on what hosts)
+    - external command file: where other programs send nagios internal cmds
+      (not cmd-line cmds) to run
+    - active plugins: exit status 0-3 determine state
+    - distributed montoring: ssh/NRPE for active, NSCA for passive, SNMP
+    - passive plugins: checks _external command file_ every minute by default
+      - can check for sufficient freshness
+    - both queue results; checked every 5s by default by _reaper_
+    - volatile: state-triggered (v edge-triggered)
+    - ndoutils: store in mysql; will probably be nagios default in future
+    - stalking: logging all
+
 - R
 
   > Austin Huang - I'm afraid there's not a perfect solution right now. STATA
@@ -33,10 +63,6 @@
   > used in conjunction with R). For things like MCMC sampling, it's often
   > straightforward enough to roll your own in C/C++ (with the help of the gnu
   > scientific library or boost).Nov 4
-
-- monitoring
-  - nagios: configure for a static set of servers
-    - not good for EC2-like places where instances are expected to fail
 
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
