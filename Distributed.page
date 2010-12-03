@@ -1324,6 +1324,9 @@ bigtable
 - periodically compact the disktables, merging them into a single disktable
 - not partition-tolerant
 - scale to PB range across thousands of machines; auto elasticity
+- coprocessors: run arbitrary code over rows/row ranges
+  - eg: fancy updates, fancy filtering
+  - <http://www.scribd.com/doc/21631448/Dean-Keynote-Ladis2009>
 
 voldemort (linkedin, 2009)
 
@@ -1519,6 +1522,8 @@ hbase
   - fast writes; CDH3 adds single-server durability
 - HDFS is rack-aware
 - <http://hstack.org/why-were-using-hbase-part-2/>
+- coprocessors: same as in bigtable
+  - <http://hbaseblog.com/2010/11/30/hbase-coprocessors/>
 
 http://developer.yahoo.net/blog/archives/2009/06/nosql_meetup.html
 http://stackoverflow.com/questions/1189911/non-relational-database-design
