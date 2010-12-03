@@ -15,6 +15,7 @@
     - everything is periodic, has delay
     - no integration with trend monitoring systems; no data accumulation
     - how is it for EC2-like places where instances are expected to fail?
+    - polling duration can exceed period, causing problems
   - details
     - define hosts, cmds, services (what cmds to run on what hosts)
     - external command file: where other programs send nagios internal cmds
@@ -27,6 +28,41 @@
     - volatile: state-triggered (v edge-triggered)
     - ndoutils: store in mysql; will probably be nagios default in future
     - stalking: logging all
+    - often integrated with cacti/rrdtool for trend monitoring?
+
+- monitoring systems (2008)
+  - nagios: see section
+  - zenoss (core): zope
+    - web/daemon/data-tier arch; data in cmdb (cfg), rrd (hist), mysql (events)
+    - uses snmp (req'd), nagios plugins, zenpacks (cmds, tmpls, graphs)
+    - all cfg via web ui or api
+      - tmpls; production states for servers; alert severities; locations
+    - integrates events and trends; nice/confusing gui
+    - scalable server
+    - missing commercial features in zenoss enterprise
+  - zabbix
+    - lightweight agent/php/db-tier arch
+    - simple checks; agents; snmp; external/internal/aggregated checks
+    - auto discovery (agent based)
+    - fully integrated alerting, reporting, trending
+    - create own screens w tmpls; correlation of graphs
+    - cons: cumbersome config; reporting not great; no escalation
+  - hyperichq
+    - java; pg
+    - focus on app internals (mysql, pg, jboss); great for debugging
+    - integrated with opennms; similar frameworks; complementary
+    - auto-detection; best graphing; easy config; nice GUI
+    - not for typical lamp shop; lots of features in commercial version
+  - opsview enterprise
+    - set of nagios exts for scaling, web (catalyst), mysql
+    - HA/LB monitoring; multi slaves, single master
+    - nagvis, rrdtool for trending
+  - opennms: once nagios' only contender; j2ee; focus on network; snmp + nagios
+    plugins
+  - groundworks: sucks
+  - hobbit: sucks
+  - from <http://www.slideshare.net/tomdc/open-source-monitoring-tools-shootout>
+    - nice feature matrix
 
 - R
 
