@@ -161,6 +161,8 @@ misc
 - a pos def matrix has pos def inverse
 - all eigenvalues of pos def are positive
 - a real sym matrix has real sym inverse
+- _kernel_ of a mapping: elts that map to the zero elt
+- _kernel_ aka _null space_ of a matrix: nullity of A
 
 foundations
 
