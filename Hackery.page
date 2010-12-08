@@ -1,3 +1,35 @@
+- process monitoring/management
+
+  - supervisord
+    - directly monitors children; no sub-children, no forking/start cmds
+    - ugly configparser files
+    - less control than god
+    - only very basic monitoring controls + event-listening extension system
+  - god
+    - reports of problems running and memory leaks
+      - <http://stackoverflow.com/questions/768184/god-vs-monit>
+      - <http://blog.bradgessler.com/use-monit-with-rails-not-god>
+    - I also had problems with god hanging when playing with it
+    - unmaintained since Feb 2009
+  - monit
+    - nice but new language
+    - most actively maintained
+    - unlike god/supervisord:
+      - only supports running in fresh environment
+      - no stdout/stderr redirection
+    - only uses forking/start cmds; no child supervision
+    - advanced monitoring checks
+    - dependencies
+  - upstart
+    - designed for child supervision
+    - root user only; only supports running as root
+    - simple, restricted language
+    - no stdout/stderr redirection
+    - also actively maintained; ubuntu's "success story"
+    - dependencies
+  - all the above
+    - can’t monitor process groups/trees, only pid files
+
 - nagios
 
   - pros/features/highlights
