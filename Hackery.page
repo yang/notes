@@ -636,6 +636,7 @@
         One or more schema objects could not be imported during the migration process. Please review the migration output for more details.
 
 - postgresql
+  - PG8.3 added spread chkpts; fsync at end
   - clustering
     - built-in async streaming record-based replication in 9.0; sync in 9.1
       - warm standby: can't be queried; hot standby: can be queried (limited)
@@ -1946,6 +1947,10 @@
   - kqueue/kevent: handles signals, FS (vnode) changes, AIO, monitoring processes
 
 - linux
+  - dirty_ratio, dirty_background_ratio: control % RAM allowed to be dirty
+    - more aggressive writing happens when crossed
+    - pre-2.6.22: 10%/40% RAM thresholds
+    - post-2.6.22: 5%/10% are defaults
   - threading
     - NTPL: modern threading system for Linux
     - LinuxThreads: separate processes per thread; doesn't follow POSIX semantics in various ways (eg signals)
