@@ -5,6 +5,10 @@
     - ugly configparser files
     - less control than god
     - only very basic monitoring controls + event-listening extension system
+    - online reloading (`reread` then `update`) isn't that great
+      - misses certain changes, e.g. to events for event listener
+      - changed processes are restarted on `update`
+    - only one group per program
   - god
     - reports of problems running and memory leaks
       - <http://stackoverflow.com/questions/768184/god-vs-monit>
@@ -19,7 +23,11 @@
       - no stdout/stderr redirection
     - only uses forking/start cmds; no child supervision
     - advanced monitoring checks
-    - dependencies
+    - dependencies, but only process-based, not listening port-based
+    - janky; single-threaded architecture gets stuck waiting for pidfile to
+      appear and can't respond to control
+      - very slow/sluggish feeling
+    - can monitor process trees, unlike the others
   - upstart
     - designed for child supervision
     - root user only; only supports running as root
@@ -27,8 +35,16 @@
     - no stdout/stderr redirection
     - also actively maintained; ubuntu's "success story"
     - dependencies
-  - all the above
-    - can’t monitor process groups/trees, only pid files
+    - details
+      - "stop on stopped foo" will stop this job even if foo just dies (doesn't
+        have to be explicitly stopped)
+      - stopping: first sends TERM, then KILL after 5s (`kill timeout 5`)
+        - log if exited with non-0, logged
+      - upstart takes care of `start on runlevel [2345]`
+        - don't create /etc/rc?.d/ symlinks
+        - ubuntu has symlinks in /etc/init.d/ to upstart-job only for compat
+          - perhaps users or other programs expect these there
+          - none of them have symlinks in /etc/rc?.d/
 
 - nagios
 
