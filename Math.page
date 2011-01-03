@@ -257,6 +257,38 @@ general
   or SNR
   - only existential, not constructive, hence actual capacity depends on algo
 
+maximum entropy
+
+- given constraints ("testable information"), the dist that best represents the
+  current state of knowledge is the one w largest entropy
+  - i.e., choose the _least informative_ (and thus most generalizable) dist
+    given what we know, since we don't know anything else
+  - also, many physical systems tend to move toward maxent configs over time
+  - makes explicit our freedom in using different forms of prior information
+- applications
+  - obtain priors for bayesian inference
+  - maxent models: observed data itself is the testable information
+- examples
+  - given just mean and sd, use normal
+  - given just the support [a,b], use uniform over [a,b]
+  - exponential dist w mean $1/\lambda$ is maxent dist over all dists in
+    $[0,\infty]$ w mean $1/\lambda$
+
+shannon entropy
+
+- $H(X) = E(I(X)) = \sum_i p(x_i) I(x_i) = - \sum_i p(x_i) \log p(x_i)$,
+  assuming $X$ has possible values $x_i$
+  - $I(X)$ is the _information content_ of $X$
+  - if $p_i = 0$, the $0 \log 0$ is taken to be 0
+- eg binary entropy: [$H(X)$ for varying
+  $P(X=1)$](http://en.wikipedia.org/wiki/File:Binary_entropy_plot.svg)
+- distinguish btwn _entropy_ of a distribution of messages/symbols and the
+  _entropy rate_ of a stochastic process
+  - eg need 7 bits to distinguish the first 128 symbols generated in the
+    fibonacci sequence
+  - the fib sequence formula itself has a much lower entropy and applies to any
+    length fib seq
+
 probability
 ===========
 
