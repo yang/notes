@@ -796,6 +796,31 @@ voltdb
   - early beta w 150 customers featured bunch of web gaming companies and bunch
     of use cases resembling stream processing
 
+percolator (daniel peng, frank dabek, google, osdi10)
+
+- btwn DBMS & mapreduce: online processing that tolerates latency
+- latency comes from conflicts
+- built on bigtable, chubby
+- no blocking - on conflict, abort
+- locks taken at the sites
+- one of the locked sites designated as primary
+- ACID snapshot isolation (write-write conflicts only; reads are not monitored)
+- centralized timestamp oracle hands out timestamps; can reply to 2B req/s
+  - allows others to run their own systems
+- solves blockage on 2PC coordinator failure: after some time, try to undo the
+  primary lock
+  - the primary lock site is "the" commit site
+  - bigtable has row txns, which allows for atomic test-and-set to rollback or
+    commit txns at the primary lock site
+- abort & backoff if see a lock w any timestamp or a write w more recent
+  timestamp than current txn timestamp
+- _observers_ run on storage servers; multiple changes may coalesce into one
+  observer run
+  - implemented via _notifications_ in special bigtable column group/column
+- slower than MR due to excessive RPCs, but major engineering gains
+  - lock operations made faster by adding special RPC to bigtable
+- app: incremental indexing
+
 Data Integration
 ----------------
 
