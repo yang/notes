@@ -374,3 +374,9 @@ queueing theory
 
 - little's law: $L=\lambda W$ where $L$ is avg number of customers in system,
   $\lambda$ is avg arrival rate, $W$ is avg time each customer spends in system
+
+sequences and series
+====================
+
+- TODO name: $(1-1/x)^k \approx e^{-k/x}$, $(1-k/m)^n \approx e^{-kn/m}$ (last
+  seen <http://www.eecs.harvard.edu/~michaelm/postscripts/im2005b.pdf>)
