@@ -821,6 +821,36 @@ percolator (daniel peng, frank dabek, google, osdi10)
   - lock operations made faster by adding special RPC to bigtable
 - app: incremental indexing
 
+haystack (facebook, osdi10)
+
+- facebook photo store
+- replaces NFS NAS solution that choked on sheer # files and excessive disk
+  seeks
+- photos stored in 100GB append-only physical volumes (files) that are replicas
+  of logical volumes
+- lookup operation
+  1. get metadata/location-specifying URL from the metadata server (haystack
+     directory), which balances load across physical volumes
+  2. browser issues img requests to the CDN, which fwds to haystack, or
+     directly to haystack
+  3. lookup in haystack cache (DHT, basically a CDN)
+  4. haystack store looks up some position info in in-memory index and grabs
+     the photo in 1 seek
+  5. put into haystack cache iff requesting directly (CDN can cache) &
+     requesting from a write-enabled store (recently-written photos are most-read)
+- index has filename, offset, and size for each photo ID
+- photo IDs have random number (_cookie_) to prevent guessing valid URLs
+- writes synchronously append to volume and asynchronously write index
+  checkpoints for faster recovery (the volume is like the DB log)
+  - batched uploads when possible; luckily many users upload whole albums
+  - updates: latest ver in physical offset has highest offset; if diff physical
+    vol, must update
+  - deletes synchronously update physical volumes & index; compaction does GC
+- compactions: processes deletes & duplicate keys
+- occasionally, full reset needed of a node, which takes many hours
+- use XFS extent-based FS bc it has efficient prealloc & blockmaps that fit in
+  mem
+
 Data Integration
 ----------------
 
