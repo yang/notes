@@ -1,3 +1,18 @@
+- speech synthesis/TTS systems
+  - festival: c++/scheme; basic (diphone) voices poor; HTS/Unit Selection
+    voices great
+  - flite: c
+  - emacspeak: dectalk 3, dectalk express, viavoice
+  - espeak: c
+  - freetts: java
+  - festvox: voices
+  - mary: sounds pretty nice, at least the online demo w cmu voices
+  - epos
+  - hts (hmm text to speech)
+  - mbrola: not that great
+  - neospeech: commercial; amazing; used in qwiki
+  - svox: used in google products
+
 - process monitoring/management
 
   - supervisord
