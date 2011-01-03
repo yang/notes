@@ -388,3 +388,25 @@ count-min sketch
   - but decrement operation is no longer valid
 - used in statistical counting of passwords in MSR paper
   <http://research.microsoft.com/pubs/132859/popularityISeverything.pdf>
+
+universal hash families
+
+- if $H$ is a family of functions $h:M \rightarrow N$ where
+  $M={0,1,\dots,m-1},N={0,1,\dots,n-1},m \ge n$:
+  - _weak universal hash family_ aka _weak 2-universal hash family_ aka
+    _2-universal hash family_: $\forall x,y \in M, x \ne y, P[h(x)=h(y)] \le
+    1/n$
+  - _strongly 2-universal hash family_ aka _(strongly) 2-independent hash
+    family_: $\forall x,y \in M, a,b \in N, P[h(x)=a \wedge h(y)=b] \le 1/n^2$
+  - _(strongly) $k$-independent universal hash family_: $\forall x_1, x_2,
+    \dots, x_k \in M, a_1, a_2, \dots, a_k \in N, P[h(x_1) = a_1 \wedge h(x_2)
+    = a_2 \wedge \dots] \le 1/n^k$
+  - "weak" commonly elided from "weak hash function" bc 2-universal hash
+    families tend to also be 2-independent
+- carter and wegman's hash family: $h_{a,b}(x) = (ax+b \mod p) \mod n$
+  - if $n=m=p$ is prime, this is strongly 2-universal
+  - nobody actually uses mod in practice
+  - cormode's impl: <http://www.cs.rutgers.edu/~muthu/massdal-code-index.html>
+- multiply-carry: fastest 2-universal hash family for ints
+  - is it strongly 2-universal?
+- <http://blog.ezyang.com/2010/11/is-multiply-carry-strongly-universal/>
