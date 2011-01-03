@@ -373,3 +373,18 @@ feed-forward bloom filters (dga)
   then be used to filter out irrelevant *patterns*
 - paper analysis shows high prob that there will be only few patterns in second
   array that don't get any matches
+
+count-min sketch
+
+- similar to bloom filter, but instead of 1 array of bits, have $k$ arrays of
+  counters (one for each of the $k$ hash fn's)
+- operations
+  - add: increment the count elements that the hash functions point to
+  - remove: decrement the count elements that the hash functions point to
+  - count: return the min of all the count elements that the hash functions
+    point to
+- can optionally implement _conservative add_: only increment the array with
+  the min counter value
+  - but decrement operation is no longer valid
+- used in statistical counting of passwords in MSR paper
+  <http://research.microsoft.com/pubs/132859/popularityISeverything.pdf>
