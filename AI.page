@@ -242,6 +242,19 @@ graphical models
 - markov networks
 - <http://cacm.acm.org/magazines/2010/12/102122-bayesian-networks/fulltext>
 
+maximum entropy
+
+- _max entropy classifier_ aka _multinomial logit_
+  - generalizes logistic regression
+  - assumes independence of irrelevant alternatives (IIA): eg choices are blue
+    bus, yellow bus, car, but most ppl choose btwn (any) bus and car
+  - unlike alts like naive bayes, doesn't require feature independence, but
+    learning is much slower
+  - $P(y_i=j) = \frac{\exp(X_i \Beta_j)}{1 + \bigsum_{j=1}^J \exp(X_i
+    \Beta_j)}$ and $P(y_i=0) = \frac{1}{1 + \bigsum_{j=1}^J \exp(X_i \Beta_j)}$
+  - $\Beta_j$ typically estimated using maximum a posteriori (MAP), which is an
+    extension of max likelihood using regularization of weights
+
 nlp
 ===
 
