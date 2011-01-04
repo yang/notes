@@ -11,6 +11,11 @@ TODO
 - <http://hunch.net/?p=224>
 - <http://googleresearch.blogspot.com/2010/04/lessons-learned-developing-practical.html>
 - top 10: <http://gettinggeneticsdone.blogspot.com/2010/04/top-10-algorithms-in-data-mining.html>
+- k-means/canopy clustering
+- model fitting: linear models, regularization/overfitting, $k$-fold
+  cross-validation
+- common distributions: normal, beta binomial, multinomial
+- $t$-test: matched pairs and unmatched
 
 supervised learning
 
@@ -261,3 +266,14 @@ nlp
 - segmentation: figuring out word boundaries
   - simplest: over all possible segmentations, return seg w max prod over all
     words of P(word)
+
+svm
+===
+
+regression
+
+- [question: what does the objective function
+  mean?](metaoptimize.com/qa/questions/4151/understanding-svm-regression-objective-function-and-flatness)
+- <http://kernelsvm.tripod.com/>
+- [Tutorial on SVM
+  Regression](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf)
