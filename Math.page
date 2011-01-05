@@ -53,6 +53,8 @@ statistical significance
 - don't stop experiment as soon as significant results are detected
   - <http://www.evanmiller.org/how-not-to-run-an-ab-test.html>
 
+- TODO ridge regression
+
 combinatorics
 =============
 
