@@ -55,6 +55,9 @@ statistical significance
 
 - TODO ridge regression
 
+- mean absolute percentage error (MAPE): $M = \frac{1}{n} \bigsum_{t=1}^n
+  \left\vert \frac{A_t - F_t}{A_t} \right\vert$
+
 combinatorics
 =============
 
