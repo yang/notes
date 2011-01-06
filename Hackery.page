@@ -1,3 +1,12 @@
+- google apps script
+  - run on google servers
+  - can customize buttons/menus
+  - per-document, or can be added domain-wide
+  - can trigger on events: open, edit, install, spreadsheet form submit, etc
+  - can publish into public gallery or as a private or public URL service
+    (where it still runs *as you*)
+  - various actions: send mail, fetch URLs, manage docs, jdbc, utils
+
 - speech synthesis/TTS systems
   - festival: c++/scheme; basic (diphone) voices poor; HTS/Unit Selection
     voices great
