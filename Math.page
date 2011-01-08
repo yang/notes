@@ -245,6 +245,16 @@ outlier elimination
   - process involves multiple steps and lookup tables
   - <https://web.chemistry.ohio-state.edu/~coe/research/documents/error_distributions_new2.pdf>
 
+exponential smoothing for time series analysis
+
+- _exponential moving average (EMA)_ aka _exponentially weighted moving average
+  (EWMA)_ aka _single exponential smoothing (SES)_: does _not_ spot trends
+- _double exponential moving average (DEMA)_ aka _linear exponential smoothing
+  (LES)_: incorporates seasonality
+- _triple exponential moving average (TEMA)_ aka _triple exponential smoothing
+  (TES)_: incorporates seasonality & trend
+- <http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc43.htm>
+
 signals, coding, information theory
 ===================================
 
