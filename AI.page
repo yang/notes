@@ -260,6 +260,14 @@ maximum entropy
   - $\beta_j$ typically estimated using maximum a posteriori (MAP), which is an
     extension of max likelihood using regularization of weights
 
+misc
+
+- transfer learning: storing knowledge gained while solving one problem and
+  applying it to a different but related problem
+  - eg useful for personalization
+  - simple form: final prediction = sum of global and local (user-specific)
+    models
+
 nlp
 ===
 
@@ -277,3 +285,26 @@ regression
 - <http://kernelsvm.tripod.com/>
 - [Tutorial on SVM
   Regression](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf)
+
+systems
+=======
+
+gmail priority inbox
+
+- <http://research.google.com/pubs/archive/36955.pdf>
+- concise paper
+- use simple linear logistic regression for scalable learning & prediction
+- features: social (sender/recip metrics), msg content, thread, labels
+- importance metric: $p=P(a \in A, t \in (T_{min}, T_{max}) | \mathbf{f}, s)$
+  - action $a$ within time $t$ of delivery given whether seen ($s$)
+  - $T_{min}$ under 24 hours, constrained by model update frequency and gives
+    users time to react
+  - $T_{max}$ in days; longer interaction periods are not considered
+  - [prediction error strange]
+- personalizing model uses transfer learning
+  - $s = \sum_{i=1}^n f_i g_i + \sum_{i=1}^{n+k} f_i w_i, p=\frac{1}{1 +
+    \exp^{-s}}$
+  - $k$ user-specific features
+- use PA-II online passive-aggressive regression variant
+- misc
+  - continuous -> binary features via ID3-style algo [?]
