@@ -12,9 +12,21 @@ statistical learning
 statistics
 ==========
 
+- areas: descriptive, inferential
+
+- moments
+  - positive skew: lumped to the left (counter-intuitive)
+  - positive kurtosis: pointier peak
+
+- sample variance: two definitions, one divides by $n-1$ instead of $n$
+
 - mean deviation: the mean absolute deviation from the mean
   - harder to eval in closed form
   - used by TPC To calculate large deviations from RTT by calcing EWM deviation
+
+- central limit theorem: mean/sum of sufficiently many independent random
+  variables, each with finite mean & variance, is approximately normal
+  - as sample size increases, sample mean distribution approaches normal
 
 - TODO
 - (paired) student t-test
