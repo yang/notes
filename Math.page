@@ -70,6 +70,31 @@ statistical significance
 - mean absolute percentage error (MAPE): $M = \frac{1}{n} \bigsum_{t=1}^n
   \left\vert \frac{A_t - F_t}{A_t} \right\vert$
 
+- correlation
+  - Pearson's product-moment coefficient: most popular
+
+    $$\rho_{X,Y} = \frac{ \cov(X,Y) }{ \sigma_X \sigma_Y }$$
+
+    - always in $[-1, 1]$
+- T-test: TODO
+
+outlier elimination
+
+- chauvenet's criterion
+- pierce's criterion: "if you need rigor, generality, and the ability to reject more than one data point"
+  - process involves multiple steps and lookup tables
+  - <https://web.chemistry.ohio-state.edu/~coe/research/documents/error_distributions_new2.pdf>
+
+exponential smoothing for time series analysis
+
+- _exponential moving average (EMA)_ aka _exponentially weighted moving average
+  (EWMA)_ aka _single exponential smoothing (SES)_: does _not_ spot trends
+- _double exponential moving average (DEMA)_ aka _linear exponential smoothing
+  (LES)_: incorporates seasonality
+- _triple exponential moving average (TEMA)_ aka _triple exponential smoothing
+  (TES)_: incorporates seasonality & trend
+- <http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc43.htm>
+
 combinatorics
 =============
 
@@ -238,34 +263,6 @@ How To Share A Secret (Shamir 79)
 
 - split into $n$ pieces such that any $k$ can reconstruct but $k-1$ can't
 - <http://research.swtch.com/2008/01/i-could-tell-you-but.html>
-
-statistics
-==========
-
-- correlation
-  - Pearson's product-moment coefficient: most popular
-
-    $$\rho_{X,Y} = \frac{ \cov(X,Y) }{ \sigma_X \sigma_Y }$$
-
-    - always in $[-1, 1]$
-- T-test: TODO
-
-outlier elimination
-
-- chauvenet's criterion
-- pierce's criterion: "if you need rigor, generality, and the ability to reject more than one data point"
-  - process involves multiple steps and lookup tables
-  - <https://web.chemistry.ohio-state.edu/~coe/research/documents/error_distributions_new2.pdf>
-
-exponential smoothing for time series analysis
-
-- _exponential moving average (EMA)_ aka _exponentially weighted moving average
-  (EWMA)_ aka _single exponential smoothing (SES)_: does _not_ spot trends
-- _double exponential moving average (DEMA)_ aka _linear exponential smoothing
-  (LES)_: incorporates seasonality
-- _triple exponential moving average (TEMA)_ aka _triple exponential smoothing
-  (TES)_: incorporates seasonality & trend
-- <http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc43.htm>
 
 signals, coding, information theory
 ===================================
