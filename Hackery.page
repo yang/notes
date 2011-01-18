@@ -136,6 +136,10 @@
   - from <http://www.slideshare.net/tomdc/open-source-monitoring-tools-shootout>
     - nice feature matrix
 
+- scipy
+  - scikits
+    - openopt: bunch of optimization
+
 - R
 
   > Austin Huang - I'm afraid there's not a perfect solution right now. STATA
