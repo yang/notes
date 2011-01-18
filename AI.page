@@ -22,9 +22,11 @@ supervised learning
 - old statistically inspired linear methods
 - artificial neural networks
 - decision trees
-- support vector machines
+- support vector machines: maximum margin classifiers, potentially with slack
 - Gaussian processes
 - boosting; boosted trees
+
+- $k$-nearest-neighbors (KNN): classify objects based on closest $k$ neighbors
 
 - case-based reasoning
   - knowledge-based ai
@@ -34,12 +36,13 @@ supervised learning
 - margin infused relaxation algo (MIRA): TODO
   - <http://aria42.com/blog/?p=216>
 
-graph searching
+graph search
 
 - BFS, DFS, IDFS
-- best-first search
-- beam search
-- A* serach
+- best-first search: minimize distance to goal
+- A* search: explore node with minimum distance to goal + distance from start
+  - unlike best-first, may jump off a certain path you've been heading down to
+    keep from going too far off
 - dijkstra
 
 constraint satisfaction
@@ -47,13 +50,19 @@ constraint satisfaction
 - unification
   - backtracking
 
-optimization algo families
+local search/optimization algos
 
+- hill climbing: each step adjusts a single element in the vector; various ways
+  to choose successor
+- simulated annealing: adjusts all elements in the vector according to gradient
+  of the hill
+- local beam search: hill-climbing in lock-step; share info so that each
+  exploring thread jumps to one of the best successors found by any of the
+  other threads
+- stochastic beam search: local + 
 - minimax
-- hill climbing
-- simulated annealing
 - nearest neighbors
-  - knn
+  - knn: see above
   - cuckoo hashing
 - genetic algos
 
