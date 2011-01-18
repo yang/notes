@@ -212,7 +212,7 @@ generalization error
   - train $k$ times, each time leaving out one of the subsets, then testing on
     one subset
   - LOOCV: when $k$ is the sample size ($k=n$ where $n$ is data size)
-  - leave v out cross validation: more elaborate and expensive that leaves out
+  - leave $v$ out cross validation: more elaborate and expensive that leaves out
     all possible subsets
   - diff from "split-sample"/"hold-out" method commonly used for early stopping
     in neural networks
@@ -284,8 +284,20 @@ nlp
   - simplest: over all possible segmentations, return seg w max prod over all
     words of P(word)
 
+modeling
+========
+
+- hyperparameters: model params that are not being estimated/optimized
+
 svm
 ===
+
+general
+
+- hyperparameters
+  - eg $C$ penalty param
+  - eg kernel-specific params; eg poly kernel has more hyperparams than others
+- slack variables introduce soft margin
 
 regression
 
@@ -294,6 +306,17 @@ regression
 - <http://kernelsvm.tripod.com/>
 - [Tutorial on SVM
   Regression](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf)
+
+pragmatics/usage
+
+- scale params to avoid feature imbalance and numeric difficulties
+- kernels
+  - RBF: good first choice
+    - in (0,1], so fewer numerical difficulties
+    - just one hyperparam ($\gamma$)
+    - linear is special case of RBF; behaves like sigmoid for certain params
+  - linear: good when many features
+- simplest approach to finding hyperparams: grid search
 
 systems
 =======
