@@ -1781,6 +1781,17 @@
     - the simple glue approach
   - waf
     - a step backwards
+  - redo
+    - separate .do file for each target file, or a default.o.do
+    - first line calls `redo-ifchange DEPS...`
+    - can't handle steps producing multiple target files
+    - hash file contents; stored in .redo db
+  - memoize.py, fabricate
+    - just write a build script; tool will strace to determine dependencies (.deps)
+    - can't handle variations on the build
+    - no parallelism
+  - tup
+    - like memoize/fabricate but uses LD_PRELOAD not strace
 
 - note-taking
   - wyneken
