@@ -172,6 +172,15 @@
   > straightforward enough to roll your own in C/C++ (with the help of the gnu
   > scientific library or boost).Nov 4
 
+  - modeling facilities
+    - linear regression: lm
+    - generalized linear model: glm
+    - ANOVA: aov
+    - nonlinear least squares, maximum likelihood: nlm
+    - logistic regression: lrm
+  - packages
+    - quadprog
+
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
   - communication w PCs
