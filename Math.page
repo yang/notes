@@ -2,13 +2,6 @@
   - eulerian circuit iff all nodes have even degrees
   - eulerian non-circuit tour iff only 2 nodes have odd degrees
 
-statistical learning
-====================
-
-- kernel density estimator: basically place a small kernel everywhere you have
-  a sample, resulting in somtehing much smoother than a histogram (where bins
-  can make all the difference in interpretation)
-
 statistics
 ==========
 
@@ -65,6 +58,15 @@ statistical significance
 - don't stop experiment as soon as significant results are detected
   - <http://www.evanmiller.org/how-not-to-run-an-ab-test.html>
 
+statistical inference
+
+- generalized linear model (GLM): generalization of least squares regression
+  - TODO
+- analysis of variance (ANOVA or AOV): TODO
+- logistic regression
+- kernel density estimator: basically place a small kernel everywhere you have
+  a sample, resulting in somtehing much smoother than a histogram (where bins
+  can make all the difference in interpretation)
 - TODO ridge regression
 
 - mean absolute percentage error (MAPE): $M = \frac{1}{n} \bigsum_{t=1}^n
