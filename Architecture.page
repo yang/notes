@@ -21,6 +21,13 @@ intel atom
 
 - good low-power chip but currently no 64-bit mem or ECC
 
+RAM
+
+- ddr: chunks of data per operation; ddr = 2x, ddr2 = 4x, ddr3 = 8x
+- channels: width btwn cpu and ram; eg dual channel ddr3-1333 (pc3-10600) xfers
+  2*10600=21200 GB/s
+- <http://blog.serverfault.com/post/know-your-ram/>
+
 power mgmt
 
 - cpu idle
