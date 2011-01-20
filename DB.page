@@ -64,7 +64,11 @@ companies
   - greenplum: postgresql based; acquired by emc
   - aster data: customers: myspace; hadoop interop; COTS; investors: sequoia
     - ncluster: row-based MPP DBMS based on PG; supports map-reduce
-  - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token compression, multicore queries, ACID, no indexes/mat views, "extends" like netezza's zone maps)
+  - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token
+    compression, multicore queries, ACID, no indexes/mat views, "extends" like
+    netezza's zone maps)
+    - tried this out; suffers from mysql row size limit (no large tables, which
+      is common in OLAP!)
   - infobright: wants multicore queries, ACID
   - netezza: row-based db hw with compression, clustering; acquired by ibm
     - compression: prefix compression, huffman coding
