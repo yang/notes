@@ -22,6 +22,14 @@ supervised learning
 - old statistically inspired linear methods
 - artificial neural networks
 - decision trees
+  - pruning: remove irrelevant features; eg $\chi^2$ pruning (math)
+  - finding split points on continuous features is usu most expensive part
+    (math)
+  - ID3: standard simple learning algo
+    - choose attr w max info gain (or, equivalently, min entropy)
+  - C4.5: standard modern decision tree learner
+    - supports continuous attrs, missing values, diffing costs, pruning
+      irrelevant attrs
 - support vector machines: maximum margin classifiers, potentially with slack
 - Gaussian processes
 - boosting; boosted trees
