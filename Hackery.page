@@ -711,8 +711,9 @@
     - segments are separate 16MB files
     - checkpoints taken by default every 3 WAL segments or 5m
   - has async api
-  - monitoring
-    - `select * from pg_stat_activity`
+  - monitoring/introspection
+    - `select * from pg_stat_activity`: see current queries/activity
+    - `select * from pg_locks where not granted`: see locks
   - rules: query rewriting, eg let you insert/update a view and redirect to
     underlying table(s)
   - triggers: executed in-transaction
