@@ -17,6 +17,24 @@ TODO
 - common distributions: normal, beta binomial, multinomial
 - $t$-test: matched pairs and unmatched
 
+ensemble methods
+
+- decision stumps aka weak learners: predict based on just one feature
+- bootstrap aggregating aka bagging
+  - given a learner (model), trains $t$ classifiers (instances of the learner)
+    on a bootstrap sample from the training data
+  - bootstrap sample: sample w replacement (replace each example)
+  - given a test example, classifiers take a vote (regressions take avg)
+    - averages predictions, so not useful for improving linear models
+  - TODO relationship to cross-validation, bootstrapping?
+- boosting (adaboost): usu applied to decision trees
+  - given a learner, trains $t$ classifiers (instances of the learner) on
+    samples of the training data
+  - when a classifier is trained, weights for misclassified instances are
+    increased, so that next classifier must try harder to get those right
+  - classifiers also assigned a weight based on accuracy on training set
+  - given a test example, classifiers take a weighted vote
+
 supervised learning
 
 - old statistically inspired linear methods
@@ -32,7 +50,6 @@ supervised learning
       irrelevant attrs
 - support vector machines: maximum margin classifiers, potentially with slack
 - Gaussian processes
-- boosting; boosted trees
 
 - $k$-nearest-neighbors (KNN): classify objects based on closest $k$ neighbors
 
@@ -229,13 +246,36 @@ generalization error
   - cross-validation to split-sample is superior for small datasets
   - LOOCV good for continuous error functions/model-selection methods, bad for
     discontinuous ones
+  - repeated random sub-sampling validation (this may be referred to as
+    bootstrapping)
+    - split multiple times randomly; avg over splits
+    - split multiple times randomly; avg over splits
+  - stratification
+    - repeated random sub-sampling validation
+      - maintain same mean response value is equal in training and test sets
+        TODO understand that sentence
+      - useful if responses are dichotomous, where data has unbalanced repr of
+        the two response values
+    - stratified $k$-fold CV
+      - choose folds so that mean response value is approx equal in all folds
+        TODO understand that sentence
+      - for dichotomous classification, each fold has ~same +/- labels
 - jackknifing: LOOCV but for estimating bias not gen error
   - compute some statistic of interest in each subset
   - compare avg of these to avg of entire sample to estimate the latter's bias
-- bootstrapping: seems to work better than CV in many cases
+- bootstrapping
   - repeatedly analyze subsamples of the data rather than subsets
   - ea subsample is a random sample with replacement from full sample
-  - TODO
+    - subsamples may be of same cardinality as full sample
+  - allows us to evaluate estimators
+    - example from classical statistics: what's the variance of the mean? what
+      are our confidence intervals?
+    - example from machine learning: for a decision tree algo, evaluate mean &
+      variance of (# correct)/(# elements)
+  - TODO clarify relationship w CV
+    - seems CV is better for ML tasks, since test set != train set
+    - bootstrapping works better than CV in many cases?
+      <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
 - ref: <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
 
 loss functions
