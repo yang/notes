@@ -4,6 +4,34 @@ resources
 
 - <http://www.cs.berkeley.edu/~daw/teaching/cs261-f08/>
 
+everything you need to know about cryptography in 1 hour (talk by collin
+percival)
+
+- hashing
+  - ideal hash function: collision-resistant & one-way; nothing else
+    - collision-resistant: hard to find 2 inputs w same hash
+    - one-way: hard to find input given hash
+    - nothing else: in particular, knowing $H(x)$ may let attacker compute
+      $H(y)$ for some $y$, so simple hashing in itself is unsuitable for
+      authentication/signing
+    - don't use for symmetric signing
+    - use SHA-256 (SHA-2); consider SHA-3; avoid MD2, MD4, MD5, SHA-1, RIPEMD
+  - symmetric authentication aka symmetric signing: uses MACs
+    - ideal MAC $f_k(x)$ uses key $k$ to map any-len input to $n$-bit output
+      such that even if you know a $(x, f_k(x))$ pair, it's hard to generate
+      another $(y, f_k(y))$, unlike in hashing
+    - avoid having 2 msgs result in same data being input to MAC; ie take care
+      w delimiters, don't simply concatenate things
+    - use HMAC-SHA256; avoid CBC-MAC, Poly1305
+    - don't leak timing side channels when verifying signatures (no early
+      returns)
+  - side channels: timing, EM emissions (TEMPEST), power consumption, microarch
+    features (caches, HyperThreading)
+  - block ciphers: TODO
+  - TODO finish
+- <http://www.bsdcan.org/2010/schedule/attachments/135_crypto1hr.pdf>
+- <http://blip.tv/file/3627639>
+
 people
 
 - michal zalewski: google security person, wrote browsersec book among tons of
