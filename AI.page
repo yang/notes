@@ -280,6 +280,50 @@ generalization error
       <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
 - ref: <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
 
+receiver operating characteristic (ROC)
+
+- based on confusion matrix aka contingency table
+- true positive rate aka TPR aka sensitivity: TP/P or TP/(TP+FP)
+- false positive rate aka FPR aka 1 - specificity: FP/N or FP/(TN+FN)
+- ROC curve: plot of FPR on x and TPR on y while varying threshold
+  - input: true labels and scores from classifier
+  - top left is perfect; random tends to be around FPR=TPR diagonal
+  - python to generate a ROC curve
+
+      # say sorted(zip(scores, labels), reverse=True) returns:
+      # [(.9, 1), (.8, 1), (.6, 0), (.4, 1), (.2, 0), (.1, 0)]
+
+      pos, neg = labels.count(1), labels.count(0)
+
+      # simple implementation: doesn't sort data first
+
+      thresholds = sorted(set(scores), reverse=True)
+      for i, t in enumerate(thresholds):
+        # num examples with predict=1 and label=1
+        tp = sum(label for score, label in zip(scores, labels)
+                 if score >= t and label == 1)
+        # num examples with predict=1 and label=0
+        fp = sum(label for score, label in zip(scores, labels)
+                 if score >= t and label == 0)
+        yield tp/pos, fp/neg
+
+      # more efficient implementation sorts data first and accumulates data
+
+      tp, fp = 0
+      # this descends the threshold to each distinct value of score
+      for score, label in sorted(zip(scores, labels), reverse=True):
+        if label: tp += 1
+        else: fp += 1
+        yield tp/pos, fp/neg
+
+- area under curve (AUC) metric
+  - random classifier: AUC = .5
+  - perfect classifier: AUC = 1
+  - different apps have different prefs
+    - spam filtering: want low FP
+    - medical screening tests: want high TP
+- <http://metaoptimize.com/qa/questions/4370/how-to-generate-a-roc-curve-for-binary-classification>
+
 loss functions
 
 - 0-1 loss
