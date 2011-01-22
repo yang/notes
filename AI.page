@@ -21,12 +21,11 @@ ensemble methods
 
 - decision stumps aka weak learners: predict based on just one feature
 - bootstrap aggregating aka bagging
-  - given a learner (model), trains $t$ classifiers (instances of the learner)
-    on a bootstrap sample from the training data
+  - given a learner (model), trains $t$ classifiers (instances of the learner),
+    each on some bootstrap sample from the training data
   - bootstrap sample: sample w replacement (replace each example)
   - given a test example, classifiers take a vote (regressions take avg)
     - averages predictions, so not useful for improving linear models
-  - TODO relationship to cross-validation, bootstrapping?
 - boosting (adaboost): usu applied to decision trees
   - given a learner, trains $t$ classifiers (instances of the learner) on
     samples of the training data
@@ -232,6 +231,9 @@ generalization error
   - often used to choose among different models; e.g. different neural network
     architectures; choose one with lowest gen error
 - cross validation
+  - *doesn't* estimate error on future data
+  - rather, a way to pick best learning algo (and best learning params that
+    aren't already being numerically optimized)
   - $k$-fold cross validation: divide data into $k$ subsets of roughly same
     size (folds)
   - train $k$ times, each time leaving out one of the subsets, then testing on
