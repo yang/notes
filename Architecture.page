@@ -23,9 +23,15 @@ intel atom
 
 RAM
 
-- ddr: chunks of data per operation; ddr = 2x, ddr2 = 4x, ddr3 = 8x
-- channels: width btwn cpu and ram; eg dual channel ddr3-1333 (pc3-10600) xfers
-  2*10600=21200 GB/s
+- frequency, bandwidth: each xfer ships 8 bytes
+  - eg ddr3-1333 (pc3-10600): 1333 MHz * 8 bytes/xfer = 10.6 GB/s
+- ddr: data per xfer; ddr = 2x, ddr2 = 4x, ddr3 = 8x
+  - eg ddr3-1333 (pc3-10600): already accounts ddr3
+- channels: width btwn cpu and ram
+  - eg dual channel ddr3-1333 (pc3-10600): 2*10600=21200 GB/s
+- registered ram: buffered; higher capacity but lower latency
+- rank: independently accessible 64-bit area of the memory (don't understand)
+- misc terms: ecc, capacity
 - <http://blog.serverfault.com/post/know-your-ram/>
 
 power mgmt
