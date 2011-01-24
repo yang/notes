@@ -1416,6 +1416,7 @@
     - <http://www.airs.com/blog/archives/52>
 
 - java
+  - visualvm: sampling profiler in 1.2+
   - jstack: print thread stacks of a running process or core file
   - interface fields are all static
   - initial heap size = 1/64 phy, max heap size = 1/4 phy (cap 1gb)
