@@ -69,13 +69,13 @@ statistical inference
   can make all the difference in interpretation)
 - TODO ridge regression
 
-- mean absolute percentage error (MAPE): $M = \frac{1}{n} \bigsum_{t=1}^n
+- mean absolute percentage error (MAPE): $M = \frac{1}{n} \sum_{t=1}^n
   \left\vert \frac{A_t - F_t}{A_t} \right\vert$
 
 - correlation
   - Pearson's product-moment coefficient: most popular
 
-    $$\rho_{X,Y} = \frac{ \cov(X,Y) }{ \sigma_X \sigma_Y }$$
+    $$\rho_{X,Y} = \frac{ \text{cov}(X,Y) }{ \sigma_X \sigma_Y }$$
 
     - always in $[-1, 1]$
 - T-test: TODO
