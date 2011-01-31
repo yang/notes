@@ -106,6 +106,27 @@ garbage collection
   full-copying
 - great big FAQ: <http://www.iecc.com/gclist/GC-faq.html>
 
+azul's pauseless GC (managed runtime initiative aka MRI)
+
+- GC pauses: biggest pain point in modern JVMs
+  - every other GC delays moving objects around
+- azul is different: the only way it collects is by compaction
+- single pass marking of live objs; no need to revisit refs
+  - special read barrier: ea time read ref, VM intercepts to ensure obj is
+    marked if it isn't already
+  - GC thus insensitive to ref mutation rate
+- concurrent compaction: move an object without updating all its refs
+  - self healing: read barriers also allow refs to be updated as they're
+    deref'd
+- massive and rapid manipulation of virtual mem mappings, at rate of allocation
+  - requires changes to OS kernels
+  - "quick release": once relocated/compacted objs out of a page, keep
+    forwarding info outside the page, so can immediately release the physical
+    page behind the physical mapping (refs are all intercepted) and recycle it
+    at a diff virt addr for allocation/app use again
+- slightly lower all-around perf
+- <http://www.artima.com/lejava/articles/azul_pauseless_gc.html>
+
 B programming language
 
 - basically C without types
