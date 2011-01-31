@@ -20,9 +20,11 @@ TODO
 data set balance
 
 - class imbalance is common problem in many problems
-- undersampling majority class in training set is common technique
-  - shouldn't affect ROC curve
-  - don't undersample test set
+- most common techniques
+  - random undersampling (RUS) of majority class
+    - shouldn't affect ROC curve
+    - don't undersample test set
+  - random oversampling (ROS) of minority class: duplicate samples
 - synthetic minority over-sampling technique (SMOTE)
   - "informed over-sampling": for each minority sample $s$:
     - find $k$ nearest neighbors
@@ -38,6 +40,7 @@ data set balance
   - <http://www.iro.umontreal.ca/~lisa/workshop2004/slides/japkowicz_slides.ppt>
   - may combine SMOTE and undersampling
 - <http://metaoptimize.com/qa/questions/232/does-subsampling-bias-the-auc>
+- <http://www.machinelearning.org/proceedings/icml2007/papers/62.pdf>
 
 ensemble methods
 
