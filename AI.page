@@ -124,6 +124,7 @@ clustering
   - divisive: top-down splitting
 - partitional: determine all clusters at once; can be used in divisive
   - $k$-means: assign each point to cluster with closest centroid; initialize with random centroids
+    - can use results to determine _clustroids_ (points closest to centroids)
   - locality sensitive hashing (LSH): hash similar values to similar values
     - a form of dimensionality reduction
     - also used in nearest neighbor search
