@@ -2,6 +2,15 @@
   - orange > pyml, mlpy
   - rapidminer > weka
 
+- weka
+  - dealing with dataset imbalance
+    - SpreadSubsample: undersampling
+    - SMOTE: oversampling
+    - CostSensitiveClassifier
+    - InterquartileRange: undersample (remove) outliers
+    - CostMatrix, Resample
+    - <http://old.nabble.com/Unbalanced-class-problem-td29911621.html>
+
 - google apps script
   - run on google servers
   - can customize buttons/menus
