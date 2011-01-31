@@ -142,6 +142,10 @@ evaluation measures
 
 - see statistical test accuracy measures for basic ones
   - precision, recall, F-measure are single-value metrics of entire result set
+  - precision: # relevant and retrieved / # retrieved
+  - recall: # relevant and retrieved / # relevant
+  - f-measure aka F1 score aka F-score: $F = 2 \frac{PR}{P+R}$ where $P$ is
+    precision, $R$ is recall
 - mean avg precision (MAP): unlike single-value metrics, considers ranking
   - avg of precisions computed at the point of each of the relevant docs
   - AveP = $\sum_{r=1}^N P(r) \mathrm{rel}(r)$ / |relevant|, where
