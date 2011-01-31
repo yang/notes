@@ -344,7 +344,11 @@ receiver operating characteristic (ROC)
   - different apps have different prefs
     - spam filtering: want low FP
     - medical screening tests: want high TP
+- AUC has implicit cost functions; diff cost distributions for diff classifiers
+  - don't use AUC to compare diff classifiers
+  - <http://www.springerlink.com/content/y35743hp7010g354/>
 - <http://metaoptimize.com/qa/questions/4370/how-to-generate-a-roc-curve-for-binary-classification>
+- <http://metaoptimize.com/qa/questions/232/does-subsampling-bias-the-auc>
 
 loss functions
 
