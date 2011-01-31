@@ -17,6 +17,28 @@ TODO
 - common distributions: normal, beta binomial, multinomial
 - $t$-test: matched pairs and unmatched
 
+data set balance
+
+- class imbalance is common problem in many problems
+- undersampling majority class in training set is common technique
+  - shouldn't affect ROC curve
+  - don't undersample test set
+- synthetic minority over-sampling technique (SMOTE)
+  - "informed over-sampling": for each minority sample $s$:
+    - find $k$ nearest neighbors
+    - randomly select $j$ of them ($j$ depends on oversampling desired)
+    - randomly generate synthetic samples along the lines joining $s$ and the
+      $j$ neighbors
+  - shortcomings
+    - may overgeneralize bc it disregards majority class; esp problematic for
+      highly skewed class distributions bc minority class is very sparse wrt
+      majority class
+    - inflexibility: $j$ is fixed in advance
+  - adaptive synthetic minority oversampling (ASMO): overcomes shortcomings
+  - <http://www.iro.umontreal.ca/~lisa/workshop2004/slides/japkowicz_slides.ppt>
+  - may combine SMOTE and undersampling
+- <http://metaoptimize.com/qa/questions/232/does-subsampling-bias-the-auc>
+
 ensemble methods
 
 - decision stumps aka weak learners: predict based on just one feature
