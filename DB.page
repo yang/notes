@@ -253,6 +253,13 @@ innodb
   - can't add/drop/change PK def'n without full-table rewrite
   - can't scan in physical page order; must scan in key order
 - supports index-only scans; covering indexes run faster
+- MVCC
+  - updates copy old row to rollback segment first
+  - deletes mark row for deletion, insert info into rollback segment too
+  - "purge" GC can quickly determine what to discard from rollback segment
+  - purge is single-threaded
+  - not sure how deleted space is reclaimed/reused/kept around (doesn't info
+    about it get removed from the rollback segment by the purge process?)
 
 sqlite
 
@@ -305,6 +312,9 @@ postgresql
   - supports changing PKs wo full-table rewrite; even allows concurrent writes
 - no index-only scans yet; covering indexes don't help
   - adding more cols to indexes slows things down
+- MVCC: on update, old row left in place, new row quickly inserted
+  - VACUUM must scan all data as a result
+  - VACUUM is multi-threaded
 - users: disqus, skype, debian, omniti
   - <http://www.postgresql.org/about/users>
 
@@ -313,6 +323,10 @@ postgresql vs mysql
 - table org: PK index & table data sep vs same (see sections)
   - neither can scan index in physical order, only in key order
   - <http://rhaas.blogspot.com/2010/11/mysql-vs-postgresql-part-1-table.html>
+- MVCC GC: VACUUM vs purge
+  - innodb: updates must copy old row to rollback segment
+  - PG: faster updates, slower VACUUM scans all data
+  - <http://rhaas.blogspot.com/2011/02/mysql-vs-postgresql-part-2-vacuum-vs.html>
 
 oracle
 
