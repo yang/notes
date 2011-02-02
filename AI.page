@@ -380,6 +380,11 @@ graphical models
 - markov networks
 - <http://cacm.acm.org/magazines/2010/12/102122-bayesian-networks/fulltext>
 
+kernels
+logistic regression
+
+- nearly same as linear SVM
+
 maximum entropy
 
 - _max entropy classifier_ aka _multinomial logit_
@@ -442,6 +447,35 @@ general
   - eg $C$ penalty param
   - eg kernel-specific params; eg poly kernel has more hyperparams than others
 - slack variables introduce soft margin
+
+kernels
+
+- from <http://anyall.org/blog/2011/01/please-report-your-svms-kernel/>:
+
+  > An un-kernelized, linear SVM is nearly the same as logistic
+  > regression...But a quadratic kernelized SVM is much more like boosted
+  > depth-2 decision trees.  It can do automatic combinations of pairs of
+  > features — a potentially very different thing, since you can start throwing
+  > in features that don’t do anything on their own but might have useful
+  > interactions with others.  (And of course, more complicated kernels do
+  > progressively more complicated and non-linear things.)
+  >
+  > I have heard people say they download an SVM package, try a bunch of
+  > different kernels, and find the linear kernel is the best. In such cases
+  > they could have just used a logistic regression.  (Which is way faster and
+  > simpler to train!  You can implement SGD for it in a few lines of code!)
+  >
+  > A linear SVM sometimes has a tiny bit better accuracy than logistic
+  > regression, because hinge loss is a tiny bit more like error rate than is
+  > log-loss.  But I really doubt this would matter in any real-world
+  > application, where much bigger issues are happening (like data cleanliness,
+  > feature engineering, etc.)
+  >
+  > If a linear classifier is doing better than non-linear ones, that’s saying
+  > something pretty important about your problem.  Saying that you’re using an
+  > SVM is missing the point.  An SVM is interesting only when it’s kernelized.
+  > Otherwise it’s just a needlessly complicated variant of logistic
+  > regression.
 
 regression
 
