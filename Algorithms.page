@@ -50,6 +50,13 @@ TODO
   - compressive sensing of images
 - <http://rjlipton.wordpress.com/2009/10/27/highlights-of-focs-theory-day/>
 
+randomized algorithms
+
+- las vegas: always gives correct results; runtime resources may vary
+  - eg quicksort (rand pivots)
+- monte carlo: deterministic runtime; output may be incorrect w certain prob
+  - eg min cut
+
 misc terms
 
 - _binary decision diagram (BDD)_: binary tree representation of truth table;
