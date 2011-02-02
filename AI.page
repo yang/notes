@@ -405,6 +405,14 @@ gibbs sampling
   $p(x_j^(i) | x_1^(i), \dots, x_{j-1}^(i), x_{j+1}^(i-1), \dots, x_n^(i-1))$
   - cond on all other vars, making use of most recent values and updating ASAP
 
+feature selection
+
+- subset selection: evaluate a subset of features (or: which feature to discard
+  first? a search problem)
+  - wrappers: wrap a learning model, may overfit TODO finish this line
+  - filters: like wrappers, but instead of model, use simpler filter
+- TODO stepwise regression
+
 misc
 
 - transfer learning: storing knowledge gained while solving one problem and
