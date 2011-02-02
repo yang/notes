@@ -34,6 +34,42 @@ statistics
   - similarity of orderings of data
   - TODO uses p-value somewhere
 
+bayesians vs frequentists
+
+- views of probability
+  - frequentist: $P(H)=.5$ turns up heads .5 of the time
+  - bayesian: coin w $P(H)=.5$ deserves even-odds betting
+- views of stats
+  - frequentist: ask what's $P(H=h)$ given that null hyp that true odds are .5
+  - bayesian: estimate $P(\theta=.5)$ vs $P(\theta\ne.5)$ given #H & prior
+- frequentist
+  - believes pop mean is real, but unknown and unknowable; must be estimated
+    from data; constructs confidence interval centered at sample mean
+  - can't say "95% prob that true mean is in interval"; must say "95% of
+    similar intervals would contain the true mean, if each interval were
+    constructed from a different random sample like this one"
+- bayesian
+  - only data is real; pop mean is an abstraction; construct a credible
+    interval, centered near the sample mean and tempered by prior beliefs
+    (sometimes very non-informative)
+  - can say "95% prob that this interval contains the mean"
+- <http://www.statisticalengineering.com/frequentists_and_bayesians.htm>
+- <http://www.rasmusen.org/x/2007/09/25/bayesian-vs-frequentist-statistical-theory/>
+
+probability vs statistics
+
+- probabilists: hypothesis to data
+  - very pure, "subjunctive"; strict if-thens; if die is fair, then $P(1)=1/6$;
+    "is die fair?" -> "not my dept"
+  - "in 100 tosses of fair coin, what's $P(H=40)$?
+- statistician: data to hypothesis
+  - deal w not just if-then, but whether die fair, what the bias is
+  - more science-y; nature must be observed to get at the underlying rules
+  - "if 40 of 100 tosses were heads, what's $P(\theta=.5)$?": much harder
+    question, such that no agreement among math/science/philos/prob/stats
+- TODO finish
+- <http://appliedclinicaltrialsonline.findpharma.com/appliedclinicaltrials/Metrics%2FStatistics/Bayesian-Likelihood-and-Frequentist-Approaches-to-/ArticleLong/Article/detail/84710>
+
 test accuracy
 
 - precision = relevant & retrieved / retrieved
