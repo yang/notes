@@ -556,9 +556,17 @@
     - <http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL#Replication_and_High_Availability>
   - examples of why mysql blows vs postgresql
     - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
+    - <http://news.ycombinator.com/item?id=2176062>
+
+      > "InnoDB *is* still broken...Just last week we had to drop/re-create an
+      > InnoDB-table in one project because it would not allow to add an index
+      > anymore, no matter what we tried...`Mysql::Error: Incorrect key file
+      > for table 'foo'; try to repair it: CREATE INDEX [...]` "
+
     - pg now has async replication; that was mysql's only strong pt against pg
       - neither has synchronous replication, but pg's is coming
-      - semisync still unsafe; waiting after commit, not before commit
+      - semisync still unsafe; master waits *after* actually committing
+        locally, instead of blocking the commit (as it should)
       - recovery is complex
     - crappy concurrency, >3 sucks vs pg <http://spyced.blogspot.com/2006/12/benchmark-postgresql-beats-stuffing.html>
     - multiple storage engines has always restricted progress:
