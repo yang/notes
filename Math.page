@@ -90,20 +90,99 @@ test accuracy
 statistical significance
 
 - standard score: number of SDs; aka z-value, z-score, normal score
+- this is frequentist hypothesis testing; Bayesian hypothesis testing is
+  Bayesian inference
+- Fisherian testing: p-values
+- Neyman-Pearson: type II errors, alt hyps
 - p-value: significance level; P(observation|null hypothesis)
-  - prob of mistakenly rejecting null hyp < p-value
+  - assuming null hyp (no underlying relationship or diff btwn the variables),
+    what's prob we'll see a diff at least as extreme as the one observed just
+    by chance?
+    - not same as saying, given that the alt hyp *is* true, we can replicate
+      the results 5% of the time or 95% of the time; that's called the
+      _statistical power_ of the design
   - the lower, the less likely the result if the null hyp is true, thus the
     more statistically significant the result is
   - if < .05 or .01, corresponding to a 5% or 1% chance of rejecting the null
     hyp when it's actually true (type I error)
-  - 5% is a typical value
+  - 5% is a typical value (border-line acceptability); in the end this is all
+    arbitrary, no way to say something is/isn't "really" significant
   - eg P(14+ heads of 20 flips|fair coin)
 - E-value: expected num tests until a certain observation, assuming null hyp
 - how to efficiently calc prob of *at least* $h$ H in $n$ flips?
 - type I error: false pos; rej null hyp when it's actually true
 - type II error: false neg; acc null hyp when it's actually false
-- don't stop experiment as soon as significant results are detected
+- mustn't stop experiment as soon as significant results are detected
   - <http://www.evanmiller.org/how-not-to-run-an-ab-test.html>
+- common "general format" of significance tests
+  - they're some ratio of (some measure of the differentiation common in the
+    variables) / (overall differentiation of those vars)
+  - eg: (part of overall differentiation of the WCC scores) / (overall
+    differentiation of the WCC scores)
+  - called ratio of "explained variation" to "total variation"
+- can only get to P(null hypothesis|observation) if we're Bayesian and have a
+  prior
+  - Fisher violently opposes the concept of an alt hyp
+- many different and widespread interpretation pitfalls
+- robust/resistant statistics: around for 20+ yrs; not widely used; p-values
+  reign for many non-ideal real-world reasons
+
+statistical tests
+
+- many different statistical measures
+- _power_ of a test is its probability of correctly rejecting null hyp
+  (complement of false negative rate, $\beta$)
+  - power function $\beta(\theta) = P_\theta(X \in R)$, where $R$ is rejection
+    region (this is a diff $\beta$)
+- size/significance level of a test ($\alpha$): prob of incorrectly rejecting
+  null hyp (false positive rate), or upper bound of prob of rejecting the null
+  hyp over all cases covered by the null hyp
+- always want to choose the _most powerful_ test (highest power under $H_1$)
+  for a given size/significance level
+  - finding most powerful tests is hard; most powerful tests don't exist for
+    many cases
+  - 4 widely used tests: Wald, $\chi^2$, permutation, likelihood ratio
+- contingency tables: used by many statistical tests
+- decision table: <http://www.graphpad.com/www/book/choose.htm>
+- chi-square: typically Pearson's chi-square
+- Pearson's chi-square: for large categorical data
+  - assesses _goodness of fit_ and tests of independence
+  - $X^2 = \sum_{i=1}^n \frac{(O_i - E_i)^2}{E_i}$, where
+    - $X^2$ is Pearson's cumulative test statistic which asymptotically
+      approaches a $\chi^2$ distribution
+    - $O_i$ is observed freq
+    - $E_i$ is expected (theoretical) freq
+    - $n$ is number of cells in contingency table
+  - degrees of freedom
+    - for goodness of fit, it's number of terms in $X^2$ expr - 1
+    - for indep test, it's (num cols) (num rows) = 1
+  - for 2x2 contingency table (comparing two groups, $n=4$)
+    - $E_i$ are (row total)(column total)/(total)
+    - $X^2$ becomes $(ad-bc)^2 (a+b+c+d) / ((a+b)(c+d)(b+d)(a+c))
+  - with chi square and dof, look up prob in $\chi^2$ dist
+  - goodness of fit: compare group against theoretical expectation
+  - cautionary note - TODO is this related to one-sided vs two-sided tests?
+
+    > It is important to keep in mind that the chi-square test only tests
+    > whether two variables are independent. It cannot address questions of
+    > which is greater or less. Using the chi-square test, we cannot evaluate
+    > directly the hypothesis that boys get in trouble more than girls; rather,
+    > the test (strictly speaking) can only test whether the two variables are
+    > independent or not.
+
+  - <http://ccnmtl.columbia.edu/projects/qmss/the_chisquare_test/about_the_chisquare_test.html>
+  - <http://math.hws.edu/javamath/ryan/ChiSquare.html>
+- Fisher's exact test: for small categorical data; compares two groups
+  - a type of exact permutation test; based on hypergeom dist
+  - $p = \frac{(a+b choose a) (c+d choose c)}{(n choose a+c)} =
+    \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!n!}$
+  - use fisher if possible; easy w computers; chi square is approximation
+    - <http://www.graphpad.com/faq/viewfaq.cfm?faq=1114>
+    - <http://en.wikipedia.org/wiki/Exact_test>
+    - <http://www.itl.nist.gov/div898/handbook/prc/section3/prc33.htm>
+- binomial test: for small categorical data
+  - compare group against theoretical value (i.e. with-replacement; see
+    binomial dist vs hypergeom dist)
 
 statistical inference
 
