@@ -1469,6 +1469,16 @@ lightcloud
 - provides consistent hashing on top of tokyo tyrant
 - TODO
 
+piccolo (jiyang, nyu, osdi10)
+
+- partitioned KV store; can eg force together partition $i$ from multiple
+  tables
+- commutative updates
+- load balancing
+- python/c++ impl
+- eg pagerank
+- other apps: crawler, numeric algos
+
 dynamo
 
 - works across DCs
