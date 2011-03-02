@@ -755,6 +755,13 @@ authentication protocols
 - u-prove: maintain privacy while proving that i can pay
   - TODO can't tell if same person made txns?
 
+wifi
+
+- WEP: can be sniffed by any user
+- WPA/WPA2: diff link key per user, unless they can capture initial handshake
+  - pre-shared key (PSK) means this link key can be recovered trivially from initial handshake
+- <http://serverfault.com/questions/149888/wep-wpa-wpa2-and-wifi-sniffing>
+
 windows security
 
 - 2 ways windows stores acct credentials: LAN Manager and NTLM
