@@ -2043,6 +2043,10 @@
     - sys/kernel/core_pattern: where to output core dumps (or pipe to command)
     - sys/fs/binfmt_misc: register different ways to run different binary
       formats
+    - PID/fdinfo/FD: includes pos in file
+    - PID/maps: what files (usu. libs) the process has mapped, and where;
+      useful for debugging env/LD_* issues
+  - <http://blog.ksplice.com/2011/01/solving-problems-with-proc/>
   - `ulimit` can only lower not raise for non-root; root can raise;
     `/etc/security/limits.conf` can set global cap for non-roots
   - scheduler works on threads
