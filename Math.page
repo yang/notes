@@ -34,6 +34,17 @@ statistics
   - similarity of orderings of data
   - TODO uses p-value somewhere
 
+distributions
+
+- bernoulli: heads or tails
+- binomial: number of successes in $n$ draws with replacement (multiple
+  bernoulli trials)
+- hypergeometric: number of successes in $n$ draws *without* replacement
+  (unlike binomial)
+- poisson: number of arrivals in sliver of time; infinite-granularity binomial
+- exponential: inter-arrival times for poisson
+- gaussian/normal
+
 bayesians vs frequentists
 
 - views of probability
