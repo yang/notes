@@ -92,9 +92,11 @@ statistical significance
 - standard score: number of SDs; aka z-value, z-score, normal score
 - this is frequentist hypothesis testing; Bayesian hypothesis testing is
   Bayesian inference
-- Fisherian testing: p-values
-- Neyman-Pearson: type II errors, alt hyps
-- p-value: significance level; P(observation|null hypothesis)
+- alt hyps
+  - Fisherian testing: no alt hyp, only accept/reject null hyp
+  - Neyman-Pearson: alt hyps
+  - in practice: alt hyp is just negation of null hyp
+- p-value: significance level; P(observation or more extreme|null hypothesis)
   - assuming null hyp (no underlying relationship or diff btwn the variables),
     what's prob we'll see a diff at least as extreme as the one observed just
     by chance?
@@ -108,6 +110,17 @@ statistical significance
   - 5% is a typical value (border-line acceptability); in the end this is all
     arbitrary, no way to say something is/isn't "really" significant
   - eg P(14+ heads of 20 flips|fair coin)
+- simple hypothesis: of the form $\theta = \theta_0$; specifies pop dist
+  completely
+- composite hypothesis: of the form $\theta > \theta_0$; doesn't specify
+  population dist completely
+- two-tail: p-value is $P(X>a \vee X<b | \theta)$
+  - $H_0 : \theta = \theta_0$ vs $H_1 : \theta \ne \theta_0$
+- one-tail: p-value is $P(X>x|\theta)$
+  - $H_0 : \theta \le \theta_0$ vs $H_1 : \theta > \theta_0$ (or vice versa)
+  - problem is that the $\theta$ is unknown (just something under $\theta_0$;
+    TODO how do we justify the p-value, then, which must assume some value of
+    $\theta$?
 - E-value: expected num tests until a certain observation, assuming null hyp
 - how to efficiently calc prob of *at least* $h$ H in $n$ flips?
 - type I error: false pos; rej null hyp when it's actually true
@@ -222,6 +235,12 @@ exponential smoothing for time series analysis
 - _triple exponential moving average (TEMA)_ aka _triple exponential smoothing
   (TES)_: incorporates seasonality & trend
 - <http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc43.htm>
+
+likelihood
+
+- likelihoods for continuous distributions use PDFs instead of probabilities
+  (since $P(X=x) = 0$); this is justified, see
+  <http://en.wikipedia.org/wiki/Likelihood_function#Likelihoods_for_continuous_distributions>
 
 combinatorics
 =============
