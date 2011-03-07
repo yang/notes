@@ -544,6 +544,12 @@ random forests
 - efficient, parallelizable
 - RFs is very competitive, but also has danger of overfitting
 
+latent dirichlet allocation (LDA)
+
+- learns from body of entities, inferring that a particular attr belongs to a
+  topic
+- TODO
+
 systems
 =======
 
