@@ -529,6 +529,21 @@ collaborative filtering
   - <http://software-carpentry.org/4_0/matrix/recommend/>
 - TODO slope one
 
+random forests
+
+- bagged ensemble of decision trees (orange uses 100 by default)
+- each decision tree uses subset of all features (sqrt of all features)
+- each decision tree may be grown fully without pruning
+- each decision tree trained on a bootstrapped sample of the data (as per
+  bagging)
+- their reported error (confidence?) does take into account their performance
+  on the training set, somehow
+- may be obvious but: despite feature sampling, feature selection still helps,
+  since the trees are not weighted at all by their performance (if they were,
+  then they'd implicitly be weighing their own subset of features)
+- efficient, parallelizable
+- RFs is very competitive, but also has danger of overfitting
+
 systems
 =======
 
