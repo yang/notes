@@ -1,0 +1,378 @@
+Emacs
+=====
+
+Packages
+--------
+
+- ProjectSettings
+
+Functions
+---------
+
+- General
+
+  (standard-display-ascii ?\t "^I")
+  (desktop-save-mode 1)
+  make-auto-save-file-name
+  auto-save-file-name-p
+  make-backup-file-name-function
+  point
+  (goto-char N)
+  point-min
+  point-max
+  (message STR)
+
+- Locating the cursor: point, point-min, point-max, bobp, eobp, bolp, eolp, current-column
+- Moving around in text: goto-char, all your favorite keyboard commands, save-excursion
+- Reading text: char-after, char-before, buffer-substring, thing-at-point
+- Searching: search-forward, re-search-forward
+- Modifying text: insert, insert-buffer, newline, delete-region
+
+Unknown modes
+-------------
+
+  transient-mark-mode
+  hi-lock-mode
+  column-number-mode
+  line-number-mode
+
+Major modes
+-----------
+
+  fundamental
+  text
+  outline
+  vc
+  man
+  shell
+
+Minor modes
+-----------
+
+  midnight
+  flyspell
+  flymake: syntax errors
+  ffap
+  auto-fill
+  indent-tabs = noexpandtab
+  hi-lock: highlight words set by (eg) highlight-regexp
+  overwrite
+
+Vars
+----
+
+  tab-width = tabstop
+  c-basic-offset = shiftwidth
+  truncate-lines = wrap
+  truncate-partial-width-windows
+  indent-tabs-mode: expandtabs
+
+  sort-fold-case: ignore case when sorting
+
+  auto-save-file-name-transforms
+  make-backup-files
+  backup-directory-alist: eg ("." . ".~")
+  version-control :: (t nil never)
+  kept-old-versions :: int
+  kept-new-versions :: int
+  delete-old-versions :: (t nil never)
+
+Commands
+--------
+
+  MACROS
+  c-x (       start-kbd-macro
+  c-x )       end-kbd-macro
+  c-x e       call-last-kbd-macro
+              name-last-kbd-macro
+              insert-kbd-macro
+  SEARCH/REPLACE
+  m-%         query-replace
+              query-replace-regexp
+              grep
+  c-x `       next-error
+  m-g n       next-error
+  m-g m-n     next-error
+  SEARCH INTERACTION
+  ret c-w     word search
+  c-w         search for word under cursor
+  c-y         search for line under cursor
+  m-r         toggle regex
+  m-c         toggle case sensitivity
+  m-e         edit search string in minibuffer
+  m-n         search for next item in search ring
+  m-p         search for prev item in search ring
+  m-tab       complete search string using search ring
+  c-m-i       ..
+  DISPLAY
+              toggle-truncate-lines
+  SPELLCHECK
+  m-$         ispell-word
+              ispell-region
+              ispell-buffer
+  EDIT
+  c-q         quoted-insert (e.g. to insert tab, use c-q tab)
+  c-o         open-line
+  c-m-o       split-line
+  m-m         back-to-indentation (jump to first non-whitespace char)
+  c-x c-o     delete-blank-lines (leaving just one)
+  m-^         delete-indentation (join line with prev)
+  m-spc       just-one-space
+  c-t         transpose-chars
+  m-t         transpose-words
+  c-m-t       transpose-sexps
+  c-x c-t     transpose-lines
+              transpose-sentences
+              transpose-paragraphs
+  m-c         capitalize-word
+  m-u         upcase-word
+  m-l         downcase-word
+  c-x c-u     upcase-region
+  c-x c-l     downcase-region
+  m-- m-c     capitalize previous word
+  m-- m-u     upcase previous word
+  m-- m-l     downcase previous word
+              center-line
+  MARK
+  c-@         set-mark-command
+  m-@         mark-word
+  m-h         mark-paragraph
+  c-m-@       mark-sexp
+  c-m-h       mark-defun
+  c-x c-p     mark-page
+  c-x h       mark-whole-buffer
+  REGION
+  c-x c-x     exchange-point-and-mark
+  c-x n n     narrow-to-region
+  c-x n w     widen
+  RING
+  m-y         yank-pop
+  c-m-w       append-next-kill
+  NAV
+  m-r         move-to-window-line
+  m-0 m-r     move to top of screen
+  m-- m-r     move to bottom of screen
+  c-m-b       backward-sexp
+  c-m-f       forward-sexp
+  c-m-u       backward-up-list
+  c-m-d       down-list
+  c-m-a       backward-defun
+  c-m-e       forward-defun
+  m-{         backward-paragraph
+  m-}         forward-paragraph
+  m-a         backward-sentence
+  m-e         forward-sentence
+  c-x [       backward-page
+  c-x ]       forward-page
+  C/CC MODES
+              c-beginning-of-defun
+              c-end-of-defun
+  c-c c-u     (up preproc conditional; leaves mark)
+  c-c c-p     (prev preproc conditional; leaves mark)
+  c-c c-n     (next preproc conditional; leaves mark)
+  m-a         c-beginning-of-statement
+  m-e         c-end-of-statement
+              c-backward-into-nomenclature
+              c-forward-into-nomenclature
+  VCS
+              vc‑resolve‑conflicts
+  PY MODE
+  c-c c-u     py-goto-block-up (leaves mark)
+  c-c c-p     py-previous-statement (leaves mark)
+  c-c c-n     py-next-statement (leaves mark)
+  COMPLETION/INTELLISENSE
+  m-/         dabbrev-expand
+  c-tab       complete-symbol
+  c-m-i       ..
+  m-.         find-tag
+  m-0 m-.     go to next matching function definition
+  m-*         pop-tag-mark
+              tags-search (looks for any occurrence of a symbol)
+  m-,         tags-loop-continue (next tags-search match)
+              visit-tags-table
+              tags-query-replace
+  KILL
+  m-z         zap-to-char
+  c-u -1 m-k  backward kill-sentence
+  m-k         kill-sentence
+  c-x del     backward kill-sentence
+  m-0 c-k     backward kill-line
+              forward-kill-paragraph
+              backward-kill-paragraph
+  c-c c-bs    c-hungry-backspace
+  c-c bs      c-hungry-backspace
+  c-c c-d     c-hungry-delete-forward
+  c-c c-del   c-hungry-delete-forward
+  c-c del     c-hungry-delete-forward
+              c-toggle-hungry-state
+  m-\         delete-horizontal-space
+  c-m-k       kill-sexp
+  m-- c-m-k   backward kill-sexp
+  SORT
+              sort-lines
+              sort-paragraphs
+              sort-pages
+              sort-fields
+              sort-numeric-fields
+              sort-columns
+              reverse-region
+  SESSIONS
+              desktop-save
+              desktop-change-dir
+              desktop-revert
+              desktop-clear
+  ELISP
+              find-function
+  c-x c-e     eval-last-sexp
+  c-m-x       eval-defun
+  m-:         eval-expression
+              eval-region
+              load-library
+  MISC
+              customize
+  m-g ...     set-face-...
+  c-h w       where-is
+  c-/         undo
+  m-0         digit-argument
+  m--         negative-argument
+  c-x c-q     toggle readonly
+              check-parens
+              global-set-key
+              load-file
+              load-library
+  c-x f       set-fill-column
+  c-x .       set-fill-prefix
+  c-u m-x align
+  c-x z       repeat
+              list-command-history
+  FILES/BUFFERS
+              ffap-bindings
+  c-x c-v     find-alternate-file
+              revert-buffer
+  c-x c-w     write-file (save as)
+  c-u c-x s   save all without prompting
+  c-x k       kill-buffer
+  c-x i       insert-file
+  c-x l       count-lines-page
+              recover-file
+  c-x b       switch-to-buffer
+  c-x c-b     list-buffers
+              list-matching-lines (:v/PAT/d)
+  c-x #       server-edit (in server, save/close and end the blocking client)
+  WINDOWS
+  c-x {       shrink-window-horizontally
+  c-x }       enlarge-window-horizontally
+  c-x ^       enlarge-window
+  c-x 0       delete-window
+  c-x 1       delete-other-windows
+  c-x 2       split-window-vertically
+  c-x 3       split-window-horizontally
+  c-x o       other-window
+  c-m-v       scroll-other-window
+  c-x 4 0     kill-buffer-and-window
+  c-x 4 b     switch-to-buffer-other-window
+  c-x 4 c-o   display-buffer
+  c-x 4 f     find-file-other-window
+  c-x 4 r     find-file-read-only-other-window
+  c-x 4 d     dired-other-window
+  c-x 4 .     find-tag-other-window
+  FRAMES
+  c-x 5 0     delete-frame
+  c-x 5 o     other-frame
+  c-x 5 2     make-frame-command
+  c-x 5 b     switch-to-buffer-other-frame
+  c-x 5 f     find-file-other-frame
+  c-x 5 r     find-file-read-only-other-frame
+  c-x 5 d     dired-other-frame
+  c-x 5 .     find-tag-other-frame
+  SHELL
+  m-!         shell-command
+  m-|         shell-command-on-region
+  c-u m-|     filter region through shell command
+              shell
+  RECTANGLES
+  c-x r r     copy-rectangle-to-register
+  c-x r k     kill-rectangle
+  c-x r y     yank-rectangle
+  c-x r o     open-rectangle (shifts text)
+  c-x r c     clear-rectangle
+  c-x r t     string-rectangle
+  ABBREVIATIONS
+  c-x a g     add-global-abbrev
+  c-x a l     add-mode-abbrev
+  c-x a i g   inverse-add-global-abbrev
+  c-x a i l   inverse-add-mode-abbrev
+  c-x a e     expand-abbrev
+  I18N
+              set-language-environment
+              list-input-methods
+  c-\         toggle-input-method
+  c-x ret c   universal-coding-system-argument
+              list-coding-systems
+              prefer-coding-system
+  BUILD
+              compile
+  c-x `       next-error
+              gdb
+  VARS
+              set-variable
+              describe-variable
+  FILL
+  m-q         fill-paragraph
+              fill-region
+  INDENT
+  m-i         tab-to-tab-stop
+              indent-relative (indent from point to under an indentation point in the previous line)
+  m-j         c-indent-new-comment-line
+  c-j         newline-and-indent
+  c-m-q       indent-pp-sexp
+  c-m-\       indent-region
+  c-x tab     indent-rigidly (shift block of lines rigidly right or left)
+  c-u tab     shift sexp rigidly so that first line is properly indented
+              indent-code-rigidly (doesn't indent lines within comments and strings)
+  c-c c-q     c-indent-defun
+  c-m-q       c-indent-exp
+  c-c . ret   c-set-style
+  c-c c-l     c-toggle-electric-state (indent on special chars like { and :)
+  c-c c-a     c-toggle-auto-newline (lets electric chars trigger newline insertions)
+              tabify
+              untabify
+  HIGHLIGHT
+  c-x w h     highlight-regexp
+  MACROS
+  c-x (       start-kbd-macros
+  c-x )       start-kbd-macros
+              name-last-kbd-macro
+  c-x e       call-last-kbd-macro
+              insert-kbd-macro
+  c-u F3      (re-execute last macro, then append keys to it)
+  c-x c-k c-e kmacro-edit-macro-repeat
+  c-x c-k l   kmacro-edit-lossage
+  AWESOME
+              artist-mode
+              spook
+  CUSTOM?
+  c-K         kill to end of buffer
+  c-;         scroll one line up
+  c-'         scroll one line down
+  c-,         scroll half page up
+  c-.         scroll half page down
+  c-x g       goto-line
+              shrink-window-vertically
+              enlarge-window-vertically
+  HELP
+  c-c c-b     help-go-back
+  c-h i       info
+  c-h c-i     info-lookup-symbol
+  c-h a       apropos
+              apropos-variable
+  REGISTERS
+  c-x r s     copy-to-register
+  c-x r i     insert-register
+  c-x r spc   point-to-register
+  c-x r j     jump-to-register
+  RECURSIVE EDITING MODES
+  c-r         enter recursive edit
+  c-m-c       exit recursive edit
+  c-]         abort: exit all nested recursive-edit sessions
+
