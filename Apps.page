@@ -380,3 +380,678 @@ Bash
 ====
 
 - `$'hello\nworld'` actually interprets the backslashed chars
+
+Command-Line Cheatsheet
+=======================
+
+  # extract URLs from squid disk cache
+  grep --only-matching --no-filename --max-count 1 --text --perl-regexp 'http://[^\0]*' /var/spool/squid3/*/*/*
+  # grep -ahoPm1 'http://[^\0]*' /var/spool/squid3/*/*/*
+
+  # add/remove latency to localhost
+  tc qdisc add dev lo root handle 1:0 netem delay 100msec
+  tc qdisc del dev lo root
+
+  # allow X across sudo
+  xauth list # find the triple you want
+  xauth add partycat/unix:10 MIT-MAGIC-COOKIE-1 73b185cea93847a27ea2d275e1e2ebf0
+
+  # generate password
+  < /dev/urandom tr -cd [[:graph:]] | head -c16 | xargs echo
+
+  # inspect postfix mail queues
+  mailq
+
+  # retry queued mail
+  sendmail -q
+
+  # set pid 123 to cpus 4-6
+  taskset -c 4,5,6 123
+  # another way
+  cpuset ...
+
+  # allow kerel to offload large packet segmentation to the network adapter
+  sudo ethtool -K eth1 tso on
+  # check with
+  $ dmesg|tail -1
+  [892528.450378]0000:04:00.1:eth1:TSO is Enabled
+
+  # give somewhat limited sudo
+  Cmnd_Alias INSTALL = aptitude apt-get
+  yang ALL = INSTALL
+
+  # trace system calls, printing up to 1024 chars; useful for finding eg what SQL
+  # is being executed
+  strace -tt -s 1024
+
+  # nicely align mount output
+  mount | column -t
+
+  # repeat prev command replacing every "foo" with "bar"
+  !!:gs/foor/bar
+
+  # watch for changes in output of df/ls commands
+  watch -d -n 1 'df; ls -FlAt /path'
+
+  # show size of all immediate subdirectories
+  du -h --max-depth=1
+
+  # get tlb info
+  x86info -c
+
+  # base64 encode/decode stdin
+  base64 [-d]
+
+  # encrypt a file or stdin to a file or stdout [-a for ascii]
+  openssl aes-256-cbc [-a] -salt [-in secrets.txt -out secrets.txt.enc]
+
+  # decrypt a file or stdin to a file or stdout
+  openssl aes-256-cbc -d [-a] [-in secrets.txt.enc -out secrets.txt.new]
+
+  # allow follow symlinks
+  $ cat > /etc/apache2/conf.d/yang
+  <Directory /home/yang/public_html/>
+    Options +ExecCGI +FollowSymLinks -SymLinksIfOwnerMatch
+    AddHandler cgi-script cgi pl py bash
+  </Directory>
+
+  Show Long Format Output
+
+    ps -Al
+
+  To turn on extra full mode (it will show command line arguments passed to process):
+    ps -AlF
+
+  To See Threads ( LWP and NLWP)
+
+    ps -AlFH
+
+  To See Threads After Processes
+
+    ps -AlLm
+
+  Print All Process On The Server
+
+    ps ax
+    ps axu
+
+  Print A Process Tree
+
+    ps -ejH
+    ps axjf
+    pstree
+
+  Print Security Information
+
+    ps -eo euser,ruser,suser,fuser,f,comm,label
+    ps axZ
+    ps -eM
+
+  See Every Process Running As User Vivek
+
+    ps -U vivek -u vivek u
+
+  Set Output In a User-Defined Format
+
+    ps -eo pid,tid,class,rtprio,ni,pri,psr,pcpu,stat,wchan:14,comm
+    ps axo stat,euid,ruid,tty,tpgid,sess,pgrp,ppid,pid,pcpu,comm
+    ps -eopid,tt,user,fname,tmout,f,wchan
+
+  Display Only The Process IDs of Lighttpd
+
+    ps -C lighttpd -o pid=
+
+  OR
+    pgrep lighttpd
+
+  OR
+    pgrep -u vivek php-cgi
+
+  Display The Name of PID 55977
+
+    ps -p 55977 -o comm=
+
+  Find Out The Top 10 Memory Consuming Process
+
+    ps -auxf | sort -nr -k 4 | head -10
+
+  Find Out top 10 CPU Consuming Process
+
+    ps -auxf | sort -nr -k 3 | head -10
+
+  # check whether HD supports SMART
+  smartctl -i /dev/sda
+  # enable SMART
+  smartctl -s on /dev/sda 
+  # estimate testing time
+  smartctl -c /dev/sda 
+  # extended test
+  smartctl -t long /dev/sda 
+  # view test stats
+  smartctl -l selftest /dev/sda 
+  # view detailed SMART info for IDE
+  sudo smartctl -a /dev/hda 
+  # view detailed SMART info for SATA
+  sudo smartctl -a -d ata /dev/sda
+
+  # generate hashes for a word list
+  ./genkeys -r wordlist -f words.hashes -n words.index
+
+  #
+  # hijack HTTP/HTTPS traffic
+  # <http://blog.ksplice.com/2010/09/hijacking-http-traffic-on-your-home-subnet-using-arp-and-iptables/>
+  #
+
+  # scan network
+  nmap -sC -O 10.10.0.0/24
+
+  # enable IP forwarding
+  cat /proc/sys/net/ipv4/ip_forward
+  echo 1 > /proc/sys/net/ipv4/ip_forward
+
+  # if i'm forwarding packets, redirect packets to go to port 8080 (if hacking SSL)
+  iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j REDIRECT --to-port 8080
+  # or redirect to yourself if you want to serve your own content
+  iptables -t nat -A PREROUTING -p tcp --destination-port 80 -j NETMAP --to 192.168.1.200
+  ip addr add 192.168.1.1/24 dev eth0
+  ip addr
+
+  # ARP cache poisoning: situate ourself as the MITM between target .159 router .1
+  arpspoof -i eth0 -t 10.10.0.159 10.10.0.1
+  # or use arping
+  arping -c 3 -A -I eth0 192.168.1.1
+
+  # strip requests of SSL, and listen on port 8080
+  sslstrip.sh -l 8080
+
+  #
+  # end hijack
+  #
+
+  # play media at 1.65X speedup
+  mplayer -speed 1.65 file.avi
+
+  # avisynth script for 1.65X speedup and 75 pitch
+    file = "file_name_of_video.avi"
+    speedup = 1.65
+    pitch = 75
+
+    DirectShowSource(file)
+
+    audio_rate = last.audiorate
+    video_rate = last.framerate
+
+    AssumeSampleRate(int(audio_rate*speedup))
+    AssumeFPS(video_rate*speedup)
+    TimeStretch(pitch = pitch)
+
+  # top for files
+  watch -d -n 2 'df; ls -FlAt;'
+
+  # replace in prev command
+  ^foo^bar
+  ^foo # delete
+
+  # Lists all listening ports together with the PID of the associated process
+  netstat -tlnp
+
+  # capture screencast
+  ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg
+
+  # empty a file
+  > file.txt
+
+  # bring up cmd line editor (in readline)
+  c-x c-e
+
+  # run cmd at midnight
+  echo cmd | at midnight
+
+  # output microphone to another speaker
+  dd if=/dev/dsp | ssh host dd of=/dev/dsp
+
+  # mount temp ram partition (fixed size, can swap)
+  mount -t tmpfs -o size=1024m tmpfs /mnt/tmp
+
+  # mount temp ram partition (dynamic size, no swap)
+  mount -t ramfs -o size=1024m,maxsize=2G ramfs /mnt/ram
+
+  # resize a tmpfs/ramfs
+  mount -o remount,size=2G /mnt/tmp
+
+  # remount a partition for read-write/read-only
+  mount -o remount,rw
+  mount -o remount,ro
+
+  # find tips
+  # exact
+  find . -perm 644
+  # at least any of these bits are set
+  find . -perm /644
+  # at least all of these bits are set
+  find . -perm -644
+  # writable by someone (any of: owner, group, or anyone)
+  find . -perm /222
+  find . -perm /u+w,g+w,a+w
+  find . -perm /u=w,g=w,a=w
+  # writable by any of: owner, group
+  find . -perm /220
+  find . -perm /u+w,g+w
+  find . -perm /u=w,g=w
+  # writable by both owner and group
+  find . -perm -220
+  find . -perm -u+w,g+w
+  find . -perm -u=w,g=w
+  # not writable by owner
+  find . ! -perm /u=w
+  find . ! -perm -u=w
+
+  # disable a user account
+  # better than passwd USER -l, which just makes no password possible
+  usermod --expiredate 1 dsontag
+
+  # record a stream (eg asx)
+  # use VLC, or try (i get core dumps from this):
+  mplayer -dumpstream -dumpfile OUTFILE URL
+
+  # output 3-way merge
+  diff3 -m a_mine.c a_old.c a_theirs.c
+
+  # resumable scp: http://www.commandlinefu.com/commands/view/1818/resume-scp-of-a-big-file
+  rsync --partial --progress --rsh=ssh $file_source $user@$host:$destination_file
+
+  # add new PPA repo
+  sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com \
+      67265eb522bdd6b1c69e66ed7fb8bee0a1f196a8
+  echo deb http://ppa.launchpad.net/pidgin-developers/ppa/ubuntu \
+      `lsb_release --short --codename` main | \
+      sudo tee /etc/apt/sources.list.d/pidgin-ppa.list
+
+
+  # skip tests when building a maven package
+  mvn -Dmaven.test.skip=true package
+
+  # start a jvm to allow for (remote) attachment
+  java -agentlib:jdwp=transport=dt_socket,address=8765,server=y,suspend=y -jar target/server-1.0-SNAPSHOT.jar server.conf 2>&1 | tee ~/server-out3
+  Listening for transport dt_socket at address: 8765
+
+  # compress with different compression level
+  GZIP=-1 tar czf ...
+  GZIP=-9 tar czf ...
+
+  # encrypt stdin with a passphrase (-a for ascii, -o for outfile)
+  gpg -aco OUTFILE
+  gpg --armor --symmetric --output OUTFILE
+
+  # backup/export secret/private and public keypair
+  gpg [-a] [-o OUTFILE] --export-secret-keys me@host.com
+
+  # set x keyboard map
+  setxkbmap dvorak
+  setxkbmap us
+
+  # gdb c++ template names; from
+  # http://tdistler.com/2008/11/13/debugging-c-templates-brekpoints-and-gdb
+  objdump -t libMyLib.so | c++filt | grep ‘BarAbstract.*Baz’
+
+  # use perl as a sed-like tool
+  perl -pe 's///'
+  perl -pie 's///' FILE
+
+  # clear swap; this will block until there actually is enough main memory for
+  # the swap to be cleared
+  sudo swapoff -a && sudo swapon -a
+
+  # reset file buffer caches
+  sudo sync # flush dirty (clean all buffers)
+  sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches' # drop pagecache + dentries/inodes
+  # sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches' # drop pagecache
+  # sudo sh -c 'echo 2 > /proc/sys/vm/drop_caches' # drop dentries/inodes
+
+  # max compression with 7z with multi-threading
+  7z a -mx=9 -m9=lzma2 -mmt=on FILE.7z FILES/DIRS
+
+  # convert wma to wav
+  mplayer -ao pcm:file=OUTPUT.wav INPUT
+  mplayer -vc dummy -vo null -ao pcm:waveheader:file=OUTPUT.wav INPUT.wma
+  mplayer -vo null -vc dummy -ao pcm:file=OUTPUT.wav INPUT.wma
+  mplayer -vo null -vc dummy -af resample=44100 -ao pcm:waveheader:file=OUTPUT.wav INPUT.wma
+
+  # convert flv to mp3
+  # from http://ubuntuforums.org/archive/index.php/t-327331.html
+  ffmpeg -i in.flv -f mp3 -vn -acodec copy out.mp3
+
+  # disable pc speakers/system beep
+  sudo rmmod pcskrs
+  # permanently: edit /etc/modprobe.d/blacklist and add "blacklist pcskprs"
+
+  # debugging wifi
+  iwlist wlan0 scan
+  iwlist wlan0 chan
+  iwlist wlan0 mode
+  ifconfig wlan0 down
+  iwconfig wlan0 essid barnacle # typical case
+  iwconfig wlan0 ap 06:18:0a:30:00:88 # force associate with ap
+  iwconfig wlan0 mode ad-hoc essid barnacle
+  iwconfig wlan0 channel 56
+  ifconfig wlan0 up
+
+  # force destroy an ap
+  wlanconfig wlan0 destroy
+
+  # configure optional private params of a wireless network
+  iwpriv wlan0
+
+  # cvs repository check out
+  CVS_RSH=ssh cvs -d :ext:yang@nms.csail.mit.edu:/var/cvs co biblio
+
+  # collect awstats from proftpd logs
+  sudo perl /usr/share/awstats/wwwroot/cgi-bin/awstats.pl -config=ftp -update
+
+  # monitor proftpd activity
+  ftpwho
+  ftptop
+
+  # find out your Ethernet connection: 10? 100? GigE?
+  lshw
+
+  # capture mysql queries
+  tshark -i 1 -T text -V -f ‘dst port 3306′ |grep -i ’statement: ‘ | cut -b20-
+
+  # find out what open() syscalls are being made
+  strace -eopen -f <cmd>
+
+  # to find out if you just plugged into a usb2 port
+  tail -25 /var/log/messages
+  # you should see a line saying "new usb device..." or some such. Look for
+  # "ehci", that's the USB 2.0 driver. ohci & uhci are USB 1.1 drivers.
+
+  # reformat a partition
+  sudo mkfs -t ext3 /dev/sdb1
+
+  # open/close/eject CD/DVD drive
+  eject -t
+  eject -t cdrom
+
+  # play mp3 from command line
+  mplayer <mp3>
+  mpg123 <mp3>
+
+  # select an alternative Java
+  sudo update-alternatives --list java
+  sudo update-alternatives --set java <something from the above list>
+
+  # list ssh keys
+  ssh-keygen -l -t dsa
+
+  # check for vulnerable user ssh key
+  ssh-vulnkey
+
+  # execute something in 1 minute
+  sleep 60 ; <cmd>
+  echo "<cmd>" | at now + 1 minute
+
+  # find out which ubuntu version
+  lsb_release -a
+
+  # find out which files/dirs were modified in the past day
+  find . -mtime -1
+
+  # find out which files are executable
+  find . -type f -perm -u=x
+
+  # memory address to file/line
+  addr2line --demangle --functions --exe <binary> <mem addrs>...
+
+  # lock/disable a user account
+  sudo passwd <user> -l
+  # unlock/enable a user account
+  sudo passwd <user> -u
+
+  # sharing a screen. this requires suid on screen!
+  from mainuser:
+    screen -S shared
+      :multiuser on
+      :acladd otheruser
+      :acladd anotheruser
+  from otheruser:
+    screen -x shared
+
+  # ruby gem
+  gem q -r -n fsxtrader
+  gem i fsxtrader
+
+  # initialize a postgresql database (at least on ubuntu, where the default run
+  # socket directory is /var/run/postgresql/, which is sudo-only)
+  initdb -D /tmp/central -U postgres
+  vim /tmp/central/postgresql.conf
+    unix_socket_directory = '/tmp/sockets-central'>->-# (change requires restart)
+  PGPORT=10000 pg_ctl -D /tmp/central/ -l /tmp/log-central start
+  psql -U postgres -p 10000 -h /tmp/sockets-central/
+
+  # put a process into the idle scheduling class
+  ionice -c3 -p[pid]
+
+  # start <cmd> on cpu 0
+  taskset -c 0 <cmd>
+
+  # control the numa policies of a running process
+  numactl
+
+  # turn off the bell
+  xset b off
+
+  # which glibc?
+  getconf GNU_LIBC_VERSION
+  # which thread system?
+  getconf GNU_LIBPTHREAD_VERSION
+
+  # mount an external NTFS hard disk on usb
+  sudo mount -t ntfs-3g /dev/sdb1 /media/disk
+  # if that didn't work due to 'unclean shutdown'
+  sudo mount -t ntfs-3g /dev/sdb1 /media/disk -o force
+
+  # burn cd
+  k3b
+
+  # enable and disable startup services
+  # http://linuxhelp.blogspot.com/2006/04/enabling-and-disabling-services-during_01.html
+  update-rc.d apache2 defaults
+  update-rc.d -f apache2 remove
+
+  #
+  # To work with certificates
+  #
+
+  # generate a private key for the CA
+  openssl genrsa -des3 -out ca.key 4096
+  # generate a CA cert (aka root cert; the -x509 makes this a self-signed cert
+  # instead of a cert request)
+  openssl req -new -x509 -days 365 -key ca.key -out ca.crt # also might call it ca.pem
+
+  # generate a private key for the server
+  openssl genrsa -des3 -out server.key 4096
+  # generate a cert signing request for the server; most clients will insist that
+  # the Common Name field match the hostname
+  openssl req -new -key server.key -out server.csr
+
+  # sign the cert with the CA
+  openssl x509 -req -days 365 -in server.csr -CA ca.crt -CAkey ca.key -set_serial 01 -out server.crt
+
+  # examine
+  openssl rsa -noout -text -in server.key
+  openssl req -noout -text -in server.csr
+  openssl rsa -noout -text -in ca.key
+  openssl x509 -noout -text -in ca.crt
+
+  # create insecure version (decrypt)
+  mv server.key server.key.secure
+  openssl rsa -in server.key.secure -out server.key
+
+  # by now you should have the following files; make all the .key files
+  # accessible only to root!
+  # -rw------- 1 yang yang 1996 2008-08-26 13:53 ca.crt
+  # -rw------- 1 yang yang 3311 2008-08-26 13:49 ca.key
+  # -rw------- 1 yang yang 1789 2008-08-26 13:55 server.crt
+  # -rw------- 1 yang yang 1663 2008-08-26 13:53 server.csr
+  # -rw------- 1 yang yang 3243 2008-08-27 22:52 server.key
+  # -rw------- 1 yang yang 3311 2008-08-26 13:50 server.key.secure
+
+  # now allow users to download and install ca.crt, then you're set!
+
+  # regenerate ubuntu default self-signed certificate
+  make-ssl-cert generate-default-snakeoil
+
+  # convert key + crt to p12
+  openssl pkcs12 -export -in server.crt -inkey server.key -out server.p12
+
+  # test (TLS) certificate
+  openssl s_client -CApath /etc/ssl/certs -starttls smtp -crlf \
+      -connect getkula.com:25
+
+  # also can use CA.sh
+  CA.sh -newca
+  CA.sh -newreq
+  CA.sh -sign
+
+  #
+  # End of working with certificates
+  #
+
+  # enable a mod (like userdir or ssl), at least on ubuntu
+  sudo a2enmod userdir
+
+  # enable a site (like default or ssl)
+  sudo a2dismod ssl
+
+  # snarf data off the wire
+  # -s 0 is for "get the full packet"
+  # -X is for "print data (in hex)"
+  # -w writes to log file (in tcpdump's own format)
+  tcpdump -i eth0 -s 0 -w /tmp/log dst host 18.138.5.240 and dst port 80
+
+  # dump pure data stream from a tcpdump capture (as shown above)
+  tcpflow -r /tmp/log
+
+  # run something at a certain time
+  runwhen # at is insufficient for things like alarms which need certain devices to be available; at jobs are run via the atd daemon
+
+  # reverse forwarding (make sure GatewayPorts is yes)
+  ssh -g -R 2345:11.0.0.1:22 hades
+  ssh -R myport:targethost:targetport somehost
+
+  # run scalaint with ledit
+  ledit -x -h ~/.scalahistory -l 10000 scala
+
+  # mount a cifs share
+  # note: ip must be an IP address and not a hostname
+  mount -t cifs -o 'user=yang,pass=nutcr4ck3r,ip=127.0.0.1,port=4445' //nishachar/games /mnt/nishachar
+
+  # list shares available on server
+  smbtree -L pbems.mit.edu -U pbe
+
+  # generate tags
+  find . -name '*.cpp' -o -name '*.h' -o -name '*.c' |
+  xargs $(ETAGS) --extra=+q --fields=+fksaiS --c++-kinds=+px --append
+
+  # enable/disable certain yum repos
+  yum --disablerepo=livna-stable
+  yum --enablerepo=livna-stable instal xmms-mp3
+
+  # uprade all software
+  yum update
+  # or
+  yum upgrade
+
+  # rip an audio cd to flac, manually - no tagging
+  cdparanoia -B
+  flac track*wav
+
+  # rip an audio cd to flac with tagging from cddb/freedb
+  abcde
+
+  # convert flac to mp3
+  flac -cd blah.flac | lame - blah.mp3
+
+  # to create a patch
+  # new-files recursive unified-output print-c-function
+  diff -N -r -u -p file.c{.orig,} > diff.patch
+  # to apply a patch
+  patch -p0 < diff.patch
+  # find out which pkg an installed file belongs to
+  rpm -qif /path/to/file
+  # find out which pkg a file belongs to
+  yum provides xclip
+  # find out which ps is listening on port 22
+  lsof -i tcp:22
+  # find out which ps is using file /path/to/.file.txt.swp
+  lsof /path/to/.file.txt.swp
+  # find out what files a pkg provides
+  sudo yum install yum-utils && repoquery -l <package> # for uninstalled
+  rpm -ql fuse # for installed
+  rpm -qlp fuse-4.5.rpm # for an rpm file
+  # list all installed packages
+  rpm -qa
+  # extract rpm files into current dir
+  rpm2cpio livna-release-5.rpm | cpio -ivd
+  # rip lemixx
+  streamripper 'http://213.251.129.38:8004' -r localhost:8000 -L lemixx.pls -d /export/home/yang/rip/pad -o never -T --xs_padding=3000:3000 --xs_search_window=3000:3000
+  # print kernel routing table
+  netstat -rn
+  # set 128.30.76.1 as the default gateway
+  route add default gw 128.30.76.1
+  # processes on current terminal
+  [jfink@kerry jfink]$ ps -T
+    PID TTY      STAT   TIME COMMAND
+   1668 pts/0    S      0:00 login -- jfink
+   1669 pts/0    S      0:00 -bash
+   1708 pts/0    R      0:00 ps -T
+  # processes with command string 'identd'
+  [jfink@kerry jfink]$ ps -C identd
+    PID TTY          TIME CMD
+    535 ?        00:00:00 identd
+    542 ?        00:00:00 identd
+    545 ?        00:00:00 identd
+    546 ?        00:00:00 identd
+    550 ?        00:00:00 identd
+  # processes in job format
+  [jfink@kerry jfink]$ ps -j
+    PID  PGID   SID TTY          TIME CMD
+   1669  1669  1668 pts/0    00:00:00 bash
+   1729  1729  1668 pts/0    00:00:00 ps
+  # processes in job format
+   [jfink@kerry jfink]$ ps ae
+    PID TTY      STAT   TIME COMMAND
+   1668 pts/0    S      0:00 login -- jfink
+   1669 pts/0    S      0:00 -bash TERM=ansi REMOTEHOST=172.16.14.102 HOME=/home/j
+   1754 pts/0    R      0:00 ps ae LESSOPEN=|/usr/bin/lesspipe.sh %s 
+  # find out nameservers
+  cat /etc/resolv.conf
+  should be something like:
+  search csail.mit.edu
+  nameserver 128.30.2.23
+  nameserver 128.30.2.24
+  nameserver 128.30.2.25
+  # mount an iso cd/dvd
+  mount -o loop -t iso9660 filename.iso /mnt/isoimage/
+  # preferred c indenting
+  indent -nbad -bap -bbo -bc -bl -bli0 -bls -ci4 -cli0 -di1 -nfc1 -nfca -hnl -i4 -ip4 -l80 -npcs -prs -npsl -saf -sai -saw -nsc -sob -ss -ts4 -nut depitok2.hxx
+  # create exact whole dvd backup (verbosely)
+  vobcopy -o /existing-outpath/ -m
+  # old way: dvdbackup -M -v 2 -i /dev/dvd -o /outpath/
+  # Create an ISO image from extracted DVD files in a <title> sub-directory of
+  # the current directory:
+  mkisofs -dvd-video -udf <title> > filename.iso
+  # Write a DVD ISO image to DVD:
+  growisofs -dvd-compat -Z /dev/dvd=filename.iso
+  # mount dvd iso
+  sudo mount -t udf file.iso /mnt/dvd -o loop
+  # TODO watch for http headers
+  tcpdump -w - 'tcp[tcpflags] & (tcp-syn|tcp-fin|tcp-ack) == 0 and tcp dst port 80'
+  # add an svn commit hook (eg for emailing on commits)
+  vim /data/cartel/subversion/repos/cartel/hooks/post-commit # use a script called commit-email.pl
+  # create a new mailing list (eg for commits)
+  vim /etc/aliases # add a line like: cartel-icde07: hari@csail.mit.edu, madden@csail.mit.edu, y_z@mit.edu
+  newaliases
+  # TCP ping Microsoft
+  nmap -PT80 -sP -d -n www.microsoft.com
