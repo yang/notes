@@ -17,6 +17,10 @@ statistics
   - harder to eval in closed form
   - used by TPC To calculate large deviations from RTT by calcing EWM deviation
 
+- weak law of large numbers (prove using Chebyshev's ineq):
+  $\lim_{n \rightarrow \infty} P(|\bar{X_n} - \mu| < \eps) = 1$
+- strong law of large numbers (more complex proof):
+  $P( \lim_{n \rightarrow \infty} \bar{X_n} = \mu ) = 1$
 - central limit theorem: mean/sum of sufficiently many independent random
   variables, each with finite mean & variance, is approximately normal
   - as sample size increases, sample mean distribution approaches normal
