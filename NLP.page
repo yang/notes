@@ -59,6 +59,7 @@ vector space model
 
 cosine similarity
 
+- $\frac{A \cdot B}{\|A\| \|B\|}$
 - intuitively, find angle between vector representations of docs
 - don't actually need to calc cosine; can just leave as is; ordering preserved
 - $-1$ means opposite, 0 means same, 1 means identical; in IR, components are
@@ -66,4 +67,8 @@ cosine similarity
 
 jaccard similarity/coefficient/index
 
+- for binary features
 - simple: $J(A,B) = \frac{|A \cap B|}{|A \cup B|}$
+- extended jaccard coefficient aka tanimoto coefficient: $T(A,B) = \frac{A
+  \cdot B}{\|A\|^2 + \|B\|^2 - A \cdot B}$
+  - extended cosine similarity that yields jaccard for binary features
