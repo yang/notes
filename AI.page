@@ -219,8 +219,6 @@ MACHINE LEARNING
 
 - data mining
 
-- collaborative filtering
-
 - analyses
   - mathematical
     - real analysis
@@ -495,6 +493,27 @@ pragmatics/usage
     - linear is special case of RBF; behaves like sigmoid for certain params
   - linear: good when many features
 - simplest approach to finding hyperparams: grid search
+
+collaborative filtering
+
+- various similarity measures
+  - jaccard for binary features
+  - cosine similarity
+  - pearson correlation: useful if want insensitivity to users' differing
+    scales
+- item-item similarity (first pub by glinden et al)
+  - predict a user's rating of an item as the weighted sum of other items' ratings by the user, where weights are item similarities:
+
+      score[usr,itm] = avg(sim(itm,itm2) * score[usr,itm2] for itm2 in itms)
+
+- user-user similarity
+  - predict a user's rating of an item as the weighted avg of other users'
+    ratings for the item, where weights are user similarities:
+
+      score[usr,itm] = avg(sim(usr,usr2) * score[usr2,itm] for usr2 in usrs)
+
+  - <http://software-carpentry.org/4_0/matrix/recommend/>
+- TODO slope one
 
 systems
 =======
