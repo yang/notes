@@ -14,6 +14,9 @@ TODO
 - k-means/canopy clustering
 - model fitting: linear models, regularization/overfitting, $k$-fold
   cross-validation
+- model selection criteria: akaike information criterion (AIC), minimum
+  description length (MDL), bayesian information criterion (BIC), ridge
+  regression
 - common distributions: normal, beta binomial, multinomial
 - $t$-test: matched pairs and unmatched
 
