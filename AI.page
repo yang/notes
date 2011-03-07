@@ -412,7 +412,21 @@ feature selection
 
 - subset selection: evaluate a subset of features (or: which feature to discard
   first? a search problem)
-  - wrappers: wrap a learning model, may overfit TODO finish this line
+  - wrappers: wrap a learning model, may overfit
+    - forward: starting w empty set, try adding features one at a time,
+      greedily choosing the feature that yields the highest cross-validation
+      accuracy
+    - stepwise: like forward, but after each add, also optionally remove a
+      feature, if removal yields a higher accuracy
+    - backward: a faster and sloppier version of naive backward (which is
+      opposite of forward)
+
+        start with all features in model
+        candidates (for removal) = all features
+        for each iteration,
+          remove from candidates any feature whose exclusion yields no acc drop
+          remove (from model and candidates) feature in candidates with biggest acc drop
+
   - filters: like wrappers, but instead of model, use simpler filter
 - TODO stepwise regression
 
