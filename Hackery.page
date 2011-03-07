@@ -1772,7 +1772,17 @@
       - <http://code.google.com/p/chromium/wiki/LinuxZygote>
 
 - terminals
+  - hierarchy: each process in one process group; each group in one session
+  - each session may have one controlling terminal
+  - processes may open/talk to any number of terminals, but special behaviors
+    for job control and access control apply only to controlling term
+  - generally, all processes in a single login session or a single terminal
+    emulator session are in the same session
+  - each terminal has exactly 1 foreground process group; others are background
+  - termios is the name of the system; while bash uses libreadline, termios
+    provides the (much poorer) line editing facilities when using (eg) `cat`
   - <http://www.linusakesson.net/programming/tty/index.php>
+  - <http://blog.nelhage.com/2010/01/a-brief-introduction-to-termios-signaling-and-job-control/>
 
 - automake
   - `SUBDIRS` order matters
