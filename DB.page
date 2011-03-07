@@ -67,8 +67,8 @@ companies
   - calpont's infinidb: mysql + columnar storage engine (MPP, dict/token
     compression, multicore queries, ACID, no indexes/mat views, "extends" like
     netezza's zone maps)
-    - tried this out; suffers from mysql row size limit (no large tables, which
-      is common in OLAP!)
+    - tried this out since it seemed like most promising free c-store; suffers
+      from mysql row size limit (no large tables, which is common in OLAP!)
   - infobright: wants multicore queries, ACID
   - netezza: row-based db hw with compression, clustering; acquired by ibm
     - compression: prefix compression, huffman coding
