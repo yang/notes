@@ -376,3 +376,7 @@ Commands
   c-m-c       exit recursive edit
   c-]         abort: exit all nested recursive-edit sessions
 
+Bash
+====
+
+- `$'hello\nworld'` actually interprets the backslashed chars
