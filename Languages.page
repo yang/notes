@@ -127,6 +127,26 @@ azul's pauseless GC (managed runtime initiative aka MRI)
 - slightly lower all-around perf
 - <http://www.artima.com/lejava/articles/azul_pauseless_gc.html>
 
+hotspot GC
+
+- generational GC
+  - objs count number of GCs they survived; big counts promote them to older
+    generation
+- parallel new collector: stop the world copying collector
+  - stops, marks, and copies/compacts
+- concurrent mark-sweep (CMS)
+  - initial-mark (stop the world): mark root objects
+  - concurrent-mark (concurrent)
+  - remark (stop the world): catch changed refs and new objs; special data
+    structure allows us to inspect only objects modified in prior phase
+  - concurrent-sweep (concurrent): does not relocate objects, leading to frag
+- failure modes
+  - concurrent mode failure: if CMS heap fills up during concurrent-mark phase,
+    must fall back to copying collector
+  - promotion failure due to frag: if no free space in CMS heap due to frag,
+    must fall back to copying collector
+- <http://www.cloudera.com/blog/2011/02/avoiding-full-gcs-in-hbase-with-memstore-local-allocation-buffers-part-1/>
+
 B programming language
 
 - basically C without types
