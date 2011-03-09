@@ -19,6 +19,7 @@ TODO
   regression
 - common distributions: normal, beta binomial, multinomial
 - $t$-test: matched pairs and unmatched
+- L1/lasso, L2/ridge/Tihkonov regression
 
 data set balance
 
@@ -306,6 +307,23 @@ generalization error
     - bootstrapping works better than CV in many cases?
       <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
 - ref: <http://www.faqs.org/faqs/ai-faq/neural-nets/part3/section-12.html>
+
+ML vs statistics
+
+- <http://www-stat.stanford.edu/~jhf/ftp/dm-stat.pdf>
+  - statistics too focused on math technique rather than ideas
+  - empirical validation and mathematics are complementary
+  - stats: prob theory, real analysis, measure theory, asymptotics, decision
+    theory, markov chains, martingales, ergotic theory
+    - tools: hyp testing, experimental design, response surface modeling,
+      ANOVA/MANOVA, linear regression, discriminant analysis, logistic
+      regression, GLM, canonical correlation, principal components, factor
+      analysis
+  - DM
+    - tools: decision trees, rule induction, nearest neighbors, clustering,
+      association rules, feature selection, neural nets, graphical models,
+      genetic algos, self-organizing maps, neuro-fuzzy systems
+- <http://brenocon.com/blog/2008/12/statistics-vs-machine-learning-fight/>
 
 receiver operating characteristic (ROC)
 
