@@ -631,6 +631,8 @@
     - `set session sql_log_off = 1`
     - `load data infile` 20x faster `insert`; else, use txns, `insert delayed`,
       multi-valued `insert`
+    - `--safe-updates`/`--i-am-a-dummy`: guard against mass deletes/updates
+      that are missing `where` clauses
   - grant tables: user, db, host, tables_priv, columns_priv
     - created by mysql_upgrade and mysql_install_db
   - "engine" is newer term for "type"
