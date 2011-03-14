@@ -417,3 +417,15 @@ universal hash families
 - multiply-carry: fastest 2-universal hash family for ints
   - is it strongly 2-universal?
 - <http://blog.ezyang.com/2010/11/is-multiply-carry-strongly-universal/>
+
+skip lists
+
+- for storing sorted list of items, like trees, but probabilistic
+- insertion, removal, contains: $O(\log n)$; enumeration: $O(n)$
+- insert: decide # lists this node will be a part of
+  - prob .5: make node part of lowest level only
+  - prob .25: make node part of lowest 2 lists
+  - ...
+- delete: remove node from all lists it's in
+- contains: traverse lists forward and down
+- <http://igoro.com/archive/skip-lists-are-fascinating/>
