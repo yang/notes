@@ -1,0 +1,54 @@
+Riddles
+=======
+
+- how many ways are there to walk up s steps if you can take 1 or 2 at a time?
+- given two ropes that burn in 60m (non-uniformly), measure 15m
+- with 2 eggs, what's min # steps to find the floor in a 100-fl bldg at which
+  dropping eggs breaks the eggs?
+- what's smallest # yes/no questions to ask to determine a birthday if you
+  have to prepare all the questions up-front (can't ask dynamically)? what
+  are those questions?
+- min # weighings to find fake (lighter/heavier) coin out of 12
+- hat puzzle: $n$ prisoners given black/white hat. can't see own hat but can
+  see others'. no communication. at least one must correctly say own hat
+  color, else all executed. given prep planning time before test begins/hats
+  given.
+- <http://www.tanyakhovanova.com/Puzzles/>
+- <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
+
+Number theory
+=============
+
+- prove: for all ints $A,B$, there exist ints $C,D$ such that
+  $2(A^2+B^2)=C^2+D^2$
+  - eg, $2(4^2+7^2)=3^2+11^2$
+
+Programming
+===========
+
+- how do you incrementally extend a hashtable?
+- how to reverse the words in a string?
+
+Probability
+===========
+
+- birthday problem: computable
+- hat problem: actually a very hard problem
+  - setup: 1000 ppl pile their hats, then each takes one.
+  - originally asked in 6.431: what's E(X) where X is the number of ppl who
+    get back their orig hat?
+    - easy bc linearity of expectation doesn't require $X_i$ to be indep
+    - just $n E[X_i] = n (1/n) = 1$
+  - much harder: what's prob of ppl getting back their hat?
+  - solvable via inclusion-exclusion principle:
+    <http://www.mathnet.or.kr/mathnet/paper_file/Elizabethtown/Gabriela/Monmort.pdf>
+  - but why isn't P(first person gets wrong hat) P(second person gets wrong
+    hat | first person gets wrong hat) P(third person gets wrong hat | first
+    two people get wrong hats) ... = 999/1000+998/999+997/998+...+2/3+1/2 =
+    1/1000?
+  - bc eg P(second person gets wrong hat | first person gets wrong hat) is
+    not 998/999. first person may have taken second person's hat
+  - harder versions: no two people get each other's hats either
+- poisson approximation can solve the above and others (prob of drunken
+  walker ending at start location):
+  <http://heroofourtime.blogspot.com/2010/11/birthday-problem.html>
