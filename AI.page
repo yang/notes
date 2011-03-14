@@ -404,6 +404,18 @@ logistic regression
 
 - nearly same as linear SVM
 
+linear classifiers
+
+- naive bayes
+  - generative
+  - it's actually linear: <http://nlp.stanford.edu/IR-book/html/htmledition/linear-versus-nonlinear-classifiers-1.html>
+    - choose $c_0$ iff $\log \frac{P(c_0|d)}{P(c_1|d)} = \log
+      \frac{P(c_0)}{P(c_1)} + \sum_{k=K} \log \frac{P(t_k|c_0)}{P(t_k|c_1)} >
+      0$ where $K$ is the set of terms in the document
+- logistic regression
+  - discriminative
+- <http://www.quora.com/What-is-the-difference-between-logistic-regression-and-Naive-Bayes>
+
 maximum entropy
 
 - _max entropy classifier_ aka _multinomial logit_
