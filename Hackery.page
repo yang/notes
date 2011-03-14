@@ -1,3 +1,13 @@
+- linux security tools/practices
+  - denyhosts/fail2ban
+  - psad: detect intrusions from iptables
+  - tiger: general system audit tool
+  - logwatch
+  - chkrootkit
+  - ufw
+  - sshd_config: `PermitRootLogin no` and `PasswordAuthentication no`
+  - <http://www.andrewault.net/2010/05/17/securing-an-ubuntu-server/>
+
 - machine learning libraries
   - orange > pyml, mlpy
   - rapidminer > weka
