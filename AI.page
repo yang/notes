@@ -434,6 +434,8 @@ feature selection
 - subset selection: evaluate a subset of features (or: which feature to discard
   first? a search problem)
   - wrappers: wrap a learning model, may overfit
+    - aka least angle regression (LARS) bc at each step you choose the
+      dimension that, when added, minimizes your angle to the residual ($y$)
     - forward: starting w empty set, try adding features one at a time,
       greedily choosing the feature that yields the highest cross-validation
       accuracy
@@ -449,6 +451,7 @@ feature selection
           remove (from model and candidates) feature in candidates with biggest acc drop
 
   - filters: like wrappers, but instead of model, use simpler filter
+- <http://www.quora.com/Regression-statistics/What-is-Least-Angle-Regression-and-when-should-it-be-used>
 - TODO stepwise regression
 
 misc
