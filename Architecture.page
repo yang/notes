@@ -454,3 +454,21 @@ from facebook engineering blog post on web app benchmarking system "dyno"
 > allocates 25MB per request. When we compare several generations of processors
 > under high load, we see dramatic gains in the maximum throughput of the node
 > when the hardware has a more advanced memory architecture.
+
+Brawny cores still beat wimpy cores, most of the time (Urs Holzle, Google)
+
+- serialization/communication overheads grow
+- inherently serial work dominates execution time
+- always ignore SW dev costs; devs will have to invest into fighting latency
+- the more workers, the higher the prob of stragglers
+- more smaller systems can increase overall cluster cost if non-CPU costs can't
+  be scaled down accordingly
+  - basic infrastructure: enclosures, cables disks, power supplies, network
+    ports, cables, ...
+  - higher % of DRAM for OS (non throughput related)
+- lower utilization: easier to bin-pack larger bins than smaller bins
+- parallel algos may be less efficient w smaller bins
+  - eg if stopping condition based on global info, to avoid global comm/sync,
+    use more local heuristics that are sloppier and more conservative, doing
+    more work than necessary
+- <http://research.google.com/pubs/archive/36448.pdf>
