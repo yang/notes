@@ -25,6 +25,10 @@ statistics
   variables, each with finite mean & variance, is approximately normal
   - as sample size increases, sample mean distribution approaches normal
 
+- simpson's paradox: a correlation present in diff groups is reversed when
+  groups are combined; often in social-/med-sciences when frequency data
+  hastily given causal interps
+
 - TODO
 - (paired) student t-test
 - distributions
