@@ -140,19 +140,21 @@ standard boolean model
 
 evaluation measures
 
-- see statistical test accuracy measures for basic ones
+- set-based measures: don't consider rankings
   - precision, recall, F-measure are single-value metrics of entire result set
   - precision: # relevant and retrieved / # retrieved
   - recall: # relevant and retrieved / # relevant
   - f-measure aka F1 score aka F-score: $F = 2 \frac{PR}{P+R}$ where $P$ is
     precision, $R$ is recall
   - precision at some cutoff (precision@k aka PC): precision in the top $k$
-- mean avg precision (MAP): unlike single-value metrics, considers ranking
-  - avg of precisions computed at the point of each of the relevant docs
-  - AveP = $\sum_{r=1}^N P(r) \mathrm{rel}(r)$ / |relevant|, where
-    - rel(r) = binary function on the relevance of a given rank
-    - P(r) = precision at given cut-off rank = relevant & retrieved & rank<r /
-      r
+- average precision (AP): considers ranking
+  - $\frac{1}{|\text{relevant}|} \sum_{r=1}^k P(r) \text{rel}(r)$, where
+    - $P(r)$ is the precision at given cut-off rank (i.e. `relevant & retrieved
+      & rank<r / r`)
+    - $\text{rel}(r)$ is 1 if relevant, 0 otherwise (i.e. skip/discount terms
+      for irrelevant results)
+    - <http://www.slideshare.net/lindabeekeeper/calculating-precision-presentation>
+- mean avg precision (MAP): mean AP over multiple queries
 - discounted cumulative gain (DCG): uses graded relevance scale instead of bool
   - insight: penalize highly relevant documents of low rank
   - DCG accumulated at rank p = $rel_1 + \sum_{i=2}^p \frac{rel_i}{\log_2 i}$
