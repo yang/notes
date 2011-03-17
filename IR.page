@@ -146,6 +146,7 @@ evaluation measures
   - recall: # relevant and retrieved / # relevant
   - f-measure aka F1 score aka F-score: $F = 2 \frac{PR}{P+R}$ where $P$ is
     precision, $R$ is recall
+  - precision at some cutoff (precision@k aka PC): precision in the top $k$
 - mean avg precision (MAP): unlike single-value metrics, considers ranking
   - avg of precisions computed at the point of each of the relevant docs
   - AveP = $\sum_{r=1}^N P(r) \mathrm{rel}(r)$ / |relevant|, where
@@ -164,6 +165,11 @@ evaluation measures
     <http://research.microsoft.com/~cburges/papers/ICML_ranking.pdf>
   - recent advances directly optimize these:
     <http://research.microsoft.com/en-us/um/people/cburges/papers/LambdaRank.pdf>
+- SIGIR10 paper from MSR comparing standard IR metrics (NDCG, MAP, PC) with
+  clicks from A/B tests of rankings findings:
+  - you need 10x (cheap) click data than (expensive) manual data
+  - NDCG has best correlation w click data
+  - <http://research.microsoft.com/apps/pubs/default.aspx?id=130616>
 
 learning to rank (LETOR)
 
