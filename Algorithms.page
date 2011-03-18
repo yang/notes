@@ -429,3 +429,15 @@ skip lists
 - delete: remove node from all lists it's in
 - contains: traverse lists forward and down
 - <http://igoro.com/archive/skip-lists-are-fascinating/>
+
+tries
+
+- trie: ordered tree where keys usu strings/radixes and all descendants of a
+  node have a common prefix of the key w that node
+- patricia trie aka radix tree: space-optimized trie where each node w only one
+  child is merged w its child
+  - thus every internal node has at least 2 children
+- hash array mapped trie (HAMT): persistent version popularized in clojure
+  - basically, high-fanout (very flat - 32x) radix tree keyed by hashing
+  - use bitmap so nodes w <32 items can allocate only as many words as nec and
+    bitmap identifies which items are present (population count aka hamming wt)
