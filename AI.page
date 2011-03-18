@@ -591,6 +591,10 @@ multiclass classification
     iff labeled w that class; in test, choose class w highest classifier score
   - 1 vs 1 aka pairwise aka all vs all aka AVA: build classifier for each pair
     of classes ($\choose{n,2}$ classifiers); in test, choose class w most wins
+  - AVA builds more classifiers but pairwise classification much faster (?) and
+    more balanced (easier to find best regularization), hence often faster than
+    OVA
+    <http://www.cs.berkeley.edu/~pliang/cs294-spring08/lectures/multiclass/slides.pdf>
   - error-correcting output codes (ECOC)
     - each class given unique binary str of length $n$
     - train $n$ classifiers, one per bit
