@@ -441,3 +441,13 @@ tries
   - basically, high-fanout (very flat - 32x) radix tree keyed by hashing
   - use bitmap so nodes w <32 items can allocate only as many words as nec and
     bitmap identifies which items are present (population count aka hamming wt)
+
+binary space partitioning (BSP) trees
+
+- TODO recursively partition space; apps in graphics
+- kd-tree aka $k$-dimensional tree: special case
+  - binary tree, each internal node is a hyperplane splitting some dimension
+  - useful for range searches, NN searches
+  - various algos
+  - not efficient for high dim; number of data points $n$ should be much larger
+    than $2^k$
