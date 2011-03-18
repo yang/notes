@@ -643,3 +643,17 @@ pragmatics/usage
     - linear is special case of RBF; behaves like sigmoid for certain params
   - linear: good when many features
 - simplest approach to finding hyperparams: grid search
+
+multiclass
+
+- <http://nlp.stanford.edu/IR-book/html/htmledition/multiclass-svms-1.html>
+- generic approaches (OVA, AVA, etc) "not very elegant"
+- instead, build 2-class SVM over new feature vector that *includes the class
+  as a feature* (or in general some function of it, $\Phi(x,y')$)
+  - in test, choose class w largest margin $y = \arg \max_{y'} w^T \Phi(x,y')$
+  - in train, margin is gap btwn this value for correct class and for the
+    nearest other class, so new quadprog formulation required (see URL)
+
+ranking
+
+- <http://nlp.stanford.edu/IR-book/html/htmledition/result-ranking-by-machine-learning-1.html#sec:ranking-svm>
