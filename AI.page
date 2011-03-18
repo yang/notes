@@ -580,6 +580,35 @@ random forests
 - efficient, parallelizable
 - RFs is very competitive, but also has danger of overfitting
 
+multiclass classification
+
+- some classifiers handle it naturally
+  - dec trees, bayes methods, log reg, ...
+- generic meta learners
+  - 1 vs rest aka 1 vs all aka OVA: build classifier for each class where pos
+    iff labeled w that class; in test, choose class w highest classifier score
+  - 1 vs 1 aka pairwise aka all vs all aka AVA: build classifier for each pair
+    of classes ($\choose{n,2}$ classifiers); in test, choose class w most wins
+  - error-correcting output codes (ECOC)
+    - each class given unique binary str of length $n$
+    - train $n$ classifiers, one per bit
+    - in test, run $n$ classifiers on $x$ to get $n$-bit str
+      - coding must be carefully chosen to maximize hamming dist among
+        codewords and make sure each bit is uncorrelated w other bits
+      - choose coding using exhaustive codes (all $2^{k-1} - 1$ bits), column
+        selection from exhaustive codes, randomized hill climbing, BCH codes,
+        more
+    - choose class w closest str (eg by hamming dist)
+  - tutorial
+    <http://courses.washington.edu/ling572/winter2011/teaching_slides/2_15_multiclass_to_binary.pdf>
+  - generalization:
+    <http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=B6C31DC721E6484E27B9380C764CBF98?doi=10.1.1.73.2154&rep=rep1&type=pdf>
+    - ECOC is a less-general intermediate
+    - orthogonal probs: how to classify example or assign it a prob dist given
+      classifiers' results
+  - In Defense of One-Vs-All Classification
+    <http://jmlr.csail.mit.edu/papers/volume5/rifkin04a/rifkin04a.pdf>
+
 latent dirichlet allocation (LDA)
 
 - learns from body of entities, inferring that a particular attr belongs to a
