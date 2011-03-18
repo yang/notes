@@ -65,6 +65,10 @@ ensemble methods
 
 supervised learning
 
+- classification: discrete/categorical
+- regression: continuous
+- ordinal regression: ranking (in btwn classification & regression; used in IR)
+
 - old statistically inspired linear methods
 - artificial neural networks
 - decision trees
