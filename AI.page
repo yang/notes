@@ -468,84 +468,6 @@ feature selection
 - <http://www.quora.com/Regression-statistics/What-is-Least-Angle-Regression-and-when-should-it-be-used>
 - TODO stepwise regression
 
-misc
-
-- transfer learning: storing knowledge gained while solving one problem and
-  applying it to a different but related problem
-  - eg useful for personalization
-  - simple form: final prediction = sum of global and local (user-specific)
-    models
-
-nlp
-===
-
-- segmentation: figuring out word boundaries
-  - simplest: over all possible segmentations, return seg w max prod over all
-    words of P(word)
-
-modeling
-========
-
-- hyperparameters: model params that are not being estimated/optimized
-
-svm
-===
-
-general
-
-- hyperparameters
-  - eg $C$ penalty param
-  - eg kernel-specific params; eg poly kernel has more hyperparams than others
-- slack variables introduce soft margin
-
-kernels
-
-- from <http://anyall.org/blog/2011/01/please-report-your-svms-kernel/>:
-
-  > An un-kernelized, linear SVM is nearly the same as logistic
-  > regression...But a quadratic kernelized SVM is much more like boosted
-  > depth-2 decision trees.  It can do automatic combinations of pairs of
-  > features — a potentially very different thing, since you can start throwing
-  > in features that don’t do anything on their own but might have useful
-  > interactions with others.  (And of course, more complicated kernels do
-  > progressively more complicated and non-linear things.)
-  >
-  > I have heard people say they download an SVM package, try a bunch of
-  > different kernels, and find the linear kernel is the best. In such cases
-  > they could have just used a logistic regression.  (Which is way faster and
-  > simpler to train!  You can implement SGD for it in a few lines of code!)
-  >
-  > A linear SVM sometimes has a tiny bit better accuracy than logistic
-  > regression, because hinge loss is a tiny bit more like error rate than is
-  > log-loss.  But I really doubt this would matter in any real-world
-  > application, where much bigger issues are happening (like data cleanliness,
-  > feature engineering, etc.)
-  >
-  > If a linear classifier is doing better than non-linear ones, that’s saying
-  > something pretty important about your problem.  Saying that you’re using an
-  > SVM is missing the point.  An SVM is interesting only when it’s kernelized.
-  > Otherwise it’s just a needlessly complicated variant of logistic
-  > regression.
-
-regression
-
-- [question: what does the objective function
-  mean?](metaoptimize.com/qa/questions/4151/understanding-svm-regression-objective-function-and-flatness)
-- <http://kernelsvm.tripod.com/>
-- [Tutorial on SVM
-  Regression](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf)
-
-pragmatics/usage
-
-- scale params to avoid feature imbalance and numeric difficulties
-- kernels
-  - RBF: good first choice
-    - in (0,1], so fewer numerical difficulties
-    - just one hyperparam ($\gamma$)
-    - linear is special case of RBF; behaves like sigmoid for certain params
-  - linear: good when many features
-- simplest approach to finding hyperparams: grid search
-
 collaborative filtering
 
 - various similarity measures
@@ -643,3 +565,81 @@ gmail priority inbox
 - use PA-II online passive-aggressive regression variant
 - misc
   - continuous -> binary features via ID3-style algo [?]
+
+misc
+
+- transfer learning: storing knowledge gained while solving one problem and
+  applying it to a different but related problem
+  - eg useful for personalization
+  - simple form: final prediction = sum of global and local (user-specific)
+    models
+
+nlp
+===
+
+- segmentation: figuring out word boundaries
+  - simplest: over all possible segmentations, return seg w max prod over all
+    words of P(word)
+
+modeling
+========
+
+- hyperparameters: model params that are not being estimated/optimized
+
+svm
+===
+
+general
+
+- hyperparameters
+  - eg $C$ penalty param
+  - eg kernel-specific params; eg poly kernel has more hyperparams than others
+- slack variables introduce soft margin
+
+kernels
+
+- from <http://anyall.org/blog/2011/01/please-report-your-svms-kernel/>:
+
+  > An un-kernelized, linear SVM is nearly the same as logistic
+  > regression...But a quadratic kernelized SVM is much more like boosted
+  > depth-2 decision trees.  It can do automatic combinations of pairs of
+  > features — a potentially very different thing, since you can start throwing
+  > in features that don’t do anything on their own but might have useful
+  > interactions with others.  (And of course, more complicated kernels do
+  > progressively more complicated and non-linear things.)
+  >
+  > I have heard people say they download an SVM package, try a bunch of
+  > different kernels, and find the linear kernel is the best. In such cases
+  > they could have just used a logistic regression.  (Which is way faster and
+  > simpler to train!  You can implement SGD for it in a few lines of code!)
+  >
+  > A linear SVM sometimes has a tiny bit better accuracy than logistic
+  > regression, because hinge loss is a tiny bit more like error rate than is
+  > log-loss.  But I really doubt this would matter in any real-world
+  > application, where much bigger issues are happening (like data cleanliness,
+  > feature engineering, etc.)
+  >
+  > If a linear classifier is doing better than non-linear ones, that’s saying
+  > something pretty important about your problem.  Saying that you’re using an
+  > SVM is missing the point.  An SVM is interesting only when it’s kernelized.
+  > Otherwise it’s just a needlessly complicated variant of logistic
+  > regression.
+
+regression
+
+- [question: what does the objective function
+  mean?](metaoptimize.com/qa/questions/4151/understanding-svm-regression-objective-function-and-flatness)
+- <http://kernelsvm.tripod.com/>
+- [Tutorial on SVM
+  Regression](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf)
+
+pragmatics/usage
+
+- scale params to avoid feature imbalance and numeric difficulties
+- kernels
+  - RBF: good first choice
+    - in (0,1], so fewer numerical difficulties
+    - just one hyperparam ($\gamma$)
+    - linear is special case of RBF; behaves like sigmoid for certain params
+  - linear: good when many features
+- simplest approach to finding hyperparams: grid search
