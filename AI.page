@@ -414,6 +414,8 @@ linear classifiers
       0$ where $K$ is the set of terms in the document
 - logistic regression
   - discriminative
+  - for $K$ classes, $P(y|x) = \frac{ \exp(w_y \cdot x) }{
+    \sum_{y'\in\{1,\dots,K\}} \exp(w_{y'} \cdot x) }$
 - <http://www.quora.com/What-is-the-difference-between-logistic-regression-and-Naive-Bayes>
 
 maximum entropy
