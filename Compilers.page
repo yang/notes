@@ -13,7 +13,23 @@ TODO merge in notes from CS164
     - use $k$ tokens of lookahead to fully determine which production to use
     - no backtracking needed
   - top-down operator precedence (pratt) parser
-    - TODO
+    - <http://journal.stuffwithstuff.com/2011/03/19/pratt-parsers-expression-parsing-made-easy/>
+    - basic idea: allow yourself to call into main parse(precedence) from
+      anywhere, and the precedence is always checked to be non-decreasing
+    - also controls associativity
+    - pseudocode
+
+        def parse(precedence):
+          token = next()
+          p = prefix_parsers[token.type]
+          parsed = p.parse(token)
+          while True:
+            token = next()
+            p = infix_parsers[token.type]
+            if p is None or precedence < token.precedence: break
+            parsed = p.parse(parsed, token)
+          return parsed
+
 - parsing types
   - shift-reduce parsing: a type of bottom-up parsing
 - grammar types (hierarchy)
