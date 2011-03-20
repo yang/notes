@@ -32,7 +32,8 @@ TODO merge in notes from CS164
     - (k) = k-token lookahead
   - LL(k) aka top-down: simplest
     - produces leftmost derivation top-down
-    - LL(1): need to examine 1 token to determine which rule to apply
+    - LL(1): need to look ahead 1 token to determine which rule to apply (for
+      infix, etc.)
     - animation: http://www.cs.wm.edu/~noonan/animations/llparse.html
     - ANTLR
     - LL is a subset of LR
@@ -49,11 +50,6 @@ TODO merge in notes from CS164
     - YACC, bison
   - SLR(k)
     - LR(0) + followsets TODO
-  - GLR aka generalized LR
-    - handles nondeterministic and ambiguous grammars by returning *all*
-      possible interpretations
-    - also: GLL aka generalized LL
-    - tomita's algorithm is the best
 - grammar forms
   - Backus-Naur Form (BNF): TODO
   - Extended BNF (EBNF): TODO
@@ -148,6 +144,7 @@ Bottom-up parsing
 - recursive-ascent: implementation technique for bottom-up (LR) parsers
   - practical benefit: flexible in that it allows for parameterized recursion
     (eg for error recovery)
+  - also, popular bc simple
 - LR: largest class of grammars for which shift-reduce parser can be built
   - shift-reduce conflicts; ambiguous grammar cannot be LR
   - LR parsing is attractive because
@@ -202,6 +199,12 @@ Bottom-up parsing
     As a result, the grammar is ambiguous since a program can be interpreted more than one way.
 
     This error is often caused by recursive grammar definitions where the system cannot determine when one rule is complete and another is just started. The Builder documentation contains an example of the common if-then-else grammar problem and how to fit it.
+  - GLR aka generalized LR aka parallel parser
+    - handles nondeterministic and ambiguous LR grammars by returning *all*
+      possible interpretations
+    - tomita's parsing algo is best
+  - GLL aka generalized LL (2009)
+    - RD-like but uses tomita-style algo
 
 compiler optimizations
 
