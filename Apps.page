@@ -1055,3 +1055,7 @@ Command-Line Cheatsheet
   newaliases
   # TCP ping Microsoft
   nmap -PT80 -sP -d -n www.microsoft.com
+
+  # benchmark disk perf
+  iostat -x 1
+  # Explanation: <https://forums.aws.amazon.com/thread.jspa?messageID=124044#124044>
