@@ -242,6 +242,8 @@ lexing/regular expression matching
   - sucks (exp-time) for wide-branching cases? can't think of them right now
 - backreferences trivial in backtracking, but make parallel exp-time
 - <http://swtch.com/~rsc/regexp/regexp1.html>
+- lexer hack: lexer doesn't have enough info to determine if symbol is var name
+  or type name, eg `(int) *x` vs `(a) * b`; must feed it symbol table info
 
 tracing JITs
 
