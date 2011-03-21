@@ -661,20 +661,27 @@ PortLand: A Scalable Fault-Tolerant Layer 2 Data Center Network Fabric (amin vah
 VL2 (msr, sigcomm09)
 
 - focused on high bisectional bandwidth and good fairness among flows
-- propose virtualized app-level IP addrs (AAs) for addr migration
-  - modifies end-host OSs to perform loc-specific addr (LA) resolution
+- VL2 (virtual layer 2) is an overlay that virtualizes IP addrs
+  - app-level IP addrs (AAs) allow for flexibility and migration; single flat
+    layer 2 addr space
+  - loc-specific IP addrs (LAs) are actual locations; standard IP (layer 3)
+    addrs
+  - central directory translates AAs to LAs
+  - modify end-host OSs to be clients of directory; no need to change routers
+    though
   - OS module also intercepts ARP reqs for LA addrs and converts ARP bcasts
     into unicast lookups into a centralized directory service (like
     PortLand/Ethane)
-- uses clos network topology
+- use clos network topology
   - each top-of-rack switch connects to two agg switches
   - each agg switch connects to every core switch (called "intermediate" switch)
-- uses valiant load balancing (VLB) and equal-cost multi-path (ECMP) routing
+- use valiant load balancing (VLB) and equal-cost multi-path (ECMP) routing
   - valiant load balancing: work from '80
     - dst-indep (eg random) traffic spreading across multiple intermediate nodes
     - VL2 spreads flows rather than packets; avoids OOO delivery
   - VLB+ECMP spreads traffic uniformly across network paths
-    - VLB uses random intermediate waypoint to route traffic btwn 2 endpoints
+    - VLB uses random intermediate waypoint (switch) to route traffic btwn 2
+      endpoints (using IP-over-IP)
     - ECMP selects amongst multiple equal-cost paths; provides load balancing
       among the many VLB paths
   - [but does this apply to intra-rack flows too? seems silly.]
