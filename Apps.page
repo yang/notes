@@ -1059,3 +1059,43 @@ Command-Line Cheatsheet
   # benchmark disk perf
   iostat -x 1
   # Explanation: <https://forums.aws.amazon.com/thread.jspa?messageID=124044#124044>
+
+Software
+========
+
+Windows
+-------
+
+- acrobat
+- avg free
+- cdrdao
+- clamwin
+- colinux
+- cygwin
+- d-tools/daemon-tools
+- eac
+- emule
+- filezilla
+- google earth
+- google picasa
+- google sketchup
+- google talk
+- i2p
+- itunes
+- mame
+- mixminion
+- nero
+- pakexplorer
+- pdfcreator
+- peerguardian2
+- pidgin
+- putty
+- skype
+- sysinternals tools
+- tor, vidalia, privoxy
+- virtualdub
+- vlc
+- vstrip
+- winamp
+- windirstat
+- winpt
