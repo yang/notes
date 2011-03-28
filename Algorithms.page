@@ -188,6 +188,22 @@ linear programming
     - dual function combines $m$ vars w $n$ lower-bound constraints
   - lagrange duality/lagrange multiplier: TODO
 
+priority queues
+
+- binary heap: maintain invariant that each node is $\ge$ children
+  - add to bottom and take from top; bubble up/down as necessary
+- binomial heap: bin-heap that supports fast (log-time) merges, but log-time
+  (non-const) min-peeks
+  - special tree structure: a binomial tree is defined recursively
+    - order 0 tree is single node
+    - order $n$ tree's children: roots of trees of orders $k-1,k-2,\dots,1,0$
+  - a heap is collection of $O(\log n$) trees
+  - to find min, inspect all roots
+  - merges merge trees of same order (each is $O(1)$ op)
+  - inserts are merges of order-0 trees, $O(1)$ amortized
+- Fibonacci heap: $O(1)$ insert/decrease/merge; log-time find/del-min
+  - TODO
+
 randomized
 ==========
 
