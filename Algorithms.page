@@ -203,6 +203,8 @@ priority queues
   - inserts are merges of order-0 trees, $O(1)$ amortized
 - Fibonacci heap: $O(1)$ insert/decrease/merge; log-time find/del-min
   - TODO
+- for heaps implemented as linked objects, keeping pointers to the nodes
+  enables things like deleting specific nodes or relaxing their weights
 
 randomized
 ==========
