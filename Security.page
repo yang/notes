@@ -466,6 +466,15 @@ PKI
   - p12: PKCS12, may contain both public and private keys; published by RSA
     - protected with password-based symmetric key
     - successor to PFX from MS, criticized for complexity
+- renego vulnerabilities: when upgrading an insecure connection to a secure one
+  (e.g. STARTTLS) already-buffered plaintext data can slip through
+  - attacker can inject prefixes into the data stream
+  - eg for HTTP, everything starting from the second GET is from the client
+    (and encrypted):
+
+      GET /path/to/resource.jsp HTTP/1.0
+      Dummy-Header: GET /index.jsp HTTP/1.0
+      Cookie: sessionCookie=Token
 
 - MAC: integrity and authenticity; TODO
 - message authentication code (MAC): keyed hash; TODO
