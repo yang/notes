@@ -96,11 +96,33 @@ supervised learning
 graph search
 
 - BFS, DFS, IDFS
-- best-first search: minimize distance to goal
-- A* search: explore node with minimum distance to goal + distance from start
-  - unlike best-first, may jump off a certain path you've been heading down to
-    keep from going too far off
-- dijkstra
+- best-first search: explore most promising node according to heuristic fn
+  - usu.: minimize distance to goal
+- A* search: best-first where heuristic fn is distance to goal + distance from
+  start
+  - unlike best-first min-dist, may jump off a certain path you've been heading
+    down to keep from going too far off
+- beam search: best-first but at ecah step keep limited # of best candidates
+- dijkstra: exact min cost path
+  - orig algo $O(|V|^2)$; using Fib heap $O(|E| + |V| \log |V|)$
+  - for each node, maintain a "min known distance from root"
+  - starting from root, relax neighbors' distances & put into/pop from PQ
+  - once all neighbors of a node explored, dist won't relax again
+  - neg edge weights cause inf loops
+  - pseudocode:
+
+      for x in nodes:
+        x.dist = inf
+        x.prev = null
+      root.dist = 0
+      q = PQ({root})
+      while x = q.pop():
+        for y in x.neighbors:
+          m = min(y.dist, x.dist + edge(x,y))
+          if m < y.dist:
+            y.dist = m
+            y.prev = x // record path
+            insert or relax y in q
 
 constraint satisfaction
 
