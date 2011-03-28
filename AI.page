@@ -683,3 +683,45 @@ multiclass
 ranking
 
 - <http://nlp.stanford.edu/IR-book/html/htmledition/result-ranking-by-machine-learning-1.html#sec:ranking-svm>
+
+rule learning/mining/induction
+
+- apriori: best-known algo for association rule mining
+  - for items that are grouped in txns
+  - build up candidate itemsets one item at a time using BFS, but on each
+    iteration prune out candidates, keeping only those with minimum _support_
+    (frequencies) and (optionally) minimum _confidence_ (# in subset including
+    new item / # in current set)
+  - can also only expand search to candidates that have a minimum 
+  - historically significant but has inefficiencies & trade-offs
+- AQ: outputs sequence of "if COND then CLASS" rules
+  - beam search (best-first search with pruning)
+  - once find rule, remove covered data, repeat
+  - TODO diff from CN2?
+- CN2: rule induction algo
+  - based on ideas from the ID3 decision tree algo
+  - significance test filters out rules that cover too few examples
+  - possible heuristic criteria to rank rules in beam (best-first) search
+    - entropy: used in ID3 and orig CN2
+      - tends to select very specific rules covering few examples; significance
+        test is only a threshold; tihs is called _downward bias_
+    - accuracy: behaves similarly to entropy; $P(class|cond) = n_c/n$, where:
+      - $n_c$ is # examples in predicted class $c$ covered by rule
+      - $n$ is total # examples covered by rule
+    - laplace accuracy: $\frac{n_c + 1}{n + k}$, where $k$ is # classes
+      - not sure about rationale here
+    - weighted relative accuracy: $P(cond) (P(class|cond) - P(class))$
+      - instead of focusing on accuracy, focus on finding big groups
+      - $P(cond)$ is _generality_; find big groups
+      - $P(class|cond) - P(class)$ is _relative accuracy_
+      - $= P(cond, class) - P(class) P(cond)$ (diff btwn actual joint and
+        expected joint if indep)
+      - laplace accuracy can be used for $P(class|cond)$
+  - ordered v unordered: whether rule is defined conditioned on rules above it
+    having failed
+    - unordered algo change: iterate the search for each class in turn,
+      removing only covered examples *of that class* when rule is found
+  - CN2-SD (subgroup discovery): instead of removing, downweight
+    - bc in CN2 only first few rules may be of interest
+    - can decrease multiplicatively or additively
+  - TODO how to know when to stop?
