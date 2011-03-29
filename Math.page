@@ -168,43 +168,35 @@ statistical tests
     many cases
   - 4 widely used tests: Wald, $\chi^2$, permutation, likelihood ratio
 - contingency tables: used by many statistical tests
-- decision table: <http://www.graphpad.com/www/book/choose.htm>
+- test selection decision table: <http://www.graphpad.com/www/book/choose.htm>
+  - the complexity here is a critique of the frequentist approach
 - chi-square: typically Pearson's chi-square
+- Fisher's exact test: for small categorical data; compares two groups
+  - a type of exact permutation test; based on hypergeom dist
+  - for 2x2 contingency tables (1 DOF)
+  - for each variation of table, calculate $p = \frac{(a+b choose a) (c+d
+    choose c)}{(n choose a+c)} = \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!n!}$
+    - sum these up to get the $p$-value
+  - use fisher if possible; easy w computers; chi square is approximation
+    - <http://www.graphpad.com/faq/viewfaq.cfm?faq=1114>
+    - <http://en.wikipedia.org/wiki/Exact_test>
+    - <http://www.itl.nist.gov/div898/handbook/prc/section3/prc33.htm>
 - Pearson's chi-square: for large categorical data
-  - assesses _goodness of fit_ and tests of independence
+  - assesses _goodness of fit_ and _tests of independence_ (TODO)
   - $X^2 = \sum_{i=1}^n \frac{(O_i - E_i)^2}{E_i}$, where
     - $X^2$ is Pearson's cumulative test statistic which asymptotically
       approaches a $\chi^2$ distribution
     - $O_i$ is observed freq
     - $E_i$ is expected (theoretical) freq
     - $n$ is number of cells in contingency table
+  - goodness of fit: compare group against theoretical expectation
+  - $\chi^2$ test approximates Fisher
+    - $X^2$ becomes $(ad-bc)^2 (a+b+c+d) / ((a+b)(c+d)(b+d)(a+c))
   - degrees of freedom
     - for goodness of fit, it's number of terms in $X^2$ expr - 1
     - for indep test, it's (num cols) (num rows) = 1
-  - for 2x2 contingency table (comparing two groups, $n=4$)
-    - $E_i$ are (row total)(column total)/(total)
-    - $X^2$ becomes $(ad-bc)^2 (a+b+c+d) / ((a+b)(c+d)(b+d)(a+c))
-  - with chi square and dof, look up prob in $\chi^2$ dist
-  - goodness of fit: compare group against theoretical expectation
-  - cautionary note - TODO is this related to one-sided vs two-sided tests?
-
-    > It is important to keep in mind that the chi-square test only tests
-    > whether two variables are independent. It cannot address questions of
-    > which is greater or less. Using the chi-square test, we cannot evaluate
-    > directly the hypothesis that boys get in trouble more than girls; rather,
-    > the test (strictly speaking) can only test whether the two variables are
-    > independent or not.
-
   - <http://ccnmtl.columbia.edu/projects/qmss/the_chisquare_test/about_the_chisquare_test.html>
   - <http://math.hws.edu/javamath/ryan/ChiSquare.html>
-- Fisher's exact test: for small categorical data; compares two groups
-  - a type of exact permutation test; based on hypergeom dist
-  - $p = \frac{(a+b choose a) (c+d choose c)}{(n choose a+c)} =
-    \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!n!}$
-  - use fisher if possible; easy w computers; chi square is approximation
-    - <http://www.graphpad.com/faq/viewfaq.cfm?faq=1114>
-    - <http://en.wikipedia.org/wiki/Exact_test>
-    - <http://www.itl.nist.gov/div898/handbook/prc/section3/prc33.htm>
 - binomial test: for small categorical data
   - compare group against theoretical value (i.e. with-replacement; see
     binomial dist vs hypergeom dist)
