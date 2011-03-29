@@ -52,6 +52,10 @@ distributions
 - poisson: number of arrivals in sliver of time; infinite-granularity binomial
 - exponential: inter-arrival times for poisson
 - gaussian/normal
+- log-normal distribution: dist of a RV whose log is normal
+  - in Black-Scholes model, changes in the log of exchange rates, price
+    indices, and stock market indices are assumed normal
+- Cauchy: occurs in spectroscopy
 
 bayesians vs frequentists
 
