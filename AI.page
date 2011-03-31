@@ -739,3 +739,14 @@ rule learning/mining/induction
     - bc in CN2 only first few rules may be of interest
     - can decrease multiplicatively or additively
   - TODO how to know when to stop?
+
+regularization
+
+- overfitting tends to occur when large weights found in $\theta$
+- add regularization term to pressure params $\theta$ to be 0
+- L2: $\lambda \left\lnorm \theta^2 \right\rnorm$
+  - $\lambda$ is the regularization param
+  - special case of Tikhonov regularization
+  - can be computed directly in $O(n^3)$
+- L1: $\lambda \left\lnorm \theta \right\rnorm$
+- TODO
