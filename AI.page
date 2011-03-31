@@ -124,6 +124,20 @@ graph search
             y.prev = x // record path
             insert or relax y in q
 
+- bellman-ford: single-source shortest-paths all-pairs
+  - same as dijkstra but instead of greedily relaxing min-dist unvisited node,
+    relax *all* edges, and can report neg edges (no 'shortest path')
+
+    for v in vs: v.dist, v.pred = inf, null
+    for i in range(len(vs)):
+      for u,v in es:
+        if u.dist + edge(u,v) < v.dist:
+          v.dist = u.dist + edge(u,v)
+          v.pred = u
+    for u,v in es:
+      if u.dist + edge(u,v) < v.dist:
+        raise Exception('graph contains neg weight edges')
+
 constraint satisfaction
 
 - unification
