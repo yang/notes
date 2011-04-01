@@ -79,6 +79,15 @@ bayesians vs frequentists
 - <http://www.statisticalengineering.com/frequentists_and_bayesians.htm>
 - <http://www.rasmusen.org/x/2007/09/25/bayesian-vs-frequentist-statistical-theory/>
 
+conjugate priors
+
+- conjugate priors produce posteriors of the same algebraic form
+- an algebraic convenience that yields closed-form posteriors
+- beta dist is conjugate prior for binomial & bernoulli
+- dirichlet dist is generalization of beta and conjugate prior for multinomial
+  & categorical
+- TODO
+
 probability vs statistics
 
 - probabilists: hypothesis to data
