@@ -182,7 +182,7 @@ statistical tests
 - chi-square: typically Pearson's chi-square
 - Fisher's exact test: for small categorical data; compares two groups
   - a type of exact permutation test; based on hypergeom dist
-  - for 2x2 contingency tables (1 DOF)
+  - for 2x2 contingency tables (1 DOF, since margins are held fixed)
   - for each variation of table, calculate $p = \frac{(a+b choose a) (c+d
     choose c)}{(n choose a+c)} = \frac{(a+b)!(c+d)!(a+c)!(b+d)!}{a!b!c!d!n!}$
     - sum these up to get the $p$-value
@@ -204,6 +204,10 @@ statistical tests
   - degrees of freedom
     - for goodness of fit, it's number of terms in $X^2$ expr - 1
     - for indep test, it's (num cols) (num rows) = 1
+  - for 1DOF, chi square dist = gaussian, so same as "equal proportions z test"
+    (z test over the difference of 2 binomial random variables)
+    - <http://stats.stackexchange.com/questions/2391/what-is-the-relationship-between-a-chi-square-test-and-test-of-equal-proportions>
+    - <http://stattrek.com/AP-Statistics-4/Test-Difference-Proportion.aspx?Tutorial=AP>
   - <http://ccnmtl.columbia.edu/projects/qmss/the_chisquare_test/about_the_chisquare_test.html>
   - <http://math.hws.edu/javamath/ryan/ChiSquare.html>
 - binomial test: for small categorical data
