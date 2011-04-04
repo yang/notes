@@ -367,6 +367,9 @@ symmetric positive definite, positive semi-definite, negative definite, indefini
 
 misc
 
+- subspace of $\Re^n$: set of vectors that's closed under scalar mult (hence
+  must incl. origin)
+- only way to represent a line in >2D is parametrically ($t$)
 - A matrix $A$ is diagonalizable if there exists a non-singular matrix $B$ and
   a diagonal matrix $D$ such that $A = BDB^{-1}$.
 - _singular value decomposition (SVD)_: important factorization of a
