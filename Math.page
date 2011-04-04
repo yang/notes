@@ -56,21 +56,6 @@ statistics
   - similarity of orderings of data
   - TODO uses p-value somewhere
 
-distributions
-
-- bernoulli: heads or tails
-- binomial: number of successes in $n$ draws with replacement (multiple
-  bernoulli trials)
-- hypergeometric: number of successes in $n$ draws *without* replacement
-  (unlike binomial)
-- poisson: number of arrivals in sliver of time; infinite-granularity binomial
-- exponential: inter-arrival times for poisson
-- gaussian/normal
-- log-normal distribution: dist of a RV whose log is normal
-  - in Black-Scholes model, changes in the log of exchange rates, price
-    indices, and stock market indices are assumed normal
-- Cauchy: occurs in spectroscopy
-
 bayesians vs frequentists
 
 - views of probability
@@ -494,17 +479,29 @@ shannon entropy
 probability
 ===========
 
+stochastic processes
+
+- bernoulli process: stream of discrete & independent events, usu binary;
+  discrete-time, unlike poisson
 - poisson process: stream of continuous & independent events occurring at const
-  avg rate
+  avg rate; continuous-time (infinite-granularity) bernoulli process
   - characterized by rate param $\lambda$
-- bernoulli process: stream of discrete & independent events, usu binary
 
 distributions
 
-- bernoulli: heads/tails
-- poisson: # events over fixed time in poisson process
-  - mean = variance
+- bernoulli: heads or tails
+- binomial: number of successes in $n$ draws with replacement (multiple
+  bernoulli trials)
+- hypergeometric: number of successes in $n$ draws *without* replacement
+  (unlike binomial)
+- poisson: # events over some amount of time according to poisson process;
+  infinite-granularity binomial
 - exponential: time btwn events in poisson process
+- gaussian/normal
+- log-normal distribution: dist of a RV whose log is normal
+  - in Black-Scholes model, changes in the log of exchange rates, price
+    indices, and stock market indices are assumed normal
+- Cauchy: occurs in spectroscopy
 - gamma: sum of fixed # exponentially dist vars
   - eg total time for some # ppl to arrive
 
