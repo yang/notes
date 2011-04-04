@@ -24,6 +24,20 @@ statistics
 - central limit theorem: mean/sum of sufficiently many independent random
   variables, each with finite mean & variance, is approximately normal
   - as sample size increases, sample mean distribution approaches normal
+- standard error of the mean: standard deviation of the sampling distribution
+  of the sample mean ("sampling distribution of the sample mean" is the
+  "distribution of the mean of samples")
+- confidence interval: at a certain confidence level (eg 95%), the prob this
+  experiment yielded a sample that contains the true pop param
+  - "Were this procedure to be repeated on multiple samples, the calculated
+    confidence interval (which would differ for each sample) would encompass
+    the true population parameter 90% of the time."
+  - *not* for predicting prob of true pop param being in interval; pop param
+    has actual value, not a prob dist
+  - closely related to significance testing: testing null hyp $\theta=0$ can be
+    done by seeing if confidence interval for $\theta$ includes 0 (w confidence
+    level $y=1-\alpha$)
+  - margin of error: radius (half) of confidence interval
 
 - simpson's paradox: a correlation present in diff groups is reversed when
   groups are combined; often in social-/med-sciences when frequency data
