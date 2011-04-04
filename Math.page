@@ -331,7 +331,11 @@ From <http://en.wikipedia.org/wiki/Sparse_matrix>:
 
 linear independence
 
-- vectors linearly dependent iff determinant of vectors as cols is 0
+- vectors linearly dependent iff
+  - any of the vectors can be linear combo of any others (redundancy)
+  - only linear combo that equals 0 is all-0 coefs
+  - vectors are $n$-dimensional and span $\Re^n$
+  - determinant of vectors as cols is 0
 
 symmetric positive definite, positive semi-definite, negative definite, indefinite, etc.
 
