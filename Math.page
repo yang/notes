@@ -314,6 +314,11 @@ Interesting questions that came up during ICFPC08
 linear algebra
 ==============
 
+inverting matrices
+
+- Gaussian elim yields row echelon form (0s in lower-left)
+- Gaussian-Jordan elim yields reduced row echelon form ($I$)
+
 From <http://en.wikipedia.org/wiki/Sparse_matrix>:
 
 > Conceptually, sparsity corresponds to systems which are loosely coupled.
