@@ -11,7 +11,7 @@ statistics
   - positive skew: lumped to the left (counter-intuitive)
   - positive kurtosis: pointier peak
 
-- sample variance: two definitions, one divides by $n-1$ instead of $n$
+- sample variance: same as var but divide by $n-1$ instead of $n$
 
 - mean deviation: the mean absolute deviation from the mean
   - harder to eval in closed form
