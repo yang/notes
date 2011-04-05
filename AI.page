@@ -708,6 +708,24 @@ rule learning/mining/induction
     new item / # in current set)
   - can also only expand search to candidates that have a minimum 
   - historically significant but has inefficiencies & trade-offs
+- FP-growth: frequent pattern growth
+  - param: min support
+  - build FP-tree data structure
+    - sort each txn (itemset) by item frequency
+    - build prefix tree from txns
+    - chain identical nodes so we can find all tree paths containing that item
+  - to find frequent itemsets, for each distinct item $x$, find if it has
+    enough support (sum of counts across all its nodes >= min support)
+    - if so, yield that (+ suffix if currently recursing) as a frequent itemset
+    - for each item $x$, build _conditional FP-tree for $x$_
+      - FP-tree of itemsets ending in $x$, excluding $x$
+      - build new FP-tree over paths collected by walking up parent ptrs
+      - update node counts: sum of children's supports (anchor w $x$ node
+        supports)
+  - <http://www.engr.uvic.ca/~seng474/association3.ppt>
+  - <http://www.engr.uvic.ca/~seng474/fptree_complete_example.ppt>
+  - <https://github.com/enaeseth/python-fp-growth/blob/master/fp_growth.py>
+  - orig paper <http://www.inf.unibz.it/dis/teaching/DWDM/project2010/FP-growth.pdf>
 - AQ: outputs sequence of "if COND then CLASS" rules
   - beam search (best-first search with pruning)
   - once find rule, remove covered data, repeat
