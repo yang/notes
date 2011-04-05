@@ -596,7 +596,9 @@ Command-Line Cheatsheet
   netstat -tlnp
 
   # capture screencast
+  # <http://ubuntuforums.org/showthread.php?t=1392026>
   ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg
+  ffmpeg -i output.mkv -acodec libvorbis -ab 128k -ac 2 -vcodec libtheora -b 1000k our-final-product.ogg
 
   # empty a file
   > file.txt
