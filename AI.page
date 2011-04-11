@@ -55,6 +55,7 @@ ensemble methods
   - bootstrap sample: sample w replacement (replace each example)
   - given a test example, classifiers take a vote (regressions take avg)
     - averages predictions, so not useful for improving linear models
+  - error estimate: accuracy of the classifiers on their excluded sets
 - boosting (adaboost): usu applied to decision trees
   - given a learner, trains $t$ classifiers (instances of the learner) on
     samples of the training data
