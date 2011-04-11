@@ -239,6 +239,16 @@ statistical inference
     - always in $[-1, 1]$
 - T-test: TODO
 
+relationship btwn mean squared error and gaussian dist?  (TODO cs229 notes)
+
+- mean squared error (MSE): $\frac{1}{n} \sum_i (x_i - x_i)^2$
+- root mean squared error (RMSE): sqrt of MSE
+- mean absolute error (MAE): $\frac{1}{n} \sum_i |x_i - x_i|$
+- relative squared error (RSE): TODO
+- root relative squared error (RRSE): sqrt of RSE
+- relative absolute error (RAE): TODO
+- coef of determination aka R-squared: TODO
+
 outlier elimination
 
 - chauvenet's criterion
