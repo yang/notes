@@ -769,3 +769,11 @@ regularization
   - can be computed directly in $O(n^3)$
 - L1: $\lambda \left\lnorm \theta \right\rnorm$
 - TODO
+
+backoff
+
+- m-estimate: backoff to handle sparsity
+  - instead of n_c / n where n_c is # matching examples in class c and n is #
+    matching examples, use (n_c + m p_c) / (n + m) where p_c is relative class
+    frequency (over all)
+  - mitchell, 1997 / lidstone's law
