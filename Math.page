@@ -549,6 +549,8 @@ distributions
 - Cauchy: occurs in spectroscopy
 - gamma: sum of fixed # exponentially dist vars
   - eg total time for some # ppl to arrive
+- great reference illustrating relationships among distributions:
+  <http://www.johndcook.com/distribution_chart.html>
 
 misc
 
