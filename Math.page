@@ -321,6 +321,9 @@ Interesting questions that came up during ICFPC08
 - if we roll a circle around the outside of an ellipse and trace the path of
   its center, is the resulting oval an ellipse?
 
+- circumcenter of a polygon = point equidistant to all vertices = center of
+  circumscribed circle = intersection of all edge-bisecting lines
+
 linear algebra
 ==============
 
