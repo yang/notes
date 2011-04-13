@@ -250,3 +250,13 @@ google adwords bidding
       next-lower bid
     - if value per click < ICC, lower bid; else, raise bid
   - <http://googleblog.blogspot.com/2009/09/new-adwords-bidding-tutorial.html>
+
+HITS (jon kleinberg, cornell)
+
+- some pages are hubs/portals with many outlinks
+- others are topic authorities with many inlinks
+- good hubs point to good auths
+- each page has a hub score and an auth score
+- hub score is sum of outbound auth scores
+- auth score is sum of inbound hub scores
+- equiv to solving max eigenval problem
