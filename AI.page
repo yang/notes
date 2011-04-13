@@ -491,7 +491,7 @@ feature selection
   - wrappers: wrap a learning model, may overfit
     - aka least angle regression (LARS) bc at each step you choose the
       dimension that, when added, minimizes your angle to the residual ($y$)
-    - forward: starting w empty set, try adding features one at a time,
+    - forward: starting w empty set, try adding features one/some at a time,
       greedily choosing the feature that yields the highest cross-validation
       accuracy
     - stepwise: like forward, but after each add, also optionally remove a
@@ -505,6 +505,7 @@ feature selection
           remove from candidates any feature whose exclusion yields no acc drop
           remove (from model and candidates) feature in candidates with biggest acc drop
 
+    - recursive feature elimination: another name for backward
   - filters: like wrappers, but instead of model, use simpler filter
 - <http://www.quora.com/Regression-statistics/What-is-Least-Angle-Regression-and-when-should-it-be-used>
 - TODO stepwise regression
@@ -777,3 +778,45 @@ backoff
     matching examples, use (n_c + m p_c) / (n + m) where p_c is relative class
     frequency (over all)
   - mitchell, 1997 / lidstone's law
+
+getting in shape for the sport of data science (jeremy howard, kaggle chief scientist)
+
+- subject: how to compete in kaggle
+- coding to prep data for models is most important
+  - else, you're just applying models
+  - regexes get you very far
+- excel is very powerful for data understanding
+  - cell color scales
+  - pivot tables
+- programming platform recommendations
+  - python, numpy, scipy, matplotlib, ipython
+  - c#, alglib (ML), math.net numerics (linalg), chartcontrol (charts)
+  - c++, eigen (powerful linalg)
+  - java, weka
+- R packages
+  - caret: auto find models, grid search hyperparams, etc.
+
+      mdl <- train(data, "svm", center, pca)
+
+  - ggplot2: transparent scatterplot points
+  - ggobi: like tableau
+    - brushing: select pits in one plot, highlight in others
+    - not used as much in practice bc excel/ggplot2 so good
+- viz must be flexible more than fancy
+  - eg plotting hundreds of time series is surprisingly useful (won that comp)
+- models
+  - parametric models: GLM
+  - 
+  - non-parametric models: SVM, RF
+- traffic prediction: excel color scales helped see the pattern/propagation of
+  jams
+- cran recommendations problem
+  - P(user installing any pkg) * P(pkg getting installed) -> 84% AUC
+  - use max of probs -> 95% AUC
+  - use RF and a bunch more data -> 93% AUC
+  - use RF on max -> 83% AUC
+  - GLM on a bunch more data -> 97% AUC
+  - GLM + mark deps as installed (type of programming that's cumbersome in R, a
+    "shit programming language"; used C#) -> 98%
+  - 6th place
+- <http://blog.kaggle.com/2011/03/23/getting-in-shape-for-the-sport-of-data-sciencetalk-by-jeremy-howard/>
