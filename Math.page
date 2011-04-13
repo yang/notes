@@ -349,6 +349,20 @@ linear independence
   - only linear combo that equals 0 is all-0 coefs
   - vectors are $n$-dimensional and span $\Re^n$
   - determinant of vectors as cols is 0
+- subspace of $\Re^n$ is subset of $\Re^n$ closed under scaling and summing
+  (hence must incl 0)
+- basis of vector space: linearly indep spanning set of vectors
+
+eigenvalues and eigenvectors
+
+- _power method_ or _power iteration_: eigenvalue algo
+  - given mat $A$, find scalar $\lambda$ (eigenvalue) and non-0 vector $v$
+    (eigenvector) s.t. $A v = \lambda v$
+  - doesn't compute matrix decomposition so suitable for large sparse A
+  - but will only find one eigenvalue (with max val) and may converge slowly
+  - start with random vector and iteratively multiply by $A$ and normalize
+  - used in pagerank, HITS
+  - <http://meyer.math.ncsu.edu/Meyer/PS_Files/IMAGE.pdf>
 
 symmetric positive definite, positive semi-definite, negative definite, indefinite, etc.
 
