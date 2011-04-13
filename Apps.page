@@ -395,6 +395,7 @@ Command-Line Cheatsheet
   # allow X across sudo
   xauth list # find the triple you want
   xauth add partycat/unix:10 MIT-MAGIC-COOKIE-1 73b185cea93847a27ea2d275e1e2ebf0
+  # or: xauth add $(xauth list)
 
   # generate password
   < /dev/urandom tr -cd [[:graph:]] | head -c16 | xargs echo
