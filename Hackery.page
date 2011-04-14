@@ -2276,6 +2276,9 @@
 
 - css
   - designed for horizontal layout/flow layout, not vertical
+  - specificity: id = 100, class = 10, else = 1; add up
+  - @ rules: import, media, charset, font-face (custom fonts), page
+    - <http://www.htmldog.com/guides/cssadvanced/atrules/>
   - cross-browser gradient
 
       filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#000000'); /* for IE */
@@ -2375,10 +2378,13 @@
     width/height; unfortunately, this is arguably more intuitive, hence
     reintroduced in `box-sizing`
     - `border-box`: tells browser to behave like IE6
-  - `position: relative` makes all children that have `position: absolute`
-    actually framed in this elt's coords (origin)
+  - `position`:
+    - `static`: the default
+    - `absolute`
+    - `relative` makes all children that have `position: absolute` actually
+      framed in this elt's coords (origin)
+    - `fixed` fixes something in place regardless of scroll pos
   - background images: `background: url(widget-image.gif) no-repeat`
-  - `position: fixed` fixes something in place regardless of scroll pos
   - wildcards: `* { margin: 0; padding: 0; }`
   - nice header style:
 
