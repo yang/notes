@@ -152,8 +152,15 @@ Google SPDY (Alyssa (Rzeszutek) Wilk, talk at MIT 12/8/2009)
     down" or lose benefits
   - insecure content: classify data as public + cacheable?
 - related work
-  - HTTP over SCTP
-  - SST
+  - HTTP over SCTP, SST, MUX, BEEP
+    - offers some improvements but doesn't fix HTTP itself
+    - requires big infrastructure changes to client/server networking stacks
+  - HTTP pipelining
+    - FIFO, so lost packet is disastrous
+    - hard for web proxies to implement
+    - server *must* return results in same order; possibly suboptimal
+    - disabled in most browsers/proxies by default
+- <http://lwn.net/Articles/362473/>
 
 decentralized identity/auth/social standards
 
