@@ -510,6 +510,22 @@ feature selection
 - <http://www.quora.com/Regression-statistics/What-is-Least-Angle-Regression-and-when-should-it-be-used>
 - TODO stepwise regression
 
+recommender systems
+
+- some flavors: depends on how much data you have
+  - collaborative filtering: works best in isolation but requires enough data
+    to combat sparsity
+  - content-based
+  - social/trust: based on network's items/activity
+  - usually mixing is good
+- "the science and the magic of user and expert feedback for improving
+  recommendations" (telefonica)
+  - feedback is noisy; users inconsistent, esp. for mild ratings; re-ratings
+    very effective in increasing prediction acc (choose milder re-rating)
+  - expert-based recs have many benefits
+  - [video](http://sna-projects.com/blog/2011/04/improving-recommendations/)
+  - [slides](http://www.slideshare.net/xamat/the-science-and-the-magic-of-user-feedback-for-recommender-systems)
+
 collaborative filtering
 
 - various similarity measures
@@ -529,6 +545,7 @@ collaborative filtering
       score[usr,itm] = avg(sim(usr,usr2) * score[usr2,itm] for usr2 in usrs)
 
   - <http://software-carpentry.org/4_0/matrix/recommend/>
+- evaluation metrics: RMSE is typical
 - TODO slope one
 
 random forests
