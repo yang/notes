@@ -1,3 +1,11 @@
+Opinions
+========
+
+- lighttpd: unstable
+- activemq/camel: poor socket handling
+  <http://highscalability.com/blog/2010/5/10/sifycom-architecture-a-portal-at-3900-requests-per-second.html>
+- solr: needs restarts
+
 Emacs
 =====
 
