@@ -719,8 +719,9 @@ Command-Line Cheatsheet
   # sudo sh -c 'echo 1 > /proc/sys/vm/drop_caches' # drop pagecache
   # sudo sh -c 'echo 2 > /proc/sys/vm/drop_caches' # drop dentries/inodes
 
-  # max compression with 7z with multi-threading
-  7z a -mx=9 -m9=lzma2 -mmt=on FILE.7z FILES/DIRS
+  # max LZMA2 compression with 7z with multi-threading; must limit threads or
+  # memory consumption will explode
+  7z a -mx=9 -m0=lzma2 -mmt=4 FILE.7z FILES/DIRS
 
   # convert wma to wav
   mplayer -ao pcm:file=OUTPUT.wav INPUT
