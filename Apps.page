@@ -1071,6 +1071,9 @@ Command-Line Cheatsheet
   iostat -x 1
   # Explanation: <https://forums.aws.amazon.com/thread.jspa?messageID=124044#124044>
 
+  # stream downloading file to another file (e.g. a youtube video)
+  tail -c +0 -f /proc/`pgrep npviewer.bin`/fd/11 > foo.flv
+
 Software
 ========
 
