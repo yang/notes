@@ -21,6 +21,22 @@ TODO
 - $t$-test: matched pairs and unmatched
 - L1/lasso, L2/ridge/Tihkonov regression
 
+wisdom
+
+- data dredging aka data fishing aka data snooping: inappropriate use of data
+  mining to uncover misleading relationships in data
+  - can occur when no hyp formed in advance or reduced data reduces prob of
+    refuting some hyp
+  - when doing many significance tests, expect that some results are
+    significant by chance alone
+- no free lunch theorem: many hyps can fit; always assuming *something*
+  - bias-free learning is futile
+  - for search/optimization: all algos perform the same on avg (over all
+    possible cost functions); improving perf requires prior info to match
+    procedures to problems
+  - for compression: "No compression algorithm can compress data on average."
+  - <http://www.aihorizon.com/essays/generalai/no_free_lunch_machine_learning.htm>
+
 data set balance
 
 - class imbalance is common problem in many problems
