@@ -5,6 +5,9 @@ Opinions
 - activemq/camel: poor socket handling
   <http://highscalability.com/blog/2010/5/10/sifycom-architecture-a-portal-at-3900-requests-per-second.html>
 - solr: needs restarts
+- boxbackup: total pain to set up relative to duplicity, but the only one with
+  continuous backup, and doesn't consume excessive tmp local resources like
+  duplicity
 
 Emacs
 =====
