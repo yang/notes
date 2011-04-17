@@ -125,6 +125,12 @@ applications
 - business intelligence (BI)
 - data mining
 
+OLAP
+
+- multi dimensional expressions (MDX): lang for querying OLAP cubes
+  - resembles SQL on surface; expresses things that may be clumsy in SQL
+  - basically like pivot tables over RDBMSs
+
 benchmarks
 
 - TPC-C: OLTP
