@@ -200,13 +200,25 @@
   > scientific library or boost).Nov 4
 
   - modeling facilities
-    - linear regression: lm
-    - generalized linear model: glm
-    - ANOVA: aov
-    - nonlinear least squares, maximum likelihood: nlm
-    - logistic regression: lrm
+    - lm: linear model
+    - glm
+    - nlm: nonlinear least squares, maximum likelihood
+    - lrm: logistic regression: lrm
+    - ANOVA: aov, anova
+    - descriptive tools: table, summary
   - packages
+    - Rserve
+    - ggplot2
     - quadprog
+    - randomForest
+    - rggobi
+    - survival
+  - to run an R file from cmd line
+    - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
+    - will be replaced with `Rscript`
+  - GUIs: RStudio beats all the rest
+  - RF can only have categorical variables with <=32 factors
+    <http://r.789695.n4.nabble.com/randomForest-can-not-handle-categorical-predictors-with-more-than-32-categories-td3036871.html>
 
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
@@ -337,11 +349,6 @@
 
 - php
   - `php -a`: if built w readline support, then behave as console
-
-- R
-  - to run an R file from cmd line
-    - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
-    - will be replaced with `Rscript`
 
 - ruby web app infrastructure
   - monit: monitors mongrel processes (and unicorn masters)
