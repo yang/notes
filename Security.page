@@ -621,6 +621,23 @@ public key crypto
   - attractive for mobile/wireless env's
   - vs RSA: equiv security with smaller key sizes (faster, less resources)
 
+secure ciphers
+
+- rely on bit manip "networks"
+  - AES uses substitution-permutation network (SPN)
+    - SPN is simplest way to achieve confusion & diffusion; easily implemented
+      in HW
+  - DES uses feistel network
+- Shannon properties
+  - confusion: relationship btwn key & ciphertext as complex/involved as
+    possible
+  - diffusion: redundancy in the plaintext statistics is "dissipated" in
+    ciphertext
+    - non-uniformity dist in plaintext should be redistributed (somehow)
+    - ciphertext bits should depend on input bits in very complex way
+    - changing 1 plaintext bit should completely change ciphertext in
+      pseudorandom way
+
 block ciphers vs. stream ciphers
 
 - distinction not always clear cut; block ciphers sometimes act effectively as
