@@ -1078,6 +1078,9 @@ Command-Line Cheatsheet
   # stream downloading file to another file (e.g. a youtube video)
   tail -c +0 -f /proc/`pgrep npviewer.bin`/fd/11 > foo.flv
 
+  # find out extN FS block size and other info
+  sudo tune2fs -l /dev/sdb1
+
 Software
 ========
 
