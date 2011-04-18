@@ -189,6 +189,23 @@ local search/optimization algos
   - cuckoo hashing
 - genetic algos
 
+nearest-neighbor
+
+- density estimation: defines joint dists over input space
+- unlike Bayes net, no hidden vars/unsupervised clustering
+- distance functions
+  - continuous features: don't just use Euclidian; normalize by standard
+    deviation ($Z$-distance)
+    - special case of Mahalanobis distance, which uses covariance as well
+  - discrete features: Hamming distance
+- can predict some attr $y$ with $P(y|x) = P(y,x) / P(x)$
+- supervised learning: predict $y=h(x)$ from $k$ nearest neighbors of $x$
+  - for discrete: majority vote
+  - for continuous: average, or do local linear regression using the $k$ points
+- high-dimensional problems
+  - slow kNN search
+  - curse of dimensionality on distance functions
+
 clustering
 
 - difference from partitioning: clustering is on points that have coordinates
