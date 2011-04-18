@@ -36,6 +36,8 @@ wisdom
     procedures to problems
   - for compression: "No compression algorithm can compress data on average."
   - <http://www.aihorizon.com/essays/generalai/no_free_lunch_machine_learning.htm>
+- curse of dimensionality: volume grows exponentially with dimensions, so
+  everything is far away
 
 data set balance
 
@@ -448,6 +450,18 @@ adaboost
     down-weight correct examples, up-weight incorrect examples
   combine subordinate models into final model,
     each weighted inversely by training error
+
+learning bayes net structures
+
+- still active research
+- search algo: modifying an initial structure (nodes, arcs)
+  - some assume partial topological order over vars is given
+- criteria
+  - accuracy after fitting params
+  - if implicit conditional independence assertions are satisfied
+  - MLE results in fully connected network; must penalize with bayesian
+    (MAP/MDL) approach over network hyps (prefer simpler networks)
+    - usu too many structures to sum over, so sample w MCMC
 
 graphical models
 
