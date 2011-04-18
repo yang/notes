@@ -1,7 +1,6 @@
 TODO
 
 - mege in notes from CS182, 6.867
-- generalized/weighted least squares -> local linear regression with kernels -> density estimation
 - Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
 - kalman filters, smoothing
 - <http://measuringmeasures.com/blog/2010/3/12/learning-about-machine-learning-2nd-ed.html>
