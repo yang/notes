@@ -502,3 +502,20 @@ shotgun genome assembly
 similarity with shingling
 
 - `jaccard(set(shingles(stream1)), set(shingles(stream2)))`
+
+find majority item in stream
+
+- pseudocode from
+  <http://unmaintainable.wordpress.com/2010/02/21/finding-majority-in-stream/>:
+
+    maj, n = None, 0
+    for x in xs:
+      if x == maj: n += 1
+      elif n == 0: maj, n = x, 1
+      else: n -= 1
+    return maj
+
+- assumes that there *is* a majority item; requires 2nd pass to verify this if
+  unknown
+- can generalize to find all $k$ items that exceed $1/k$ fraction of all items;
+  useful for finding outliers in power law dist
