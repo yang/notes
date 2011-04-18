@@ -457,6 +457,19 @@ foundations
   - spectral decomposition aka eigendecomposition
   - spectral theorem
 
+norms/distance functions
+
+- taxicab geometry aka rectilinear dist aka L1 distance aka $\ell_1$ norm aka
+  city block dist aka manhattan dist aka manhattan length
+  - sum of absolute diffs in coordinates
+  - hamming dist is manhattan dist of unit hypercube (since hamming dst
+    components are either 0 or 1; hamming dist is # positions that are diff)
+- euclidian dist aka $L^2$/$\ell^2$ dist/norm
+- $p$ norm aka $L^p$ norm
+  - $( \sum_i |x_i|^p )^{1/p}$
+- maximum norm aka infinity norm aka uniform norm aka supremum norm
+  - $\max( |x_1|, \dots, |x_2| )$
+
 cryptography
 ============
 
