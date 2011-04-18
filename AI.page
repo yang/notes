@@ -124,7 +124,9 @@ supervised learning
   - C4.5: standard modern decision tree learner
     - supports continuous attrs, missing values, diffing costs, pruning
       irrelevant attrs
-- support vector machines: maximum margin classifiers, potentially with slack
+- support vector machines (SVM) aka kernel machine
+  - maximum margin classifiers, potentially with slack
+  - linear: similar to logistic regression
 - Gaussian processes
 
 - $k$-nearest-neighbors (KNN): classify objects based on closest $k$ neighbors
@@ -511,11 +513,6 @@ graphical models
   - HMMs
 - markov networks
 - <http://cacm.acm.org/magazines/2010/12/102122-bayesian-networks/fulltext>
-
-kernels
-logistic regression
-
-- nearly same as linear SVM
 
 linear classifiers
 
