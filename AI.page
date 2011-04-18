@@ -531,6 +531,18 @@ linear classifiers
     \sum_{y'\in\{1,\dots,K\}} \exp(w_{y'} \cdot x) }$
 - <http://www.quora.com/What-is-the-difference-between-logistic-regression-and-Naive-Bayes>
 
+GLM
+
+- families
+  - Bernoulli and binomial: logistic regression
+  - Gaussian: OLS regression
+  - multinomial: softmax regression
+  - Poisson: for modelling count-data
+  - gamma and exponential: for modelling continuous, non-neg RVs, eg time
+    intervals
+  - beta and Dirichlet: for dists over probs
+  - many more...
+
 maximum entropy
 
 - _max entropy classifier_ aka _multinomial logit_
