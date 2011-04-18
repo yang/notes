@@ -511,9 +511,19 @@ learning bayes net structures
 
 graphical models
 
-- bayesian networks
-  - HMMs
-- markov networks
+- bayesian network aka belief network aka directed graphical model
+  - any 2 nodes conditionally indep given parents' values
+  - plates: for repeating sub vars
+  - eg naive bayes, neural nets
+  - dynamic bayesian network: for sequences of vars, eg time series
+    - eg HMMs, kalman filter
+- markov network aka markov random fields aka undirected graphical model
+  - reprs some things bayes nets can't (cyclic deps) & vice versa (induced deps)
+  - eg log-linear models, gaussian markov random field TODO
+  - must satisfy pairwise, local, global markov props TODO
+  - conditional random fields TODO
+- factor graph
+  - bipartite hypergraph representing factorization of a function TODO
 - <http://cacm.acm.org/magazines/2010/12/102122-bayesian-networks/fulltext>
 
 linear classifiers
