@@ -102,7 +102,20 @@ supervised learning
 - ordinal regression: ranking (in btwn classification & regression; used in IR)
 
 - old statistically inspired linear methods
-- artificial neural networks
+- neural networks
+  - nodes aka units are connected by links propagating activations
+  - each node is activation function of weighted inputs
+  - activation functions: threshold or sigmoid/logistic (differentiable)
+  - bias weight $W_{0,i}$ connected to fixed input $a_0 = -1$, sets actual
+    threshold
+  - acyclic/feed-forward networks or cyclic/recurrent networks (memory)
+  - hidden units/layers: internal units/layers
+  - FF networks usu arranged in layers
+  - perceptron: single-layer FF using threshold function; linear
+  - multilayer backpropagates errors to hidden layers by assuming each hidden
+    node responsible for some fraction of the error in each of the output nodes
+    it connects to
+- gradient descent for logistic regression *is* perceptron with sigmoid/logit
 - decision trees
   - pruning: remove irrelevant features; eg $\chi^2$ pruning (math)
   - finding split points on continuous features is usu most expensive part
