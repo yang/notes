@@ -395,6 +395,15 @@ Bash
 Command-Line Cheatsheet
 =======================
 
+Windows
+-------
+
+  # uptime + other stats
+  net statistics server
+
+Linux
+-----
+
   # extract URLs from squid disk cache
   grep --only-matching --no-filename --max-count 1 --text --perl-regexp 'http://[^\0]*' /var/spool/squid3/*/*/*
   # grep -ahoPm1 'http://[^\0]*' /var/spool/squid3/*/*/*
