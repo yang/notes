@@ -524,9 +524,13 @@ learning bayes net structures
 graphical models
 
 - bayesian network aka belief network aka directed graphical model
-  - any 2 nodes conditionally indep given parents' values
+  - local markov prop: any 2 nodes conditionally indep given parents' values
+  - edges usu repr causality but not required (either dir)
   - plates: for repeating sub vars
   - eg naive bayes, neural nets
+  - _markov blanket_: neighbors; parents, children, children's parents
+    - every node is conditionally indep of all other nodes in network given
+      blanket
   - dynamic bayesian network: for sequences of vars, eg time series
     - eg HMMs, kalman filter
 - markov network aka markov random fields aka undirected graphical model
