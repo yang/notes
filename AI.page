@@ -357,6 +357,18 @@ decision tree learning algorithms TODO
 
 - NP complete
 
+generalization guarantees
+
+- bias TODO
+- variance TODO
+- Vapnik-Chervonenkis (VC) dimension
+  - model _shatters_ some data if for all labelings there's some perfect params
+    (no errs)
+  - VC dim of model is size of largest set that model can shatter
+  - eg linear classifiers: VC-dim of 3
+  - can predict probabilistic upper bound on test err of classification model
+    TODO
+
 generalization error
 
 - cross validation, bootstrapping: methods to estimate generalization error;
@@ -602,6 +614,7 @@ feature selection
   - filters: like wrappers, but instead of model, use simpler filter
 - <http://www.quora.com/Regression-statistics/What-is-Least-Angle-Regression-and-when-should-it-be-used>
 - TODO stepwise regression
+- TODO optimality criteria
 
 recommender systems
 
