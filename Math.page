@@ -39,6 +39,12 @@ statistics
     level $y=1-\alpha$)
   - margin of error: radius (half) of confidence interval
 
+- _cointegration_: statistical property of time series
+  - 2 time series are cointegrated if they share common _stochastic drift_
+  - eg drunkard and his dog: both randomly constantly moving but periodically
+    error-correcting; cointegrated of order zero
+  - eg stock market index and its futures contract
+
 - simpson's paradox: a correlation present in diff groups is reversed when
   groups are combined; often in social-/med-sciences when frequency data
   hastily given causal interps
