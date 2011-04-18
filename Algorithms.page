@@ -498,3 +498,7 @@ shotgun genome assembly
   - find and shard out disconnected partitions
   - local graph complexity reduction & error/artifact trimming
 - <http://www.slideshare.net/c.titus.brown/pycon-2011-talk-may-not-be-final-note>
+
+similarity with shingling
+
+- `jaccard(set(shingles(stream1)), set(shingles(stream2)))`
