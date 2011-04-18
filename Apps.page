@@ -1090,6 +1090,9 @@ Linux
   # find out extN FS block size and other info
   sudo tune2fs -l /dev/sdb1
 
+  # rip stream
+  streamripper "http://..." -r localhost:8000 -d OUTDIR -L PLAYLIST -o never -T
+
 Software
 ========
 
