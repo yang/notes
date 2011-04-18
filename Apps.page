@@ -1133,3 +1133,161 @@ Windows
 - winamp
 - windirstat
 - winpt
+
+Linux commands
+--------------
+
+smtp-source # send test mail
+
+logger # log to syslog
+
+glxinfo
+LIBGL_DEBUG=verbose glxinfo
+
+ccomps # connected components filter for graphs; from graphviz
+
+gsmartcontrol # GUI in smartmontools
+
+mk-visual-explain
+
+kinit
+
+sslsniff
+sslstrip
+
+column
+
+# monitor some process output
+watch
+
+# archival
+cabextract
+lzop
+pbzip2
+
+# compare words instead of lines
+wdiff
+
+# convert flash video to mpeg
+ffmpeg -i asdf.flv asdf.mpg
+ffmpeg -i asdf.flv -ab 56 -ar 22050 -b 500 -s 320×240 asdf.mpg
+  -b bitrate: set the video bitrate in kbit/s (default = 200 kb/s)
+  -ab bitrate: set the audio bitrate in kbit/s (default = 64)
+  -ar sample rate: set the audio samplerate in Hz (default = 44100 Hz)
+  -s size: set frame size. The format is WxH (default 160×128 )
+
+od # octal dump
+hd # hex dump
+
+git-svn show-ignore > .git/info/exclude
+
+namei
+realpath
+readlink
+
+# suspend pulseaudio
+pasuspender cat
+
+fdupes
+
+(c++ dev)
+c++filt # demangles C++/Java symbol names
+
+(objs)
+addr2line # memory addresses to files and lines
+
+(profiling)
+gprof
+oprofile
+valgrind
+
+(code coverage)
+gcov
+
+(X)
+import
+xsel
+
+(scripting)
+dialog
+
+look # look up spelling
+watch # run programs at set interval
+at # schedule a job
+od # view binary data
+nl # number lines
+stat # display file attributes
+chattr # change advanced file attributes
+lsattre # list advanced file attributes
+
+lspci
+lspci -v -s 01:00.0
+
+getconf # find various info
+
+ionice # set IO priorities
+
+slocate # locate using index
+sync # flush disk caches
+dump # back up a disk
+restore # restore a backup
+
+mesg # prohibit 'talk'/'write'
+
+fuser -n tcp 8767
+lsof
+uuidgen
+xclipboard (or xclip)
+(cygwin-only)
+getclip
+putclip
+shred
+getent
+
+ssh-copy-id
+
+cpuid
+
+(monitoring tools)
+exmap # monitors mem usage accurately (takes into account sharing)
+htop
+xload
+xosview
+uptime
+vmstat # vmstat 1: monitor every second; vmstat -d: disk
+free
+top
+ps
+less /proc/cpuinfo
+bonnie
+time
+iostat # iostat 1: monitor every second
+dstat # combines iostat vmstat ifstat netstat
+sar
+mpstat # multiprocessor usage
+ss # dump socket stats
+
+(disk monitoring)
+xdiskusage
+baobab
+filefrag
+
+(bandwidth monitoring)
+sudo iptraf
+bwm-ng
+ibmonitor --bits --bytes --max --avg --data
+sudo /usr/sbin/iftop
+
+(network)
+mtr
+ping
+ping6
+traceroute
+tcpdump
+ntop
+nmap
+netstat
+tshark
+
+(low-level development)
+addr2line
