@@ -46,9 +46,11 @@ learning taxonomies
 - parametric v nonparametric
   - parametric learning: models have params that we're estimating, eg Bayesian
     learning; hyp complexity fixed
+    - once params learned, they're all you need to predict
   - nonparametric learning: hyp complexity can grow with data
     - instance-based learning aka memory-based learning: hyps directly
       constructed from training instances, eg nearest-neighbor, kernels
+    - eg LWR: must keep training set around; "re-training" all the time
 
 data set balance
 
