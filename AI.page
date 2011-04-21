@@ -947,3 +947,11 @@ getting in shape for the sport of data science (jeremy howard, kaggle chief scie
     "shit programming language"; used C#) -> 98%
   - 6th place
 - <http://blog.kaggle.com/2011/03/23/getting-in-shape-for-the-sport-of-data-sciencetalk-by-jeremy-howard/>
+
+deep learning TODO
+
+- sparse coding aka dictionary learning
+- learn low-level features
+- multilayer feed-fwd neural networks using back-prop
+- <https://venefrombucharest.wordpress.com/2011/04/15/an-overview-of-dictionary-learning-terminology/>
+- <http://www.stanford.edu/class/cs294a/>
