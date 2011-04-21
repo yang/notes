@@ -38,6 +38,10 @@ statistics
     done by seeing if confidence interval for $\theta$ includes 0 (w confidence
     level $y=1-\alpha$)
   - margin of error: radius (half) of confidence interval
+- statistical error: deviation of a sample from unobservable true/theoretical
+  value (eg person's height vs population mean)
+- residual: deviation of a sample from observable estimated value (eg person's
+  height vs sample mean)
 
 - _cointegration_: statistical property of time series
   - 2 time series are cointegrated if they share common _stochastic drift_
