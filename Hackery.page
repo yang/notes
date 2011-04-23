@@ -206,6 +206,7 @@
     - lrm: logistic regression: lrm
     - ANOVA: aov, anova
     - descriptive tools: table, summary
+    - gbm: gradient boosting machine
   - packages
     - Rserve
     - ggplot2
