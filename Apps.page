@@ -879,9 +879,7 @@ Linux
   k3b
 
   # enable and disable startup services
-  # http://linuxhelp.blogspot.com/2006/04/enabling-and-disabling-services-during_01.html
-  update-rc.d apache2 defaults
-  update-rc.d -f apache2 remove
+  update-rc.d apache2 [enable|disable]
 
   #
   # To work with certificates
