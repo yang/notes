@@ -404,6 +404,12 @@ Windows
 Linux
 -----
 
+  # tweak kernel settings
+  sysctl kernel.shmmax # show
+  sysctl -w kernel.shmmax= # update
+  cat /proc/sys/kernel/shmmax # raw
+  vim /etc/sysctl.conf # permanent changes
+
   # extract URLs from squid disk cache
   grep --only-matching --no-filename --max-count 1 --text --perl-regexp 'http://[^\0]*' /var/spool/squid3/*/*/*
   # grep -ahoPm1 'http://[^\0]*' /var/spool/squid3/*/*/*
