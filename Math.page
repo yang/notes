@@ -62,6 +62,10 @@ statistics
 - $\mathrm{Correlation}(X, Y) = \frac{ \mathrm{Covariance}(X, Y) }{ \sigma_X
   \sigma_Y }$ where $\sigma$ is the SD
 
+- seq of RVs has _heteroscedasticity_ if they have diff variances
+  - usu. error terms vary w each obs, often true in cross-sectional/time-series
+- _copula_, Gaussian copula: TODO
+
 - Kendall tau rank correlation coefficient $\tau$
   - similarity of orderings of data
   - TODO uses p-value somewhere
