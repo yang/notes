@@ -72,3 +72,18 @@ jaccard similarity/coefficient/index
 - extended jaccard coefficient aka tanimoto coefficient: $T(A,B) = \frac{A
   \cdot B}{\|A\|^2 + \|B\|^2 - A \cdot B}$
   - extended cosine similarity that yields jaccard for binary features
+
+NLP at Google (Katja Filippova)
+
+- NLP problems at google: translation, speech recognition, language modeling,
+  information extraction
+  - 7-gram language models on 2T+ tokens using simplified smoothing
+- graph-based multi-sentence (sentence fusion) summarization
+  - each unique (token,pos) is a vertex; also start & end vertices
+  - merge graphs of multiple sentences together (merging vertices may require
+    their neighbors to also be the same)
+  - edges are inverse frequencies of transitions (bigram freqs)
+  - find $k$ shortest paths from start to end
+  - constraint: path must contain a verb
+  - use google news' clusters as dataset
+- <http://videolectures.net/russir2010_filippova_nlp/>
