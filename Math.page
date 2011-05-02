@@ -47,7 +47,13 @@ statistics
   - 2 time series are cointegrated if they share common _stochastic drift_
   - eg drunkard and his dog: both randomly constantly moving but periodically
     error-correcting; cointegrated of order zero
-  - eg stock market index and its futures contract
+  - eg stock market index and its futures contract, pairs trading
+  - eg, R-squared fails when dealing w non-stationary vars, leading to
+    _spurious regressions_ suggesting relationships when there's none
+  - Engle-Granger test: simplest detection approach TODO
+
+- order of integration $I(p)$: min num diffs required to obtain a stationary
+  series TODO
 
 - simpson's paradox: a correlation present in diff groups is reversed when
   groups are combined; often in social-/med-sciences when frequency data
