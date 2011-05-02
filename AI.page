@@ -369,6 +369,20 @@ generalization guarantees
   - can predict probabilistic upper bound on test err of classification model
     TODO
 
+comparing classifiers
+
+- not sure how trustworthy the following is, but mostly accurate
+- high-bias/low-var (eg NB) better for small training sets
+- low-bias/high-var (eg kNN, LR) better for bigger training sets
+- NB: simple; fast; converges faster than discriminative model like LR; good
+  for small datasets
+- LR: many ways to regularize, so less worry about correlated features; nice
+  prob interp useful for adjusting thresholds or getting confidence scores;
+  easily update model w online grad desc, unlike SVMs/DTs
+- DT: easy to explain; non-param; RFs avoid overfitting; RFs beat SVMs
+- SVM: accurate; slow; too many kernels/params
+- <http://www.quora.com/What-are-the-advantages-of-different-classification-algorithms>
+
 generalization error
 
 - cross validation, bootstrapping: methods to estimate generalization error;
