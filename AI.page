@@ -343,6 +343,64 @@ MACHINE LEARNING
   - PCA
   - exploratory data analysis
 
+feature/dimensionality reduction
+
+- feature selection
+- feature extraction
+  - principal component analysis (PCA)
+- autoencoder aka sparse coding
+
+principal component analysis (PCA)
+
+- use covariance method or SVD (preferred)
+- covariance method:
+  - `row_data_adjusted = row_data - mean(row_data)` (normalized to have unit
+    variance?)
+  - find eig of compute covariance (correlation) matrix
+  - choose eigenvectors that have biggest eigenvalues; these are the
+    (principal) components
+  - _feature vector_ is matrix of col evecs $[e_1, e_2, \dots, e_n]
+  - `transformed_data = trans(feature_vector) * row_data_adjusted`
+- components optimally account for variance in features
+  - first component extracted accounts for max amt of total variance
+    - i.e., choose new axis covering greatest "spread" in data points
+    - typically means it will be correlated w several/many vars
+  - second component extracted accounts for max amt of variance not
+    accounted for by first component
+- results depend on scaling of variables
+- eval directly corresponds to fraction of total variance
+  - eg if total variance of 10, eval of 6.1 means 61% of total variance
+- can extract _orthogonal_ components or _oblique_ components (which may
+  produce cleaner results but also may be more complicated to interpret)
+- *not* factor analysis; makes no assumptions about underlying causal model or
+  latent vars; simply reduce to components that account for most of the variance
+  - but may sometimes produce similar results
+- optimal orthogonal xform but more computationally expensive than eg DCT
+- refs
+  - <http://www.cs.otago.ac.nz/cosc453/student_tutorials/principal_components.pdf>
+  - <http://support.sas.com/publishing/pubcat/chaps/55129.pdf>
+
+factor analysis
+
+- for when you believe latent factors cause observations
+
+linear discriminant analysis
+
+- alt to PCA that optimizes for class separability
+- TODO
+- despite name, it's generative; name makes sense vs PCA (which ignores labels)
+
+singular value decomposition (SVD)
+
+- SVD of $M$ is a factorization of the form $M = U \Sigma V*$ where:
+  - $U$ is $m \times m$ real/complex unitary matrix
+  - $\Sigma$ is $m \times n$ nonnegative real diag matrix
+  - $V*$ is $n \times n$ real/complex unitary matrix
+- when all real, then $U,V$ are rotations and $\Sigma$ is scaling
+- eval decomp is similar but only for square matrices
+- use SVD to perform PCA
+  - covariance matrix is $\frac{1}{n} X X^T = \frac{1}{n} U \Sigma^2 U^T$
+
 - resources
   - http://videolectures.net/icmi05_bengio_tsmla/
   - google video: machine learning
