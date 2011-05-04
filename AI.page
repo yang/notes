@@ -628,6 +628,11 @@ linear classifiers
     \sum_{y'\in\{1,\dots,K\}} \exp(w_{y'} \cdot x) }$
 - <http://www.quora.com/What-is-the-difference-between-logistic-regression-and-Naive-Bayes>
 
+generative vs discriminative
+
+- generative: LDA, NB
+- discriminative: LR, perceptron, SVM
+
 GLM
 
 - families
