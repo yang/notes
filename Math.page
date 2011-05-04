@@ -362,17 +362,6 @@ From <http://en.wikipedia.org/wiki/Sparse_matrix>:
 > areas such as network theory, of a low density of significant data or
 > connections.
 
-linear independence
-
-- vectors linearly dependent iff
-  - any of the vectors can be linear combo of any others (redundancy)
-  - only linear combo that equals 0 is all-0 coefs
-  - vectors are $n$-dimensional and span $\Re^n$
-  - determinant of vectors as cols is 0
-- subspace of $\Re^n$ is subset of $\Re^n$ closed under scaling and summing
-  (hence must incl 0)
-- basis of vector space: linearly indep spanning set of vectors
-
 eigenvalues and eigenvectors
 
 - _power method_ or _power iteration_: eigenvalue algo
@@ -412,10 +401,17 @@ symmetric positive definite, positive semi-definite, negative definite, indefini
     - $M$ is neither pos semi-def nor neg semi-def
     - $M$ has pos and neg evals
 
-misc
+definitions
 
+- vectors linearly dependent iff
+  - any of the vectors can be linear combo of any others (redundancy)
+  - only linear combo that equals 0 is all-0 coefs
+  - vectors are $n$-dimensional and span $\Re^n$
+  - determinant of vectors as cols is 0
+- basis of vector space: linearly indep spanning set of vectors
 - subspace of $\Re^n$: set of vectors that's closed under scalar mult (hence
   must incl. origin)
+- nullspace of $A$ is set of vectors $x$ s.t. $Ax=0$; a valid subspace
 - only way to represent a line in >2D is parametrically ($t$)
 - A matrix $A$ is diagonalizable if there exists a non-singular matrix $B$ and
   a diagonal matrix $D$ such that $A = BDB^{-1}$.
@@ -425,8 +421,14 @@ misc
   - eg computing the pseudoinverse, least squares fitting of data, matrix
     approximation, and determining the rank, range and null space of a matrix
 - singularity
-  - matrix is singular iff has no inverse iff any eigenvalues are zero
-  - matrix is nonsingular iff invertible iff all eigenvalues are non-zero
+  - matrix is singular iff has no inverse iff any eigenvalues are zero iff
+    characteristic polynomial is 0
+  - matrix is nonsingular iff invertible iff all eigenvalues are non-zero iff
+    characteristic polynomial is non-0
+- characteristic polynomial: $p(\lambda) = \det(A - \lambda I)$
+- eigenvalues are roots of characteristic polynomial
+- eigenspace: for a given eigenvalue, linear subspace spanned by its
+  eigenvectors
 - if $M$ is pos def then $z^* M z > 0$ for any vector z
 - a pos def matrix has pos def inverse
 - all eigenvalues of pos def are positive
@@ -464,7 +466,6 @@ foundations
     - solutions $x$ always form a subspace, i.e. linear combos of $x$s are 0
 
 - TODO
-  - characteristic polynomial: $\det(A - lambda I) = 0$
   - stochastic matrix
   - eigen*, singular, etc.
   - http://www.cut-the-knot.org/arithmetic/algebra/eigens.shtml
