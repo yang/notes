@@ -1027,8 +1027,9 @@ getting in shape for the sport of data science (jeremy howard, kaggle chief scie
 
 deep learning TODO
 
-- sparse coding aka dictionary learning
-- learn low-level features
-- multilayer feed-fwd neural networks using back-prop
+- sparse coding aka dictionary learning aka autoencoder
+- learn low-level features; similar to PCA, but yields not necessarily
+  orthogonal basis
+- multilayer feed-fwd neural networks using back-prop (with small hidden layer)
 - <https://venefrombucharest.wordpress.com/2011/04/15/an-overview-of-dictionary-learning-terminology/>
 - <http://www.stanford.edu/class/cs294a/>
