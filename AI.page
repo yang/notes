@@ -749,6 +749,13 @@ random forests
   then they'd implicitly be weighing their own subset of features)
 - efficient, parallelizable
 - RFs is very competitive, but also has danger of overfitting
+- can rank features with this rough technique:
+  - each tree is trained over a bootstrapped sample, so check tree accuracy on
+    the complement ("test set")
+  - for each feature, randomly permute the values over the records, and
+    re-measure accuracy
+  - rank/score features by how much its randomization affected tree accuracy
+  - accumulate scores over all trees
 
 multiclass classification
 
