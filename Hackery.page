@@ -1,3 +1,8 @@
+- mahout
+  - ? means unknown
+  - mahout accepts csv-like files where ',' and ' ' are delims (it also ignores
+    the @ lines so this way it also accepts ARFF)
+
 - linux security tools/practices
   - denyhosts/fail2ban
   - psad: detect intrusions from iptables
