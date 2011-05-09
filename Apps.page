@@ -1277,13 +1277,14 @@ baobab
 filefrag
 
 (bandwidth monitoring)
-sudo iptraf
+iptraf
 bwm-ng
 ibmonitor --bits --bytes --max --avg --data
-sudo /usr/sbin/iftop
+iftop
+slurm # visualize network traffic as curses graph
 
 (network)
-mtr
+mtr # traceroute++
 ping
 ping6
 traceroute
@@ -1292,6 +1293,31 @@ ntop
 nmap
 netstat
 tshark
+socat # netcat++
+netpipes # more user friendly than socat
+
+(network apps)
+rsync
+lftp
+curl
+wget
+
+(load testers)
+siege
+tsung
 
 (low-level development)
 addr2line
+
+(terminal tools)
+ttyrec
+ipbt
+
+(images)
+pngcrush
+gifsicle
+jpegtran
+
+(misc)
+multitail
+ack-grep
