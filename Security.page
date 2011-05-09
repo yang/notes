@@ -349,6 +349,7 @@ ways to do cross-site communication in web apps
 - JSONRequest: obsoleted by CS-XHR
   - like form.submit, but no auth data or cookies
 - IE XDomainRequest (XDR) and W3C Cross-Origin Resource Sharing (CORS)
+  - modern alt to JSONP (but works with reqs besides GET)
   - send `Origin` in req (like `Referer` but no path)
   - require `Access-Control-Allow-Origin` in response; must be `*` or the exact
     page URL
