@@ -459,11 +459,12 @@ foundations
       $\{(0,0)\}$
     - subspaces of $\mathbf{R}^3$: $\mathbf{R}^3$, any plane through origin,
       any line through origin, and $\{(0,0)\}$
-  - _column space_ $C(A)$ is set of all linear combinations of $A$'s columns
+  - _column space_ $C(A)$ is span of $A$'s col vecs
     - if not fully linearly indep, then fewer dimensions spanned then #columns
     - $Ax=b$ can be solved iff $b \in C(A)$
-  - _null space_ $N(A)$ is set of all solutions to $Ax=0$
+  - _kernel_ aka _null space_ $N(A)$ is set of all solutions to $Ax=0$
     - solutions $x$ always form a subspace, i.e. linear combos of $x$s are 0
+    - $N(A)=0$ means col vecs of $A$ lin indep ($C(A)$ is a basis)
 
 - TODO
   - stochastic matrix
@@ -484,6 +485,7 @@ norms/distance functions
   - $( \sum_i |x_i|^p )^{1/p}$
 - maximum norm aka infinity norm aka uniform norm aka supremum norm
   - $\max( |x_1|, \dots, |x_2| )$
+- triangle inequality holds for $n$-dim vectors
 
 cryptography
 ============
