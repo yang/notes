@@ -391,6 +391,12 @@ From <http://en.wikipedia.org/wiki/Sparse_matrix>:
 
 eigenvalues and eigenvectors
 
+- treating $M$ as linear xform, which vectors would keep same direction (but
+  possibly scaled)?  ($Mx=\lambda x$)
+  - $M$ xforms unit sphere $x^T x = 1$ into ellipsoid where evecs are axes,
+    evals are radii
+  - if $M$ has data pts as col vecs, covariance matrix $M^T M$ has evecs as
+    principal components, evals as their variances
 - _power method_ or _power iteration_: eigenvalue algo
   - given mat $A$, find scalar $\lambda$ (eigenvalue) and non-0 vector $v$
     (eigenvector) s.t. $A v = \lambda v$
@@ -399,6 +405,9 @@ eigenvalues and eigenvectors
   - start with random vector and iteratively multiply by $A$ and normalize
   - used in pagerank, HITS
   - <http://meyer.math.ncsu.edu/Meyer/PS_Files/IMAGE.pdf>
+- for transition matrix of markov chain, evec is stationary state $\pi$
+- for ratings matrix (eg rows are users, cols are movies), evecs of $M M^T$ are
+  row features, of $M^T M$ are col features
 
 symmetric positive definite, positive semi-definite, negative definite, indefinite, etc.
 
