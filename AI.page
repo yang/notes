@@ -356,11 +356,19 @@ feature/dimensionality reduction
 
 missing values
 
-- _imputation_: filling in missing values
-- eg log reg can't handle unknowns
-- avg/maj are most common, but generally can use any learner to predict value
+- usu. non-random; missing bc of other attr (or class label)
+- model-specific treatment
+  - discriminative, eg log reg, can't handle unknowns
+  - generative can marginalize over unknowns
+  - other models, eg trees, can handle: eg treat missing as separate value, or
+    split instance into new instances (with value filled in) weighted by
+    frequencies of filled-in value
 - can also treat unknown as special value; for discrete, add one more value;
-  for continuous, add new binary feature and use avg
+  for continuous, use avg & add new binary feature
+- _imputation_: filling in missing values
+  - avg/maj are most common, but generally can use any learner to predict value
+- EM: build model (ignoring missing), estimate missing, repeat till convergence
+- faster algos: apply to large datasets
 
 principal component analysis (PCA)
 
