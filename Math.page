@@ -248,6 +248,22 @@ neyman-pearson
   - preferred over Wald; can deal w vector params instead of just scalars
 - 
 
+time series (TODO also cover math)
+
+- stationary process: stochastic process whose joint prob dist doesn't change
+  when shifted in time/space, so mean/variance don't change
+  - white noise is stationary; cymbal clash variance diminishes over time
+- autocorrelation: cross-correlation of signal w itself; a lagged
+  self-correlation; to detect non-randomness
+  - Durbin-Watson test: conventional test to detect autocorrelation
+- cross-correlation: sliding dot product of two signals; like convolution but
+  no reversal
+- linear prediction: future values of discrete-time signal estimated as linear
+  function of previous samples
+- autoregressive (AR) model: random process used to model natural phenomena; a
+  type of linear prediction formula
+- Dickey Fuller test: whether unit root is present in autoregressive model
+
 statistical inference
 
 - generalized linear model (GLM): generalization of least squares regression
