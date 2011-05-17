@@ -238,6 +238,15 @@ statistical tests
   - same as z-test but look up into student's t-distribution instead of
     gaussian (calculate t-statistic identically to z-score)
 
+neyman-pearson
+
+- Wald test: reject iff $\frac{|\hat{\theta} - \theta_0|}{\sigma} > z_\alpha /
+  2$
+- likelihood ratio test: $-2 \log \frac{L(\hat{\theta_0})}{L(\hat{\theta})}$
+  - compare max likelihood of null over alt model; $0 \le D \le 1$
+  - 
+  - preferred over Wald; can deal w vector params instead of just scalars
+- 
 
 statistical inference
 
