@@ -693,9 +693,23 @@ gibbs sampling
 
 feature selection
 
+- why?
+  - most methods implicitly do feature selection
+    - decision trees: use info gain or gain ration to decide what attrs to use as
+      tests; many features don't get used
+    - neural nets: backprop learns strong connections to some inputs, near-0
+      connections to others
+    - kNN, MBL: weights in weighted euclidian distance
+    - SVMs: max margin hyperplane may focus on important features, ignore
+      irrelevant features
+  - answer: empirically degrading performance with more features; cf curse of
+    dimensionality
+  - also, simpler models: faster, easier to understand, see most important
 - subset selection: evaluate a subset of features (or: which feature to discard
   first? a search problem)
   - wrappers: wrap a learning model, may overfit
+    - best to use the target model, since best features for one model may not
+      be best for another
     - aka least angle regression (LARS) bc at each step you choose the
       dimension that, when added, minimizes your angle to the residual ($y$)
     - forward: starting w empty set, try adding features one/some at a time,
@@ -714,9 +728,20 @@ feature selection
 
     - recursive feature elimination: another name for backward
   - filters: like wrappers, but instead of model, use simpler filter
+- relevance determination: rank by information gain and evaluate first 10, 20,
+  ... features
+  - information gain: reduction in entropy due to attribute:
+    $G(S,A) = H(S) - \sum_{v \in Values(A)} \frac{|S_v|}{|S|} H(S_v)$
+- limitations
+  - feature selection can overfit
+  - wrapper methods can be expensive
+  - non-selected != non-predictor (eg redundant features)
+  - may discard features that domain experts want to keep
+  - most feature selection greedy, non-optimal
 - <http://www.quora.com/Regression-statistics/What-is-Least-Angle-Regression-and-when-should-it-be-used>
 - TODO stepwise regression
 - TODO optimality criteria
+- <http://www.cs.cornell.edu/courses/cs578/2007fa/missing_featsel_lecture.pdf>
 
 recommender systems
 
