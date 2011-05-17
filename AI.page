@@ -358,18 +358,28 @@ missing values
 
 - usu. non-random; missing bc of other attr (or class label)
 - model-specific treatment
-  - discriminative, eg log reg, can't handle unknowns
+  - discriminative, eg log reg, can't handle unknowns, need generic treatment
   - generative can marginalize over unknowns
   - other models, eg trees, can handle: eg treat missing as separate value, or
     split instance into new instances (with value filled in) weighted by
     frequencies of filled-in value
     - <http://www.slideshare.net/pierluca.lanzi/machine-learning-and-data-mining-11-decision-trees>
-- can also treat unknown as special value; for discrete, add one more value;
-  for continuous, use avg & add new binary feature
-- _imputation_: filling in missing values
-  - avg/maj are most common, but generally can use any learner to predict value
-- EM: build model (ignoring missing), estimate missing, repeat till convergence
-- faster algos: apply to large datasets
+- generic treatments
+  - discard examples with missing values; should only do this if don't expect
+    them to come up again (in test set)
+  - treat as special value; new discrete value or new indicator for continuous
+  - reduced-feature models: build models excluding missing features
+  - _imputation_: fill in missing values
+    - avg/maj are most common, but generally can use any learner to predict
+      value
+    - distribution-based imputation: use the tree splitting technique described
+      above to impute
+    - EM: build model (ignoring missing), estimate missing, repeat till
+      convergence
+- resources
+  - <http://www.cs.toronto.edu/~marlin/research/phd_thesis/marlin-phd-thesis.pdf>
+  - <http://www.stat.ucla.edu/~yuille/courses/Stat153/Stat_153.htm>
+  - <http://jmlr.csail.mit.edu/papers/volume8/saar-tsechansky07a/saar-tsechansky07a.pdf>
 
 principal component analysis (PCA)
 
