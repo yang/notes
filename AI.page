@@ -717,6 +717,11 @@ recommender systems
   - expert-based recs have many benefits
   - [video](http://sna-projects.com/blog/2011/04/improving-recommendations/)
   - [slides](http://www.slideshare.net/xamat/the-science-and-the-magic-of-user-feedback-for-recommender-systems)
+- if $M$ is ratings matrix with users in rows and movies in cols, then:
+  - for $M M^T$: one evec may be for "horror" movies, and $i$th component
+    is user $i$'s pref for horror movies; evals are feature importance
+  - for $M^T M$: one evec may be for "horror" movies, and $j$th component is
+    how horrific movie $j$ is
 
 collaborative filtering
 
