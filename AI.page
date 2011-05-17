@@ -95,6 +95,10 @@ ensemble methods
     increased, so that next classifier must try harder to get those right
   - classifiers also assigned a weight based on accuracy on training set
   - given a test example, classifiers take a weighted vote
+- rely on randomization/perturbation to build diverse models, so only unstable
+  learners can be used; not useful for stable learners like SVM, NB
+  - stable learners: produce similar models upon small perturbations to
+    training set
 
 supervised learning
 
