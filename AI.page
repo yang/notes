@@ -363,6 +363,7 @@ missing values
   - other models, eg trees, can handle: eg treat missing as separate value, or
     split instance into new instances (with value filled in) weighted by
     frequencies of filled-in value
+    - <http://www.slideshare.net/pierluca.lanzi/machine-learning-and-data-mining-11-decision-trees>
 - can also treat unknown as special value; for discrete, add one more value;
   for continuous, use avg & add new binary feature
 - _imputation_: filling in missing values
