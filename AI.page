@@ -354,6 +354,14 @@ feature/dimensionality reduction
   - principal component analysis (PCA)
 - autoencoder aka sparse coding
 
+missing values
+
+- _imputation_: filling in missing values
+- eg log reg can't handle unknowns
+- avg/maj are most common, but generally can use any learner to predict value
+- can also treat unknown as special value; for discrete, add one more value;
+  for continuous, add new binary feature and use avg
+
 principal component analysis (PCA)
 
 - use covariance method or SVD (preferred)
