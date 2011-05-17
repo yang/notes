@@ -368,6 +368,7 @@ principal component analysis (PCA)
 - components optimally account for variance in features
   - first component extracted accounts for max amt of total variance
     - i.e., choose new axis covering greatest "spread" in data points
+    - i.e., choose new axis minimizing L2 errors
     - typically means it will be correlated w several/many vars
   - second component extracted accounts for max amt of variance not
     accounted for by first component
