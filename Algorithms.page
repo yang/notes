@@ -264,6 +264,11 @@ compression
 
 - huffman coding
   - variable length coding: more freq symbols given shorter codes
+  - optimal (but not trivial to show)
+  - pseudocode: build tree bottom-up
+    - start w ea symbol having its own root node; node freq = freq of symbol
+    - iterate until one root node
+      - merge two nodes with min freqs; new parent freq is sum of child freqs
 - LZ77
   - sliding window compression, replacing strings with backrefs
     ((length,offset) pairs)
