@@ -256,6 +256,15 @@ clustering
   infinity norm, hamming, inner product/cosine similarity
 - many clustering algos require number of clusters as input; 
 
+v-measure cluster evaluation measure
+
+- "conditional entropy-based external cluster evaluation measure"
+- harmonic mean of homogoneity score & completeness score (optionally weighing
+  each differently)
+- other commonly used scores: purity, entropy, F-measure-like "clustering
+  accuracy", more...
+- http://acl.ldc.upenn.edu/D/D07/D07-1043.pdf
+
 machine learning
 
 - linear classif, perceptron, SVM
@@ -1102,3 +1111,19 @@ deep learning TODO
 - multilayer feed-fwd neural networks using back-prop (with small hidden layer)
 - <https://venefrombucharest.wordpress.com/2011/04/15/an-overview-of-dictionary-learning-terminology/>
 - <http://www.stanford.edu/class/cs294a/>
+
+gradient boosted decision trees
+
+- favors many shallow trees (maybe even stumps)
+- usage
+  - yahoo has used this extensively: GBRank, SmoothDCG
+  - blender in BellKor
+- pros
+  - feature normalization not required
+  - auto feature selection; not prone to colinear/identical features
+  - easy to interpret
+  - easy to use diff loss functions
+- cons
+  - boosting is sequential
+  - compute intensive: in DTs, for each feature/value, must compute gain
+  - can perform poorly on high-dim sparse data (eg bag of words) bc too many nodes/trees needed
