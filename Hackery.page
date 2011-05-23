@@ -1,3 +1,25 @@
+- android internals
+  - apps: bundles of components
+  - each app in a linux process; can be killed any time
+  - intents: msgs, like unix signals
+  - Binder: RPC system that lets services talk to components & to ea other
+    - IDL
+  - bionic: libc replacement
+  - dalvik vm, harmony class lib
+    - dx converts .class to .dex
+  - init: parses /init.rc; usu mounts FSs, starts mem mgr, starts services (incl
+    servicemanager, which manages Binder ctxs), starts zygote
+  - zygote aka app_process: root java process; starts system service
+  - system service: process that houses everything important (battery, lights,
+    vibrator, audio, sensors, etc), alarms, notifs, activities, windows
+  - toolbox: suckier busybox; freq install busybox on androids
+  - startup
+    - bootloader implements fastboot protocol; contains secure boot/recovery
+      logic
+  - no FHS but no conflicts either
+  - ext4 for SMP and new storage devices that were more like SD cards than NAND
+    flash; was yaffs2
+
 - mahout
   - ? means unknown
   - mahout accepts csv-like files where ',' and ' ' are delims (it also ignores
