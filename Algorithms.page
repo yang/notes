@@ -302,7 +302,7 @@ compression
   - gzip: 25MB/s encode, 200MB/s decode, 4-6X compression
   - <http://www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf>
 - implementations:
-  - gzip: uses zlib
+  - gzip: same as zlib internally but diff headers/trailers
   - zlib: deflate; compresses single files (freq. tar); not parallelizable
 
 [On Reducing the Size of Compressed Javascript (by up to 20%)](http://timepedia.blogspot.com/2009/08/on-reducing-size-of-compressed.html)
