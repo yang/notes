@@ -254,8 +254,9 @@ time series (TODO also cover math)
   when shifted in time/space, so mean/variance don't change
   - white noise is stationary; cymbal clash variance diminishes over time
 - autocorrelation: cross-correlation of signal w itself; a lagged
-  self-correlation; to detect non-randomness
+  self-correlation; to detect non-randomness; works if fixed intervals
   - Durbin-Watson test: conventional test to detect autocorrelation
+    - 0 to 4; 2 means no autocorrelation
 - cross-correlation: sliding dot product of two signals; like convolution but
   no reversal
 - linear prediction: future values of discrete-time signal estimated as linear
