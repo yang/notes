@@ -982,8 +982,9 @@ ranking
 
 - <http://nlp.stanford.edu/IR-book/html/htmledition/result-ranking-by-machine-learning-1.html#sec:ranking-svm>
 
-assoc rule mining/learning
+assoc rule mining/learning, frequent itemset mining
 
+- assoc rules are just superficial variations on itemsets
 - apriori: best-known algo for association rule mining
   - for items that are grouped in txns
   - build up candidate itemsets one item at a time using BFS, but on each
