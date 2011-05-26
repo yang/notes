@@ -1014,6 +1014,35 @@ assoc rule mining/learning, frequent itemset mining
 
 rule learning/induction
 
+- subgroup discovery: variation that focuses on discovering individual patterns
+  of interest rather than model generation (classification/prediction rule
+  learning)
+  - don't mind overlap; use downweighting instead of removal of covered items,
+    and use quality metric like weighted relative accuracy instead of
+    confidence/support
+- weighted relative accuracy: $P(X) (P(Y|X) - P(Y))$ or
+  `P(cond) (P(class|cond) - P(class))`
+  - probs are freqs, but weighted
+  - instead of focusing on accuracy, focus on finding big groups
+  - $P(X)$ is _generality_; find big groups
+  - $P(Y|X) - P(Y)$ is _relative accuracy_
+  - $= P(X,Y) - P(Y) P(X)$ (diff btwn actual joint and expected joint if indep)
+  - laplace accuracy can be used for $P(Y|X)$
+  - better WRA: use unweighted $P(Y) = n(Y)/N$
+- apriori-C: apriori for classification
+  - discretize cont vars, binarize disc vars
+  - apriori considering only rules/itemsets containing class value
+  - post-process: keep just $n$ highest-support rules (for each class)
+    - iteratively select best rule, remove covered examples, repeat sorting
+  - some optimizations, eg:
+    - suppress generating rule if already have more general rule w satisfactory
+      support & confidence
+- apriori-SD
+  - apriori-c w new post-process:
+    - order by _weighted relative accuracy_ quality function
+    - downweight covered examples, repeat sorting
+  - downweighting of covered examples: $w = 1/(i+1)$ (init $w=1$)
+- SD-map: based on FP-growth
 - AQ: outputs sequence of "if COND then CLASS" rules
   - beam search (best-first search with pruning)
   - once find rule, remove covered data, repeat
@@ -1030,21 +1059,15 @@ rule learning/induction
       - $n$ is total # examples covered by rule
     - laplace accuracy: $\frac{n_c + 1}{n + k}$, where $k$ is # classes
       - not sure about rationale here
-    - weighted relative accuracy: $P(cond) (P(class|cond) - P(class))$
-      - instead of focusing on accuracy, focus on finding big groups
-      - $P(cond)$ is _generality_; find big groups
-      - $P(class|cond) - P(class)$ is _relative accuracy_
-      - $= P(cond, class) - P(class) P(cond)$ (diff btwn actual joint and
-        expected joint if indep)
-      - laplace accuracy can be used for $P(class|cond)$
+    - weighted relative accuracy
   - ordered v unordered: whether rule is defined conditioned on rules above it
     having failed
     - unordered algo change: iterate the search for each class in turn,
       removing only covered examples *of that class* when rule is found
-  - CN2-SD (subgroup discovery): instead of removing, downweight
-    - bc in CN2 only first few rules may be of interest
-    - can decrease multiplicatively or additively
   - TODO how to know when to stop?
+- CN2-SD (subgroup discovery): instead of removing, downweight
+  - bc in CN2 only first few rules may be of interest
+  - can decrease multiplicatively or additively
 - C4.5rules
 - RIPPER
 - SLIPPER
