@@ -982,7 +982,7 @@ ranking
 
 - <http://nlp.stanford.edu/IR-book/html/htmledition/result-ranking-by-machine-learning-1.html#sec:ranking-svm>
 
-rule learning/mining/induction
+assoc rule mining/learning
 
 - apriori: best-known algo for association rule mining
   - for items that are grouped in txns
@@ -990,7 +990,6 @@ rule learning/mining/induction
     iteration prune out candidates, keeping only those with minimum _support_
     (frequencies) and (optionally) minimum _confidence_ (# in subset including
     new item / # in current set)
-  - can also only expand search to candidates that have a minimum 
   - historically significant but has inefficiencies & trade-offs
 - FP-growth: frequent pattern growth
   - param: min support
@@ -1006,10 +1005,14 @@ rule learning/mining/induction
       - build new FP-tree over paths collected by walking up parent ptrs
       - update node counts: sum of children's supports (anchor w $x$ node
         supports)
+  - fast: no candidate generation/test; use compact tree; scan DB once
   - <http://www.engr.uvic.ca/~seng474/association3.ppt>
   - <http://www.engr.uvic.ca/~seng474/fptree_complete_example.ppt>
   - <https://github.com/enaeseth/python-fp-growth/blob/master/fp_growth.py>
   - orig paper <http://www.inf.unibz.it/dis/teaching/DWDM/project2010/FP-growth.pdf>
+
+rule learning/induction
+
 - AQ: outputs sequence of "if COND then CLASS" rules
   - beam search (best-first search with pruning)
   - once find rule, remove covered data, repeat
@@ -1041,6 +1044,9 @@ rule learning/mining/induction
     - bc in CN2 only first few rules may be of interest
     - can decrease multiplicatively or additively
   - TODO how to know when to stop?
+- C4.5rules
+- RIPPER
+- SLIPPER
 
 regularization
 
