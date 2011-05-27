@@ -1042,7 +1042,6 @@ rule learning/induction
     - order by _weighted relative accuracy_ quality function
     - downweight covered examples, repeat sorting
   - downweighting of covered examples: $w = 1/(i+1)$ (init $w=1$)
-- SD-map: based on FP-growth
 - AQ: outputs sequence of "if COND then CLASS" rules
   - beam search (best-first search with pruning)
   - once find rule, remove covered data, repeat
@@ -1070,7 +1069,12 @@ rule learning/induction
   - can decrease multiplicatively or additively
 - C4.5rules
 - RIPPER
-- SLIPPER
+  - faster/worse than C4.5rules, better than IREP
+    <http://www.let.rug.nl/~nerbonne/teach/learning/cohen95fast.pdf>
+  - worse than NB for mail classif
+    <http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.18.3844>
+- SLIPPER: competitive w/better than ripper, c4.5rules
+- SD-map: based on FP-growth
 
 regularization
 
