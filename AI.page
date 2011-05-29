@@ -429,6 +429,8 @@ linear discriminant analysis
 
 - alt to PCA that optimizes for class separability
 - TODO
+- TODO canonical correlation analysis (CCA)
+  - <http://www.cs.huji.ac.il/~shashua/papers/class8-PCA-LDA.pdf>
 - despite name, it's generative; name makes sense vs PCA (which ignores labels)
 
 singular value decomposition (SVD)
