@@ -24,3 +24,15 @@ touch, tabletop, and tangible blocks (patrick baudisch, msr, prof at hasso-platt
 - use fingerprint
 
 reflow: recalculating positions when eg resizing a window
+
+data visualizations
+
+- boxplots
+- candlestick plots
+- hierarchical
+  - treemaps
+  - ringmaps/multi-level pies/sunburst/wedge stack graph
+  - icicle tree
+  - spacetrees: scope context to selected node in tree
+  - bubble plots
+  - nested column plots
