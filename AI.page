@@ -953,6 +953,9 @@ kernels
 
 regression
 
+- multivariate regression: multiple dependent vars
+- multinomial regression: multiple categorical dependent vars
+- multiple regression: multiple indep vars, one dep var
 - [question: what does the objective function
   mean?](metaoptimize.com/qa/questions/4151/understanding-svm-regression-objective-function-and-flatness)
 - <http://kernelsvm.tripod.com/>
