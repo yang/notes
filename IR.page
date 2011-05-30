@@ -260,3 +260,10 @@ HITS (jon kleinberg, cornell)
 - hub score is sum of outbound auth scores
 - auth score is sum of inbound hub scores
 - equiv to solving max eigenval problem
+
+SPEAR (michael noll)
+
+- find expert users and quality documents
+- based on HITS: mutual reinforcement of users and documents
+- time-based: discoverers vs followers
+- evaluated on delicious.com
