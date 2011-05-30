@@ -393,7 +393,7 @@ missing values
 principal component analysis (PCA)
 
 - use covariance method or SVD (preferred)
-- covariance method:
+- "eval decomp of data covariance matrix" method: rarely used bc inefficient
   - `row_data_adjusted = row_data - mean(row_data)` (normalized to have unit
     variance?)
   - find eig of compute covariance (correlation) matrix
@@ -401,6 +401,7 @@ principal component analysis (PCA)
     (principal) components
   - _feature vector_ is matrix of col evecs $[e_1, e_2, \dots, e_n]
   - `transformed_data = trans(feature_vector) * row_data_adjusted`
+- "SVD of mean-centered data matrix" method: faster
 - components optimally account for variance in features
   - first component extracted accounts for max amt of total variance
     - i.e., choose new axis covering greatest "spread" in data points
