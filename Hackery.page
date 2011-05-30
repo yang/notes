@@ -234,6 +234,8 @@
     - ANOVA: aov, anova
     - descriptive tools: table, summary
     - gbm: gradient boosting machine
+    - train (caret): parallel training procedure that takes care of a lot of
+      stuff for you
   - packages
     - Rserve
     - ggplot2
@@ -241,6 +243,10 @@
     - randomForest
     - rggobi
     - survival
+    - rjags
+    - caret: data splitting, preprocessing, model tuning using resampling,
+      variable importance estimation
+    - kernlab
   - to run an R file from cmd line
     - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
     - will be replaced with `Rscript`
