@@ -968,6 +968,12 @@ regression
 - [Tutorial on SVM
   Regression](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf)
 
+multicollinearity
+
+- correlation btwn predictors
+- causes problems for LMs, neural nets, others
+- trees are resistant but may affect interpretability of model
+
 pragmatics/usage
 
 - scale params to avoid feature imbalance and numeric difficulties
