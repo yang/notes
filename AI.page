@@ -560,6 +560,12 @@ computational learning theory
 - algorithmic learning theory
 - online machine learning
 
+dumb learners
+
+- majority learner aka ZeroR
+- OneR: generate one rule per predictor, then use only the rule w smallest
+  error
+
 receiver operating characteristic (ROC)
 
 - based on confusion matrix aka contingency table
