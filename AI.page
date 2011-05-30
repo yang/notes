@@ -547,6 +547,14 @@ ML vs statistics
       genetic algos, self-organizing maps, neuro-fuzzy systems
 - <http://brenocon.com/blog/2008/12/statistics-vs-machine-learning-fight/>
 
+computational learning theory
+
+- probably approximately correct (PAC)
+- VC theory
+- bayesian inference
+- algorithmic learning theory
+- online machine learning
+
 receiver operating characteristic (ROC)
 
 - based on confusion matrix aka contingency table
