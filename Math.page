@@ -267,10 +267,7 @@ time series (TODO also cover math)
 
 statistical inference
 
-- generalized linear model (GLM): generalization of least squares regression
-  - TODO
 - analysis of variance (ANOVA or AOV): TODO
-- logistic regression
 - kernel density estimator: basically place a small kernel everywhere you have
   a sample, resulting in somtehing much smoother than a histogram (where bins
   can make all the difference in interpretation)
@@ -278,14 +275,6 @@ statistical inference
 
 - mean absolute percentage error (MAPE): $M = \frac{1}{n} \sum_{t=1}^n
   \left\vert \frac{A_t - F_t}{A_t} \right\vert$
-
-- correlation
-  - Pearson's product-moment coefficient: most popular
-
-    $$\rho_{X,Y} = \frac{ \text{cov}(X,Y) }{ \sigma_X \sigma_Y }$$
-
-    - always in $[-1, 1]$
-- T-test: TODO
 
 relationship btwn mean squared error and gaussian dist?  (TODO cs229 notes)
 
