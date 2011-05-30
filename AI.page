@@ -434,17 +434,6 @@ linear discriminant analysis
   - <http://www.cs.huji.ac.il/~shashua/papers/class8-PCA-LDA.pdf>
 - despite name, it's generative; name makes sense vs PCA (which ignores labels)
 
-singular value decomposition (SVD)
-
-- SVD of $M$ is a factorization of the form $M = U \Sigma V*$ where:
-  - $U$ is $m \times m$ real/complex unitary matrix
-  - $\Sigma$ is $m \times n$ nonnegative real diag matrix
-  - $V*$ is $n \times n$ real/complex unitary matrix
-- when all real, then $U,V$ are rotations and $\Sigma$ is scaling
-- eval decomp is similar but only for square matrices
-- use SVD to perform PCA
-  - covariance matrix is $\frac{1}{n} X X^T = \frac{1}{n} U \Sigma^2 U^T$
-
 - resources
   - http://videolectures.net/icmi05_bengio_tsmla/
   - google video: machine learning
