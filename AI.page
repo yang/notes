@@ -707,7 +707,7 @@ maximum entropy
   - $\beta_j$ typically estimated using maximum a posteriori (MAP), which is an
     extension of max likelihood using regularization of weights
 
-gibbs sampling
+gibbs sampling TODO
 
 - an MCMC algo (special case of Metropolis-Hastings algo)
 - purpose: given a multivariate dist, simpler to sample from a conditional dist
