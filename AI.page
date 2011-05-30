@@ -517,7 +517,7 @@ generalization error
       - choose folds so that mean response value is approx equal in all folds
         TODO understand that sentence
       - for dichotomous classification, each fold has ~same +/- labels
-- jackknifing: LOOCV but for estimating bias not gen error
+- jackknifing: LOOCV but for estimating bias & variance, not gen error
   - compute some statistic of interest in each subset
   - compare avg of these to avg of entire sample to estimate the latter's bias
 - bootstrapping
