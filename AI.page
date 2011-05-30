@@ -675,8 +675,12 @@ linear classifiers
 
 generative vs discriminative
 
-- generative: LDA, NB
 - discriminative: LR, perceptron, SVM
+  - good generalization when much data
+- generative: LDA, NB
+  - more interest in semisupervised learning bc harder to get labels
+    - can train discriminatively, but no longer make use of unlabeled data
+    - <http://research.microsoft.com/en-us/um/people/minka/papers/LasserreBishopMinka06.pdf>
 
 GLM
 
