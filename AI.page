@@ -52,6 +52,10 @@ learning taxonomies
     - instance-based learning aka memory-based learning: hyps directly
       constructed from training instances, eg nearest-neighbor, kernels
     - eg LWR: must keep training set around; "re-training" all the time
+  - nonparametric learning (2): infinite dimensional hyp (think of as function)
+    - rationale: flexibility, performance, more realistic
+    - TODO
+    - <http://learning.eng.cam.ac.uk/zoubin/talks/nips09npb.pdf>
 
 data set balance
 
