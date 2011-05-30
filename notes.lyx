@@ -1,0 +1,2634 @@
+#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options true
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\author "" 
+\author "" 
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset FormulaMacro
+\newcommand{\Var}{\text{Var}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\E}{\text{E}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert }
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\transpose}[1]{#1^{\text{T}}}
+\end_inset
+
+
+\begin_inset FormulaMacro
+\newcommand{\Cov}{}
+{\text{Cov}}
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Limits
+\end_layout
+
+\begin_layout Itemize
+Identity: 
+\begin_inset Formula $\lim_{x\rightarrow\infty}\left(1+\frac{a}{x}\right)^{x}=e^{a}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Euler's identity: 
+\begin_inset Formula $e^{i\pi}+1=0$
+\end_inset
+
+ (from 
+\begin_inset Formula $e^{ix}=\cos x+i\sin x$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Section
+General
+\end_layout
+
+\begin_layout Itemize
+Stirling's approx: 
+\begin_inset Formula $\ln n!=n\ln n-n+O\left(\log n\right)$
+\end_inset
+
+ where last term is 
+\begin_inset Formula $\frac{1}{2}\ln\left(2\pi n\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Or, 
+\begin_inset Formula $\lim_{n\rightarrow\infty}\frac{n!}{\sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}}=1$
+\end_inset
+
+ or 
+\begin_inset Formula $n!\sim\sqrt{2\pi n}\left(\frac{n}{e}\right)^{n}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Finance
+\end_layout
+
+\begin_layout Itemize
+rate of return (ROR) aka return on investment (ROI) aka return
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+let 
+\begin_inset Formula $V_{f}$
+\end_inset
+
+ be final value, 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+ be initial value
+\end_layout
+
+\begin_layout Itemize
+ratio: 
+\begin_inset Formula $r=\frac{V_{f}}{V_{i}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+arithmetic return aka yield: 
+\begin_inset Formula $r_{\text{arith}}=\frac{V_{f}-V_{i}}{V_{i}}=r-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+logarithmic/continuous compound return: 
+\begin_inset Formula $r_{\log}=\ln\frac{V_{f}}{V_{i}}=\ln\left(1+r\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+compound annual growth rate (CAGR): 
+\begin_inset Formula $\left(\frac{V_{f}}{V_{i}}\right)^{\frac{1}{n}}-1$
+\end_inset
+
+ where 
+\begin_inset Formula $n$
+\end_inset
+
+ is # years
+\end_layout
+
+\begin_layout Itemize
+annual percentage rate (APR)
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Signal Processing
+\end_layout
+
+\begin_layout Itemize
+DFT: 
+\begin_inset Formula $X_{k}=\sum_{n=0}^{N-1}x_{n}\exp\left(-\frac{2\pi i}{N}kn\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+IDFT: 
+\begin_inset Formula $X_{k}=\frac{1}{N}\sum_{n=0}^{N-1}x_{n}\exp\left(i2\pi k\frac{n}{N}\right)$
+\end_inset
+
+ (normalized, changed exp sign)
+\end_layout
+
+\begin_layout Itemize
+interesting presentation: strength of freq 
+\begin_inset Formula $k$
+\end_inset
+
+ is distance from origin of the midpoint of your signal's points as the
+ signal are spun around a circle 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://altdevblogaday.org/2011/05/17/understanding-the-fourier-transform/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Probability
+\end_layout
+
+\begin_layout Itemize
+Binomial: # successes in 
+\begin_inset Formula $n$
+\end_inset
+
+ Bernoulli trials each with success prob 
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[X=k\right]={n \choose k}p^{k}\left(1-p\right)^{n-k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=np$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=np\left(1-p\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Poisson: # arrivals in sliver of time (infinite-granularity binomial) assuming
+ mean 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ arrival rate
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[X=k\right]=\frac{\lambda^{k}}{k!}e^{-\lambda}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=\lambda$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\lambda$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Simple interesting proof from binomial
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Normal: mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+, standard deviation 
+\begin_inset Formula $\sigma$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[X=x\right]=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left(-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right)=\dots\exp\left(-\frac{Z^{2}}{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=\mu$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\sigma^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Empirical rule: z-scores of 1/2/3 span 68%/95%/99.7%
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Beta: density shape over 
+\begin_inset Formula $\left(0,1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+uniform dist is a beta dist
+\end_layout
+
+\begin_layout Itemize
+params 
+\begin_inset Formula $a,b$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $\text{beta}\left[a,b\right]\left(\theta\right)=\alpha\theta^{a-1}\left(1-\theta\right)^{b-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E\left[X\right]=\frac{a}{a+b}$
+\end_inset
+
+: higher 
+\begin_inset Formula $a$
+\end_inset
+
+ suggests 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ closer to 1 than 0
+\end_layout
+
+\begin_layout Itemize
+conjugate prior for Bernoulli/binomial dists
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Student's t-distribution: a more spread-out normal distribution
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+for when sample size is small, population SD unknown
+\end_layout
+
+\begin_layout Itemize
+converges to normal as DF (corresponds to sample size) increases
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+General
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Linearity: 
+\begin_inset Formula $\E\left[aX+bY\right]=a\E\left[X\right]+b\E\left[Y\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X|Y=y\right]=\sum_{x}x\cdot\Pr\left[X=x|Y=y\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Iterated: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $\E\left[E\left[X|Y\right]\right]=\E\left[X\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\E\left[\left(X-\mu\right)^{2}\right]=\E\left[X^{2}\right]-\left(\E\left[X\right]\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[aX+b\right]=\Var\left[aX\right]=a^{2}\Var\left[X\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[aX+bY\right]=a^{2}\Var\left[X\right]+b^{2}\Var\left[Y\right]+2ab\Cov\left[X,Y\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X+Y\right]=\Var\left[X\right]+\Var\left[Y\right]$
+\end_inset
+
+ if 
+\begin_inset Formula $X,Y$
+\end_inset
+
+ indep/uncorrelated
+\end_layout
+
+\begin_layout Itemize
+Pearson's product-moment coefficient is a 
+\begin_inset Quotes eld
+\end_inset
+
+normalized
+\begin_inset Quotes erd
+\end_inset
+
+ covariance: 
+\begin_inset Formula $\rho_{X,Y}=\frac{\Cov\left[X,Y\right]}{\sigma_{X}\sigma_{Y}}\in\left[-1,1\right]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Statistics
+\end_layout
+
+\begin_layout Subsection
+Tests TODO
+\end_layout
+
+\begin_layout Itemize
+z-test/z-statistic: approximations are OK when 
+\begin_inset Formula $n>30$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+one-sample: 
+\begin_inset Formula $z=\frac{\bar{x}-\mu_{\bar{x}}}{\sigma_{\bar{x}}},\sigma_{\bar{x}}=\frac{\sigma}{\sqrt{n}}\approx\frac{S}{\sqrt{n}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+two-sample: 
+\begin_inset Formula $z=\frac{\left(\bar{X}-\bar{Y}\right)-\left(\mu_{\bar{X}-\bar{Y}}=0\right)}{\sigma_{\bar{X}-\bar{Y}}=\sqrt{\frac{\sigma_{X}^{2}}{n}+\frac{\sigma_{Y}^{2}}{m}}\approx\sqrt{\frac{S_{X}^{2}}{n}+\frac{S_{Y}^{2}}{m}}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+t-test/t-statistic: same as z-test but refer to student's t-distribution;
+ use when 
+\begin_inset Formula $n\le30$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+one-sample: 
+\begin_inset Formula $t=\frac{\bar{x}-\mu_{\bar{x}}}{S/\sqrt{n}}$
+\end_inset
+
+ (same quantity as in z-test), DF is 
+\begin_inset Formula $n-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+two-sample: 
+\begin_inset Formula $t=\frac{\bar{X}-\bar{Y}-\left(\mu_{\bar{X}-\bar{Y}}=0\right)}{S_{\bar{X}-\bar{Y}}=\sqrt{\frac{S_{X}^{2}}{n}+\frac{S_{Y}^{2}}{m}}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Unsorted
+\end_layout
+
+\begin_layout Itemize
+kalman filter: TODO understand
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+untrusted predictions, untrusted measurements; combine them
+\end_layout
+
+\begin_layout Itemize
+optimal estimate 
+\begin_inset Formula \[
+\hat{y}=\text{prediction}+\left(\text{Kalman gain}\right)\left(\text{measurement}-\text{prediction}\right)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+predict using previous data, measure, fuse/correct prediction and measurement
+\end_layout
+
+\begin_layout Itemize
+usually no control signals 
+\begin_inset Formula $\vec{u}_{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+http://www.swarthmore.edu/NatSci/echeeve1/Ref/Kalman/ScalarKalman.html
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Exponential smoothing for time series analysis
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+exponential moving average (EMA)
+\emph default
+ aka 
+\emph on
+exponentially weighted moving average (EWMA)
+\emph default
+ aka 
+\emph on
+single exponential smoothing (SES)
+\emph default
+
+\begin_inset Formula \begin{eqnarray*}
+S_{t} & = & \left(1-\alpha\right)\cdot S_{t-1}+\alpha\cdot y_{t-1}\\
+S_{2} & = & 1\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Does not spot trends
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+double exponential moving average (DEMA)
+\emph default
+ aka 
+\emph on
+linear exponential smoothing (LES)
+\emph default
+
+\begin_inset Formula \begin{align*}
+S_{t} & = & \alpha y_{t}+\left(1-\alpha\right)\left(S_{t-1}+b_{t-1}\right), & 0\le\alpha\le1\\
+b_{t} & = & \gamma\left(S_{t}-S_{t-1}\right)+\left(1-\gamma\right)b_{t-1}, & 0\le\gamma\le1\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+triple exponential moving average (TEMA) aka 
+\emph on
+triple exponential smoothing (SES)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4.htm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Applied
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+recency, frequency, monetary value (RFM)
+\emph default
+: simple customer behavior analysis
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+segment customers along these 3 axes into discrete bins
+\end_layout
+
+\begin_layout Itemize
+identify highest-value intersections of bins
+\end_layout
+
+\end_deeper
+\begin_layout Section
+Linear Algebra
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Power method 
+\emph default
+or 
+\emph on
+power iteration
+\emph default
+: an eigenvalue algo
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Given matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, produce scalar 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ and non-0 vector 
+\begin_inset Formula $v$
+\end_inset
+
+ (eigenvector) s.t.
+ 
+\begin_inset Formula $Av=\lambda v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Doesn't compute matrix decomposition so suitable for large sparse 
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+But will only find one eigenvalue (with max val) and may converge slowly
+\end_layout
+
+\begin_layout Itemize
+Start with random vector 
+\begin_inset Formula $b_{0}$
+\end_inset
+
+ and iteratively multiple by 
+\begin_inset Formula $A$
+\end_inset
+
+ and normalize: 
+\begin_inset Formula $b_{k+1}=\frac{Ab_{k}}{\norm{Ab_{k}}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+TODO
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $a\cdot b=\norm a\norm b\cos\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\norm{a\times b}=\norm a\norm b\sin\theta=\mbox{area of parallelogram with sides \ensuremath{a,b}}$
+\end_inset
+
+ (direction given by right hand rule)
+\end_layout
+
+\begin_layout Itemize
+Cauchy-schwartz inequality: 
+\begin_inset Formula $\left|a\cdot b\right|\le\norm a\norm b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+triangle inequality: 
+\begin_inset Formula $\norm{a+b}\le\norm a+\norm b$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+reduced row echelon form
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+identity means unique solution
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left[\begin{array}{cccc}
+1 & 2 & 0 & 3\\
+0 & 0 & 1 & -2\\
+0 & 0 & 0 & 0\end{array}\right]$
+\end_inset
+
+ with pivot variables 
+\begin_inset Formula $x_{1},x_{3}$
+\end_inset
+
+ and free vars 
+\begin_inset Formula $x_{2},x_{4}$
+\end_inset
+
+ has inf solutions
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left[\begin{array}{cccc}
+1 & 2 & 0 & 3\\
+0 & 0 & 1 & -2\\
+0 & 0 & 0 & -4\end{array}\right]$
+\end_inset
+
+ has no solutions (
+\begin_inset Formula $0=-4$
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+tensor product aka outer product 
+\begin_inset Formula $\vec{a}\otimes\vec{b}=\vec{a}\transpose{\vec{b}}$
+\end_inset
+
+ is 
+\begin_inset Formula $\left|\vec{a}\right|\times\left|\vec{b}\right|$
+\end_inset
+
+ matrix
+\end_layout
+
+\begin_layout Subsection
+HITS
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\forall i,\forall k=1,2,3,\dots,$
+\end_inset
+
+
+\begin_inset Formula \begin{eqnarray*}
+a_{i}^{\left(k\right)} & = & \sum_{j:e_{ji}\in E}h_{j}^{\left(k-1\right)}\\
+h_{i}^{\left(k\right)} & = & \sum_{j:e_{ij}\in E}a_{j}^{\left(k\right)}\end{eqnarray*}
+
+\end_inset
+
+ and 
+\begin_inset Formula $a_{i}^{\left(1\right)}=h_{i}^{\left(1\right)}=\frac{1}{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+if 
+\begin_inset Formula $\vec{h},\vec{a}$
+\end_inset
+
+ are vectors of 
+\begin_inset Formula $h_{i},a_{i}$
+\end_inset
+
+ and
+\series bold
+ 
+\series default
+
+\begin_inset Formula $\vec{L}$
+\end_inset
+
+ is adj matrix (
+\begin_inset Formula $L_{ij}=\begin{cases}
+1 & \text{page \ensuremath{i}links to \ensuremath{j}}\\
+0 & \text{otherwise}\end{cases}$
+\end_inset
+
+) then 
+\begin_inset Formula \begin{eqnarray*}
+\vec{a}^{\left(k\right)} & = & \vec{L}^{T}\vec{h}^{\left(k-1\right)}\\
+\vec{h}^{\left(k\right)} & = & \vec{L}\vec{a}^{\left(k\right)}\end{eqnarray*}
+
+\end_inset
+
+ or 
+\begin_inset Formula \begin{eqnarray*}
+\vec{a}^{\left(k\right)} & = & \vec{L}^{T}\vec{L}\vec{a}^{\left(k-1\right)}\\
+\vec{h}^{\left(k\right)} & = & \vec{L}\vec{L}^{T}\vec{h}^{\left(k-1\right)}\end{eqnarray*}
+
+\end_inset
+
+ i.e., power method applied to positive semi-definite matrices 
+\begin_inset Formula $\vec{L}\vec{L}^{T}$
+\end_inset
+
+ (auth matrix) and 
+\begin_inset Formula $\vec{L}^{T}\vec{L}$
+\end_inset
+
+ (hub matrix).
+\end_layout
+
+\begin_layout Itemize
+Thus, HITS amounts to solving for largest eigenvalue 
+\begin_inset Formula $\lambda_{1}$
+\end_inset
+
+ in 
+\begin_inset Formula $\vec{L}^{T}\vec{L}\vec{a}=\lambda_{1}\vec{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{L}\vec{L}^{T}\vec{h}=\lambda_{1}\vec{h}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://meyer.math.ncsu.edu/Meyer/PS_Files/IMAGE.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+PageRank
+\end_layout
+
+\begin_layout Itemize
+TODO
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://meyer.math.ncsu.edu/Meyer/PS_Files/IMAGE.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Machine Learning
+\end_layout
+
+\begin_layout Subsection
+Information criteria
+\end_layout
+
+\begin_layout Itemize
+Akaike's information criterion (AIC): 
+\begin_inset Formula $-2\log\mathcal{L}+2p$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+ is maximized likelihood using all avail data for estimation
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+ is # free params in model
+\end_layout
+
+\begin_layout Itemize
+asymptotically, minimizing AIC equiv to minimizing CV value
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Schwarz Bayesian information criterion (BIC): 
+\begin_inset Formula $-2\log\mathcal{L}+p\log n$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $n$
+\end_inset
+
+ is # obs
+\end_layout
+
+\begin_layout Itemize
+heavier penalty means model chosen by BIC is same or simpler (fewer params)
+ than AIC
+\end_layout
+
+\begin_layout Itemize
+asymptotically, minimizing BIC equiv to minimizing leave-
+\begin_inset Formula $v$
+\end_inset
+
+-out CV where 
+\begin_inset Formula $v=n\left(1-\frac{1}{\log n-1}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Bayesian learning
+\end_layout
+
+\begin_layout Itemize
+hypothesis prior 
+\begin_inset Formula $\Pr\left[\Theta\right]$
+\end_inset
+
+, where 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ is hyp RV
+\end_layout
+
+\begin_layout Itemize
+likelihood 
+\begin_inset Formula $L\left(\theta\right)=\Pr\left[\vec{x}\mid\theta\right]$
+\end_inset
+
+; log-likelihood 
+\begin_inset Formula $\ell\left(\theta\right)=\log\Pr\left[\vec{x}\mid\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+posterior 
+\begin_inset Formula $\Pr\left[\theta\mid\vec{x}\right]=\alpha\Pr\left[\vec{x}\mid\theta\right]\Pr\left[\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Bayesian learning: predict 
+\begin_inset Formula $\Pr\left[X'\mid\vec{x}\right]=\sum_{\theta}\Pr\left[X'\mid\vec{x},\theta\right]\Pr\left[\theta\mid\vec{x}\right]=\sum_{i}\Pr\left[X'\mid\theta\right]\Pr\left[\theta\mid\vec{x}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+calculate prob of each hyp and predict over all hyps
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+maximum a posteriori (MAP): predict 
+\begin_inset Formula $\Pr\left[X'\mid\theta_{\text{MAP}}\right]$
+\end_inset
+
+ where 
+\begin_inset Formula $\theta_{\text{MAP}}=\arg\max_{\theta}\Pr\left[\theta\mid\vec{x}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+predict from just the single hyp with greatest posterior (easier)
+\end_layout
+
+\begin_layout Itemize
+usually 
+\begin_inset Formula $\Pr\left[X'\mid\theta_{\text{MAP}}\right]\rightarrow\Pr\left[X'\mid\vec{x}\right]$
+\end_inset
+
+ as more data arrives; otherwise, may snap to incorrect hypothesis
+\end_layout
+
+\begin_layout Itemize
+equiv to MDL: 
+\begin_inset Formula $\theta_{\text{MAP}}=\arg\min_{\theta}-\log\Pr\left[\vec{x}\mid\theta\right]-\log\Pr\left[\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+maximum lilkelihood: assume uniform prior over hyps, then 
+\begin_inset Formula $\theta_{\text{MAP}}=\arg\max_{\theta}\Pr\left[\vec{x}\mid\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+reasonable for more data, since data swamps priors
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Complete data
+\end_layout
+
+\begin_layout Itemize
+observations are commonly IID: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $\Pr\left[\vec{x}\mid\theta\right]=\prod_{i=1}^{n}\Pr\left[\vec{x}_{i}\mid\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+maximum likelihood
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+log likelihood easier to maximize because products become sums: 
+\begin_inset Formula $\log\Pr\left[\vec{x}\mid\theta\right]=\sum_{i=1}^{n}\Pr\left[\vec{x}_{i}\mid\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Naive Bayes: MLE on Bayesian network where (discrete) class is root, attrs
+ are leaves, and 
+\emph on
+attrs are IID given class
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+generative model
+\emph default
+: either class is a component of 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+ (
+\begin_inset Formula $\vec{x}_{0}$
+\end_inset
+
+) or say 
+\begin_inset Formula $\Pr\left[\vec{x},C\mid\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+same for both discrete and continuous models
+\end_layout
+
+\begin_layout Itemize
+for network 
+\begin_inset Formula $A\rightarrow B$
+\end_inset
+
+ where 
+\begin_inset Formula $A,B$
+\end_inset
+
+ are continuous, MLE over 
+\begin_inset Formula $\Pr\left[b\mid a\right]=\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{\left(b-\left(\theta_{1}a+\theta_{2}\right)\right)^{2}}{2\sigma^{2}}\right)$
+\end_inset
+
+ same as minimizing the exponent, the sum of squared errors 
+\begin_inset Formula $E=\sum_{i=1}^{n}\left(b_{i}-\left(\theta_{1}a_{i}+\theta_{2}\right)\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Bayesian parameter learning (incorporating hyp probs)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+commonly use conjugate prior for hyp prior 
+\begin_inset Formula $\Pr\left[\Theta\right]$
+\end_inset
+
+ to simplify math
+\end_layout
+
+\begin_layout Itemize
+e.g.
+ if 
+\begin_inset Formula $\Theta=\Pr\left[X=\text{head}\right]$
+\end_inset
+
+ and 
+\begin_inset Formula $\Pr\left[\theta\right]=\text{beta}\left[a,b\right]\left(\theta\right)=\alpha\theta^{a-1}\left(1-\theta\right)^{b-1}$
+\end_inset
+
+ and our data is 
+\begin_inset Formula $x=\text{head}$
+\end_inset
+
+, then 
+\begin_inset Formula \[
+\Pr\left[\theta\mid x\right]=\alpha\Pr\left[x\mid\theta\right]\Pr\left[\theta\right]=\alpha'\theta\theta^{a-1}\left(1-\theta\right)^{b-1}=\text{beta}\left[a+1,b\right]\left(\theta\right)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+usu.
+ assume param independence so each param can have own beta dist
+\end_layout
+
+\begin_layout Itemize
+incorporating param RVs into Bayesian network itself requires making copies
+ of the variables describing each instance
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Incomplete data: EM algo
+\end_layout
+
+\begin_layout Itemize
+hidden/latent variables: indirection that dramatically reduces number of
+ parameters in Bayesian network
+\end_layout
+
+\begin_layout Itemize
+EM algo examples (all have 
+\begin_inset Formula $N$
+\end_inset
+
+ data points)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+unsupervised clustering: mixtures of Gaussians
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+mixture model of 
+\begin_inset Formula $k$
+\end_inset
+
+ components: 
+\begin_inset Formula $\Pr\left[\vec{x}\right]=\sum_{i=1}^{k}\Pr\left[C=i\right]\Pr\left[\vec{x}\mid C=i\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Bayes net: 
+\begin_inset Formula $C\rightarrow\vec{X}$
+\end_inset
+
+, 
+\begin_inset Formula $C$
+\end_inset
+
+ hidden, 
+\begin_inset Formula $C$
+\end_inset
+
+ discrete, 
+\begin_inset Formula $\vec{X}$
+\end_inset
+
+ continuous
+\end_layout
+
+\begin_layout Itemize
+E-step: calculate some quantities useful later:
+\begin_inset Formula \begin{eqnarray*}
+p_{ij} & \leftarrow & \Pr\left[C_{j}=i\mid\vec{x}_{j}\right]=\alpha\Pr\left[\vec{x}_{j}\mid C_{j}=i\right]\Pr\left[C_{j}=i\right]\\
+p_{i} & \leftarrow & \sum_{j}p_{ij}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+M-step: maximize expected likelihood of observed & hidden vars
+\begin_inset Formula \begin{eqnarray*}
+\vec{\mu}_{i} & \leftarrow & \sum_{j}p_{ij}\vec{x}_{j}/p_{i}\\
+\vec{\Sigma}_{i} & \leftarrow & \sum_{j}p_{ij}\vec{x}_{j}\transpose{\vec{x}_{j}}/p_{i}\\
+\Pr\left[C=i\right]=\theta_{i} & \leftarrow & p_{i}/N\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+to avoid local maxima (component shrinking to a single point, two components
+ merging, etc.):
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+use priors on params to apply MAP version of EM
+\end_layout
+
+\begin_layout Itemize
+restart components with new random params if it gets too small/too close
+ to another component
+\end_layout
+
+\begin_layout Itemize
+initialize params with reasonable values
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Naive Bayes with hidden class
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Bayes net: 
+\begin_inset Formula $X\rightarrow\vec{Y}$
+\end_inset
+
+, 
+\begin_inset Formula $X$
+\end_inset
+
+ hidden, 
+\begin_inset Formula $X,Y$
+\end_inset
+
+ discrete
+\end_layout
+
+\begin_layout Itemize
+E-step: 
+\begin_inset Formula \begin{eqnarray*}
+p_{ij} & \leftarrow & \Pr\left[X=i\mid\vec{Y}=\vec{y}_{j}\right]\\
+p_{i} & \leftarrow & \sum_{j}p_{ij}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+M-step: 
+\begin_inset Formula $\hat{N}$
+\end_inset
+
+ are expected counts: 
+\begin_inset Formula \begin{eqnarray*}
+\Pr\left[X=i\right]=\theta_{i} & \leftarrow & \frac{\hat{N}\left(X=i\right)}{N}=\frac{1}{N}\sum_{j=1}^{N}\Pr\left[X=i\right]=\frac{p_{i}}{N}\\
+\Pr\left[\vec{Y}=\vec{y}\mid X=i\right]=\vec{\theta}_{i} & \leftarrow & \frac{\hat{N}\left(\vec{Y}=\vec{y},X=i\right)}{\hat{N}\left(X=i\right)}=\frac{\sum_{j:\vec{y}_{j}=\vec{y}}p_{ij}}{p_{i}}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+HMMs: dynamic Bayes net with single discrete state var
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+each data point is sequence of observations
+\end_layout
+
+\begin_layout Itemize
+transition probs repeat across time: 
+\begin_inset Formula $\forall t,\theta_{ijt}=\theta_{ij}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+E-step: modify forward-backward algo to compute expected counts below
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+obtained by smoothing rather than filtering: must pay attn to subsequent
+ evidence in estimating prob of a particular transition (eg evidence is
+ obtained after crime)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+M-step: 
+\begin_inset Formula $\theta_{ij}\leftarrow\frac{\sum_{t}\hat{N}\left(X_{t+1}=j,X_{t}=i\right)}{\sum_{t}\hat{N}\left(X_{t}=i\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+EM algo
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+pretend we know params, then 
+\begin_inset Quotes eld
+\end_inset
+
+complete
+\begin_inset Quotes erd
+\end_inset
+
+ data infer prob dists over hidden vars, then find params that maximize
+ likelihood of observed & hidden vars
+\end_layout
+
+\begin_layout Itemize
+gist: 
+\begin_inset Formula $\vec{\theta}^{\left(t+1\right)}=\arg\max_{\vec{\theta}}\sum_{\vec{z}}\Pr\left[\vec{Z}=\vec{z}\mid\vec{x},\vec{\theta}^{\left(t\right)}\right]\ell\left(\vec{x},\vec{Z}=\vec{z}\mid\theta\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+E-step: compute 
+\begin_inset Formula $Q\left(\vec{\theta}\mid\vec{\theta}^{\left(t\right)}\right)=\E_{\vec{Z}\mid\vec{x},\vec{\theta}^{\left(t\right)}}\left[\ell\left(\vec{x},\vec{Z}\mid\vec{\theta}\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+expected likelihood over 
+\begin_inset Formula $\vec{Z}$
+\end_inset
+
+ under current 
+\begin_inset Formula $\vec{\theta}^{\left(t\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+misnomer: what's calculated are fixed, data-dependent params of 
+\begin_inset Formula $Q$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+M-step: compute 
+\begin_inset Formula $\vec{\theta}^{\left(t+1\right)}=\arg\max_{\vec{\theta}}Q\left(\vec{\theta}\mid\vec{\theta}^{\left(t\right)}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+new 
+\begin_inset Formula $\vec{\theta}$
+\end_inset
+
+ that maximizes the expected likelihood
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+resembles gradient-based hill-climbing but no 
+\begin_inset Quotes eld
+\end_inset
+
+step size
+\begin_inset Quotes erd
+\end_inset
+
+ param
+\end_layout
+
+\begin_layout Itemize
+monotonically increases likelihood
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Kernel models
+\end_layout
+
+\begin_layout Itemize
+aka Parzen-Rosenblatt window
+\end_layout
+
+\begin_layout Itemize
+each instance contributes small density function 
+\begin_inset Formula $K\left(\vec{x},\vec{x}_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+density estimation: 
+\begin_inset Formula $p\left(\vec{x}\right)=\frac{1}{N}\sum_{i=1}^{N}K\left(\vec{x},\vec{x}_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+kernel normally depends only on distance 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $D\left(\vec{x},\vec{x}_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+eg 
+\begin_inset Formula $d$
+\end_inset
+
+-dimensional Gaussian 
+\begin_inset Formula $K\left(\vec{x},\vec{x}_{i}\right)=\frac{1}{\left(w^{2}\sqrt{2\pi}\right)^{d}}\exp\left(-\frac{D\left(\vec{x},\vec{x}_{i}\right)^{2}}{2w^{2}}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+supervised learning: take weighted combination of all predictions
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+vs kNN's unweighted combination of 
+\begin_inset Formula $k$
+\end_inset
+
+ instances
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Classification
+\end_layout
+
+\begin_layout Itemize
+linear classifiers: simplest type of feedforward neural network
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+TODO: single- vs multi-layer perceptron; feedforward vs backpropagation
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+perceptron
+\emph default
+ learning algorithm: for each iteration, if 
+\begin_inset Formula $y_{t}\left(\vec{\theta}\cdot\vec{x_{t}}\right)\le0$
+\end_inset
+
+ (mistake), then 
+\begin_inset Formula $\vec{\theta}\leftarrow\vec{\theta}+y_{t}\vec{x_{t}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+makes at most 
+\begin_inset Formula $\frac{R^{2}}{\gamma_{g}^{2}}$
+\end_inset
+
+ mistakes on training set, where 
+\begin_inset Formula $\norm{\vec{x_{i}}}\le R$
+\end_inset
+
+ and 
+\begin_inset Formula $\gamma_{g}\le\frac{y_{i}\left(\vec{\theta^{*}}\cdot\vec{x_{i}}\right)}{\norm{\vec{\theta^{*}}}}$
+\end_inset
+
+ is the margin
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+support vector machine (SVM)
+\emph default
+: maximum margin classifier with some slack
+\begin_inset Formula \begin{eqnarray*}
+\text{minimize } &  & \frac{1}{2}\norm{\vec{\theta}}^{2}+C\sum_{t=1}^{n}\xi_{t}\\
+\text{subject to } &  & y_{t}\left(\vec{\theta}^{T}\vec{x_{t}}+\theta_{0}\right)\ge1-\xi_{t}\\
+\text{and } &  & \xi_{t}\ge0\,\forall t=1,\dots,n\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+LOOCV error 
+\begin_inset Formula $\frac{1}{2}\sum_{i=1}^{n}\text{Loss}\left(y_{i},f\left(x_{i};\hat{\vec{\theta}}^{-i},\hat{\vec{\theta}}_{0}^{-i}\right)\right)$
+\end_inset
+
+ where Loss is the 0-1 loss.
+ Upper bound is (# support vectors / 
+\begin_inset Formula $n$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Itemize
+quadratic programming optimization problem: single global maximum that can
+ be found efficiently
+\end_layout
+
+\begin_layout Itemize
+dual: 
+\begin_inset Formula \begin{eqnarray*}
+\mbox{maximize} &  & \sum_{i}\alpha_{i}-\frac{1}{2}\sum_{i,j}\alpha_{i}\alpha_{j}y_{i}y_{j}\left(\vec{x}_{i}\cdot\vec{x}_{j}\right)\\
+\mbox{subject to} &  & \alpha_{i}\ge0\,\forall i\\
+\mbox{and} &  & \sum_{i}\alpha_{i}y_{i}=0\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+kernel trick: substitute kernel function 
+\begin_inset Formula $K\left(\vec{x}_{i},\vec{x}_{j}\right)=F\left(\vec{x}_{i}\right)\cdot F\left(\vec{x}_{j}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $F$
+\end_inset
+
+ maps to high/infinite dimensions but 
+\begin_inset Formula $K$
+\end_inset
+
+ can still be computed efficiently
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Mercer's theorem
+\emph default
+: any 
+\begin_inset Quotes eld
+\end_inset
+
+reasonable
+\begin_inset Quotes erd
+\end_inset
+
+ (positive definite) kernel function corresponds to 
+\emph on
+some
+\emph default
+ feature space
+\end_layout
+
+\begin_layout Itemize
+kernels
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+quadratic: 
+\begin_inset Formula $\left(\vec{x}_{i}\cdot\vec{x}_{j}\right)^{2}$
+\end_inset
+
+ (common illustration: slicing hyperparabola yields circular separator)
+\end_layout
+
+\begin_layout Itemize
+polynomial: 
+\begin_inset Formula $\left(1+\vec{x}_{i}\cdot\vec{x}_{j}\right)^{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+radial basis function (RBF): often the best
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+logistic regression
+\emph default
+: optimize using logit/logistic/sigmoid function 
+\begin_inset Formula \[
+\Pr\left[y=1\mid\vec{x};\vec{\theta}\right]=h_{\vec{\theta}}\left(\vec{x}\right)=g\left(z\right)=\frac{e^{z}}{e^{z}+1}=\frac{1}{1+e^{-z}},\, z=\theta_{0}+\vec{\theta}\cdot\vec{x}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+gradient descent: identical (LMS) update rule & derivation but 
+\begin_inset Formula $h$
+\end_inset
+
+ is non-linear (logit)
+\end_layout
+
+\begin_layout Itemize
+for perfectly separable data, 
+\begin_inset Formula $\theta\rightarrow\infty$
+\end_inset
+
+; need regularization
+\end_layout
+
+\begin_layout Itemize
+another algo: Newton's method to find zero of 
+\begin_inset Formula $\ell'\left(\theta\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+coefficients & intercept have log-odds interpretation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $z=\log\frac{p}{1-p}$
+\end_inset
+
+, where 
+\begin_inset Formula $p=\Pr\left[y=1\mid\vec{x};\vec{\theta}\right]=g\left(z\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+intercept: log-odds if 
+\begin_inset Formula $\vec{x}=\vec{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+coefficient for indicator: log-odds between 1 and 0 groups
+\end_layout
+
+\begin_layout Itemize
+coefficient for continuous: log-odds between unit deltas in value
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://www.ats.ucla.edu/stat/mult_pkg/faq/general/odds_ratio.htm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Subsection
+Linear regression
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+ordinary least squares (OLS) regression
+\emph default
+: a linear regression
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+minimize cost function 
+\begin_inset Formula $J\left(\theta\right)=\frac{1}{2}\sum_{i=1}^{m}\left(y-h_{\vec{\theta}}\left(\vec{x}\right)\right)^{2},h_{\vec{\theta}}\left(\vec{x}\right)=\vec{\theta}\cdot\vec{x}$
+\end_inset
+
+ (sum of squared errors)
+\end_layout
+
+\begin_layout Itemize
+gradient descent: repeatedly 
+\begin_inset Formula $\theta_{j}\leftarrow\theta_{j}-\alpha\frac{\partial}{\partial\theta_{j}}J\left(\theta\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is configurable learning rate
+\end_layout
+
+\begin_layout Itemize
+batch: cost over all training instances
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\theta_{j}\leftarrow\theta_{j}+\alpha\sum_{i=1}^{m}\left(y^{\left(i\right)}-\vec{\theta}\cdot\vec{x}^{\left(i\right)}\right)\vec{x}_{j}^{\left(i\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+stochastic aka incremental: converges faster
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\theta_{j}\leftarrow\theta_{j}+\alpha\left(y^{\left(i\right)}-\vec{\theta}\cdot\vec{x}^{\left(i\right)}\right)\vec{x}_{j}^{\left(i\right)}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+update rule is called 
+\emph on
+least mean squares (LMS) rule
+\emph default
+ aka 
+\emph on
+Widrow-Hoff rule
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+derivation for single training instance: 
+\begin_inset Formula $\frac{\partial}{\partial\theta_{j}}J\left(\vec{\theta}\right)=\frac{\partial}{\partial\theta_{j}}\frac{1}{2}\left(y-\vec{\theta}\cdot\vec{x}\right)^{2}=-2\cdot\frac{1}{2}\left(y-\vec{\theta}\cdot\vec{x}\right)\frac{\partial}{\partial\theta_{j}}\left(y-\vec{\theta}\cdot\vec{x}\right)=-\left(y-\vec{\theta}\cdot\vec{x}\right)x_{j}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+magnitude of update proportional to error term
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+can minimize in closed form without iterative algo (some matrix calculus):
+ 
+\begin_inset Formula $\theta=\left(\transpose XX\right)^{-1}\transpose X\vec{y}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+LOOCV can also be computed without training 
+\begin_inset Formula $n$
+\end_inset
+
+ models: 
+\begin_inset Formula $\frac{1}{n}\sum_{i=1}^{n}\left(\frac{e_{i}}{1-h_{i}}\right)^{2}$
+\end_inset
+
+ where 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ is residual
+\end_layout
+
+\begin_layout Itemize
+probabilistic interp: why linear regression/why 
+\begin_inset Formula $J$
+\end_inset
+
+?
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+assume 
+\begin_inset Formula $y=\vec{\theta}\cdot\vec{x}+\epsilon$
+\end_inset
+
+ where 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ is normally distributed
+\end_layout
+
+\begin_layout Itemize
+in the following, 
+\emph on
+design matrix
+\emph default
+ 
+\begin_inset Formula $X$
+\end_inset
+
+ has training inputs as rows, and examples are indep
+\end_layout
+
+\begin_layout Itemize
+to maximize likelihood 
+\begin_inset Formula $L\left(\vec{\theta}\right)=p\left(\vec{y}\mid X;\vec{\theta}\right)=\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{\left(y^{\left(i\right)}-\vec{\theta}\cdot\vec{x}^{\left(i\right)}\right)^{2}}{2\sigma^{2}}\right)$
+\end_inset
+
+, must minimize cost function in exponent
+\end_layout
+
+\begin_layout Itemize
+can work it out by writing log likelihood
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Subsection
+Local regression
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+locally weighted scatterplot smoothing (LOESS aka LOWESS) aka locally weighted
+ regression (LWR)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+a type of 
+\emph on
+smoother
+\end_layout
+
+\begin_layout Itemize
+typically LOESS is variable-bandwidth (fixed-span) smoother (like nearest-neighb
+ors)
+\end_layout
+
+\begin_layout Itemize
+typically LOESS is locally quadratic or linear
+\end_layout
+
+\begin_layout Itemize
+weight functions/kernels: tricubic (traditional), Gaussian, ...
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+fixed-bandwidth example: to predict at 
+\begin_inset Formula $x$
+\end_inset
+
+, fit 
+\begin_inset Formula $\theta$
+\end_inset
+
+ to minimize 
+\begin_inset Formula $\sum_{i}w^{\left(i\right)}\left(y^{\left(i\right)}-\vec{\theta}\cdot\vec{x}^{\left(i\right)}\right)^{2}$
+\end_inset
+
+ where typically 
+\begin_inset Formula $w^{\left(i\right)}=\exp\left(-\frac{\left(x^{\left(i\right)}-x\right)^{2}}{2\tau^{2}}\right)$
+\end_inset
+
+ (some kernel) and 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is 
+\emph on
+bandwidth 
+\emph default
+param
+\end_layout
+
+\begin_layout Subsection
+GLM
+\end_layout
+
+\begin_layout Itemize
+exponential family: 
+\begin_inset Formula $p\left(y;\eta\right)=b\left(y\right)\exp\left(\transpose{\eta}T\left(y\right)-a\left(\eta\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\eta$
+\end_inset
+
+ is 
+\emph on
+natural param
+\emph default
+ aka 
+\emph on
+canonical param
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $T\left(y\right)$
+\end_inset
+
+ is 
+\emph on
+sufficient statistic
+\emph default
+; often 
+\begin_inset Formula $T\left(y\right)=y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a\left(\eta\right)$
+\end_inset
+
+ is 
+\emph on
+log partition function
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $e^{-a\left(\eta\right)}$
+\end_inset
+
+ is normalizing const; ensures 
+\begin_inset Formula $p$
+\end_inset
+
+ sums/integrates to 1 over 
+\begin_inset Formula $y$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+fixed 
+\begin_inset Formula $T,a,b$
+\end_inset
+
+ defines a 
+\emph on
+family
+\emph default
+ (set) of dists param'd by 
+\begin_inset Formula $\eta$
+\end_inset
+
+ (vary 
+\begin_inset Formula $\eta$
+\end_inset
+
+ for diff dists in fam)
+\end_layout
+
+\begin_layout Itemize
+assumptions to derive GLM
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $y\mid x;\theta\sim\left(\mbox{some exponential family}\right)\left(\eta\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+predicting 
+\begin_inset Formula $h\left(x\right)=\E\left[T\left(y\right)\mid x\right]=\E\left[y\mid x\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\eta=\vec{\theta}\cdot\vec{x}$
+\end_inset
+
+ (more of a 
+\begin_inset Quotes eld
+\end_inset
+
+design choice
+\begin_inset Quotes erd
+\end_inset
+
+ rather than an assumption)
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+PCA
+\end_layout
+
+\begin_layout Itemize
+PCA transpose trick 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+http://blog.echen.me/2011/03/14/pca-transpose-trick/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+given 
+\begin_inset Formula $m\times n$
+\end_inset
+
+ obs matrix 
+\begin_inset Formula $A$
+\end_inset
+
+, often 
+\begin_inset Formula $n\gg m$
+\end_inset
+
+ (dims 
+\begin_inset Formula $\gg$
+\end_inset
+
+ obs)
+\end_layout
+
+\begin_layout Itemize
+finding evecs of big 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $\transpose AA$
+\end_inset
+
+ is expensive
+\end_layout
+
+\begin_layout Itemize
+insight: if 
+\begin_inset Formula $v$
+\end_inset
+
+ is evec of 
+\begin_inset Formula $A\transpose A$
+\end_inset
+
+, then 
+\begin_inset Formula $\transpose Av$
+\end_inset
+
+ is evec of 
+\begin_inset Formula $\transpose AA$
+\end_inset
+
+ w same eval (short proof)
+\end_layout
+
+\begin_layout Itemize
+so, find evecs of 
+\begin_inset Formula $A\transpose A$
+\end_inset
+
+, then multiply by 
+\begin_inset Formula $\transpose A$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+SVD
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $M=U\Sigma V^{\ast}$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $U$
+\end_inset
+
+ is 
+\begin_inset Formula $m\times m$
+\end_inset
+
+ real/complex unitary matrix; cols (
+\emph on
+left singular vectors
+\emph default
+) are evecs of 
+\begin_inset Formula $MM^{\ast}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is 
+\begin_inset Formula $m\times n$
+\end_inset
+
+ non-neg real diag matrix
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+entries are 
+\emph on
+singular values
+\end_layout
+
+\begin_layout Itemize
+non-0 singular values are sqrts of non-0 evals of 
+\begin_inset Formula $MM^{\ast}$
+\end_inset
+
+ or 
+\begin_inset Formula $M^{\ast}M$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $V^{\ast}$
+\end_inset
+
+ is 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ real/complex unitary matrix; cols (
+\emph on
+right singular vectors
+\emph default
+) are evecs of 
+\begin_inset Formula $M^{\ast}M$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+when all real, 
+\begin_inset Formula $U,V$
+\end_inset
+
+ are rotations and 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is scaling
+\end_layout
+
+\begin_layout Itemize
+eval decomp: similar concept but only for square matrices 
+\begin_inset Formula $M$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $M^{\ast}M=V\Sigma^{\ast}U^{\ast}U\Sigma V^{\ast}=V\left(\Sigma^{\ast}\Sigma\right)V^{\ast}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $MM^{\ast}=U\Sigma V^{\ast}V\Sigma^{\ast}U^{\ast}=U\left(\Sigma\Sigma^{\ast}\right)U^{\ast}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+RHSs are eval decomps of LHSs
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+use SVD to perform PCA
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+let 
+\begin_inset Formula $M$
+\end_inset
+
+ be deviations matrix; covar matrix is 
+\begin_inset Formula $\frac{1}{n}M\transpose M=\frac{1}{n}U\Sigma^{2}\transpose U$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+low-rank approx to 
+\begin_inset Formula $M$
+\end_inset
+
+: 
+\begin_inset Formula $\tilde{M}=U\tilde{\Sigma}V^{\ast}$
+\end_inset
+
+, where 
+\begin_inset Formula $\tilde{\Sigma}$
+\end_inset
+
+ is same as 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ but with only 
+\begin_inset Formula $r$
+\end_inset
+
+ largest singular values (rest replaced by 0)
+\end_layout
+
+\begin_layout Subsection
+Matrix factorization
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R\approx MU$
+\end_inset
+
+ where 
+\begin_inset Formula $M$
+\end_inset
+
+ is 
+\begin_inset Formula $n_{M}\times d$
+\end_inset
+
+, 
+\begin_inset Formula $U$
+\end_inset
+
+ is 
+\begin_inset Formula $d\times n_{U}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $d$
+\end_inset
+
+ latent features
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+EM-like algo (6.867 project)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+randomly init 
+\begin_inset Formula $M$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+learn column 
+\begin_inset Formula $i$
+\end_inset
+
+ of 
+\begin_inset Formula $U$
+\end_inset
+
+ with OLS: 
+\begin_inset Formula $\vec{u_{i}}=\left(\transpose MM\right)^{-1}\transpose M\vec{r_{i}}$
+\end_inset
+
+ where 
+\begin_inset Formula $\vec{r_{i}}$
+\end_inset
+
+ has just known values from column 
+\begin_inset Formula $i$
+\end_inset
+
+ of 
+\begin_inset Formula $R$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+learn 
+\begin_inset Formula $M$
+\end_inset
+
+ from 
+\begin_inset Formula $U$
+\end_inset
+
+; iterate
+\end_layout
+
+\begin_layout Itemize
+strongly overfits; can try introducing prior to prevent overfitting and
+ to coerce values to be within 1 to 5
+\end_layout
+
+\begin_layout Itemize
+can't run if too sparse because 
+\begin_inset Formula $\left(\transpose MM\right)^{-1}$
+\end_inset
+
+ becomes singular
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+gradient descent 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.quuxlabs.com/blog/2010/09/matrix-factorization-a-simple-tutorial-and-im
+plementation-in-python/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $e_{ij}^{2}=\left(r_{ij}-\hat{r_{ij}}\right)^{2}=\left(r_{ij}-\sum_{k=1}^{K}p_{ik}q_{kj}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+gradient:
+\begin_inset Formula \begin{eqnarray*}
+\frac{\partial}{\partial p_{ik}}e_{ij}^{2} & = & -2\left(r_{ij}-\hat{r_{ij}}\right)^{2}q_{kj}=-2e_{ij}q_{kj}\\
+\frac{\partial}{\partial q_{kj}}e_{ij}^{2} & = & -2\left(r_{ij}-\hat{r_{ij}}\right)^{2}p_{ik}=-2e_{ij}p_{ik}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+update rule (usu.
+ 
+\begin_inset Formula $\alpha=.0002$
+\end_inset
+
+):
+\begin_inset Formula \begin{eqnarray*}
+p_{ik}' & = & p_{ik}+\alpha\frac{\partial}{\partial p_{ik}}e_{ij}^{2}=p_{ik}+2\alpha e_{ij}q_{kj}\\
+q_{kj}' & = & q_{kj}+\alpha\frac{\partial}{\partial q_{kj}}e_{ij}^{2}=q_{kj}+2\alpha e_{ij}p_{ik}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+with regularization to avoid overfitting:
+\begin_inset Formula \begin{eqnarray*}
+e_{ij} & = & \left(r_{ij}-\sum_{k=1}^{K}p_{ik}q_{kj}\right)^{2}+\frac{\beta}{2}\sum_{k=1}^{K}\left(\norm P^{2}+\norm Q^{2}\right)\\
+p_{ik}' & = & p_{ik}+\alpha\frac{\partial}{\partial p_{ik}}e_{ij}^{2}=p_{ik}+\alpha\left(2e_{ij}q_{kj}-\beta p_{ik}\right)\\
+q_{kj}' & = & q_{kj}+\alpha\frac{\partial}{\partial q_{kj}}e_{ij}^{2}=q_{kj}+\alpha\left(2e_{ij}p_{ik}-\beta q_{kj}\right)\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+important extension: non-negative matrix factorization (NMF)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+require 
+\begin_inset Formula $P,Q$
+\end_inset
+
+ to be non-negative
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_body
+\end_document
