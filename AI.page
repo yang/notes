@@ -1172,7 +1172,16 @@ deep learning TODO
 
 gradient boosted decision trees
 
-- favors many shallow trees (maybe even stumps)
+- related terms: GEM algo, treeboost
+- favors many shallow trees (depth 2 or 3, maybe even stumps)
+- train tree $k$ on sample of training set where labels are residuals from
+  model-so-far $z$
+  - regression: $r = y - F_{k-1}(\vec{x})$
+  - classif: $r = y - \frac{1}{1 + \exp(-F_{k-1}(\vec{x}))}$
+  - initial $r = y$
+- general formulation defined in terms of abstract loss function
+  - can't actually calculate gradient, but follow residuals for steepest
+    descent
 - usage
   - yahoo has used this extensively: GBRank, SmoothDCG
   - blender in BellKor
@@ -1185,3 +1194,5 @@ gradient boosted decision trees
   - boosting is sequential
   - compute intensive: in DTs, for each feature/value, must compute gain
   - can perform poorly on high-dim sparse data (eg bag of words) bc too many nodes/trees needed
+- variations
+  - initialized GB: init $F_0$ is output of random forest
