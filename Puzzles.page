@@ -56,3 +56,29 @@ Probability
 - poisson approximation can solve the above and others (prob of drunken
   walker ending at start location):
   <http://heroofourtime.blogspot.com/2010/11/birthday-problem.html>
+
+Geometry
+========
+
+- You are in a boat exactly at the center of a perfectly circular lake. On the shore, there is a thief who wants to take you hostage.
+
+  You can run faster than the thief, if you make it to shore. But the thief can run 4 times as fast as you can row. The thief cannot swim and doesn’t have a boat.
+
+  Can you escape the thief?
+
+  <http://mindyourdecisions.com/blog/2011/05/25/puzzle-escaping-a-thief/>
+
+Practical
+=========
+
+- 3 switches in room A, 3 bulbs in room B. how to tell which switches go to
+  which bulbs if you're in room A, can move to room B, but can't go back to
+  room A?
+  <http://blogs.msdn.com/b/ericlippert/archive/2011/02/14/what-would-feynman-do.aspx>
+- which is the correct answer on this test question?
+
+  1. 今天是个女日子，因为我在可逻辑学。
+  2. 今天是个好日子，因为我在学逻辑学。
+  3. 今天八个好日子，因为令在学逻辑学。
+
+  <http://mindyourdecisions.com/blog/2011/05/30/using-logic-to-solve-a-test-question/>
