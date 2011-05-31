@@ -63,8 +63,7 @@
 
 
 \begin_inset FormulaMacro
-\newcommand{\Cov}{}
-{\text{Cov}}
+\newcommand{\Cov}{\text{Cov}}
 \end_inset
 
 
