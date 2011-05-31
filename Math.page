@@ -234,9 +234,6 @@ statistical tests
 - binomial test: for small categorical data
   - compare group against theoretical value (i.e. with-replacement; see
     binomial dist vs hypergeom dist)
-- student's t-test
-  - same as z-test but look up into student's t-distribution instead of
-    gaussian (calculate t-statistic identically to z-score)
 
 neyman-pearson
 
