@@ -13,7 +13,7 @@ Riddles
   see others'. no communication. at least one must correctly say own hat
   color, else all executed. given prep planning time before test begins/hats
   given.
-- # points on earth where going 1mi south, east, north goes back to origin
+- num points on earth where going 1mi south, east, north goes back to origin
 - (optimal stopping) given a sequence of $n$ ppl to date, where ppl are
   totally-ordered in how good a match they are for you, how many to reject/skip
   to maximize prob of accepting the best person?
