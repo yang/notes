@@ -3,6 +3,7 @@ TODO
 - mege in notes from CS182, 6.867
 - Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
 - kalman filters, smoothing
+- particle filters
 - <http://measuringmeasures.com/blog/2010/3/12/learning-about-machine-learning-2nd-ed.html>
 - separating hyperplane
 - sigmoid kernel function
@@ -20,7 +21,6 @@ TODO
 - $t$-test: matched pairs and unmatched
 - L1/lasso, L2/ridge/Tihkonov regression
 - mixture model for collab filtering
-- low-rank matrix factorization
 
 wisdom
 
@@ -439,9 +439,9 @@ linear discriminant analysis
   - <http://www.cs.huji.ac.il/~shashua/papers/class8-PCA-LDA.pdf>
 - despite name, it's generative; name makes sense vs PCA (which ignores labels)
 
-- resources
-  - http://videolectures.net/icmi05_bengio_tsmla/
-  - google video: machine learning
+locally linear embedding
+
+- non-linear dimensionality reduction technique TODO
 
 trending algorithms
 
