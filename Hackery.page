@@ -2254,6 +2254,14 @@
       <secret>`
     - `ec2-register <bucket>/<manifest>`: returns AMI ID
     - `ec2-register <ami>`: returns AMI ID
+
+        ec2-register -a x86_64 -n $NAME \
+            -b /dev/sda1=snap-$SNAP::false \
+            -b /dev/sdb=ephemeral0 \
+            -b /dev/sdc=ephemeral1 \
+            -b /dev/sdf=snap-$SNAP::false \
+            --kernel aki-$KERNEL --root-device-name /dev/sda1
+
   - rds
     - multi-az replication: synchronous to inaccessible failover; probably DRBD
     - read replicas: async replication; probably built-in mysql replication
