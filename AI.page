@@ -913,18 +913,6 @@ misc
   - simple form: final prediction = sum of global and local (user-specific)
     models
 
-nlp
-===
-
-- segmentation: figuring out word boundaries
-  - simplest: over all possible segmentations, return seg w max prod over all
-    words of P(word)
-
-modeling
-========
-
-- hyperparameters: model params that are not being estimated/optimized
-
 svm
 ===
 

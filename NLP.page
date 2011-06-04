@@ -11,7 +11,9 @@ general NLP problems
 
 - POS tagging
 - sentence detection
-- tokenization
+- tokenization/segmentation: figuring out word/sentence boundaries
+  - simplest: over all possible segmentations, return seg w max prod over all
+    words of P(word)
 - chunking
 - parsing
 - named entity recognition
