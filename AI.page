@@ -997,6 +997,10 @@ assoc rule mining/learning, frequent itemset mining
   - <http://www.engr.uvic.ca/~seng474/fptree_complete_example.ppt>
   - <https://github.com/enaeseth/python-fp-growth/blob/master/fp_growth.py>
   - orig paper <http://www.inf.unibz.it/dis/teaching/DWDM/project2010/FP-growth.pdf>
+- similarity-based: calculate (e.g.) jaccard similarity between indicator
+  attributes
+  - faster using minhash for first pass
+  - cohen et al, 2001
 
 rule learning/induction
 
