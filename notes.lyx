@@ -488,6 +488,154 @@ normalized
 
 \end_deeper
 \begin_layout Section
+Algorithms
+\end_layout
+
+\begin_layout Subsection
+LSH
+\end_layout
+
+\begin_layout Itemize
+usually use shingling
+\end_layout
+
+\begin_layout Itemize
+minhash: for clustering sets by similarity
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $h_{\min}\left(x\right)=\min_{x\in X}h\left(x\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+for two sets of numbers 
+\begin_inset Formula $A,B$
+\end_inset
+
+, 
+\begin_inset Formula $\Pr\left[\min\left(A\right)=\min\left(B\right)\right]=J\left(A,B\right)=\frac{\left|A\cap B\right|}{\left|A\cup B\right|}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+with 
+\begin_inset Formula $k$
+\end_inset
+
+ hash fns:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[\bigwedge_{i=1}^{k}h_{\min}^{\left(i\right)}\left(A\right)=h_{\min}^{\left(i\right)}\left(B\right)\right]=\left(\frac{\left|A\cap B\right|}{\left|A\cup B\right|}\right)^{k}$
+\end_inset
+
+ (low false positives)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[\bigvee_{i=1}^{k}h_{\min}^{\left(i\right)}\left(A\right)=h_{\min}^{\left(i\right)}\left(B\right)\right]=1-\left(1-\frac{\left|A\cap B\right|}{\left|A\cup B\right|}\right)^{k}$
+\end_inset
+
+ (low false negatives)
+\end_layout
+
+\begin_layout Itemize
+estimate 
+\begin_inset Formula $J\left(A,B\right)$
+\end_inset
+
+ as ratio of matching hash fns
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+with 
+\begin_inset Formula $k$
+\end_inset
+
+ smallest hashes:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[\mbox{all match}\right]=\frac{{\left|A\cap B\right| \choose n}}{{\left|A\cup B\right| \choose n}}\approx\left(\frac{\left|A\cap B\right|}{\left|A\cup B\right|}\right)^{n}$
+\end_inset
+
+ for 
+\begin_inset Formula $n\ll\left|A\cap B\right|$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+estimate 
+\begin_inset Formula $J\left(A,B\right)$
+\end_inset
+
+ as ratio of matching hashes
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+simhash: similar documents have low Hamming distance between their simhashes
+ (Moses Charikar, STOC02)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $V=\left[0\right]\times64$
+\end_inset
+
+ for 64-bit simhash
+\end_layout
+
+\begin_layout Itemize
+for each item, if bit 
+\begin_inset Formula $i$
+\end_inset
+
+ of 
+\begin_inset Formula $h\left(x\right)$
+\end_inset
+
+ set, increment 
+\begin_inset Formula $V\left[i\right]$
+\end_inset
+
+, else decrement 
+\begin_inset Formula $V\left[i\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+bit 
+\begin_inset Formula $i$
+\end_inset
+
+ of simhash is 1 if 
+\begin_inset Formula $V\left[i\right]>0$
+\end_inset
+
+ else 0
+\end_layout
+
+\begin_layout Itemize
+patented by Google
+\end_layout
+
+\end_deeper
+\begin_layout Section
 Statistics
 \end_layout
 
