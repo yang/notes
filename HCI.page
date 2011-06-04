@@ -28,7 +28,14 @@ reflow: recalculating positions when eg resizing a window
 data visualizations
 
 - boxplots
-- candlestick plots
+- candlestick plots: thick is open/close, thin is intraday high/low, green is
+  "closed higher"
+- stemplots: use text to convey distribution
+  - <http://vis.stanford.edu/protovis/ex/stem-and-leaf.html>
+- rose/coxcomb diagram: evenly sized polar segments (eg months), different
+  wedge sizes (may have layers)
+  - <http://vis.stanford.edu/protovis/ex/crimea-rose.html>
+- box-and-whisker
 - hierarchical
   - treemaps
   - ringmaps/multi-level pies/sunburst/wedge stack graph
@@ -36,3 +43,12 @@ data visualizations
   - spacetrees: scope context to selected node in tree
   - bubble plots
   - nested column plots
+- high-dimensional
+  - parallel coordinates
+- time series
+  - index charts: all about relative change with respect to reference month
+    (all stocks pass through one point)
+
+interaction techniques
+
+- brushing: selecting data in one view and updating others
