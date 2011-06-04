@@ -882,29 +882,6 @@ latent dirichlet allocation (LDA)
   topic
 - TODO
 
-systems
-=======
-
-gmail priority inbox
-
-- <http://research.google.com/pubs/archive/36955.pdf>
-- concise paper
-- use simple linear logistic regression for scalable learning & prediction
-- features: social (sender/recip metrics), msg content, thread, labels
-- importance metric: $p=P(a \in A, t \in (T_{min}, T_{max}) | \mathbf{f}, s)$
-  - action $a$ within time $t$ of delivery given whether seen ($s$)
-  - $T_{min}$ under 24 hours, constrained by model update frequency and gives
-    users time to react
-  - $T_{max}$ in days; longer interaction periods are not considered
-  - [prediction error strange]
-- personalizing model uses transfer learning
-  - $s = \sum_{i=1}^n f_i g_i + \sum_{i=1}^{n+k} f_i w_i, p=\frac{1}{1 +
-    \exp^{-s}}$
-  - $k$ user-specific features
-- use PA-II online passive-aggressive regression variant
-- misc
-  - continuous -> binary features via ID3-style algo [?]
-
 misc
 
 - transfer learning: storing knowledge gained while solving one problem and
@@ -913,10 +890,7 @@ misc
   - simple form: final prediction = sum of global and local (user-specific)
     models
 
-svm
-===
-
-general
+support vector machine (SVM)
 
 - hyperparameters
   - eg $C$ penalty param
@@ -1134,7 +1108,7 @@ getting in shape for the sport of data science (jeremy howard, kaggle chief scie
   - eg plotting hundreds of time series is surprisingly useful (won that comp)
 - models
   - parametric models: GLM
-  - 
+  - TODO left off around here
   - non-parametric models: SVM, RF
 - traffic prediction: excel color scales helped see the pattern/propagation of
   jams
@@ -1184,3 +1158,26 @@ gradient boosted decision trees
   - can perform poorly on high-dim sparse data (eg bag of words) bc too many nodes/trees needed
 - variations
   - initialized GB: init $F_0$ is output of random forest
+
+systems/applications
+====================
+
+gmail priority inbox
+
+- <http://research.google.com/pubs/archive/36955.pdf>
+- concise paper
+- use simple linear logistic regression for scalable learning & prediction
+- features: social (sender/recip metrics), msg content, thread, labels
+- importance metric: $p=P(a \in A, t \in (T_{min}, T_{max}) | \mathbf{f}, s)$
+  - action $a$ within time $t$ of delivery given whether seen ($s$)
+  - $T_{min}$ under 24 hours, constrained by model update frequency and gives
+    users time to react
+  - $T_{max}$ in days; longer interaction periods are not considered
+  - [prediction error strange]
+- personalizing model uses transfer learning
+  - $s = \sum_{i=1}^n f_i g_i + \sum_{i=1}^{n+k} f_i w_i, p=\frac{1}{1 +
+    \exp^{-s}}$
+  - $k$ user-specific features
+- use PA-II online passive-aggressive regression variant
+- misc
+  - continuous -> binary features via ID3-style algo [?]
