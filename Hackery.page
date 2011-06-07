@@ -260,6 +260,7 @@
     - viz
       - ggplot2
       - rggobi
+      - directlabels
       - lattice (splom), car (spm): scatterplot matrices (see ggplot2)
       - maps, geosphere
       - popbio
