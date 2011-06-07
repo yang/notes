@@ -239,30 +239,34 @@
     - step: stepwise regression
     - loess, scatter.smooth
   - packages
-    - Rserve
-    - ggplot2
-    - quadprog
-    - randomForest
-    - rggobi
-    - survival
-    - rjags
-    - mgcv: smoothers for GLMs
-    - caret: data splitting, preprocessing, model tuning using resampling,
-      variable importance estimation
-      - train: parallel training procedure that takes care of a lot of stuff
-        for you
-    - lattice (splom), car (spm): scatterplot matrices (see ggplot2)
-    - knn
-    - maps, geosphere
-    - popbio
-      - logi.hist.plot: viz logistic regression results
-    - ROCR
-      - prediction
-      - performance
-    - kernlab
-    - HH
-      - ci.plot: confidence interval plot
-        <http://princeofslides.blogspot.com/2011/02/sab-r-metrics-basic-applied-regression.html>
+    - misc
+      - Rserve
+    - modeling
+      - randomForest
+      - survival
+      - rjags
+      - mgcv: smoothers for GLMs
+      - caret: data splitting, preprocessing, model tuning using resampling,
+        variable importance estimation
+        - train: parallel training procedure that takes care of a lot of stuff
+          for you
+      - knn
+      - ROCR
+        - prediction
+        - performance
+      - kernlab
+    - numeric
+      - quadprog
+    - viz
+      - ggplot2
+      - rggobi
+      - lattice (splom), car (spm): scatterplot matrices (see ggplot2)
+      - maps, geosphere
+      - popbio
+        - logi.hist.plot: viz logistic regression results
+      - HH
+        - ci.plot: confidence interval plot
+          <http://princeofslides.blogspot.com/2011/02/sab-r-metrics-basic-applied-regression.html>
   - vocab
     - setwd, read.csv
     - png, dev.off, par
