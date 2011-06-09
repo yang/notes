@@ -40,6 +40,11 @@
   - rapidminer > weka
 
 - weka
+  - trees
+    - REPTree: does reduced-error pruning; considers all attrs at each node
+    - RandomTree: no pruning; considers only random subset of attrs at each node
+    - J48: C4.5 impl
+    - <http://mydatamining.wordpress.com/2008/04/14/decision-trees/>
   - dealing with dataset imbalance
     - SpreadSubsample: undersampling
     - SMOTE: oversampling
