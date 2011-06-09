@@ -449,9 +449,14 @@ trending algorithms
   log(monthly total)
   - <http://stackoverflow.com/questions/1635703/understanding-algorithms-for-measuring-trends>
 
-decision tree learning algorithms TODO
+decision tree learning algorithms
 
-- NP complete
+- regression trees can fit any model, but if tree built well then constant
+  should do well
+  - usu. use sum of squares instead of mutual information
+  - <http://www.stat.cmu.edu/~cshalizi/350-2006/lecture-10.pdf>
+- ID3
+- C4.5
 
 generalization guarantees
 
@@ -1138,13 +1143,14 @@ deep learning TODO
 
 gradient boosted decision trees
 
-- related terms: GEM algo, treeboost
+- related terms: GEM algo, treeboost, additive model
 - favors many shallow trees (depth 2 or 3, maybe even stumps)
 - train tree $k$ on sample of training set where labels are residuals from
   model-so-far $z$
   - regression: $r = y - F_{k-1}(\vec{x})$
   - classif: $r = y - \frac{1}{1 + \exp(-F_{k-1}(\vec{x}))}$
   - initial $r = y$
+- sum the outputs
 - general formulation defined in terms of abstract loss function
   - can't actually calculate gradient, but follow residuals for steepest
     descent
