@@ -451,9 +451,10 @@ trending algorithms
 
 decision tree learning algorithms
 
+- GINI: TODO
 - regression trees can fit any model, but if tree built well then constant
   should do well
-  - usu. use sum of squares instead of mutual information
+  - usu. use MSE instead of mutual information
   - <http://www.stat.cmu.edu/~cshalizi/350-2006/lecture-10.pdf>
 - ID3
 - C4.5
