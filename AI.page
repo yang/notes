@@ -454,10 +454,15 @@ decision tree learning algorithms
 - GINI: TODO
 - regression trees can fit any model, but if tree built well then constant
   should do well
-  - usu. use MSE instead of mutual information
+  - usu. use MSE instead of mutual information (pick attr to split where
+    partitions have minimal variance, as opposed to greatest information gain)
   - <http://www.stat.cmu.edu/~cshalizi/350-2006/lecture-10.pdf>
 - ID3
 - C4.5
+- M5
+- M5P
+  - at leaves, train linear regressors
+  - <http://www.opentox.org/dev/documentation/components/m5p>
 
 generalization guarantees
 
