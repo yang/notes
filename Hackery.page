@@ -260,6 +260,9 @@
         - prediction
         - performance
       - kernlab
+      - e1071: misc functions from dept stats, TU Wien
+        - NB, SVM, perms/combs, shortest paths, distances, LCA, lots more
+      - tm: term document matrices
     - numeric
       - quadprog
     - viz
