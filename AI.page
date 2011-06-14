@@ -962,6 +962,8 @@ pragmatics/usage
     - in (0,1], so fewer numerical difficulties
     - just one hyperparam ($\gamma$)
     - linear is special case of RBF; behaves like sigmoid for certain params
+    - "great when it works, but it's highly vulnerable both to 'junk'
+      dimensions which carry a large amount of noise and the choice of metric"
   - linear: good when many features
 - simplest approach to finding hyperparams: grid search
 
