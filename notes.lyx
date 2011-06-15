@@ -705,6 +705,56 @@ Unsorted
 \end_layout
 
 \begin_layout Itemize
+
+\emph on
+coefficient of determination
+\emph default
+ 
+\begin_inset Formula $R^{2}=\frac{SS_{\mbox{reg}}}{SS_{\mbox{tot}}}=1-\frac{SS_{\mbox{err}}}{SS_{\mbox{tot}}}$
+\end_inset
+
+ where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $SS_{\mbox{tot}}=\sum_{i}\left(y_{i}-\bar{y}\right)^{2}$
+\end_inset
+
+: total sum of squares (proportional to sample variance)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $SS_{\mbox{reg}}=\sum_{i}\left(f_{i}-\bar{y}\right)^{2}$
+\end_inset
+
+: regression/explained sum of squares
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $SS_{\mbox{err}}=\sum_{i}\left(y_{i}-f_{i}\right)^{2}$
+\end_inset
+
+: residual sum of squares; sum of squared residuals
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $R^{2}=1$
+\end_inset
+
+ is perfect; 
+\begin_inset Formula $R^{2}<0$
+\end_inset
+
+ means 
+\begin_inset Formula $\bar{y}$
+\end_inset
+
+ is better than the model
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 kalman filter: TODO understand
 \end_layout
 

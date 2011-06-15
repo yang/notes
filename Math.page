@@ -281,7 +281,6 @@ relationship btwn mean squared error and gaussian dist?  (TODO cs229 notes)
 - relative squared error (RSE): TODO
 - root relative squared error (RRSE): sqrt of RSE
 - relative absolute error (RAE): TODO
-- coef of determination aka R-squared: TODO
 
 outlier elimination
 
