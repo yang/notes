@@ -451,6 +451,12 @@ trending algorithms
 
 decision tree learning algorithms
 
+- high variance
+- unsupervised clustering: put your data all in one class and synthesize a
+  second class that is uniformly distributed throughout the same space
+  - RF will then try to distinguish the second class by finding the dense
+    clusters
+  - <http://www.genetics.ucla.edu/labs/horvath/RFclustering/RFclustering.htm>
 - GINI: TODO
 - regression trees can fit any model, but if tree built well then constant
   should do well
