@@ -21,6 +21,7 @@ TODO
 - $t$-test: matched pairs and unmatched
 - L1/lasso, L2/ridge/Tihkonov regression
 - mixture model for collab filtering
+- principal component regression (PCR), partial least squares regression (PLS)
 
 wisdom
 
