@@ -2056,6 +2056,52 @@ http://www.ats.ucla.edu/stat/mult_pkg/faq/general/odds_ratio.htm
 \end_deeper
 \end_deeper
 \begin_layout Subsection
+Support vector regression (SVR)
+\end_layout
+
+\begin_layout Itemize
+linear regression formulation with no slack: minimize 
+\begin_inset Formula $\frac{1}{2}\norm{\vec{w}}^{2}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $y_{i}-\left\langle \vec{w},\vec{x}_{i}\right\rangle -b\le\varepsilon$
+\end_inset
+
+ and 
+\begin_inset Formula $\left\langle \vec{w},\vec{x}_{i}\right\rangle +b-y_{i}\le\varepsilon$
+\end_inset
+
+ (require prediction 
+\begin_inset Formula $\left\langle \vec{w},\vec{x}_{i}\right\rangle +b$
+\end_inset
+
+ to be within 
+\begin_inset Formula $\pm\varepsilon$
+\end_inset
+
+ of 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2073&rep=rep1&type=pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
 Linear regression
 \end_layout
 
