@@ -50,8 +50,8 @@ learning taxonomies
     learning; hyp complexity fixed
     - once params learned, they're all you need to predict
   - nonparametric learning: hyp complexity can grow with data
-    - instance-based learning aka memory-based learning: hyps directly
-      constructed from training instances, eg nearest-neighbor, kernels
+    - instance-based aka memory-based learning: hyps directly constructed from
+      training instances, eg nearest-neighbor, kernels
     - eg LWR: must keep training set around; "re-training" all the time
   - nonparametric learning (2): infinite dimensional hyp (think of as function)
     - rationale: flexibility, performance, more realistic
@@ -262,6 +262,13 @@ local search/optimization algos
   - knn: see above
   - cuckoo hashing
 - genetic algos
+
+instance-based aka memory-based learning
+
+- eg nearest-neighbor, kernels
+- attribute weighting: randomly sample instances and check neighbors
+  - near hits w diff attr val decreases attr relevance
+  - near misses w diff attr val boosts attr relevance
 
 nearest-neighbor
 
