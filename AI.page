@@ -58,6 +58,53 @@ learning taxonomies
     - TODO
     - <http://learning.eng.cam.ac.uk/zoubin/talks/nips09npb.pdf>
 
+semi-supervised
+
+- EM
+  - train on labeled data, then iteratively label unlabeled data
+    probabilistically (E-step) and re-train on examples weighted by their
+    probabilities (M-step)
+  - might work w any classifier & iterative clustering algo, but must ensure
+    feedback loop is positive; NB and EM are good pair (both assume conditional
+    independence given class)
+  - can choose to weigh unlabeled data lower than labeled data
+  - can assume mixture of multiple components for each class (instead of just
+    one cluster in each class): in E-step, also probabilistically assign to
+    components
+- co-training
+  - relies on two separate views where they're
+    - complementary: $f(x) = f_1(x_1) = f_2(x_2)$
+    - conditionally indep given label
+  - pseudocode
+
+      LABELED = ...
+      UNLABELED = ...
+      UNLABELED' = sample u examples from UNLABELED
+      iterate:
+        H1 = train1(view1(LABELED))
+        H2 = train2(view2(LABELED))
+        let each H add p positive and n negative examples to LABELED
+        choose 2(p+n) from UNLABELED to replenish UNLABELED'
+
+  - use `UNLABELED'` bc forces H1/H2 to choose more representative examples of
+    underlying distribution (they try to choose the examples they're most
+    confident of)
+  - p,n should maintain ratio of underlying distribution
+  - H1 labels examples for H2, and vice-versa
+  - co-training incrementally labels; EM iteratively refines labels
+  - even when no natural split, artificial (even random) splits can work
+    (strive for independence)
+
+- co-EM
+  - co-EM better than co-training better than EM
+    - better than co-training probably bc it doesn't commit to labels, but
+      weighs probabilistically
+  - steps
+    - train A on labeled data and probabilistically label unlabeled data
+    - train B on all data and probabilistically relabel
+    - iterate
+  - good text classif results with SVMs
+
 data set balance
 
 - class imbalance is common problem in many problems
