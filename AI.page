@@ -1,6 +1,6 @@
 TODO
 
-- mege in notes from CS182, 6.867
+- merge in notes from CS182, 6.867
 - Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
 - kalman filters, smoothing
 - particle filters
