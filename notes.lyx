@@ -2185,6 +2185,20 @@ squared error
 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+bias-variance tradeoff
+\emph default
+: 
+\begin_inset Formula $\mbox{MSE}=\Var\left[\mbox{SE}\right]+\E\left[y_{i}-\hat{y}_{i}\right]^{2}=\Var\left[\mbox{SE}\right]+\mbox{Bias}^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 relative sq err 
 \begin_inset Formula $\mbox{RSE}=\frac{\sum_{i}\left(y_{i}-\hat{y}_{i}\right)^{2}}{\sum_{i}\left(y_{i}-\bar{y}\right)^{2}}$
