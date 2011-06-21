@@ -290,6 +290,12 @@
   - GUIs: RStudio beats all the rest
   - RF can only have categorical variables with <=32 factors
     <http://r.789695.n4.nabble.com/randomForest-can-not-handle-categorical-predictors-with-more-than-32-categories-td3036871.html>
+  - gripes
+    - syntax: can never tell what my environment is, when i'm writing symbols
+      or formulae or expressions, etc.
+    - inconsistency: packages use model formulae, vectors/matrices, and/or
+      data.frames
+    - hard to find packages, determine best packages, etc.
 
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
