@@ -2284,6 +2284,27 @@ coefficient of determination
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+intervals TODO
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+confidence interval: tells us about the params; at confidence level 95%,
+ 95% of samples would generate CIs containing true params
+\end_layout
+
+\begin_layout Itemize
+prediction interval: tells us about the next random point; always wider
+ than CI; 50% prob that next value is in PI in 95% of the samples
+\end_layout
+
+\begin_layout Itemize
+tolerance interval: prediction interval but with parameterized prob (95%
+ prob that next value is in TI in 95% of samples)
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Support vector regression (SVR)
 \end_layout
