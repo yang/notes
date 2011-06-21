@@ -2359,25 +2359,114 @@ useful for feature selection, with small samples
 
 \end_deeper
 \begin_layout Itemize
-intervals TODO
+intervals
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-confidence interval: tells us about the params; at confidence level 95%,
- 95% of samples would generate CIs containing true params
+confidence interval: tells us about population params (mean/variance, or
+ model params)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+at confidence level 95%, 95% of samples (repeating this experiment) would
+ generate CIs containing true params
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+prediction interval: tells us about data values; always wider than CI
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+next value is in PI of 95% of samples (repeated experiments)
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-prediction interval: tells us about the next random point; always wider
- than CI; 50% prob that next value is in PI in 95% of the samples
+or: 
+\begin_inset Quotes eld
+\end_inset
+
+95% of repeated experiments generate PI containing next random value
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-tolerance interval: prediction interval but with parameterized prob (95%
- prob that next value is in TI in 95% of samples)
+non-parametric assumes nothing about population; simply think of numbers
+ of points/gaps
 \end_layout
 
+\end_deeper
+\begin_layout Itemize
+tolerance interval: tells us about percentage of all future values; usu.
+ wider than PI
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+95% of all future values are in TI in 95% of samples/repeated experiments
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+eg: in simple linear regression, 
+\begin_inset Formula $\hat{y}=\hat{\alpha}+\hat{\beta}x=\E\left[y\mid x\right]$
+\end_inset
+
+ is the mean response, while 
+\begin_inset Formula $y=\alpha+\beta x+\epsilon$
+\end_inset
+
+ is actual response
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\hat{y}$
+\end_inset
+
+ use CI, since 
+\begin_inset Formula $\hat{\alpha},\hat{\beta}$
+\end_inset
+
+ use CI; draw confidence bands in plot for what the possible regression
+ line is
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $y$
+\end_inset
+
+ use PI; draw prediction bands in plot for what the possible values are
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Subsection
 Support vector regression (SVR)
