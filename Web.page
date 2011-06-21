@@ -31,6 +31,16 @@ encodings
 - javascript escaping: eg for json
 - css escaping
 
+JSON
+
+- always use object literal `{...}` in top-level to serve JSON
+  - if you use array `[...]` then hacker can override Array ctor and source
+    your JSON as a script, capturing values
+  - object literals in top-level are JS syntax error
+  - or prepend e.g. `throw 1` or `for (;;)`, which legit client can strip
+  - ECMAScript 5 changes array literals to use built ctor, which closes this
+    attack vector
+
 HTTP
 
 - cookies
