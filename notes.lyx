@@ -2285,6 +2285,80 @@ coefficient of determination
 
 \end_deeper
 \begin_layout Itemize
+adjusted 
+\begin_inset Formula $R^{2}$
+\end_inset
+
+ is 
+\begin_inset Formula $1-\left(1-R^{2}\right)\frac{n-1}{n-p-1}=1-\frac{SS_{\mbox{err}}}{SS_{\mbox{tot}}}\cdot\frac{df_{t}}{df_{e}}=1-\frac{\Var_{\mbox{err}}}{\Var_{\mbox{tot}}}$
+\end_inset
+
+, where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $p$
+\end_inset
+
+ is total number of regressors in linear model
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $n$
+\end_inset
+
+ is sample size
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $df_{t}$
+\end_inset
+
+ is dof 
+\begin_inset Formula $n-1$
+\end_inset
+
+ of estimate of population variance of 
+\begin_inset Formula $Y$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $df_{e}$
+\end_inset
+
+ is dof 
+\begin_inset Formula $n-p-1$
+\end_inset
+
+ of estimate of underlying population error variance
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var_{\mbox{err}}=\frac{SS_{\mbox{err}}}{n-p-1}$
+\end_inset
+
+, 
+\begin_inset Formula $\Var_{\mbox{tot}}=\frac{SS_{\mbox{tot}}}{n-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+increases only if new regressor improves model more than would be expected
+ by chance; penalizes too-many-regressors
+\end_layout
+
+\begin_layout Itemize
+useful for feature selection, with small samples
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 intervals TODO
 \end_layout
 
