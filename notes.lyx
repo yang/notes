@@ -2223,6 +2223,14 @@ relative sq err
 \end_layout
 
 \begin_layout Itemize
+mean abs pct err 
+\begin_inset Formula $\mbox{MAPE}=\frac{1}{n}\sum_{i}\left|\frac{y_{i}-\hat{y}_{i}}{y_{i}}\right|$
+\end_inset
+
+ (drawbacks: zeros, unbounded)
+\end_layout
+
+\begin_layout Itemize
 relative errors can compare models of different units
 \end_layout
 
