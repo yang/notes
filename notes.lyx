@@ -700,6 +700,166 @@ two-sample:
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+chi-square test: 
+\begin_inset Formula $X^{2}=\sum_{ij}\frac{\left(O_{ij}-E_{ij}\right)^{2}}{E_{ij}}$
+\end_inset
+
+, where 
+\begin_inset Formula $ij$
+\end_inset
+
+ enumerate cells in contingency table
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+dof is 
+\begin_inset Formula $n-1$
+\end_inset
+
+ where 
+\begin_inset Formula $n$
+\end_inset
+
+ is number of cells
+\end_layout
+
+\begin_layout Itemize
+compare freqs of a sample against theoretical dist
+\end_layout
+
+\begin_layout Itemize
+asymptotically approaches 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ distribution
+\end_layout
+
+\begin_layout Itemize
+uses normal approximation of multinomial distribution
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+likelihood ratio test: for comparing fit of 2 models/hyps, where null is
+ special case of the alternative
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+model with more params will be better fit, but is it significantly better?
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+likelihood ratio test statistic
+\emph default
+ for simple hyps 
+\begin_inset Formula $\theta_{0},\theta_{1}$
+\end_inset
+
+: 
+\begin_inset Formula $\Lambda\left(x\right)=\frac{L\left(\theta_{0}\mid x\right)}{L\left(\theta_{1}\mid x\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+log-likelihood ratio test statistic: 
+\emph default
+
+\begin_inset Formula $D=-2\ln\Lambda\left(x\right)=-2\ln\left(\frac{L\left(\theta_{0}\mid x\right)}{L\left(\theta_{1}\mid x\right)}\right)=-2\ln\left(L\left(\theta_{0}\mid x\right)\right)+2\ln\left(L\left(\theta_{1}\mid x\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+approx.
+ distributed as 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ with dof 
+\begin_inset Formula $df_{1}-df_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+G-test is more accurate than 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+for composite hyps: 
+\begin_inset Formula $\Lambda\left(x\right)=\frac{\sup\left\{ L\left(\theta\mid x\right):\theta\in\Theta_{0}\right\} }{\sup\left\{ L\left(\theta\mid x\right):\theta\in\Theta\right\} }$
+\end_inset
+
+ (compare MLEs)
+\end_layout
+
+\begin_layout Itemize
+Z-test, F-test, chi-square, G-test are tests for nested models and can be
+ phrased as (approximations of) log-likelihood ratios
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+F-test: compare models; ANOVA; TODO
+\end_layout
+
+\begin_layout Itemize
+G-test: for log-likelihood ratio tests; 
+\begin_inset Formula $G=2\sum_{ij}O_{ij}\ln\left(\frac{O_{ij}}{E_{ij}}\right)$
+\end_inset
+
+ TODO
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+chi-square tests are approximations; useful before computers
+\end_layout
+
+\begin_layout Itemize
+G-test much better where for any contingency cell 
+\begin_inset Formula $\left|O_{i}-E_{i}\right|>E_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+for small samples, use multinomial test, Fisher's exact test, or even Bayesian
+ hyp selection
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+multinomial test
+\end_layout
+
+\begin_layout Itemize
+Fisher's exact test
+\end_layout
+
+\begin_layout Itemize
+Bayes factors: vs likelihood ratio tests
+\end_layout
+
 \begin_layout Subsection
 Unsorted
 \end_layout
