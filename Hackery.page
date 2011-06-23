@@ -246,6 +246,12 @@
   - packages
     - misc
       - Rserve
+      - foreach
+    - data
+      - RPostgreSQL
+      - RGoogleDocs
+      - sqldf: SQL on DFs
+      - plyr: general bulk manipulation utils
     - modeling
       - randomForest
       - survival
@@ -279,12 +285,22 @@
           <http://princeofslides.blogspot.com/2011/02/sab-r-metrics-basic-applied-regression.html>
   - vocab
     - setwd, read.csv
-    - png, dev.off, par
-    - cor
+    - png, dev.off, par, dev.new
+    - cor, cov, var, mean, median
     - summary, print, display, table
-    - predict, resid
-    - head, tail, subset, rbind, colnames
+    - predict, resid, coef, confint, rstandard, rstudent, AIC, BIC,
+      cooks.distance, diffits, influence.measures
+    - sort
+    - transform, head, tail, subset, cbind, rbind, colnames
     - abline, lines
+    - str, dput
+    - new.env, with, within, search, ls, attach, detach, get, assign, `<<-`,
+      `<-`
+    - na.*
+    - options, sessionInfo
+    - trace, traceback, stop, stopifnot
+  - syntax tricks
+    - use backticks for non-standard names
   - to run an R file from cmd line
     - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
     - will be replaced with `Rscript`
