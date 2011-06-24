@@ -124,6 +124,88 @@ Or,
 
 \end_deeper
 \begin_layout Section
+Information Theory
+\end_layout
+
+\begin_layout Itemize
+entropy 
+\begin_inset Formula $H\left(X\right)=\E\left[I\left(X\right)\right]=-\sum_{x}p\left(x\right)\log p\left(x\right)$
+\end_inset
+
+ (expected 
+\emph on
+information content
+\emph default
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+lower prob events have higher information content
+\end_layout
+
+\begin_layout Itemize
+measured in bits
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+mutual information 
+\begin_inset Formula $I\left(X;Y\right)=\sum_{y}\sum_{x}p_{X,Y}\left(x,y\right)\log\frac{p_{X,Y}\left(x,y\right)}{p_{X}\left(x\right)p_{Y}\left(y\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+self-information is entropy: 
+\begin_inset Formula $I\left(X;X\right)=H\left(X\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $I\left(X;Y\right)=H\left(X\right)-H\left(X\mid Y\right)=H\left(Y\right)-H\left(Y\mid X\right)=H\left(X\right)+H\left(Y\right)-H\left(X,Y\right)=H\left(X,Y\right)-H\left(X\mid Y\right)-H\left(Y\mid X\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+relationship to correlation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+MI measures general depndence, correlation measures linear dependence; MI
+ is better for measuring dependence
+\end_layout
+
+\begin_layout Itemize
+MI applicable to symbolic sequences; correlation applicable only to numerical
+ sequences
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=D065413DAA29F4C500219B2822
+1E904A?doi=10.1.1.15.672&rep=rep1&type=pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Section
 Finance
 \end_layout
 
