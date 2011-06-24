@@ -129,7 +129,7 @@ Information Theory
 
 \begin_layout Itemize
 entropy 
-\begin_inset Formula $H\left(X\right)=\E\left[I\left(X\right)\right]=-\sum_{x}p\left(x\right)\log p\left(x\right)$
+\begin_inset Formula $H\left(X\right)=\E\left[I\left(X\right)\right]=-\sum_{x}p\left(x\right)\log p\left(x\right)\ge0$
 \end_inset
 
  (expected 
@@ -151,7 +151,7 @@ measured in bits
 \end_deeper
 \begin_layout Itemize
 mutual information 
-\begin_inset Formula $I\left(X;Y\right)=\sum_{y}\sum_{x}p_{X,Y}\left(x,y\right)\log\frac{p_{X,Y}\left(x,y\right)}{p_{X}\left(x\right)p_{Y}\left(y\right)}$
+\begin_inset Formula $I\left(X;Y\right)=\sum_{y}\sum_{x}p_{X,Y}\left(x,y\right)\log\frac{p_{X,Y}\left(x,y\right)}{p_{X}\left(x\right)p_{Y}\left(y\right)}\ge0$
 \end_inset
 
 
@@ -174,13 +174,21 @@ self-information is entropy:
 \end_layout
 
 \begin_layout Itemize
+symmetric uncertainy 
+\begin_inset Formula $U\left(X,Y\right)=2\frac{I\left(X;Y\right)}{H\left(X\right)+H\left(Y\right)}\in\left[0,1\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 relationship to correlation
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-MI measures general depndence, correlation measures linear dependence; MI
- is better for measuring dependence
+MI measures general dependence, correlation measures linear dependence;
+ MI is better for measuring dependence
 \end_layout
 
 \begin_layout Itemize
