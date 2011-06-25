@@ -3386,7 +3386,7 @@ information gain
 
 \begin_deeper
 \begin_layout Itemize
-entropy is information
+entropy is information uncertainty
 \end_layout
 
 \begin_layout Itemize
@@ -3399,8 +3399,8 @@ ultimately need
 \end_layout
 
 \begin_layout Itemize
-when branching on an attribute, remaining bits still needed is the expected
- class entropy of each branch: 
+when branching on an attribute, remaining uncertainty is the expected uncertaint
+y down each branch: 
 \begin_inset Formula $\E_{V}\left[H\left(Y_{V}\right)\right]=\sum_{v\in V}\frac{\left|Y_{v}\right|}{\left|Y\right|}H\left(Y_{v}\right)\le H\left(Y\right)$
 \end_inset
 
@@ -3420,7 +3420,7 @@ when branching on an attribute, remaining bits still needed is the expected
 \end_layout
 
 \begin_layout Itemize
-gain is 
+information gain is uncertainty drop 
 \begin_inset Formula $H\left(Y\right)-\E_{V}\left[H\left(Y_{V}\right)\right]$
 \end_inset
 
