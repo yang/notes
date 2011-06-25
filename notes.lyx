@@ -3376,5 +3376,57 @@ require
 
 \end_deeper
 \end_deeper
+\begin_layout Subsection
+Decision trees
+\end_layout
+
+\begin_layout Itemize
+information gain
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+entropy is information
+\end_layout
+
+\begin_layout Itemize
+ultimately need 
+\begin_inset Formula $H\left(Y\right)$
+\end_inset
+
+ bits to classify (e.g.
+ 1 bit for even 2-class distribution)
+\end_layout
+
+\begin_layout Itemize
+when branching on an attribute, remaining bits still needed is the expected
+ class entropy of each branch: 
+\begin_inset Formula $\E_{V}\left[H\left(Y_{V}\right)\right]=\sum_{v\in V}\frac{\left|Y_{v}\right|}{\left|Y\right|}H\left(Y_{v}\right)\le H\left(Y\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $V$
+\end_inset
+
+ is the attribute's value distribution and 
+\begin_inset Formula $Y_{v}$
+\end_inset
+
+ is the class distribution when filtered to attribute value 
+\begin_inset Formula $v$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+gain is 
+\begin_inset Formula $H\left(Y\right)-\E_{V}\left[H\left(Y_{V}\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \end_body
 \end_document
