@@ -341,7 +341,7 @@ machine learning
 - mixture models, EM
 - topic models, markov models, HMMs
 - bayesian nets (and learning them)
-- markov random fields, factor graphs, inference
+- random fields, conditional random fields, markov random fields, factor graphs, inference
 - inference, belief propagation
 - inference, junction trees
 - conditional models, structured prediction
