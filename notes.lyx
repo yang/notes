@@ -1239,6 +1239,46 @@ tensor product aka outer product
  matrix
 \end_layout
 
+\begin_layout Itemize
+gradient 
+\begin_inset Formula $\nabla f=\left[\begin{array}{c}
+\frac{\partial f}{\partial x_{1}}\\
+\frac{\partial f}{\partial x_{2}}\\
+\vdots\\
+\frac{\partial f}{\partial x_{n}}\end{array}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Hessian 
+\begin_inset Formula $\nabla^{2}f=\left[\begin{array}{cccc}
+\frac{\partial^{2}f}{\partial x_{1}^{2}} & \frac{\partial^{2}f}{\partial x_{1}\partial x_{2}} & \dots & \frac{\partial^{2}f}{\partial x_{1}\partial x_{n}}\\
+\frac{\partial^{2}f}{\partial x_{2}\partial x_{1}} & \frac{\partial^{2}f}{\partial x_{2}^{2}} &  & \frac{\partial^{2}f}{\partial x_{2}\partial x_{n}}\\
+\vdots &  & \ddots & \vdots\\
+\frac{\partial^{2}f}{\partial x_{n}\partial x_{1}} & \frac{\partial^{2}f}{\partial x_{n}\partial x_{2}} & \dots & \frac{\partial^{2}f}{\partial x_{n}^{2}}\end{array}\right]$
+\end_inset
+
+ is Jacobian of gradient
+\end_layout
+
+\begin_layout Itemize
+Jacobian of function 
+\begin_inset Formula $f:\Re^{n}\rightarrow\Re^{m}$
+\end_inset
+
+: 
+\begin_inset Formula $Jf=\left[\begin{array}{cccc}
+\frac{\partial f_{1}}{\partial x_{1}} & \frac{\partial f_{1}}{\partial x_{2}} & \dots & \frac{\partial f_{1}}{\partial x_{n}}\\
+\frac{\partial f_{2}}{\partial x_{1}} & \frac{\partial f_{2}}{\partial x_{2}} &  & \frac{\partial f_{2}}{\partial x_{n}}\\
+\vdots &  & \ddots & \vdots\\
+\frac{\partial f_{m}}{\partial x_{1}} & \frac{\partial f_{m}}{\partial x_{2}} & \dots & \frac{\partial f_{m}}{\partial x_{n}}\end{array}\right]$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 HITS
 \end_layout
