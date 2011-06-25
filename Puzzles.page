@@ -17,6 +17,13 @@ Riddles
 - (optimal stopping) given a sequence of $n$ ppl to date, where ppl are
   totally-ordered in how good a match they are for you, how many to reject/skip
   to maximize prob of accepting the best person?
+- 25 racehorses, 5 tracks, fewest # races to find top 3
+- # ways to climb $n$ steps if you take 1-2 steps at a time?
+- min # balance weighings to find heavier ball of 8?
+- 3 black hats, 2 white hats, 3 men in a line facing forward (can't see
+  behind), each wearing a hat. they guess at their own hats. man in back says
+  "i don't know," middle says "i don't know," front says "i know" - how does he
+  know?
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
 
@@ -56,6 +63,11 @@ Probability
 - poisson approximation can solve the above and others (prob of drunken
   walker ending at start location):
   <http://heroofourtime.blogspot.com/2010/11/birthday-problem.html>
+- 5 men form a circle; prob that they're youngest-to-oldest (either dir)?
+- prob of not rolling a 2 in 55 tosses of a 20-sided die is $.95^55$. prob of
+  this for any of the 20 numbers?
+- russian roulette: load 2 adjacent chambers. spin barrel. click. before
+  pulling again, want to spin?
 
 Geometry
 ========
