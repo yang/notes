@@ -193,7 +193,7 @@ MI measures general dependence, correlation measures linear dependence;
 
 \begin_layout Itemize
 MI applicable to symbolic sequences; correlation applicable only to numerical
- sequences
+ sequences; but MI must estimate continuous distributions
 \end_layout
 
 \begin_layout Itemize
