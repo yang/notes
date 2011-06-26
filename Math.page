@@ -371,7 +371,8 @@ eigenvalues and eigenvectors
   - given mat $A$, find scalar $\lambda$ (eigenvalue) and non-0 vector $v$
     (eigenvector) s.t. $A v = \lambda v$
   - doesn't compute matrix decomposition so suitable for large sparse A
-  - but will only find one eigenvalue (with max val) and may converge slowly
+  - but will only find one eigenvalue (with max val, aka _dominant eigenpair_)
+    and may converge slowly
   - start with random vector and iteratively multiply by $A$ and normalize
   - used in pagerank, HITS
   - <http://meyer.math.ncsu.edu/Meyer/PS_Files/IMAGE.pdf>
