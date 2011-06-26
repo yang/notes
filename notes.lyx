@@ -989,6 +989,99 @@ Bayes factors: vs likelihood ratio tests
 \end_layout
 
 \begin_layout Subsection
+Hypothesis testing
+\end_layout
+
+\begin_layout Itemize
+effect size: basically, how big a difference; fluffy notion/many formulations
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+absolute: e.g., 
+\begin_inset Quotes eld
+\end_inset
+
+difference between groups is 30lb
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+standardized difference of means: e.g., 
+\begin_inset Formula $\frac{\bar{X}-\bar{Y}}{S}$
+\end_inset
+
+, where 
+\begin_inset Formula $S$
+\end_inset
+
+ is SD of either or both groups
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+problem: can get significance (low 
+\begin_inset Formula $p$
+\end_inset
+
+-value) with big effect and small sample or big sample and small effect
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+hence, report effect/sample size with 
+\begin_inset Formula $p$
+\end_inset
+
+-value
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+power analysis: prob of rejecting false 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ (not making a type II error, false neg)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+power
+\emph default
+ aka 
+\emph on
+sensitivity
+\emph default
+ is 
+\begin_inset Formula $1-\beta$
+\end_inset
+
+ where 
+\begin_inset Formula $\beta$
+\end_inset
+
+ is 
+\emph on
+false negative rate
+\end_layout
+
+\begin_layout Itemize
+can use to find min sample size to likely detect given effect size, or min
+ effect size likely detected by given sample size
+\end_layout
+
+\begin_layout Itemize
+e.g., more powerful experiments may have more subjects
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
 Unsorted
 \end_layout
 
