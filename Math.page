@@ -672,3 +672,9 @@ sequences and series
 
 - TODO name: $(1-1/x)^k \approx e^{-k/x}$, $(1-k/m)^n \approx e^{-kn/m}$ (last
   seen <http://www.eecs.harvard.edu/~michaelm/postscripts/im2005b.pdf>)
+
+graph theory
+============
+
+- euler trail: visit each edge once; poly-time
+- hamiltonian path: visit each vertex once; NP-complete
