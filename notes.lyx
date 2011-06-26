@@ -845,6 +845,40 @@ Neymann-Pearson tests
 \end_layout
 
 \begin_layout Itemize
+Wald test: reject iff 
+\begin_inset Formula $2\cdot\frac{\left|\hat{\theta}-\theta_{0}\right|}{\sigma}>z_{\alpha}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+depends on representation of 
+\begin_inset Formula $\theta$
+\end_inset
+
+ (eg log-scaling); LR works with any monotonic transformation
+\end_layout
+
+\begin_layout Itemize
+uses 2 approximations (know standard error, dist is 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+); LR only assumes dist is 
+\begin_inset Formula $\chi^{2}$
+\end_inset
+
+ (if using that test)
+\end_layout
+
+\begin_layout Itemize
+only deals with scalars; LR can deal with vector params
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 likelihood ratio test: for comparing fit of 2 models/hyps, where null is
  special case of the alternative
 \end_layout
