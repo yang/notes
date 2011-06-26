@@ -81,6 +81,16 @@ Geometry
 
   <http://mindyourdecisions.com/blog/2011/05/25/puzzle-escaping-a-thief/>
 
+- can you draw a curve that crosses each border once?
+
+    +------+------+
+    |      |      |
+    +----+-+-+----+
+    |    |   |    |
+    +----+---+----+
+
+  <http://mindyourdecisions.com/blog/2011/06/15/a-fun-graph-theory-puzzle/>
+
 Practical
 =========
 
