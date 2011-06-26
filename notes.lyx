@@ -730,7 +730,7 @@ Statistics
 \end_layout
 
 \begin_layout Subsection
-Tests TODO
+Fisherian tests TODO
 \end_layout
 
 \begin_layout Itemize
@@ -832,6 +832,18 @@ uses normal approximation of multinomial distribution
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+multinomial test
+\end_layout
+
+\begin_layout Itemize
+Fisher's exact test
+\end_layout
+
+\begin_layout Subsection
+Neymann-Pearson tests
+\end_layout
+
 \begin_layout Itemize
 likelihood ratio test: for comparing fit of 2 models/hyps, where null is
  special case of the alternative
@@ -938,14 +950,6 @@ for small samples, use multinomial test, Fisher's exact test, or even Bayesian
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-multinomial test
-\end_layout
-
-\begin_layout Itemize
-Fisher's exact test
-\end_layout
-
 \begin_layout Itemize
 Bayes factors: vs likelihood ratio tests
 \end_layout
