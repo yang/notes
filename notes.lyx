@@ -1410,6 +1410,18 @@ Jacobian of function
 
 \end_layout
 
+\begin_layout Itemize
+graph/Markov chain is 
+\emph on
+irreducible
+\emph default
+ iff strongly connected; matrix is 
+\emph on
+irreducible
+\emph default
+ iff it's transition matrix of irreducible graph/Markov chain
+\end_layout
+
 \begin_layout Subsection
 HITS
 \end_layout
@@ -1515,9 +1527,154 @@ PageRank
 \end_layout
 
 \begin_layout Itemize
-TODO
+rank of page 
+\begin_inset Formula $i$
+\end_inset
+
+ at iteration 
+\begin_inset Formula $k$
+\end_inset
+
+: 
+\begin_inset Formula $r_{i}^{\left(k+1\right)}=\sum_{j\in I_{i}}\frac{r_{j}^{\left(k\right)}}{\left|O_{j}\right|}$
+\end_inset
+
+, where 
+\begin_inset Formula $I_{i}$
+\end_inset
+
+ is pages linking to 
+\begin_inset Formula $i$
+\end_inset
+
+ and 
+\begin_inset Formula $O_{j}$
+\end_inset
+
+ is pages 
+\begin_inset Formula $j$
+\end_inset
+
+ links to
 \end_layout
 
+\begin_layout Itemize
+start with uniform 
+\begin_inset Formula $r_{i}^{\left(0\right)}=\frac{1}{n}\,\forall i$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+in matrix notation, 
+\begin_inset Formula $\transpose{\pi^{\left(k+1\right)}}=\transpose{\pi^{\left(k\right)}}H$
+\end_inset
+
+, where 
+\begin_inset Formula $H_{ij}=\frac{1}{\left|O_{i}\right|}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+problems
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+dangling nodes i.e.
+ pages w no outlinks (rows of all 0s)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+replace rows with 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+ of all 
+\begin_inset Formula $\frac{1}{n}$
+\end_inset
+
+; call resulting matrix 
+\begin_inset Formula $S$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+graph may not be strongly connected
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+replace 
+\begin_inset Formula $S$
+\end_inset
+
+ with 
+\begin_inset Formula $G=\alpha S+\left(1-\alpha\right)E$
+\end_inset
+
+ where 
+\begin_inset Formula $E$
+\end_inset
+
+ is 
+\emph on
+teleportation matrix
+\emph default
+ where all rows are 
+\begin_inset Formula $\vec{u}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\pi=\pi G$
+\end_inset
+
+, usu.
+ with normalization condition 
+\begin_inset Formula $\sum_{i}\pi_{i}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+properties
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $S,G$
+\end_inset
+
+ are 
+\emph on
+stochastic matrices
+\emph default
+ (Markov chain transition matrix; rows sum to 1), hence there's always a
+ solution
+\end_layout
+
+\begin_layout Itemize
+actually a unique solution (
+\emph on
+stationary distribution
+\emph default
+), either by Markov theory or Perron-Frobenius theorem
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 \begin_inset Flex URL
 status collapsed
@@ -1525,6 +1682,18 @@ status collapsed
 \begin_layout Plain Layout
 
 http://meyer.math.ncsu.edu/Meyer/PS_Files/IMAGE.pdf
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://cacm.acm.org/magazines/2011/6/108660-pagerank-standing-on-the-shoulders-of-
+giants/fulltext
 \end_layout
 
 \end_inset
