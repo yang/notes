@@ -12,14 +12,10 @@ TODO
 - <http://googleresearch.blogspot.com/2010/04/lessons-learned-developing-practical.html>
 - top 10: <http://gettinggeneticsdone.blogspot.com/2010/04/top-10-algorithms-in-data-mining.html>
 - k-means/canopy clustering
-- model fitting: linear models, regularization/overfitting, $k$-fold
-  cross-validation
 - model selection criteria: akaike information criterion (AIC), minimum
-  description length (MDL), bayesian information criterion (BIC), ridge
-  regression
+  description length (MDL), bayesian information criterion (BIC)
 - common distributions: normal, beta binomial, multinomial
 - $t$-test: matched pairs and unmatched
-- L1/lasso, L2/ridge/Tihkonov regression
 - mixture model for collab filtering
 - principal component regression (PCR), partial least squares regression (PLS)
 
@@ -1189,17 +1185,6 @@ rule learning/induction
     <http://citeseer.ist.psu.edu/viewdoc/summary?doi=10.1.1.18.3844>
 - SLIPPER: competitive w/better than ripper, c4.5rules
 - SD-map: based on FP-growth
-
-regularization
-
-- overfitting tends to occur when large weights found in $\theta$
-- add regularization term to pressure params $\theta$ to be 0
-- L2: $\lambda \left\lnorm \theta^2 \right\rnorm$
-  - $\lambda$ is the regularization param
-  - special case of Tikhonov regularization
-  - can be computed directly in $O(n^3)$
-- L1: $\lambda \left\lnorm \theta \right\rnorm$
-- TODO
 
 backoff
 
