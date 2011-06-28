@@ -1,7 +1,6 @@
 Riddles
 =======
 
-- how many ways are there to walk up s steps if you can take 1 or 2 at a time?
 - given two ropes that burn in 60m (non-uniformly), measure 15m
 - with 2 eggs, what's min # steps to find the floor in a 100-fl bldg at which
   dropping eggs breaks the eggs?
@@ -25,6 +24,7 @@ Riddles
   "i don't know," middle says "i don't know," front says "i know" - how does he
   know?
 - digits AB+AA=1B2; A=?
+- how many ways are there to walk up s steps if you can take 1 or 2 at a time?
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
 
@@ -44,6 +44,8 @@ Programming
 Probability
 ===========
 
+- toss $m$ balls into $n$ bins; how many bins will be non-empty?
+- $m$ bins; how many balls to toss so that $k$ of them are non-empty?
 - birthday problem: computable
 - hat problem: actually a very hard problem
   - setup: 1000 ppl pile their hats, then each takes one.
