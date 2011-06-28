@@ -3165,6 +3165,98 @@ param
 \end_layout
 
 \begin_layout Subsection
+Regularization
+\end_layout
+
+\begin_layout Itemize
+overfitting tends to occur when large weights found in 
+\begin_inset Formula $\vec{\beta}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+regularization pressures 
+\begin_inset Formula $\vec{\beta}$
+\end_inset
+
+ to be small
+\end_layout
+
+\begin_layout Itemize
+LASSO/L1: minimize 
+\begin_inset Formula $\sum_{i}\left(\vec{\beta}\vec{x}_{i}-y_{i}\right)^{2}$
+\end_inset
+
+ where 
+\begin_inset Formula $\left|\vec{\beta}\right|\le s$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+more notes in AI.page
+\end_layout
+
+\begin_layout Itemize
+better than L2 when many features (vs examples)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+ridge/Tikhonov: instead of 
+\begin_inset Formula $\norm{X\vec{\beta}-\vec{y}}^{2}$
+\end_inset
+
+, minimize 
+\begin_inset Formula $\norm{X\vec{\beta}-\vec{y}}^{2}-\norm{\Gamma\vec{\beta}}^{2}$
+\end_inset
+
+ for some suitable Tikhonov matrix 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+L2 regularization: when 
+\begin_inset Formula $\Gamma=I$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Gamma$
+\end_inset
+
+ can also be highpass to enforce smoothing
+\end_layout
+
+\begin_layout Itemize
+explicit solution 
+\begin_inset Formula $\hat{\beta}=\left(\transpose XX+\transpose{\Gamma}\Gamma\right)^{-1}\transpose X\vec{y}$
+\end_inset
+
+ (
+\begin_inset Formula $O\left(n^{3}\right)$
+\end_inset
+
+ time)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+elastic net: handles highly correlated vars; brought up as best-of-both-worlds
+ alt to LASSO/ridge
+\end_layout
+
+\begin_layout Subsection
 GLM
 \end_layout
 
