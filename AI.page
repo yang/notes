@@ -821,21 +821,33 @@ feature selection
       irrelevant features
   - answer: empirically degrading performance with more features; cf curse of
     dimensionality
+    - DT (and many others, esp eg kNN) vuln to irrelevant attrs
+      - as you go down the tree, less data avail bc of splitting
+      - even relevant attrs can hurt; eg adding a high-signal attr deteriorates
+        perf by being chosen high up the tree, reducing the data down the tree
+    - NB robust to irrelevant attrs but vuln to redundant attrs by the same
+      principal
   - also, simpler models: faster, easier to understand, see most important
-- subset selection: evaluate a subset of features (or: which feature to discard
-  first? a search problem)
-  - wrappers: wrap a learning model, may overfit
-    - best to use the target model, since best features for one model may not
-      be best for another
-    - aka least angle regression (LARS) bc at each step you choose the
-      dimension that, when added, minimizes your angle to the residual ($y$)
-    - forward: starting w empty set, try adding features one/some at a time,
-      greedily choosing the feature that yields the highest cross-validation
-      accuracy
-    - stepwise: like forward, but after each add, also optionally remove a
-      feature, if removal yields a higher accuracy
-    - backward: a faster and sloppier version of naive backward (which is
-      opposite of forward)
+- scheme-indep techniques
+  - search algos (see below); some subset evaluation measures:
+    - filter: indep assessment based on general characteristics of data, eg
+      simple model
+    - wrapper: evaluate subset using the learner that will be ultimately used
+    - keep attrs that have high class cor but low inter-cor
+      - using symmetric uncertainty $U$, goodness of feature set is
+        $\sum_j U(A_j, C) / \sqrt{\sum_{i,j} U(A_i, A_j)}$
+  - use learner: eg, use attrs used by DT, or use top-coef attrs in linear
+    model, or use top 1R attrs, or use attribute weighting in instance-based
+    learning like kNN
+    - but error-based method like 1R may not be best for ranking attrs TODO
+      supervised discretization
+- search algos
+  - metrics: F-test (sig tests are discouraged; not even sure what this is
+    testing), AIC, BIC, $R^2$, CV accuracy
+  - best-first/greedy _stepwise regression_: most popular; data dredging?
+    - forward selection: add features one/some at a time
+    - backward elimination aka recursive elimination: eg this faster/sloppier
+      version of naive backward (which is opposite of forward)
 
         start with all features in model
         candidates (for removal) = all features
@@ -843,8 +855,8 @@ feature selection
           remove from candidates any feature whose exclusion yields no acc drop
           remove (from model and candidates) feature in candidates with biggest acc drop
 
-    - recursive feature elimination: another name for backward
-  - filters: like wrappers, but instead of model, use simpler filter
+    - combination: add & remove features, eg forward while optionally removing
+      a feature at each step
 - relevance determination: rank by information gain and evaluate first 10, 20,
   ... features
   - information gain: reduction in entropy due to attribute:
