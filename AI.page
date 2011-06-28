@@ -857,6 +857,34 @@ feature selection
 
     - combination: add & remove features, eg forward while optionally removing
       a feature at each step
+  - forward stagewise regression: "partially add" vars by increasing weight by
+    epsilon in correct direction
+    - increase weight along most-correlated var by $\epsilon$
+
+        let vector r = y
+        let vector beta = 0
+        iterate:
+          find x[j] most correlated with r
+          let delta = epsilon * sign(r, x[j])
+          set beta[j] += delta
+          set r -= delta * x[j]
+
+    - identical to LASSO for orthogonal predictors, and similar in general case
+  - least angle regression (LARS): fwd stagewise made fast
+    - increase weight along most-correlated var until another var just as
+      correlated, then move along the bisection of both vars, etc.
+    - similar results as LASSO and fwd stagewise, which can be thought of as
+      restricted versions of LARS; slight modifications yield LASSO/fwd
+      stagewise
+    - <http://blog.echen.me/tag/least-angle-regression/>
+    - <http://www.stanford.edu/~hastie/TALKS/larstalk.pdf>
+  - L1 (LASSO) regression/regularization
+    - LASSO = least absolute shrinkage and selection operator
+    - assume attrs and response are centered at 0 and scaled to unit variance
+    - minimize RMSE where L1 norm of $\beta$ bounded by $s$ (diamond in 2D)
+    - use quad prog
+    - (for small $s$) does selection as well as shrinkage, since it may be
+      optimal to put all weight on fewer attrs than a bit on each
 - relevance determination: rank by information gain and evaluate first 10, 20,
   ... features
   - information gain: reduction in entropy due to attribute:
