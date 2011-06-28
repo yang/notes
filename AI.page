@@ -58,6 +58,16 @@ learning taxonomies
     - TODO
     - <http://learning.eng.cam.ac.uk/zoubin/talks/nips09npb.pdf>
 
+data preparation
+
+- attribute selection
+- attribute discretization
+- data transformation
+  - interactions (multiplications)
+- data cleansing
+  - missing values, duplicates, noise, typos, systematic errors
+  - outliers, anomalies
+
 semi-supervised
 
 - EM
