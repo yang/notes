@@ -838,8 +838,8 @@ feature selection
     - but error-based method like 1R may not be best for ranking attrs TODO
       supervised discretization
 - search algos
-  - metrics: F-test (sig tests are discouraged; not even sure what this is
-    testing), AIC, BIC, $R^2$, CV accuracy
+  - metrics for filters/wrappers: F-test (sig tests are discouraged; not even
+    sure what this is testing), AIC, BIC, $R^2$, CV accuracy
   - best-first/greedy _stepwise regression_: most popular; data dredging?
     - forward selection: add features one/some at a time
     - backward elimination aka recursive elimination: eg this faster/sloppier
