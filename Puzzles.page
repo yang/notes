@@ -18,7 +18,7 @@ Riddles
   to maximize prob of accepting the best person?
 - 25 racehorses, 5 tracks, fewest # races to find top 3
 - # ways to climb $n$ steps if you take 1-2 steps at a time?
-- min # balance weighings to find heavier ball of 8?
+- min # balance weighings to find heavier ball of 8? of 13? of $n$?
 - 3 black hats, 2 white hats, 3 men in a line facing forward (can't see
   behind), each wearing a hat. they guess at their own hats. man in back says
   "i don't know," middle says "i don't know," front says "i know" - how does he
