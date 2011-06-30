@@ -115,3 +115,13 @@ Practical
   3. 今天八个好日子，因为令在学逻辑学。
 
   <http://mindyourdecisions.com/blog/2011/05/30/using-logic-to-solve-a-test-question/>
+
+General math
+============
+
+- find $x$ if $x^{x^{x^\dots}} = 2$
+- find all real/complex roots of $x^6 = 64$
+- hour/minute hands of clock meet at 12:00; when will they first meet again?
+- 3 points randomly drawn on circle; prob of them being on same semi-circle?
+- unit length broken off into 3 pieces; prob of forming triangle?
+- $\sqrt{2 + \sqrt{2 + \sqrt{2 + \dots}}}$
