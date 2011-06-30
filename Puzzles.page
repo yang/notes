@@ -40,6 +40,14 @@ Programming
 
 - how do you incrementally extend a hashtable?
 - how to reverse the words in a string?
+- binary search for circularly sorted array
+- $n$ary search in 2D matrix where rows/cols are ordered
+- given an array of $n$ positive numbers $A$, return array of $n$ numbers where
+  element $i$ is the product of all numbers in $A$ except for element $A_i$.
+  now do it when you have no division. now do it when you have no
+  multiplication.
+- given a set of strings xs and a string y, return subset of xs that are
+  substrings of y
 
 Probability
 ===========
