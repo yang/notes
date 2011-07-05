@@ -299,6 +299,7 @@
     - na.*
     - options, sessionInfo
     - trace, traceback, stop, stopifnot
+    - match, %in% (subset), is.element
   - syntax tricks
     - use backticks for non-standard names
   - to run an R file from cmd line
