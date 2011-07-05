@@ -53,6 +53,10 @@ Probability
 
 - toss $m$ balls into $n$ bins; how many bins will be non-empty?
 - $m$ bins; how many balls to toss so that $k$ of them are non-empty?
+- Say companies have to give a holiday to everyone whenever one employee has a
+  birthday. Other than those holidays, employees work every day. If a company
+  wants to maximize the expected total number of man-hours worked per year, how
+  many employees should it hire?
 - birthday problem: computable
 - hat problem: actually a very hard problem
   - setup: 1000 ppl pile their hats, then each takes one.
