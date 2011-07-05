@@ -492,6 +492,36 @@ converges to normal as DF (corresponds to sample size) increases
 
 \end_deeper
 \begin_layout Itemize
+Chi-square, chi distributions
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+chi-square: sum of squares of 
+\begin_inset Formula $k$
+\end_inset
+
+ normal RVs 
+\begin_inset Formula $\sum_{i}\left(\frac{X_{i}-\mu_{i}}{\sigma_{i}}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+chi: length of vector of 
+\begin_inset Formula $k$
+\end_inset
+
+ normal components 
+\begin_inset Formula $\sqrt{\sum_{i}\left(\frac{X_{i}-\mu_{i}}{\sigma_{i}}\right)^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 General
 \end_layout
 
