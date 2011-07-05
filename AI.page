@@ -998,6 +998,12 @@ latent dirichlet allocation (LDA)
 
 - learns from body of entities, inferring that a particular attr belongs to a
   topic
+- ANOVA: continuous response
+- LDA: categorical response
+  - unlike logit/probit regression, assumes vars are normally distributed
+- PCA: doesn't consider class
+- factor analysis: builds feature combos based on diffs not similarities
+- 
 - TODO
 
 misc
