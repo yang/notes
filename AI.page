@@ -824,8 +824,8 @@ feature selection
     - NB robust to irrelevant attrs but vuln to redundant attrs by the same
       principal
   - also, simpler models: faster, easier to understand, see most important
-- scheme-indep techniques
-  - search algos (see below); some subset evaluation measures:
+- techniques
+  - subset search algos (see below); some subset evaluation measures:
     - filter: indep assessment based on general characteristics of data, eg
       simple model
     - wrapper: evaluate subset using the learner that will be ultimately used
