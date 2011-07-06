@@ -70,12 +70,31 @@
 \end_layout
 
 \begin_layout Section
-Limits
+Identities, approximations, limits
 \end_layout
 
 \begin_layout Itemize
 Identity: 
 \begin_inset Formula $\lim_{x\rightarrow\infty}\left(1+\frac{a}{x}\right)^{x}=e^{a}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $e^{x}>1+x$
+\end_inset
+
+ for 
+\begin_inset Formula $x>0$
+\end_inset
+
+ and 
+\begin_inset Formula $e^{x}\approx1+x$
+\end_inset
+
+ for 
+\begin_inset Formula $-.1<x<.1$
 \end_inset
 
 
