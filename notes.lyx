@@ -3909,5 +3909,74 @@ information gain is uncertainty drop
 \end_layout
 
 \end_deeper
+\begin_layout Section
+Problems
+\end_layout
+
+\begin_layout Itemize
+Solve for 
+\begin_inset Formula $x$
+\end_inset
+
+ in 
+\begin_inset Formula $x^{x^{x^{\dots}}}=2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Which is greater, 
+\begin_inset Formula $e^{\pi}$
+\end_inset
+
+ or 
+\begin_inset Formula $\pi^{e}$
+\end_inset
+
+? (Hint: 
+\begin_inset Formula $e^{x}>1+x$
+\end_inset
+
+ for 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $x>0$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\noun default
+\color inherit
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.quantnet.com/forum/threads/quantitative-interview-questions-and-answers.
+437/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
