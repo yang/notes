@@ -47,6 +47,7 @@ Programming
   multiplication.
 - given a set of strings xs and a string y, return subset of xs that are
   substrings of y
+- come up with a $O(n \log n)$ algo for computing kendall-tau
 
 Probability
 ===========
