@@ -231,6 +231,9 @@ force                no undo, no redo     undo, no redo
 
 B+ trees TODO
 
+- B-link-trees: sibling links are for concurrency, as a "temp repair bridge"
+  while parent nodes are being rebalanced
+
 LSM trees
 
 - uses _log-structured merge (LSM)_ trees to create full DB replicas using
