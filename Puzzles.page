@@ -34,8 +34,8 @@ Number theory
   $2(A^2+B^2)=C^2+D^2$
   - eg, $2(4^2+7^2)=3^2+11^2$
 
-Programming
-===========
+Algorithms
+==========
 
 - how do you incrementally extend a hashtable?
 - how to reverse the words in a string?
@@ -48,6 +48,9 @@ Programming
 - given a set of strings xs and a string y, return subset of xs that are
   substrings of y
 - come up with a $O(n \log n)$ algo for computing kendall-tau
+- distance-maximizing problem: given an array $A$ of integers, find the maximum
+  $j-i$ where $A_i<A_j$ (in $O(n)$!)
+- find the *majority* element in a stream
 
 Probability
 ===========
