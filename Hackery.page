@@ -680,6 +680,7 @@
       - semisync still unsafe; master waits *after* actually committing
         locally, instead of blocking the commit (as it should)
       - recovery is complex
+    - no group commit <http://www.mysqlperformanceblog.com/2011/07/13/testing-the-group-commit-fix/>
     - crappy concurrency, >3 sucks vs pg <http://spyced.blogspot.com/2006/12/benchmark-postgresql-beats-stuffing.html>
     - multiple storage engines has always restricted progress:
       <http://www.mysqlperformanceblog.com/2010/05/08/the-doom-of-multiple-storage-engines/>
