@@ -51,6 +51,15 @@
   possible); best to refer to wikipedia illustration
   - intuitively: how close a node + neighbors are to being a clique
 
+- _centrality_: importance of a node; various measures
+  - _degree centrality_: just the node degree
+  - nodes that occur on many shorest paths between pairs of nodes in the graph
+    have a high _betweenness centrality_ score
+  - _eigenvector centrality_: proportional to sum of centrality scores of
+    neighbors
+    - calc eigendecomp of adj matrix, select evec w biggest eval
+    - elt $i$ in evec gives centrality of node $i$
+
 - complex networks: exhibit non-trivial topological features
   - e.g.:
     - heavy tail in degree distribution
