@@ -12,6 +12,9 @@
 - finite graph: finite # edges and # nodes
 - locally finite graph: each node has finite degree
 
+- _maximal clique_: clique that's not a subset of any other clique
+- _maximum clique_: biggest clique(s) in the graph
+
 - multigraph: a graph with multiple edges between same node pairs
 
 - spectrum of a graph: spectrum (eigenvalues) of graph's adj mat $A$
