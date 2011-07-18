@@ -152,3 +152,5 @@ Running Large Graph Algorithms: Evaluation of Current State-Of-the-Art and Lesso
   - complex and hard to parallelize: even basic BFS
   - lesser-known: large intermediate data; eg space complexity of BFS
 - used bluegene
+
+- social network analysis: <http://mlg.ucd.ie/files/summer/tutorial.pdf>
