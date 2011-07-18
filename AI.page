@@ -1227,8 +1227,10 @@ getting in shape for the sport of data science (jeremy howard, kaggle chief scie
   - eg plotting hundreds of time series is surprisingly useful (won that comp)
 - models
   - parametric models: GLM
-  - TODO left off around here
   - non-parametric models: SVM, RF
+- R's RF impl limitations: 32 factors, no NA handling
+- NA handling: fill in w median and add indicator var
+- decision trees use info gain or GINI to find break points
 - traffic prediction: excel color scales helped see the pattern/propagation of
   jams
 - cran recommendations problem
@@ -1240,6 +1242,13 @@ getting in shape for the sport of data science (jeremy howard, kaggle chief scie
   - GLM + mark deps as installed (type of programming that's cumbersome in R, a
     "shit programming language"; used C#) -> 98%
   - 6th place
+- ensemble: varying high-var learners; rely on one/few learners working well
+  while all others cancel each other out
+  - can increase variance by choosing your own (set of possible) break points
+    in continuous variables
+  - the smaller the subspaces/samples, the more variance, but the longer it
+    takes
+  - don't prune trees; that introduces bias
 - <http://blog.kaggle.com/2011/03/23/getting-in-shape-for-the-sport-of-data-sciencetalk-by-jeremy-howard/>
 
 deep learning TODO
