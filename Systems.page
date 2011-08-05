@@ -70,6 +70,10 @@ file systems
 - NTFS
   - master file table (MFT): the "inodes"
 
+caching
+
+- LIRS: generally better than LRU; "Lowest Inter-Reference Recency (IRR)"
+
 storage
 
 - Electrically Erasable Programmable Read-Only Memory (eeprom)
