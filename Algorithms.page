@@ -247,6 +247,10 @@ dynamic programming
 
 dynamic time-warping
 
+- general term for matching up two sequences that are varying in time/speed
+- one simple formulation for sequences of discrete symbols is edit distance but
+  only allowed ops are insertions and deletions
+
 edit distance
 
 - levenshtein distance: the standard way of measuring distance; ins/del/upd
