@@ -243,6 +243,7 @@ time series (TODO also cover math)
   - white noise is stationary; cymbal clash variance diminishes over time
 - autocorrelation: cross-correlation of signal w itself; a lagged
   self-correlation; to detect non-randomness; works if fixed intervals
+  - IID iff 0 autocorrelation
   - Durbin-Watson test: conventional test to detect autocorrelation
     - 0 to 4; 2 means no autocorrelation
 - cross-correlation: sliding dot product of two signals; like convolution but
