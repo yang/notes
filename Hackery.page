@@ -497,11 +497,39 @@
   - setup: <y_z.scripts.mit.edu/wp/2010/01/20/no-nonsense-standalone-hadoop-and-dumbo-on-ubuntu/>
 
 - scala
-  - `@tailrec`
-  - `@cps`
-  - util.control.Exception.catching
-  - Stream.continually
-  - `breakable`: somehow faster than simple Exceptions
+  - vocab
+    - `@tailrec`
+    - `@cps`
+    - util.control.Exception.catching
+    - Stream.continually
+    - `breakable`: somehow faster than simple Exceptions
+  - things i don't like
+    - nits
+      - `:` at the end of an operator method means `this` is the RHS
+      - why aren't all functions curried? why does currying need to be specified in advance?
+      - abuse of operators: `/:` is unnecessary
+      - why both classes and case classes? either new Foo or Foo? just have one.
+      - needs to decide whether it wants to integrate with java or not. (don't!)
+      - `:_*` syntax
+      - singleton objects are promoted everywhere and are also the main way a lot of
+        tricks in scala are pulled off.
+      - why are `for`, `if`, `while`, etc. special in the language? ideally should be
+        implemented in the language.
+      - breakOut
+      - List.map returns List instead of iterator? (cf. Python)
+      - language is too expansive
+      - Option *and* null?
+      - XML literals, yet no string interpolation
+    - more serious
+      - too many choices all the time: do I want a function, a view method, etc.
+      - libraries aren't as mature (complete, battle tested, documented)
+      - lots of compat breaks
+      - IDE is a WIP
+    - longer term
+      - no javascript backend
+      - no native backend
+      - no `dynamic` - `Dynamic` will come close but not entirely and it's not
+        here yet
 
 - html
   - link rel canonical: the canonical URL for this page; useful for eg search
