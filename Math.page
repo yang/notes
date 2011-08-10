@@ -73,6 +73,8 @@ statistics
   - student t-distribution: something about normals for small populations where
     variance is unknown
   - chi-square distribution
+  - Gaussian distribution, Cauchy, Exponential, Gamma, Generalized Extreme
+    Value, Rician, Wrapped Cauchy, Von Mises, Binomial, and Beta
 - $\mathrm{Correlation}(X, Y) = \frac{ \mathrm{Covariance}(X, Y) }{ \sigma_X
   \sigma_Y }$ where $\sigma$ is the SD
 
