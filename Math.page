@@ -2,6 +2,12 @@
   - eulerian circuit iff all nodes have even degrees
   - eulerian non-circuit tour iff only 2 nodes have odd degrees
 
+signals
+=======
+
+- fourier, z, laplace, wavelet, hilbert xforms
+- butterworth filter
+
 statistics
 ==========
 
