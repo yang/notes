@@ -257,6 +257,13 @@ time series (TODO also cover math)
 statistical inference
 
 - analysis of variance (ANOVA or AOV): TODO
+- canonical (variate) analysis: TODO
+  - 1 predictor, 1 criterion: coef of corr $r$, coef of det $r^2$, coef $\beta$
+  - $n$ predictors, 1 criterion: multiple corr $R$, multiple coef of det $R^2$,
+    weights $\beta$
+  - $n$ predictors, $m$ criteria: canonical corrs $\rho_1, \dots$, canonical
+    weights $C,D$
+  - find linear combo of predictors and linear combo of criteria w max corr
 - kernel density estimator: basically place a small kernel everywhere you have
   a sample, resulting in somtehing much smoother than a histogram (where bins
   can make all the difference in interpretation)
