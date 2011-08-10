@@ -18,6 +18,18 @@ TODO
 - $t$-test: matched pairs and unmatched
 - mixture model for collab filtering
 - principal component regression (PCR), partial least squares regression (PLS)
+- GMMs
+- navia
+  - Veritable
+    - cross-categorization: group cols as views, then group rows in each view
+      as categories
+    - monte core uses CRP
+  - MCMC: Met-Hastings, Gibbs
+  - nonparam models
+    - dirichlet process
+    - chinese restaurant process (CRP)
+  - conjugate models
+  - undirected models, Isings, clique potential
 
 wisdom
 
