@@ -1430,6 +1430,121 @@ identify highest-value intersections of bins
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Time series
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+autoregressive
+\emph default
+ model: 
+\begin_inset Formula $X_{t}=c+\sum_{i=1}^{p}\varphi_{i}X_{t-i}+\varepsilon_{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+moving avg model: 
+\begin_inset Formula $X_{t}=\mu+\varepsilon_{t}+\sum_{i=1}^{q}\theta_{i}\varepsilon_{t-i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+autoregressive moving avg (ARMA)
+\emph default
+ aka 
+\emph on
+Box-Jenkins
+\emph default
+ model: 
+\begin_inset Formula $X_{t}=\mu+a_{1}X_{t-1}+\dots+a_{k}X_{t-p}+\varepsilon_{t}+b_{1}\varepsilon_{t-1}+\dots+b_{q}\varepsilon_{t-q}$
+\end_inset
+
+ where 
+\begin_inset Formula $E\left[\varepsilon_{t,}\varepsilon_{s}\right]=0\forall t\ne s$
+\end_inset
+
+ and 
+\begin_inset Formula $\varepsilon_{t}\sim N\left(0,\sigma^{2}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+one of most common univariate time series models
+\end_layout
+
+\begin_layout Itemize
+Kalman filter can calculate exact log-likelihood, but 
+\begin_inset Quotes eld
+\end_inset
+
+conditional
+\begin_inset Quotes erd
+\end_inset
+
+ likelihood is easier/more commonly used
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+vector autoregression (VAR)
+\emph default
+ model: 
+\begin_inset Formula $X_{t}=A_{1}X_{t-1}+\dots+A_{p}X_{t-p}+\varepsilon_{t}$
+\end_inset
+
+ where each 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ is a vector, 
+\begin_inset Formula $A_{i}$
+\end_inset
+
+ is a matrix, and 
+\begin_inset Formula $\varepsilon_{t}\sim N\left(0,\Sigma\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+multivariate time series generalization of univariate AR models
+\end_layout
+
+\begin_layout Itemize
+widely used, esp.
+ in macroecon
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.slideshare.net/wesm/scipy-2011-time-series-analysis-in-python
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Time Series
 \end_layout
