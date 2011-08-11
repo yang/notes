@@ -4088,6 +4088,21 @@ X^{\left(t\right)} & \mbox{with prob \ensuremath{1-a}if \ensuremath{a<1}}\end{ca
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Burn-in commentary: 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.johndcook.com/blog/2011/08/10/markov-chains-dont-converge/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Problems
 \end_layout
