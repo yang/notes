@@ -3975,6 +3975,119 @@ information gain is uncertainty drop
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Markov Chain Monte Carlo (MCMC)
+\end_layout
+
+\begin_layout Itemize
+given multivariate dist, simpler to sample from conditional dists than the
+ joint (hard to marginalize by integrating over joint dist)
+\end_layout
+
+\begin_layout Itemize
+Gibbs sampling: initialize vars 
+\begin_inset Formula $X_{i}^{\left(0\right)}\forall i$
+\end_inset
+
+, then iteratively sample 
+\begin_inset Formula $X_{i}^{\left(t\right)}=P\left(X_{i}^{\left(t\right)}\mid\left\{ X_{j}^{\left(t-1\right)}\mid j\ne i\right\} \right)\forall i$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+typically discard samples from initial 
+\emph on
+burn-in 
+\emph default
+period
+\end_layout
+
+\begin_layout Itemize
+typically consider only every 
+\begin_inset Formula $n$
+\end_inset
+
+ samples, since successive samples have some correlation
+\end_layout
+
+\begin_layout Itemize
+useful when conditional distributions known, e.g.
+ in Bayesian networks
+\end_layout
+
+\begin_layout Itemize
+M-H special case where proposal dist is conditional dist; proposals accepted
+ 100% of time
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Metropolis Hastings: (slower) generalization of Gibbs sampling for when
+ conditional distributions unknown
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+use 
+\emph on
+proposal conditional dist
+\emph default
+ 
+\begin_inset Formula $Q\left(X';X\right)$
+\end_inset
+
+, eg 
+\begin_inset Formula $N\left(X,\sigma^{2}I\right)$
+\end_inset
+
+ (needn't be symmetric)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a=a_{1}a_{2}=\frac{P\left(X'\right)Q\left(X^{\left(t\right)};X'\right)}{P\left(X^{\left(t\right)}\right)Q\left(X';X^{\left(t\right)}\right)}$
+\end_inset
+
+ where:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $a_{1}=\frac{P\left(X'\right)}{P\left(X^{\left(t\right)}\right)}$
+\end_inset
+
+ is likelihood ratio btwn proposed sample 
+\begin_inset Formula $X'$
+\end_inset
+
+ and prior sample 
+\begin_inset Formula $X^{\left(t\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a_{2}=\frac{Q\left(X^{\left(t\right)};X'\right)}{Q\left(X';X^{\left(t\right)}\right)}$
+\end_inset
+
+ is ratio of proposal density in both directions
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $X^{\left(t+1\right)}=\begin{cases}
+X' & \mbox{if \ensuremath{a\ge1}}\\
+X' & \mbox{with prob \ensuremath{a}if \ensuremath{a<1}}\\
+X^{\left(t\right)} & \mbox{with prob \ensuremath{1-a}if \ensuremath{a<1}}\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Problems
 \end_layout

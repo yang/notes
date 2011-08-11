@@ -24,7 +24,6 @@ TODO
     - cross-categorization: group cols as views, then group rows in each view
       as categories
     - monte core uses CRP
-  - MCMC: Met-Hastings, Gibbs
   - nonparam models
     - dirichlet process
     - chinese restaurant process (CRP)
@@ -803,18 +802,6 @@ maximum entropy
     \beta_j)}$ and $P(y_i=0) = \frac{1}{1 + \sum_{j=1}^J \exp(X_i \beta_j)}$
   - $\beta_j$ typically estimated using maximum a posteriori (MAP), which is an
     extension of max likelihood using regularization of weights
-
-gibbs sampling TODO
-
-- an MCMC algo (special case of Metropolis-Hastings algo)
-- purpose: given a multivariate dist, simpler to sample from a conditional dist
-  than the joint (hard to marginalize by integrating over joint dist)
-- denote $i$-th sample w $X^(i) = \{ x_1^(i), \dots, x_n^(i) \}$ from a joint
-  dist $p(x_1, \dots, x_n)$
-- start w some $X^(0)$
-- for each sample $i=\{1, \dots, k\}$, sample each var $x_j^(i)$ from cond dist
-  $p(x_j^(i) | x_1^(i), \dots, x_{j-1}^(i), x_{j+1}^(i-1), \dots, x_n^(i-1))$
-  - cond on all other vars, making use of most recent values and updating ASAP
 
 feature selection
 
