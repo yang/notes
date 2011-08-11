@@ -20,6 +20,21 @@
   - ext4 for SMP and new storage devices that were more like SD cards than NAND
     flash; was yaffs2
 
+- android development
+  - paths
+    - Environment.getExternalStorageDirectory: /mnt/sdcard
+      - shared space, very user-accessible, public
+      - generally avoid using this
+    - Environment.getExternalStoragePublicDirectory("AnyStringExceptNull"): /mnt/sdcard/AnyStringExceptNull
+      - shared space, very user-accessible, public
+      - may not exist; create with File.mkdirs()
+    - Context.getExternalFilesDir("blah"): /mnt/sdcard/Android/data/com.android.test/files/blah
+      - app-specific, public
+      - auto-creates directory
+      - null gives the base dir, not a subdir
+    - Context.getFilesDir: /data/data/com.android.test/files
+      - app-specific, private
+
 - mahout
   - ? means unknown
   - mahout accepts csv-like files where ',' and ' ' are delims (it also ignores
