@@ -965,6 +965,10 @@ multiclass classification
 - some classifiers handle it naturally
   - dec trees, bayes methods, log reg, ...
 - generic meta learners
+  - must ensure that output scores are comparable! problematic for many
+    classifiers
+    - not "Bayes consistent"
+    - <http://metaoptimize.com/qa/questions/6543/one-vs-all-multi-class-svm>
   - 1 vs rest aka 1 vs all aka OVA: build classifier for each class where pos
     iff labeled w that class; in test, choose class w highest classifier score
   - 1 vs 1 aka pairwise aka all vs all aka AVA: build classifier for each pair
