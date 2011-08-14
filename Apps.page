@@ -1141,6 +1141,8 @@ Windows
 Linux commands
 --------------
 
+dtrx # do the right extraction
+
 smtp-source # send test mail
 
 logger # log to syslog
