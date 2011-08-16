@@ -244,6 +244,14 @@ statistical tests
     binomial dist vs hypergeom dist)
 - non-parametric tests TODO: mann-whitney, wilcoxon
 
+data
+
+- censoring: limiting values to be within bounds
+- truncation: omitting values that are out of bounds
+- eg: if policyholders subject to policy limit $u$ and deductible $d$, then
+  losses are left-truncated (unreported if under $d$) and right-censored
+  (limited to $u-d$)
+
 time series (TODO also cover math)
 
 - stationary process: stochastic process whose joint prob dist doesn't change
