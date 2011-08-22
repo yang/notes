@@ -252,6 +252,8 @@
       - RGoogleDocs
       - sqldf: SQL on DFs
       - plyr: general bulk manipulation utils
+      - reshape2: pivot table-like cubing/rollups
+      - data.table: a better data.frame
     - modeling
       - randomForest
       - survival
@@ -272,6 +274,7 @@
       - irlba: SVD for big data
       - MASS: companion to modern applied statistics with s
         - rlm: robust regression
+        - boxcox
     - numeric
       - quadprog
     - viz
