@@ -48,12 +48,20 @@ Definitions
 - texture filtering: blend texels for smoothing, eg when scaling/misaligned
   - cheap approx to anti-aliasing
   - betterness: anisotropic > trilinear > bilinear > nearest-neighbor with mipmapping > nearest-neighbor
-    - bilinear: blur pixels
+    - bilinear: blur pixels; smooth, soft
     - trilinear: blur mipmaps
     - anisotropic: make mipmaps of diff ratios
 - mipmapping: technique to save some filtering
   - when minifying textures, may need to combine many texels
   - so, prefilter at smaller sizes
+
+interpolation/resampling (merge with above)
+
+- for filtering/resizing images
+- bilinear: linear interpolation along one axis between two pairs of corners to
+  get two points, then along the other between the two points to get final
+  point
+- Lanczos: sharper
 
 GPU programming
 
