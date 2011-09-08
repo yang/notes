@@ -279,6 +279,7 @@
       - quadprog
     - viz
       - ggplot2
+      - ggExtra: `install.packages("ggExtra", repos="http://R-Forge.R-project.org")`
       - rggobi
       - directlabels
       - lattice (splom), car (spm): scatterplot matrices (see ggplot2)
@@ -304,7 +305,10 @@
     - na.*
     - options, sessionInfo
     - trace, traceback, stop, stopifnot
-    - match, %in% (subset), is.element
+    - match, %in% (subset), is.element, setdiff, merge
+    - paste
+    - apply, lapply, sapply, tapply
+    - rbind.fill
   - syntax tricks
     - use backticks for non-standard names
   - to run an R file from cmd line
