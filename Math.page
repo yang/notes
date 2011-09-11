@@ -1,6 +1,8 @@
 - graph theory: a branch of combinatorics
   - eulerian circuit iff all nodes have even degrees
   - eulerian non-circuit tour iff only 2 nodes have odd degrees
+- stanford linear systems & optimization | convex optimization I:
+  http://see.stanford.edu/see/courseinfo.aspx?coll=2db7ced4-39d1-4fdb-90e8-364129597c87
 
 signals
 =======
