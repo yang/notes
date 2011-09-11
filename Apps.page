@@ -404,6 +404,16 @@ Windows
 Linux
 -----
 
+  # to set up a repository for multiuser access:
+  sudo mkdir -p /var/git/proj.git/
+  cd !$
+  sudo chown yang .
+  git init --bare
+  sudo chmod -R 777 .
+  echo '  sharedRepository = 0666' >> config
+  # now add a user (the Debian way)
+  sudo adduser --shell /usr/bin/git-shell joe
+
   # tweak kernel settings
   sysctl kernel.shmmax # show
   sysctl -w kernel.shmmax= # update
