@@ -1333,3 +1333,290 @@ jpegtran
 (misc)
 multitail
 ack-grep
+
+Packages
+========
+
+- java fast primitive collections
+  - fastutil
+  - trove: not as comprehensive as fastutil, e.g. no SortedSets
+  - hppc: nice but also not as comprehensive as fastutil, e.g. no SortedSets
+- console disk usage
+  - ncdu - simple and works
+  - gt5
+  - tdu
+- c++ libs
+  - cpp-bigint
+  - pdflib-lite
+- tools
+  - gnuplot: using
+- c++ general libs
+  - boost: using
+  - fc++: interesting
+- coro/cothr libs
+  - boost coroutine: interesting
+  - libco
+- java analyzers
+  - esc java: interesting
+  - pmd: interesting
+  - findbugs: interesting
+- vim plugins
+  - latexsuite
+  - eclim: very hacky, noble goal, but ultimately useless
+  - vimoutliner: crap
+- linux kernel modules
+  - perfctr: interesting
+- devices
+  - gpsd: using
+- keyloggers
+  - pykeylogger: works via xlib
+  - uberkey: doesn't work
+  - lkl: doesn't work
+- markdowns
+  - markdown
+  - pandoc: using
+- dist sys mgmt
+  - plush: crap
+- typesetting systems
+  - lyx: using
+- alternative databases
+  - schevo: interesting
+- editors
+  - emacs: using
+- multimedia
+  - flash: using
+- browsers
+  - opera: using
+  - firefox: using
+  - konqueror: fast, but crashy
+- emacs modes
+  - org: meh, what's the point
+  - haskell: using
+  - tuareg: using
+- emacs tools
+  - gnuserv: unneeded
+- theorem provers
+  - jahob
+- c++ static analysis tools
+  - treehydra: gcc plugin for low level js binding to gcc's GIMPLE AST; built on dehydra (that bootstraps this)
+  - dehydra: gcc plugin for letting js interact with gcc - 
+  - oink: c++ static analysis suite by karl chen et al at cal built on elsa; includes cqual++
+  - pork: c++ parsing and rewriting toolchain; based on elsa/elkhound/oink
+  - cqual: adds type qualifiers to C
+  - elsa: c++ parser
+  - elkhound: parser generator
+- schemes
+  - mit scheme
+  - scsh
+- cross compilation tools
+  - openembedded: using, meh
+- haskell abstractions
+  - arrows: interesting
+  - edison: interesting
+- website interfaces
+  - pyfacebook: unneeded
+- web automation
+  - beautifulsoup: using
+  - twill: using
+  - selenium: unneeded
+- haskell metaprogramming
+  - drift: interesting
+- haskell tools
+  - lhs2tex: interesting
+  - hare: interesting
+  - hmake: obsolete by cabal
+- java profilers
+  - jprofiler: using, best so far
+  - netbeans: using, best free one
+- java implementations
+  - sun: using
+- c++ ide
+  - kdevelop: using, best so far
+- irc bots
+  - lambdabot
+- remote computing
+  - rdesktop: using
+- file synchronization tools
+  - unison: using
+  - tsyncd: interesting, can't build
+- web proxies
+  - tinyproxy: using
+  - squid: interesting
+  - loxy: logging proxy for understanding web apps (e.g. facebook chat)
+  - perl HTTP::Proxy: pure Perl web proxy
+  - perl HTTP::Recorder: recorder for HTTP::Proxy
+- app frameworks
+  - horde: meh
+- scheduling apps
+  - kronolith: meh
+  - giggler: small python tool for displaying alerts/reminders
+- mail tools
+  - imap-email-monitor: sf:imap-email-mon
+- mail clients
+  - thunderbird: using
+  - mutt: interesting
+  - pine: obsolete, was interesting for its support for custom imap labels (which
+      - tbird now supports)
+- scala gui
+  - scalagui: outdated
+- file sharing
+  - museek: using
+  - nicotine: using
+  - vuze: using
+  - frostwire: using
+- latex libs
+  - algo: obsolete by ???
+  - beamer: using
+- password generators
+  - pwgen
+  - gpw: http://www.multicians.org/thvv/gpw.html
+- cui file managers
+  - vifm: sucks
+  - lfm: sucks
+  - ytree
+  - mc: sucks
+  - sunrise commander: sucks
+- filesystems
+  - fuse: using
+  - fuseftp: unneeded
+  - lufs: obsolete by fuse; dev stopped
+- diagram tools
+  - dia: using
+  - visio: interesting
+- distro enhancers
+  - fedora frog: outdated
+- tutors
+  - glsamples: unneeded, http://www.xmission.com/~nate/sgi.html
+  - jpot: unneeded
+- haskell ide
+  - hide: doesn't exist
+  - pfe: doesn't seem promising
+- python libs
+  - probstat: unneeded
+  - py: very interesting
+  - icalendar: unneeded
+  - pycrypto: unneeded
+  - goopy: using
+  - egenix mx
+  - python-dateutil: interesting, cool parsing
+  - path: using
+  - pyssh: meh
+  - psyco: using
+  - python-gpsd: using
+  - pygresql: using
+  - pyx: unneeded
+  - pil: using
+- python tools
+  - bicyclerepair: crap
+  - pychecker: outdated
+  - winpdb: crap, can barely get it working
+  - pyprof: thin wrapper for profiling python programs
+- rdbms
+  - postgresql: using
+  - mysql: crap
+- embedded rdbms
+  - sqlite: interesting
+  - gadfly: crap, a python rdbms
+- python ide
+  - spe
+  - eric
+  - ipython: using
+- haskell parsing
+  - alex
+  - happy
+  - haxml
+- unsorted
+  - gadfly
+- scientific programming
+  - scipy: unneeded
+- anonymity
+  - mixminion: interesting
+- misc
+  - calgoo: crap
+  - chmlib
+  - project honey pot: using
+- ripping
+  - alac decoder: unneeded, http://craz.net/programs/itunes/alac.html
+  - streamripper: using
+  - dvdbackup: using
+  - vobcopy: using
+- music synthesis
+  - terminatorx
+- gtd
+  - taskfreak: crap
+- c libs
+  - prjlibs: very interesting
+  - libdnet: interesting
+- haskell shell
+  - hsshellscript: interesting
+- haskell debugging
+  - hat: outdated
+- c++ tools
+  - gstlfilt: not as good as wtf
+  - wtf: using
+  - cint: using
+- c++ curses
+  - ctk
+  - ncursesxx
+  - ndk++
+- networking
+  - poslib: unneeded, http://posadis.sourceforge.net/
+  - udt: useless for me, doesn't transfer things fast at all
+- coordination
+  - vxargs: using
+- package management
+  - graft: crap
+  - xstow: crap
+  - toast: using, awesome
+- clisp tools
+  - lispbox: awesome
+- clisp libs
+  - interpol: unneeded
+- haskell impls
+  - helium: unneeded
+  - ghc: using
+- langs
+  - pyrex: interesting
+  - dyna: interesting
+  - scala: using
+  - open quark: interesting
+- haskell curses
+  - hscurses: unneeded
+  - hmp3: unneeded
+  - hetris: unneeded
+  - riot: unneeded
+  - vty: unneeded
+  - yi: unneeded
+- emulation
+  - bochs: using
+- pdf readers
+  - evince: using
+  - acrobat reader: using
+- virtualization
+  - xen: interesting
+  - qemu: using
+  - virtualbox: interesting
+  - vmware: using
+- haskell games
+  - frag
+  - monadius
+- im
+  - pidgin: using
+  - xchat: using
+- xmlrpc libs
+  - xmlrpc-c
+- haskell gui
+  - fg
+  - fruit
+  - wxfruit
+  - wxhaskell
+- python
+  - twisted
+  - zope
+- search
+  - paragrep
+- terminal
+  - most: crap
+- shell tools
+  - pv: pipe viewer
+  - parallel: using
