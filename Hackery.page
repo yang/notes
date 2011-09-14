@@ -247,6 +247,7 @@
     - misc
       - Rserve
       - foreach
+      - parallel
     - data
       - RPostgreSQL
       - RGoogleDocs
@@ -309,6 +310,7 @@
     - paste
     - apply, lapply, sapply, tapply
     - rbind.fill
+    - invisible
   - syntax tricks
     - use backticks for non-standard names
   - to run an R file from cmd line
@@ -318,11 +320,12 @@
   - RF can only have categorical variables with <=32 factors
     <http://r.789695.n4.nabble.com/randomForest-can-not-handle-categorical-predictors-with-more-than-32-categories-td3036871.html>
   - gripes
-    - syntax: can never tell what my environment is, when i'm writing symbols
-      or formulae or expressions, etc.
+    - syntax: can never tell when something will be evaluated, when i'm writing
+      symbols or formulae or expressions, etc.
     - inconsistency: packages use model formulae, vectors/matrices, and/or
       data.frames
     - hard to find packages, determine best packages, etc.
+    - memory management/fragmentation
 
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
