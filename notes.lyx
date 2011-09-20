@@ -402,6 +402,10 @@ http://altdevblogaday.org/2011/05/17/understanding-the-fourier-transform/
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+IIR, FIR: TODO
+\end_layout
+
 \begin_layout Section
 Probability
 \end_layout
@@ -1330,6 +1334,90 @@ identify highest-value intersections of bins
 \end_layout
 
 \end_deeper
+\begin_layout Section
+Time Series
+\end_layout
+
+\begin_layout Subsection
+Processes
+\end_layout
+
+\begin_layout Itemize
+second-order stationary process: 
+\begin_inset Formula $\mu,\sigma^{2}$
+\end_inset
+
+ are time-indep
+\end_layout
+
+\begin_layout Subsection
+Autocorrelation
+\end_layout
+
+\begin_layout Itemize
+autocorrelation function (ACF): for second-order stationary process, 
+\begin_inset Formula $R\left(\tau\right)=\frac{\E\left[\left(X_{t}-\mu\right)\left(X_{t+\tau}-\mu\right)\right]}{\sigma^{2}}$
+\end_inset
+
+ (
+\begin_inset Formula $\tau$
+\end_inset
+
+ is lag)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+when normalized by mean and variance, called 
+\emph on
+autocorrelation coefficient
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+partial ACF (PACF): TODO
+\end_layout
+
+\begin_layout Subsection
+Models
+\end_layout
+
+\begin_layout Itemize
+Order-
+\begin_inset Formula $q$
+\end_inset
+
+ moving avg model MA(
+\begin_inset Formula $q$
+\end_inset
+
+): 
+\begin_inset Formula $X_{t}=\mu+\varepsilon_{t}+\sum_{i=1}^{q}\theta_{i}\varepsilon_{t-i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Autoregressive model: 
+\begin_inset Formula $X_{t}=c+\sum_{i=1}^{p}\varphi_{i}X_{t-i}+\varepsilon_{t}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Autoregressive moving avg (ARMA) aka Box-Jenkins model: 
+\begin_inset Formula $X_{t}=c+\varepsilon_{t}+\sum_{i=1}^{p}\varphi_{i}X_{t-i}+\sum_{i=1}^{q}\theta_{i}\varepsilon_{t-i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Autoregressive integrated moving avg (ARIMA): TODO
+\end_layout
+
 \begin_layout Section
 Linear Algebra
 \end_layout
