@@ -31,6 +31,23 @@ TODO
   - undirected models, Isings, clique potential
 - Kullback-Leibler analysis
 - http://www.youtube.com/user/sanjeev3007#p/u
+- H-measure: fixes some shortcomings of AUC
+- http://hunch.net/?p=273
+- http://hunch.net/~jl/projects/hash_reps/index.html
+- https://sites.google.com/site/icml2011sparsity/
+- http://2010.ladisworkshop.org/node/10#keynote1
+- PLSR
+- from quora:
+
+  > Compressed Sensing and Dictionary learning: These algorithms both exploit sparsely-activating (few ones in a zero-one vector) signals that appear in many real-world contexts Although sparsity-inducing algorithms have been around for a long time (in the form of "basis pursuit" and lasso" they've exploded recently, with many new advances (largely initiated by Donoho and Tao's proof of effectiveness). So far, these have touched MRI, radar and computer vision, and lead to an enormous amount of cross-talk between signal processing, statistics and machine learning. Watch for future advances.
+  > 
+  > Advances in linear, structural and multi-kernel Support Vector Machines: SVMs were invented in the 90's and were a huge deal. In the 2000's they've been radically extended, becoming much faster (linear case), much more powerful (multi-kernel case) and much more flexible (structural case). These three extensions have also motivated a lot of research into connections between SVMs and other algorithms and original research in convex optimization methods.
+  > 
+  > Latent Dirichlet Allocation: Made great use of an existing paradigm, graphical models, to allow for fast inference of human-interpretable (sort of) topic that make up a document collection. It really made people realize the power of graphical models, and has been endlessly extended.
+  > 
+  > Deep Learning: Deep Belief Nets restarted interest in deep-learning methods, like neural nets. These have also been coming increasingly in contact with graphical models, like LDA above. People have also shown that they can achieve state-of-the-art results, which people doubted for a long time. Deep architectures are still slow and complex, but they can do a small handful of things that other methods simply can't, and their connections to real neural architecture are tantalizing.
+  > 
+  > Huge strides in online learning: This is more than an algorithm, it's a whole setting. When you're being given data one point and one label at a time and you're not allowed to store much of it (which is common when dealing with huge data), you still want to be able to learn well from it. In the last decade, many people have successfully expanded connections to game theory (you want to minimize the "regret" of your strategy), found new optimization methods that make use of contextual and gradient information, and now are even expanding into the domain of "stochastic convex optimization", where you want to optimize over a convex function but you get one noisy piece of data at a time (the setting has existed a while, but theoretical research has been much stronger in the 2000's).Suggest Edits
 
 wisdom
 
