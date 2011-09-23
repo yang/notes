@@ -2474,6 +2474,7 @@
   - min-width, min-height
   - `display: none` takes up no space; `visibility: hidden` still takes space
   - pseudoclasses
+    - use single colons (`:`)
     - `a`: link, visited, hover, active
     - `p:first-child`: the first `p` instance (ignore `child`)
     - `p > i:first-child`: the first `i` in any `p`
@@ -2491,10 +2492,12 @@
       h1 { counter-reset: section; } ...
 
   - pseudoelements
+    - use double colons (`::`)
     - `first-line`, `first-letter`
     - `before`, `after`: insert something before/after, eg `.x:before {
-      content: "prefix: " }` or `.x:after { content: url(...png); }`
+      content: "prefix: " }` or `.x::after { content: url(...png); }`
     - css3: `::selection`
+    - `::-webkit-scrollbar-thumb`
   - CSS expressions: IE-only reactive property-setting
   - inheritance: eg `color` is inherited (setting on `body` will color
     everything)
