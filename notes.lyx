@@ -1310,6 +1310,33 @@ Good-Turing estimation
 \end_layout
 
 \begin_layout Subsection
+Estimation
+\end_layout
+
+\begin_layout Itemize
+unbiased estimator: converges to the true value
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+e.g.: unbiased sample variance is 
+\begin_inset Formula $\frac{1}{n-1}\sum_{i}\left(X_{i}-\bar{X}\right)^{2}$
+\end_inset
+
+, biased is 
+\begin_inset Formula $\frac{1}{n}\sum_{i}\left(X_{i}-\bar{X}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+can be terrible; they may converge to true value but be meaningless on the
+ way there
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
 Exponential smoothing for time series analysis
 \end_layout
 
