@@ -1251,6 +1251,65 @@ http://www.swarthmore.edu/NatSci/echeeve1/Ref/Kalman/ScalarKalman.html
 
 \end_deeper
 \begin_layout Subsection
+Smoothing
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+additive smoothing
+\emph default
+ aka 
+\emph on
+Laplace smoothing
+\emph default
+: 
+\begin_inset Formula $\hat{\theta_{i}}=\frac{n_{i}+k}{n+dk}$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $i=1,\dots,d$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+called 
+\begin_inset Quotes eld
+\end_inset
+
+rule of succession
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $k=1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+Good-Turing estimation
+\emph default
+: complex
+\end_layout
+
+\begin_layout Subsection
 Exponential smoothing for time series analysis
 \end_layout
 
