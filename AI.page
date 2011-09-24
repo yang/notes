@@ -96,7 +96,7 @@ data preparation
 
 semi-supervised
 
-- EM
+- EM (TODO: add some instances of EM)
   - train on labeled data, then iteratively label unlabeled data
     probabilistically (E-step) and re-train on examples weighted by their
     probabilities (M-step)
@@ -140,6 +140,20 @@ semi-supervised
     - train B on all data and probabilistically relabel
     - iterate
   - good text classif results with SVMs
+
+expectation-maximization (EM)
+
+- invented in statistics
+- Gibbs sampling a kind of Bayesian or stochastic analogue of (frequentist) EM
+  - whereas EM computes likelihoods of missing values (in the E step) and
+    maximizes parameters (in the M step), Gibbs sampling treats missing values
+    and parameters as random variables that we sample from and whose full
+    distributions we want to know
+  - ie while EM does updates by (deterministically) computing
+    maximum-likelihood point estimates of parameters, Gibbs does updates by
+    sampling for the parameters instead.
+  - <http://blog.echen.me/2011/08/22/introduction-to-latent-dirichlet-allocation/>
+- conn btwn gibbs sampling & LDA
 
 data set balance
 
