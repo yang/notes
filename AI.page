@@ -1020,16 +1020,21 @@ latent dirichlet allocation (LDA)
 
 - learns from body of entities, inferring that a particular attr belongs to a
   topic
+- to generate a document:
+  - num words ~ Poisson
+  - topic mix ~ Dirichlet (over fixed set of topics)
+  - to generate a word:
+    - topic ~ doc's multinomial of topics
+    - word ~ topic's multinomial of words
+- learn with MCMC
+
+misc
+
 - ANOVA: continuous response
 - LDA: categorical response
   - unlike logit/probit regression, assumes vars are normally distributed
 - PCA: doesn't consider class
 - factor analysis: builds feature combos based on diffs not similarities
-- 
-- TODO
-
-misc
-
 - transfer learning: storing knowledge gained while solving one problem and
   applying it to a different but related problem
   - eg useful for personalization
