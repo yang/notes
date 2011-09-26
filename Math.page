@@ -321,6 +321,10 @@ likelihood
   (since $P(X=x) = 0$); this is justified, see
   <http://en.wikipedia.org/wiki/Likelihood_function#Likelihoods_for_continuous_distributions>
 
+misc
+
+- benford's law: distribution of leading digits is non-uniform (exp decay)
+
 combinatorics
 =============
 
