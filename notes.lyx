@@ -411,98 +411,6 @@ Probability
 \end_layout
 
 \begin_layout Subsection
-Definitions
-\end_layout
-
-\begin_layout Itemize
-Linearity: 
-\begin_inset Formula $\E\left[aX+bY\right]=a\E\left[X\right]+b\E\left[Y\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\E\left[X|Y=y\right]=\sum_{x}x\cdot\Pr\left[X=x|Y=y\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Iterated: 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\noun off
-\color none
-
-\begin_inset Formula $\E\left[E\left[X|Y\right]\right]=\E\left[X\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\Var\left[X\right]=\E\left[\left(X-\mu\right)^{2}\right]=\E\left[X^{2}\right]-\left(\E\left[X\right]\right)^{2}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\Var\left[aX+b\right]=\Var\left[aX\right]=a^{2}\Var\left[X\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\Var\left[aX+bY\right]=a^{2}\Var\left[X\right]+b^{2}\Var\left[Y\right]+2ab\Cov\left[X,Y\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Formula $\Var\left[X+Y\right]=\Var\left[X\right]+\Var\left[Y\right]$
-\end_inset
-
- if 
-\begin_inset Formula $X,Y$
-\end_inset
-
- indep/uncorrelated
-\end_layout
-
-\begin_layout Itemize
-Pearson's product-moment coefficient is a 
-\begin_inset Quotes eld
-\end_inset
-
-normalized
-\begin_inset Quotes erd
-\end_inset
-
- covariance: 
-\begin_inset Formula $\rho_{X,Y}=\frac{\Cov\left[X,Y\right]}{\sigma_{X}\sigma_{Y}}\in\left[-1,1\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Law of total variance: 
-\begin_inset Formula $\Var\left[X\right]=\E\left[\Var\left[X\mid Y\right]\right]+\Var\left[\E\left[X\mid Y\right]\right]$
-\end_inset
-
- (unexplained and explained components)
-\end_layout
-
-\begin_layout Subsection
 Distributions
 \end_layout
 
@@ -703,6 +611,138 @@ chi: length of vector of
 \end_inset
 
 
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+General definitions and properties
+\end_layout
+
+\begin_layout Itemize
+Linearity: 
+\begin_inset Formula $\E\left[aX+bY\right]=a\E\left[X\right]+b\E\left[Y\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X|Y=y\right]=\sum_{x}x\cdot\Pr\left[X=x|Y=y\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Iterated: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\noun off
+\color none
+
+\begin_inset Formula $\E\left[E\left[X|Y\right]\right]=\E\left[X\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\E\left[\left(X-\mu\right)^{2}\right]=\E\left[X^{2}\right]-\left(\E\left[X\right]\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[aX+b\right]=\Var\left[aX\right]=a^{2}\Var\left[X\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[aX+bY\right]=a^{2}\Var\left[X\right]+b^{2}\Var\left[Y\right]+2ab\Cov\left[X,Y\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X+Y\right]=\Var\left[X\right]+\Var\left[Y\right]$
+\end_inset
+
+ if 
+\begin_inset Formula $X,Y$
+\end_inset
+
+ indep/uncorrelated
+\end_layout
+
+\begin_layout Itemize
+Pearson's product-moment coefficient is a 
+\begin_inset Quotes eld
+\end_inset
+
+normalized
+\begin_inset Quotes erd
+\end_inset
+
+ covariance: 
+\begin_inset Formula $\rho_{X,Y}=\frac{\Cov\left[X,Y\right]}{\sigma_{X}\sigma_{Y}}\in\left[-1,1\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Law of total variance: 
+\begin_inset Formula $\Var\left[X\right]=\E\left[\Var\left[X\mid Y\right]\right]+\Var\left[\E\left[X\mid Y\right]\right]$
+\end_inset
+
+ (unexplained and explained components)
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+coefficient of variation
+\emph default
+ aka 
+\emph on
+unitized risk
+\emph default
+ aka 
+\emph on
+variation coefficient
+\emph default
+: 
+\begin_inset Formula $c=\frac{\sigma}{\left|\mu\right|}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+normalized measure of dispersion of a distribution
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+signal to noise ratio (SNR): 
+\begin_inset Formula $\frac{\mu}{\sigma}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+reciprocal of coefficient of variation; only sensical for positive variables
 \end_layout
 
 \end_deeper
