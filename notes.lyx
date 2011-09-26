@@ -961,7 +961,7 @@ two-sample:
 \end_deeper
 \begin_layout Itemize
 chi-square test: 
-\begin_inset Formula $X^{2}=\sum_{ij}\frac{\left(O_{ij}-E_{ij}\right)^{2}}{E_{ij}}$
+\begin_inset Formula $X^{2}=\sum_{ij}\frac{\left(O_{ij}-E_{ij}\right)^{2}}{E_{ij}}=\sum_{i}\left(\frac{X_{i}-\mu_{i}}{\sigma_{i}}\right)^{2}$
 \end_inset
 
 , where 
@@ -972,6 +972,13 @@ chi-square test:
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $E_{ij}$
+\end_inset
+
+ are computed from marginal (global) frequencies of table
+\end_layout
+
 \begin_layout Itemize
 dof is 
 \begin_inset Formula $n-1$
