@@ -544,6 +544,25 @@ linear discriminant analysis
   - <http://www.cs.huji.ac.il/~shashua/papers/class8-PCA-LDA.pdf>
 - despite name, it's generative; name makes sense vs PCA (which ignores labels)
 
+independent components analysis (ICA)
+
+- PCA: finds orthogonal basis; suited for normal processes
+- ICA: suited for strongly non-normal processes
+- <http://www.stanford.edu/class/cs229/notes/cs229-notes11.pdf>
+
+eigenfaces
+
+- faces = 100x100 images = 10,000D vectors
+- PCA on faces: keep principal eigenvectors ("eigenfaces")
+- use PCA trick
+
+PCA transpose trick
+
+- rank of covar matrix is limited by # training examples: if there are $N$
+  examples, then there are at most $N-1$ evecs with non-0 evals
+- if dimensionality much larger than $N$, then transpose the observation matrix
+- <http://blog.echen.me/2011/03/14/pca-transpose-trick/>
+
 locally linear embedding
 
 - non-linear dimensionality reduction technique TODO
