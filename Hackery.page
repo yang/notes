@@ -1,3 +1,6 @@
+- chef, puppet
+  - http://news.ycombinator.com/item?id=3090800
+
 - android internals
   - apps: bundles of components
   - each app in a linux process; can be killed any time
