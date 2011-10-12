@@ -1023,8 +1023,17 @@ Linux
   rpm -qif /path/to/file
   # find out which pkg a file belongs to
   yum provides xclip
-  # find out which ps is listening on port 22
+  # find out which ps has certain sockets
+  lsof -i :22
   lsof -i tcp:22
+  lsof -i @1.1.1.1 # who's connected to 1.1.1.1
+  lsof -i tcp@1.1.1.1:22
+  # get pid of sshd command
+  lsof -t -c sshd
+  # show ps with link count <1
+  lsof +L1
+  # and(user=daniel, dest=1.1.1.1)
+  lsof -a -u daniel -i @1.1.1.1
   # find out which ps is using file /path/to/.file.txt.swp
   lsof /path/to/.file.txt.swp
   # find out what files a pkg provides
