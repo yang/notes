@@ -1,4 +1,4 @@
-#LyX 1.6.5 created this file. For more info see http://www.lyx.org/
+#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
 \lyxformat 345
 \begin_document
 \begin_header
@@ -499,7 +499,7 @@ Normal: mean
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $\Pr\left[X=x\right]=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left(-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right)=\dots\exp\left(-\frac{Z^{2}}{2}\right)$
+\begin_inset Formula $f\left(x\right)=\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left(-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right)=\dots\exp\left(-\frac{Z^{2}}{2}\right)$
 \end_inset
 
 
@@ -567,6 +567,53 @@ params
 
 \begin_layout Itemize
 conjugate prior for Bernoulli/binomial dists
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Exponential: time btwn Poisson process events
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $f\left(x\right)=\begin{cases}
+\lambda e^{-\lambda x}, & x\ge0\\
+0, & x<0\end{cases}$
+\end_inset
+
+; 
+\begin_inset Formula $\Pr\left[X<x\right]=\begin{cases}
+1-e^{-\lambda x}, & x\ge0\\
+0, & x<0\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=\frac{1}{\lambda}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\frac{1}{\lambda^{2}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+memoryless / constant event rate 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ / constant hazard 
+\begin_inset Formula $\lambda$
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -1606,6 +1653,26 @@ second-order stationary process:
 \end_inset
 
  are time-indep
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+hazard rate
+\emph default
+ at time 
+\begin_inset Formula $t$
+\end_inset
+
+ event rate at 
+\begin_inset Formula $t$
+\end_inset
+
+ conditional on survival until 
+\begin_inset Formula $t$
+\end_inset
+
+; eg bathtub curve; eg constant (in exponential dists)
 \end_layout
 
 \begin_layout Subsection
