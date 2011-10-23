@@ -388,10 +388,22 @@ Consensus
 
 Paxos
 
-- overview
+- simplified overview: there are proposers and acceptors
+  - propose
+    - proposer sends proposal (with unique round number $n$) to all acceptors
+    - acceptors promise to accept proposal if $n$ is highest $n$ seen (promise
+      to ignore any lower $n$)
+  - accept
+    - if proposer hears back from quorum, send accept requests to quorum with
+      the value it wants to set
+    - if acceptor hasn't promised to a higher $n$, tell proposer it accepted
+  - if proposer gets quorum of accepts, then commit
+- normal for all nodes to be both proposer and acceptor
+- actual overview: acceptor promise identifies accepted $n$ to prevent future
+  proposers with higher $n$ from changing the value
 
     prepare(n) ->
-      "have you accepted a proposal, and if so what's its value?"
+      "if you've already *accepted* a proposal what's its n and value?"
     <- prep_ok(n_a, v_a)
       the proposer will adopt this value, if it hears it from a majority
     accept(n,v) ->
