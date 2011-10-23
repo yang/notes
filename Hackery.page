@@ -837,6 +837,9 @@
 
 - postgresql
   - PG8.3 added spread chkpts; fsync at end
+  - limitations/annoyances
+    - count(*) always scans all rows
+    - indexed fields have ~2.5K size limit
   - clustering
     - built-in async streaming record-based replication in 9.0; sync in 9.1
       - warm standby: can't be queried; hot standby: can be queried (limited)
