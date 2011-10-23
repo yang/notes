@@ -270,6 +270,7 @@
       - maps, geosphere
       - popbio
         - logi.hist.plot: viz logistic regression results
+      - hexbin
       - HH
         - ci.plot: confidence interval plot
           <http://princeofslides.blogspot.com/2011/02/sab-r-metrics-basic-applied-regression.html>
