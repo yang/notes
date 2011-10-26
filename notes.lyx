@@ -3052,7 +3052,38 @@ logistic regression
 
 \begin_deeper
 \begin_layout Itemize
-gradient descent: identical (LMS) update rule & derivation but 
+loss function
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\mbox{Cost}\left(h_{\vec{\theta}}\left(\vec{x}\right),y\right)=\begin{cases}
+-\log h_{\vec{\theta}}\left(\vec{x}\right), & \mbox{if \ensuremath{y=1}}\\
+-\log\left(1-h_{\vec{\theta}}\left(\vec{x}\right)\right), & \mbox{if \ensuremath{y=0}}\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $J\left(\theta\right)=\frac{1}{m}\sum_{i=1}^{m}\mbox{Cost}\left(h_{\vec{\theta}}\left(\vec{x}^{\left(i\right)}\right),y^{\left(i\right)}\right)=-\frac{1}{m}\sum_{i=1}^{m}\left[y^{\left(i\right)}\log h_{\vec{\theta}}\left(\vec{x}^{\left(i\right)}\right)+\left(1-y^{\left(i\right)}\right)\log\left(1-h_{\vec{\theta}}\left(\vec{x^{\left(i\right)}}\right)\right)\right]$
+\end_inset
+
+ (a clever differentiable form)
+\end_layout
+
+\begin_layout Itemize
+intuition: 0 when completely correct and 
+\begin_inset Formula $\infty$
+\end_inset
+
+ when completely incorrect
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+gradient descent: identical (LMS) update rule & derivation as in linear
+ regression but 
 \begin_inset Formula $h$
 \end_inset
 
