@@ -133,6 +133,10 @@ vector space model
 - represent docs as vectors: a dim is non-0 if corresponding term present (eg
   tf-idf weight)
 - similarity is angle btwn vectors; cosine is sufficient and easier to calc
+- _rarity_: `log (1 / product of all letter probs)`
+  - get letter probs from
+    <http://www.math.cornell.edu/~mec/2003-2004/cryptography/subs/frequencies.html>
+  - useful when don't have corpus for IDF
 
 standard boolean model
 
