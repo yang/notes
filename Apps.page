@@ -404,6 +404,11 @@ Windows
 Linux
 -----
 
+  # monitor CPU hogs
+  top -b -d 60 -c > top-processes &
+  # monitor CPU hogs by threads
+  top -b -d 60 -c -H > top-threads &
+
   # mount encrypted filesystem
   sudo mount -t ecryptfs ~/data ~/data -o ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough=n,ecryptfs_enable_filename_crypto=n
 
