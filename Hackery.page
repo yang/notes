@@ -256,6 +256,7 @@
         - NB, SVM, perms/combs, shortest paths, distances, LCA, lots more
       - tm: term document matrices
       - irlba: SVD for big data
+      - arm: bayesglm
       - MASS: companion to modern applied statistics with s
         - rlm: robust regression
         - boxcox
