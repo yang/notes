@@ -618,6 +618,36 @@ memoryless / constant event rate
 
 \end_deeper
 \begin_layout Itemize
+Gamma: scale 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and shape 
+\begin_inset Formula $k$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+models waiting times: sum of 
+\begin_inset Formula $k$
+\end_inset
+
+ indep exponentially distributed RVs, each with mean 
+\begin_inset Formula $\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+also the sample variance of normal data
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 Student's t-distribution: a more spread-out normal distribution
 \end_layout
 
