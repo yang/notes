@@ -598,10 +598,40 @@ decision tree learning algorithms
   - at leaves, train linear regressors
   - <http://www.opentox.org/dev/documentation/components/m5p>
 
+advice for applying ML (CS229)
+
+- always evaluate a model on holdout
+- model selection: use *three* datasets
+  - train params on training set
+  - choose hyperparams that minimize CV set
+  - evaluate on test set, since evaluating on CV set is more optimistic, since
+    hyperparams were chosen to minimize CV error
+  - use error, which is loss without the regularization
+- TODO: include plots of error vs model complexity
+  - training error monotonically decreases
+  - CV error is convex above this; want to find the min point
+  - where they converge and error is high: bias (underfitting)
+  - where they diverge: variance (overfitting)
+  - similar for plot of error vs regularization $\lambda$ but flipped
+    horizontally
+- TODO: include example learning curves, plots of error over training set size
+  - train error increases, CV error decreases
+  - high bias: curves converge; more data won't help
+  - high variance: curves remain far apart; more data should help
+- strategies
+  - high variance
+    - more training data
+    - fewer features
+    - larger $\lambda$
+  - high bias
+    - more features
+    - more complexity (more NN nodes, more polynomial degrees, etc.)
+    - smaller $\lambda$
+
 generalization guarantees
 
-- bias TODO
-- variance TODO
+- bias: underfitting
+- variance: overfitting
 - Vapnik-Chervonenkis (VC) dimension
   - model _shatters_ some data if for all labelings there's some perfect params
     (no errs)
