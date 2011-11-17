@@ -3664,6 +3664,317 @@ can work it out by writing log likelihood
 \end_deeper
 \end_deeper
 \begin_layout Subsection
+Multi-layer feed-forward neural networks
+\end_layout
+
+\begin_layout Itemize
+Assume 
+\begin_inset Formula $m$
+\end_inset
+
+ examples, 
+\begin_inset Formula $K$
+\end_inset
+
+ outputs, 
+\begin_inset Formula $L$
+\end_inset
+
+ layers, 
+\begin_inset Formula $s_{l}$
+\end_inset
+
+ nodes in layer 
+\begin_inset Formula $l$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Params 
+\begin_inset Formula $\Theta^{\left(l\right)}$
+\end_inset
+
+ is 
+\begin_inset Formula $s_{l+1}\times s_{l}$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Theta_{ij}^{\left(l\right)}$
+\end_inset
+
+ is weight from node 
+\begin_inset Formula $j$
+\end_inset
+
+ in layer 
+\begin_inset Formula $l$
+\end_inset
+
+ to node 
+\begin_inset Formula $i$
+\end_inset
+
+ in layer 
+\begin_inset Formula $l+1$
+\end_inset
+
+ (subscripts are 
+\begin_inset Quotes eld
+\end_inset
+
+backward
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+Regularized cost 
+\begin_inset Formula $J\left(\Theta\right)=-\frac{1}{m}\left[\sum_{i=1}^{m}\sum_{jk=1}^{K}y_{k}^{\left(i\right)}\log h_{\Theta}\left(x^{\left(i\right)}\right)+\left(1-y_{k}^{\left(i\right)}\right)\log\left(1-h_{\Theta}\left(x^{\left(i\right)}\right)\right)\right]+\frac{\lambda}{2m}\sum_{l=1}^{L}\sum_{i=1}^{s_{l}}\sum_{j=1}^{s_{l}+1}\left(\Theta_{ji}^{\left(l\right)}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Or squared error for regressions; these turn out to have the same derivations
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\emph on
+Backpropagation
+\emph default
+: algorithm used to compute gradients
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Need random initialization of 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ to break symmetry or all params will be equal
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Delta_{ij}^{\left(l\right)}\leftarrow0\forall l,i,j$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+for 
+\begin_inset Formula $i=1$
+\end_inset
+
+ to 
+\begin_inset Formula $m$
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Forward-propagate activations 
+\begin_inset Formula $\vec{a}^{\left(l\right)}=\Theta^{\left(l-1\right)}\vec{a}^{\left(l-1\right)}$
+\end_inset
+
+ for 
+\begin_inset Formula $l=2,\dots,L$
+\end_inset
+
+ where 
+\begin_inset Formula $\vec{a}^{\left(1\right)}=\vec{x}^{\left(i\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Backpropagate errors 
+\begin_inset Formula $\vec{\delta}^{\left(l\right)}=\transpose{\left(\Theta^{\left(l\right)}\right)}\vec{\delta}^{\left(l+1\right)}\odot g'\left(\vec{z}^{\left(l\right)}\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $l=L-1,\dots,2$
+\end_inset
+
+ where
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\vec{\delta}^{\left(L\right)}=\vec{a}^{\left(L\right)}-y^{\left(i\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $g'\left(\vec{z}^{\left(l\right)}\right)=\vec{a}^{\left(l\right)}\odot\left(1-\vec{a}^{\left(l\right)}\right)$
+\end_inset
+
+ since 
+\begin_inset Formula $g'\left(x\right)=g\left(x\right)\left(1-g\left(x\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a\odot b$
+\end_inset
+
+ is element-wise multiplication (
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://math.stackexchange.com/questions/52578/symbol-for-elementwise-multiplicatio
+n-of-vectors
+\end_layout
+
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Delta_{ij}^{\left(l\right)}\leftarrow\Delta_{ij}^{\left(l\right)}+\delta_{i}^{\left(l+1\right)}a_{j}^{\left(l\right)}$
+\end_inset
+
+ for 
+\begin_inset Formula $l=L-1,\dots,1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gradient 
+\begin_inset Formula $\frac{\partial}{\partial\Theta_{ij}^{\left(l\right)}}J\left(\Theta\right)=\begin{cases}
+\frac{1}{m}\Delta_{ij}^{\left(l\right)}+\lambda\Theta_{ij}^{\left(l\right)} & \mbox{if \ensuremath{j\ne0}}\\
+\frac{1}{m}\Delta_{ij}^{\left(l\right)} & \mbox{if \ensuremath{j=0}}\end{cases}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Excellent explanations of derivation at 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.ml-class.org/course/qna/view?id=3740
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.scribd.com/doc/72228829/Back-Propagation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Derivation of gradient for layer 
+\begin_inset Formula $L-1$
+\end_inset
+
+ focusing on a single example (
+\begin_inset Formula $m=1$
+\end_inset
+
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Define 
+\begin_inset Formula $\delta_{i}^{\left(l\right)}=\frac{\partial J}{\partial z_{i}^{\left(l\right)}}$
+\end_inset
+
+: (how do we reduce the second factor?)
+\begin_inset Formula \begin{eqnarray*}
+\frac{\partial J}{\partial\Theta_{ij}^{\left(l-1\right)}} & = & \frac{\partial J}{\partial z_{i}^{\left(l\right)}}\frac{\partial z_{i}^{\left(l\right)}}{\partial\Theta_{ij}^{\left(l-1\right)}}=\delta_{i}^{\left(l\right)}\frac{\partial}{\partial\Theta_{ij}^{\left(L-1\right)}}\left(\sum_{k}\Theta_{kj}^{\left(l-1\right)}a_{j}^{\left(l-1\right)}\right)=\delta_{i}^{\left(l\right)}a_{j}^{\left(l-1\right)}\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+For output layer:
+\begin_inset Formula \begin{eqnarray*}
+\delta_{i}^{\left(L\right)} & = & \frac{\partial J}{\partial z_{i}^{\left(L\right)}}\\
+ & = & \frac{\partial}{\partial z_{i}^{\left(L\right)}}\left(-\sum_{k=1}^{K}y_{k}\log g\left(z_{k}^{\left(L\right)}\right)+\left(1-y_{k}\right)\log\left(1-g\left(z_{k}^{\left(L\right)}\right)\right)\right)\\
+ & = & \frac{\partial}{\partial z_{i}^{\left(L\right)}}\left(-y_{i}\log g\left(z_{i}^{\left(L\right)}\right)+\left(1-y_{i}\right)\log\left(1-g\left(z_{i}^{\left(L\right)}\right)\right)\right)\\
+ & = & -\left(y_{i}\frac{1}{g\left(z_{i}^{\left(L\right)}\right)}-\left(1-y_{i}\right)\frac{1}{1-g\left(z_{i}^{\left(L\right)}\right)}\right)g\left(z_{i}^{\left(L\right)}\right)\left(1-g\left(z_{i}^{\left(L\right)}\right)\right)\\
+ & = & -\left(y_{i}\left(1-g\left(z_{i}^{\left(L\right)}\right)\right)-\left(1-y_{i}\right)g\left(z_{i}^{\left(L\right)}\right)\right)\\
+ & = & -\left(y_{i}-g\left(z_{i}^{\left(L\right)}\right)\right)\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Build on this to get previous layers
+\end_layout
+
+\begin_layout Itemize
+For simpler squared error 
+\begin_inset Formula $J\left(\Theta\right)=\frac{1}{2}\sum_{j=1}^{K}\left(y_{j}-a_{j}\right)^{2}$
+\end_inset
+
+, slightly different:
+\begin_inset Formula \begin{eqnarray*}
+\delta_{i} & = & \frac{\partial}{\partial z_{i}^{\left(L\right)}}\left(\frac{1}{2}\sum_{k=1}^{K}\left(y_{k}-g\left(z_{k}^{\left(L\right)}\right)\right)^{2}\right)\\
+ & = & \left(y_{i}-g\left(z_{i}^{\left(L\right)}\right)\right)g'\left(z_{i}^{\left(L\right)}\right)\\
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Useful to test with 
+\emph on
+gradient checking
+\emph default
+ (numerical gradient)
+\end_layout
+
+\begin_layout Itemize
+Generally if single hidden layer then choose more hidden units than inputs/outpu
+ts, and choose same # hidden units in each layer if more than 1 hidden layer
+\end_layout
+
+\begin_layout Subsection
 Local regression
 \end_layout
 
