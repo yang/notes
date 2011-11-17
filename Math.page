@@ -325,6 +325,15 @@ misc
 
 - benford's law: distribution of leading digits is non-uniform (exp decay)
 
+pitfalls
+--------
+
+- unbiased estimators can be terrible (TODO)
+- drug X results may have $p=.04$ and drug Y results may have $p=.06$ but
+  difference may well NOT be significant
+- $p$-value is not prob of hyp being right; to compute this (posterior), more
+  info is needed (prior)
+
 combinatorics
 =============
 
