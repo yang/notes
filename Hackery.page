@@ -213,6 +213,18 @@
   - scikits
     - openopt: bunch of optimization
 
+- sqlite
+  - be careful, int != integer:
+
+      sqlite> create table a (a integer primary key, b integer);
+      sqlite> insert into a (b) values (0);
+      sqlite> select * from a;
+      1|0
+      sqlite> create table b (a int primary key, b integer);
+      sqlite> insert into b (b) values (0);
+      sqlite> select * from b;
+      |0
+
 - R
   - modeling facilities
     - expressions: `y ~ a + b + c:d + e*f` (`c:d` means interaction, `e*f`
