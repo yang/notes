@@ -404,6 +404,9 @@ Windows
 Linux
 -----
 
+  # Disable screen lock after suspend (in Ubuntu 11.10)
+  gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
+
   # monitor CPU hogs
   top -b -d 60 -c > top-processes &
   # monitor CPU hogs by threads
