@@ -1650,3 +1650,21 @@ Packages
 - shell tools
   - pv: pipe viewer
   - parallel: using
+
+Opinions
+========
+
+Ubuntu 11.10 / Unity
+--------------------
+
+- had to install ccsm to disable the f10 keybinding: <http://askubuntu.com/questions/37313/deactivate-f1-and-f10-keybindings>
+- had to do this to disable screen lock:
+
+    gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
+
+- had to install a PPA to get resource monitor applet
+- don't grok the alt-tab behavior (esp within same app)
+- installer made me first accept custom hw drivers
+- byobu is confusing to use/config
+- right-clicks in chrome have to be held down?
+- (still) can't alt-click without hassle
