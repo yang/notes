@@ -404,6 +404,11 @@ Windows
 Linux
 -----
 
+  # Disable alt-click in Gnome
+  gconftool-2 --set /apps/metacity/general/mouse_button_modifier --type string disabled
+  # Enable alt-click in Gnome
+  gconftool-2 --set /apps/metacity/general/mouse_button_modifier --type string '<Alt>'
+
   # Disable screen lock after suspend (in Ubuntu 11.10)
   gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
 
