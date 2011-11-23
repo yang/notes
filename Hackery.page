@@ -516,6 +516,65 @@
     - Stream.continually
     - `breakable`: somehow faster than simple Exceptions
   - things i don't like
+    - complexity, almost entirely in the type system which has many interacting
+      concerns
+      - <http://stackoverflow.com/questions/1715681/scala-2-8-breakout>
+      - open questions
+        - <http://stackoverflow.com/questions/5544536/type-inference-on-set-failing>
+        - <https://groups.google.com/forum/#!topic/scala-user/NwhaQ6U0wy0>
+        - <http://stackoverflow.com/questions/6448444/missing-parameter-type-in-overloaded-generic-method-taking-a-function-argument>
+        - <http://stackoverflow.com/questions/7830731/parameter-type-in-structural-refinement-may-not-refer-to-an-abstract-type-defin>
+      - <http://stackoverflow.com/questions/7829765/scala-view-bounds-that-work-with-subtypes>
+      - <http://stackoverflow.com/questions/6849994/understanding-the-interaction-in-scala-between-self-types-and-type-bounds>
+      - <http://stackoverflow.com/questions/6849137/scala-type-parameter-bound-error-in-subclass-but-not-superclass>
+      - collections library was hard to get right (original sucked), and is
+        hard to comprehend
+      - hopefully some clever and motivated minds will make things better in
+        the future
+    - sbt
+      - too hard to get started with (docs are better now)
+      - still too complex to understand and extend
+      - Mark Harrah is difficult and uncommunicative
+      - simple things/extensions are cumbersome:
+        - <http://stackoverflow.com/questions/7134993/how-do-i-run-an-sbt-main-class-from-the-shell-as-normal-command-line-program>
+        - <http://comments.gmane.org/gmane.comp.lang.scala.simple-build-tool/2102>
+    - collections branching off from TraversableOnce into Iterator and Seq
+      - bunch of methods missing for TraversableOnce
+      - methods missing unnecessarily between Iterator/Seq, e.g. distinct
+    - syntax
+      - need acute awareness of what we're dealing with
+        - python 3 gets this right: produce iterators by default, since
+          everything else can be efficient build on top of them
+        - `for (x <- xs) ...` may or may not produce an intermediate list,
+          depending on the type of `xs`; better remember to always use
+          `.iterator`
+        - see also the need for `breakOut`
+        - used to be a die-hard user of Streams, but now almost never use them
+      - for comprehensions and lack of generators:
+
+          def splitBy(f: (A,A) => Boolean) = {
+            var ys = mut.Buffer[A]()
+            for {
+              Seq(Some(a),b) <- padIter(xs) sliding 2
+              if { ys += a; b == None || f(a,b.get) }
+            } yield {
+              val oldYs = ys
+              ys = mut.Buffer[A]()
+              oldYs
+            }
+
+        vs.:
+
+          group = []
+          for a,b in sliding(xs, 2):
+            group.append(a)
+            if a != b
+              yield group
+              group = []
+
+        - for comprehensions vs python generators/yield
+        - for comprehension syntax is its own little world
+
     - nits
       - `:` at the end of an operator method means `this` is the RHS
       - why aren't all functions curried? why does currying need to be specified in advance?
