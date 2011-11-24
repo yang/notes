@@ -1257,6 +1257,9 @@
 
 - Hotspot
 
+  - exceptions much faster than on CLR:
+    <http://weblog.ikvm.net/PermaLink.aspx?guid=c84a5b22-d633-4eeb-a8e1-244ff66161a2>
+
   - objects 64-bit aligned, have 2-word header (word = native ptr size)
 
   - From <http://java.sun.com/products/hotspot/whitepaper.html>
