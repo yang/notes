@@ -213,6 +213,7 @@ real-time ray-tracing software
   - <http://www.alphaworks.ibm.com/tech/irt>
 - intel: quake wars raytraced <http://www.qwrt.de/>
 - industry working on RTRT: intel, nvidia
+- nvidia iray runs on GPGPUs
 
 raytracing vs rasterization
 
@@ -255,3 +256,10 @@ opengl
   - arrange objs in 3D space; select vantage pt
   - calc colors from app assignments, lighting, textures; via shaders or FFP
   - rasterization: convert math descrip of objs & color info to pixels
+
+voxels
+
+- <http://notch.tumblr.com/post/8386977075/its-a-scam>
+- engines
+  - atomontage
+  - <http://voxelstein3d.sourceforge.net/>
