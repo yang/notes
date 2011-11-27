@@ -330,9 +330,25 @@ pitfalls
 
 - unbiased estimators can be terrible (TODO)
 - drug X results may have $p=.04$ and drug Y results may have $p=.06$ but
-  difference may well NOT be significant
+  difference may well NOT be significant (diff btwn sig & insig may well be
+  insig)
 - $p$-value is not prob of hyp being right; to compute this (posterior), more
   info is needed (prior)
+- statistical significance != significance
+- data dredging: many sig tests will inevitably result in false pos results
+
+regression tips
+---------------
+
+- from andrew gelman <http://andrewgelman.com/2010/12/what_do_practit/>
+- (wouldn't take all thes as gospel)
+- pre-process your vars; discretize numeric, avg several related
+- usu fine to just treat discrete outcomes (eg 1-5 scale) as numeric; don't
+  worry about ordered logit/probit/etc., just run the reg already
+- take the 2 most important input vars in your reg & throw in their interaction
+- The key assumptions of a regression model are validity and additivity. Except
+  when you’re focused on predictions, don’t spend one minute worrying about
+  distributional issues such as normality or equal variance of the errors.
 
 combinatorics
 =============
