@@ -361,8 +361,21 @@ clustering
       - each value is a vector in hyperspace
       - divide hyperspace with a hyperplane to classify the values in 1 bit
       - repeat for more bits
-    - min-hash/sim-hash is an instance of this
-    - <http://knol.google.com/k/simple-simhashing>
+    - min-hash, sim-hash are instances of this
+    - min-hash: <http://knol.google.com/k/simple-simhashing>
+    - sim-hash
+
+        pick hash size, eg 32 bits
+        let V = [0] * hash size
+        break up token sequence into features (eg n-char shingles)
+        hash each feature
+        for each hash
+          if bit i is set, V[i]++
+          if bit i is not set, V[i]--
+        simhash bit i is set iff V[i] > 0
+
+      - <http://matpalm.com/resemblance/simhash/>
+      - <http://www.cs.princeton.edu/courses/archive/spr04/cos598B/bib/CharikarEstim.pdf>
 - density-based: discover arbitrary shapes
 - 2-way-/co-/bi-clustering: objects are clustered but also their features; if
   data in matrix, then rows and columns clustered simultaneously
