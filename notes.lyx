@@ -666,6 +666,10 @@ models waiting times: sum of
 also the sample variance of normal data
 \end_layout
 
+\begin_layout Itemize
+conjugate prior for many dists TODO
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 Student's t-distribution: a more spread-out normal distribution
