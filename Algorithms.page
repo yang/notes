@@ -279,6 +279,13 @@ compression
   - strings must be within window size apart
 - LZ78: like LZ77 but looking forward as well; less popular
 - lempel-ziv-welch (LZW): patent-encumbered modification of LZ78
+
+    dict = dict((chr(code), code) for code in xrange(256))
+    loop
+      find the next max-len substr W of input that exists in dict
+      replace it with its dict code
+      dict[W+next char] = next code
+
 - deflate
   - intended to be patent-unencumbered replacement for LZW
   - LZ77 then huffman coding, but uses one huffman tree for char literals and
