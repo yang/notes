@@ -5004,6 +5004,82 @@ http://www.johndcook.com/blog/2011/08/10/markov-chains-dont-converge/
 
 \end_layout
 
+\begin_layout Subsection
+Unsupervised learning
+\end_layout
+
+\begin_layout Itemize
+K-means
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Algo: given inputs 
+\begin_inset Formula $x^{\left(1\right)},\dots,x^{\left(m\right)}$
+\end_inset
+
+, repeatedly:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+update cluster assignments 
+\begin_inset Formula $c^{\left(1\right)},\dots,c^{\left(m\right)}$
+\end_inset
+
+: assign each point to nearest cluster
+\end_layout
+
+\begin_layout Itemize
+update cluster centroids 
+\begin_inset Formula $\mu_{1},\dots,\mu_{K}$
+\end_inset
+
+ to mean of assigned points
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Objective: minimize 
+\emph on
+distortion function
+\emph default
+ 
+\begin_inset Formula $J\left(c^{\left(1\right)},\dots,c^{\left(m\right)},\mu_{1},\dots,\mu_{K}\right)=\frac{1}{m}\sum_{i=1}^{m}\norm{x^{\left(i\right)}-\mu_{c^{\left(i\right)}}}^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Use random initialization (good to initialize to 
+\begin_inset Formula $K$
+\end_inset
+
+ random data points); run many times; choose clustering with min 
+\begin_inset Formula $J$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Choose 
+\begin_inset Formula $K$
+\end_inset
+
+ at knee/elbow in curve of 
+\begin_inset Formula $J$
+\end_inset
+
+ over 
+\begin_inset Formula $K$
+\end_inset
+
+ (or choose based on the problem you're solving)
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Problems
 \end_layout
