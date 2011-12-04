@@ -4392,6 +4392,109 @@ PCA
 \end_layout
 
 \begin_layout Itemize
+algorithm: normalize data, then find eigenvectors of covariance matrix
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+can use SVD: 
+\begin_inset Formula $U,S,V=\mbox{SVD}\left(\Cov\left(\frac{X-\mu}{\sigma}\right)\right)$
+\end_inset
+
+, where 
+\begin_inset Formula $U$
+\end_inset
+
+ cols are eigenvectors in decreasing importance, 
+\begin_inset Formula $S$
+\end_inset
+
+ is diagonal matrix of 
+\emph on
+singular values
+\end_layout
+
+\begin_layout Itemize
+down-project: 
+\begin_inset Formula $\vec{z}=U\vec{x}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+recover: 
+\begin_inset Formula $\vec{\hat{x}}=\transpose U\vec{z}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+use: viz (project to 2D/3D), compression, speeding up learning
+\end_layout
+
+\begin_layout Itemize
+don't use to reduce dimensionality for learning since it doesn't consider
+ labels; use regularization
+\end_layout
+
+\begin_layout Itemize
+choose smallest 
+\begin_inset Formula $k$
+\end_inset
+
+ where lost variance 
+\begin_inset Formula $\frac{\frac{1}{m}\sum_{i=1}^{m}\norm{x^{\left(i\right)}-\hat{x}^{\left(i\right)}}^{2}}{\frac{1}{m}\sum_{i=1}^{m}\norm{x^{\left(i\right)}}^{2}}=\le.01$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+or (equivalently) retained variance 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\frac{\sum_{i=1}^{k}S_{ii}}{\sum_{i=1}^{n}S_{ii}}\ge.99$
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ (
+\begin_inset Quotes eld
+\end_inset
+
+99% variance retained
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 PCA transpose trick 
 \begin_inset Flex URL
 status open
