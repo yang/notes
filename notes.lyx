@@ -2673,26 +2673,14 @@ single Gaussian:
 
 \begin_layout Itemize
 GMM: 
-\begin_inset Formula $\Pr\left[x\right]=\sum_{i=1}^{N}w_{i}\cdot\mathcal{N}\left(x\mid\mu_{i},\Sigma_{i}\right)$
+\begin_inset Formula $\Pr\left[x\right]=\sum_{i=1}^{N}\Pr\left[C=i\right]_{i}\cdot\mathcal{N}\left(x\mid\mu_{i},\Sigma_{i}\right)$
 \end_inset
 
  where 
 \begin_inset Formula $N$
 \end_inset
 
- is # Gaussians, 
-\begin_inset Formula $w$
-\end_inset
-
- is weights (
-\begin_inset Formula $\sum_{i}w_{i}=1$
-\end_inset
-
- and 
-\begin_inset Formula $w_{i}\ge0\forall i$
-\end_inset
-
-)
+ is # Gaussians
 \end_layout
 
 \begin_layout Itemize
@@ -2714,6 +2702,12 @@ hard EM
  algo)
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+very sensitive to initialization; may initialize with K-means
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 mixture model of 
 \begin_inset Formula $k$
@@ -2794,6 +2788,24 @@ initialize params with reasonable values
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+can also do MAP GMM
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://bengio.abracadoudou.com/lectures/gmm.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 Naive Bayes with hidden class
