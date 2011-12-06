@@ -2616,6 +2616,40 @@ hidden/latent variables: indirection that dramatically reduces number of
 \end_layout
 
 \begin_layout Itemize
+EM algo
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+E-step: calculate expected likelihood given current param estimates: 
+\begin_inset Formula $Q\left(\theta\mid\theta^{\left(t\right)}\right)=\E_{Z\mid X,\Theta^{\left(t\right)}}\left[\log L\left(\theta;X,Z\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+often, in reality, we don't actually have to calculate expected likelihood,
+ just as we don't have to compute cost function in gradient descents
+\end_layout
+
+\begin_layout Itemize
+this step usually just updates hidden value estimates, which will then be
+ used in M-step
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+M-step: find params that maximize expected likelihood: 
+\begin_inset Formula $\theta^{\left(t+1\right)}=\arg\max_{\theta}Q\left(\theta\mid\theta^{\left(t\right)}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 EM algo examples (all have 
 \begin_inset Formula $N$
 \end_inset
@@ -2625,10 +2659,61 @@ EM algo examples (all have
 
 \begin_deeper
 \begin_layout Itemize
-unsupervised clustering: mixtures of Gaussians
+unsupervised clustering: Gaussian mixture model
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+single Gaussian: 
+\begin_inset Formula $\mathcal{N}\left(x\mid\mu,\Sigma\right)=\frac{1}{\left(2\pi\right)^{d/2}\sqrt{\left|\Sigma\right|}}\exp\left(-\frac{1}{2}\transpose{\left(x-\mu\right)}\Sigma^{-1}\left(x-\mu\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+GMM: 
+\begin_inset Formula $\Pr\left[x\right]=\sum_{i=1}^{N}w_{i}\cdot\mathcal{N}\left(x\mid\mu_{i},\Sigma_{i}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $N$
+\end_inset
+
+ is # Gaussians, 
+\begin_inset Formula $w$
+\end_inset
+
+ is weights (
+\begin_inset Formula $\sum_{i}w_{i}=1$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{i}\ge0\forall i$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+while ANNs are universal approximators of functions, GMMs are universal
+ approximators of densities
+\end_layout
+
+\begin_layout Itemize
+even diagonal GMMs are universal approximators; full-rank are unwieldy,
+ since # params is square of # dims
+\end_layout
+
+\begin_layout Itemize
+like K-means with probabilistic assignments and Gaussians instead of means
+ (K-means is a 
+\emph on
+hard EM
+\emph default
+ algo)
+\end_layout
+
 \begin_layout Itemize
 mixture model of 
 \begin_inset Formula $k$
@@ -2662,7 +2747,8 @@ Bayes net:
 \end_layout
 
 \begin_layout Itemize
-E-step: calculate some quantities useful later:
+E-step: calculate some quantities useful later (assignment probabilities,
+ which are the hidden variables):
 \begin_inset Formula 
 \begin{eqnarray*}
 p_{ij} & \leftarrow & \Pr\left[C_{j}=i\mid\vec{x}_{j}\right]=\alpha\Pr\left[\vec{x}_{j}\mid C_{j}=i\right]\Pr\left[C_{j}=i\right]\\
