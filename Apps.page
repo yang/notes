@@ -419,9 +419,12 @@ Linux
   gsettings set org.gnome.desktop.lockdown disable-lock-screen 'true'
 
   # monitor CPU hogs
-  top -b -d 60 -c > top-processes &
+  top -b -d 60 -c > top-cpu-processes &
   # monitor CPU hogs by threads
-  top -b -d 60 -c -H > top-threads &
+  top -b -d 60 -c -H > top-cpu-threads &
+
+  # monitor mem hogs
+  while true; do date; ps auxk-rss; sleep 60; done > top-mem-processes &
 
   # mount encrypted filesystem
   sudo mount -t ecryptfs ~/data ~/data -o ecryptfs_cipher=aes,ecryptfs_key_bytes=32,ecryptfs_passthrough=n,ecryptfs_enable_filename_crypto=n
