@@ -404,6 +404,12 @@ Windows
 Linux
 -----
 
+  # show live transfer counters for interface eth0
+  vnstat -l 1 -i eth0
+
+  # displays information about resulting broadcast network, very very useful!
+  ipcalc 192.168.0.1/32
+
   # Disable alt-click in Gnome
   gconftool-2 --set /apps/metacity/general/mouse_button_modifier --type string disabled
   # Enable alt-click in Gnome
