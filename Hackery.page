@@ -545,6 +545,7 @@
       - need acute awareness of what we're dealing with
         - python 3 gets this right: produce iterators by default, since
           everything else can be efficient build on top of them
+        - in general, self-type-returning collections are not a good default
         - `for (x <- xs) ...` may or may not produce an intermediate list,
           depending on the type of `xs`; better remember to always use
           `.iterator`
