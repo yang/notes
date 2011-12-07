@@ -2180,6 +2180,13 @@
     - <http://clusterlabs.org/wiki/FAQ>
 
 - python
+  - things i want in py3k
+    - resumable pdb ctrl-c: <http://bugs.python.org/issue7245>
+    - iterator versions of built-in functions/methods
+    - cleaner syntax
+    - exception tracebacks are __traceback__ properties: <http://www.python.org/dev/peps/pep-3109/>
+    - better concurrent.futures
+    - stricter unicode/str distinguishing
   - greenlets
     - stackless spinoff
     - each switch = 2x memcpy, realloc, free (copying 20-100+K of mem)
