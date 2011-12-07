@@ -1677,3 +1677,6 @@ Ubuntu 11.10 / Unity
 - byobu is confusing to use/config
 - right-clicks in chrome have to be held down?
 - (still) can't alt-click without hassle
+- skype tray icon not showing up; have to pkill
+- various bugs/quirks in unity
+- vlc icon showing up to the left of the resource monitor applet
