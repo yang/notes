@@ -104,6 +104,7 @@ Commands
   c-x `       next-error
   m-g n       next-error
   m-g m-n     next-error
+              occur
   SEARCH INTERACTION
   ret c-w     word search
   c-w         search for word under cursor
@@ -348,6 +349,7 @@ Commands
   c-c c-a     c-toggle-auto-newline (lets electric chars trigger newline insertions)
               tabify
               untabify
+              align-regexp
   HIGHLIGHT
   c-x w h     highlight-regexp
   MACROS
