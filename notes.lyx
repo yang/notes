@@ -135,6 +135,18 @@ General
 \end_layout
 
 \begin_layout Itemize
+geometric mean 
+\begin_inset Formula $\left(\prod_{i}x_{i}\right)^{\frac{1}{n}}$
+\end_inset
+
+ is exp of arith mean of logs, 
+\begin_inset Formula $\exp\left(\frac{1}{n}\sum_{i}\log x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 Stirling's approx: 
 \begin_inset Formula $\ln n!=n\ln n-n+O\left(\log n\right)$
 \end_inset
