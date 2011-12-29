@@ -50,6 +50,14 @@ TODO
   - compressive sensing of images
 - <http://rjlipton.wordpress.com/2009/10/27/highlights-of-focs-theory-day/>
 
+strategies
+
+- if you need to find say an $O(n)$-time algo, think about how to make use of
+  $O(n)$ space (dynamic programming); consider cases where the reuse is not
+  exactly straightforward, e.g. palindrome
+- look for ways to simplify the problem by eliminating entire classes of stuff
+  from the solution space, e.g. max $j-i$ where $A_j > A_i$
+
 randomized algorithms
 
 - las vegas: always gives correct results; runtime resources may vary
