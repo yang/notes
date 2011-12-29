@@ -52,8 +52,11 @@ Algorithms
   substrings of y
 - come up with a $O(n \log n)$ algo for computing kendall-tau
 - distance-maximizing problem: given an array $A$ of integers, find the maximum
-  $j-i$ where $A_i<A_j$ (in $O(n)$!)
+  $j-i$ where $A_i<A_j$ (hard: in $O(n)$!)
 - find the *majority* element in a stream
+- longest palindromic substring: brute force, then in $O(n^2)$ time/space, then
+  in $O(1)$ space, then in $O(n)$ time/space (hard)
+- how to reverse bits in an int? (hint: use xor to swap pair of bits)
 
 Probability
 ===========
