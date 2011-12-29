@@ -1262,6 +1262,14 @@
     <http://weblog.ikvm.net/PermaLink.aspx?guid=c84a5b22-d633-4eeb-a8e1-244ff66161a2>
 
   - objects 64-bit aligned, have 2-word header (word = native ptr size)
+    - fields word-aligned
+
+  - useful flags
+    - `-verbosegc`
+    - `-XX:+UseCompressedOops`: many 64-bit refs now 32-bit; usable below 32GB
+      max heap; enabled by default below 30GB max heap
+    - `-Xss<SIZE>`: stack size; useful for many threads (1024KB on 64-bit
+      Linux)
 
   - From <http://java.sun.com/products/hotspot/whitepaper.html>
 
