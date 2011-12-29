@@ -66,6 +66,7 @@ wisdom
   - <http://www.aihorizon.com/essays/generalai/no_free_lunch_machine_learning.htm>
 - curse of dimensionality: volume grows exponentially with dimensions, so
   everything is far away
+- to _whiten_ features is to center & rescale them by dividing by SD
 
 learning taxonomies
 
