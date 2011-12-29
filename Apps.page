@@ -406,6 +406,9 @@ Windows
 Linux
 -----
 
+  # force ddclient to update
+  ddclient -force -daemon=0
+
   # show live transfer counters for interface eth0
   vnstat -l 1 -i eth0
 
