@@ -4,6 +4,7 @@ TODO fused multiply add (FMA)
 
 misc notes
 
+- harvard architecture: separate instr & data mem
 - x87: the FPU
 
 SSE
