@@ -733,6 +733,22 @@ queueing theory
 - little's law: $L=\lambda W$ where $L$ is avg number of customers in system,
   $\lambda$ is avg arrival rate, $W$ is avg time each customer spends in system
 
+measure theory
+==============
+
+- studies ways of generalizing the notions of length/area/volume
+- measure theory asks questions like: 
+  - How do we define a measure on our space? (Jordan measure and Lebesgue
+    measure are two different options in Euclidean space.)
+  - What properties does our measure satisfy? (For example, does it satisfy
+    translational invariance, rotational invariance, additivity?)
+  - Which objects are measurable/which objects can we say it's okay not to
+    measure in order to preserve nice properties of our measure? (The
+    Banach-Tarski ball can be rigidly reassembled into two copies of the same
+    shape and size as the original, so we don't want it to be measurable, since
+    then we would lose additivity properties.)
+- TODO URL
+
 sequences and series
 ====================
 
