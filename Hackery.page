@@ -1276,8 +1276,6 @@
 
     - they probably use the mark word to redirect to the new location
 
-  - GC: generational; parallel young
-
   - objects copied in DFS; this clusters related objects together
 
   - vocab
@@ -1314,11 +1312,16 @@
       - stack allocation
       - object eplosion
 
-  - parallel GC: actually a stop-the-world on “young generation”
-    - “parallel” means implemented w threads for better speed
-  - ConcurrentMarkSweep GC = “Full GC”
-    - apart from initial mark and final cleanup phase, it is really concurrent,
-      meaning that it runs in parallel to the normal process
+  - GC: generational
+    - parallel GC: actually stop-the-world on “young generation”
+      - “parallel” means implemented w threads for better speed
+    - ConcurrentMarkSweep GC = “Full GC”
+      - apart from initial mark and final cleanup phase, it is really
+        concurrent, meaning that it runs in parallel to the normal process
+      - doesnt compact, prone to frag/STW pauses
+    - G1: TODO
+    - adaptive sizing policy: self-tuning
+      - eg `-XX:MaxGCPauseMillis=100`, `-XX:GCTimeRatio=19`
 
 - alignment
 
