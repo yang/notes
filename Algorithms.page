@@ -526,6 +526,25 @@ binary space partitioning (BSP) trees
   - not efficient for high dim; number of data points $n$ should be much larger
     than $2^k$
 
+BK Tree
+
+- useful for spell correction/fuzzy searches
+- structure
+  - one node per word
+  - each word has edges such that edge $i$ links to sub-tree of words all
+    (Levenshtein) distance $i$ from current word
+- querying: given term $q$ and max dist $m$
+  - start at root node and repeat the following at each traversed node
+  - let $d$ be distance btwn current node and $q$
+  - use triangle inequality: follow only edges $d-m \dots d+m$
+- building: start w arbitrary root
+  - recursively traverse tree using distance until hit leaf, then insert
+- properties
+  - N-ary and irregular but generally well-balanced
+  - searching w dist 1 traverses <5-8% of tree, 2 traverses <17-25% of tree
+- not a great explanation but not many out there
+  <http://blog.notdot.net/2007/4/Damn-Cool-Algorithms-Part-1-BK-Trees>
+
 shotgun genome assembly
 
 - de brujin graphs commonly used in genome sequencing
