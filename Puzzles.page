@@ -29,6 +29,33 @@ Riddles
   enough time?
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
+- Fitch Cheney's 5-card trick:
+
+  The question concerns a "magic trick" involving playing cards, a standard 52-card deck.  There are two magicians, and they are working together.
+
+  The first magician finds a member of the audience and asks them to pick out 5 cards from the deck and hand them back to him.  The magician takes a look at the 5 cards, chooses one of them, and hands it back to the audience member, asking him to look at it and hold on to it.  This is the secret card.
+
+  The first magician then takes the remaining four cards, arranges them in some order and hands them to the second magician, who upon receiving the four cards is able to magically tell everyone what the secret card is!  ** Tada! **
+
+Game theory
+===========
+
+- cannibals:
+
+  A traveler gets lost on a deserted island and finds himself surrounded by a
+  group of n cannibals.
+
+  Each cannibal wants to eat the traveler but, as each knows, there is a risk.
+  A cannibal that attacks and eats the traveler would become tired and
+  defenseless. After he eats, he would become an easy target for another
+  cannibal (who would also become tired and defenseless after eating).
+
+  The cannibals are all hungry, but they cannot trust each other to cooperate.
+  The cannibals happen to be well versed in game theory, so they will think
+  before making a move.
+
+  Does the nearest cannibal, or any cannibal in the group, devour the lost
+  traveler?
 
 Number theory
 =============
@@ -57,6 +84,9 @@ Algorithms
 - longest palindromic substring: brute force, then in $O(n^2)$ time/space, then
   in $O(1)$ space, then in $O(n)$ time/space (hard)
 - how to reverse bits in an int? (hint: use xor to swap pair of bits)
+- Out of a thousand identical buckets of water, exactly one contains a poison
+  that will kill a pig in exactly 30 minutes. What's the minimum number of pigs
+  you need to determine which bucket is poisoned within an hour?
 
 Probability
 ===========
