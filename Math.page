@@ -15,6 +15,10 @@ signals
 statistics
 ==========
 
+- bootstrap hypothesis testing: for 2 groups, merge them, generate a bunch of
+  bootstrap samples, and see how frequently they generate means as different as
+  what's seen (the p-value)
+
 - areas: descriptive, inferential
 
 - moments
