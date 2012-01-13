@@ -766,3 +766,26 @@ graph theory
 
 - euler trail: visit each edge once; poly-time
 - hamiltonian path: visit each vertex once; NP-complete
+
+category theory
+===============
+
+- a _category_ consists of
+  - a class of _objects_
+  - a class of _morphisms_ aka _arrows_
+  - for each morphism $f$, a _domain_ object and a _codomain_ object
+  - for each object $A$, an _identity morphism_ $1_A: A \rightarrow A$
+  - for each pair of morphisms $f: A \rightarrow B$ and $g: B \rightarrow C$,
+    a _composite morphism_ $g \ocirc f: A \rightarrow C$
+- with these rules:
+  - identity composition: for each $f: A \rightarrow B$, $f \ocirc 1_A = f$
+    and $1_B \ocirc f = f$
+  - associativity
+- functors: morphisms from category to category
+  - define functor $F: C1 \rightarrow C2$
+    - every object $A \in C1$ maps to an object $F(A) \in C2$
+    - every map $A \right B \in C1$ maps to $F(A) \rightarrow F(B) \in C2$
+  - must preserve rules:
+    - $F(1_A) = 1_{F(A)} \forall A \in C1$
+    - $F(g \ocirc f) = F(g) \ocirc F(f) \forall f: A \rightarrow B, g: B
+      \rightarrow C$ where $A,B,C \in C1$
