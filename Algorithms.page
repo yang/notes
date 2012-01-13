@@ -70,6 +70,10 @@ misc terms
 - _binary decision diagram (BDD)_: binary tree representation of truth table;
   each layer switches on one input
 
+bit tricks
+
+- <http://graphics.stanford.edu/~seander/bithacks.html>
+
 core concepts
 
 - TODO: Range counting, predecessor, voronoi diagrams, dynamic optimality, planar point location, nearest neighbor, partial sums, connectivity
