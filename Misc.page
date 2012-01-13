@@ -89,6 +89,14 @@ audio
 
 - AAC: designed to succeed MP3, generally better quality at same bitrates
 
+fonts
+
+- Helvetica: widely used, pretty standard; nice in larger sizes on Ubuntu
+- Arial: similar to Helvetica but "cheaper"
+  <http://ilovetypography.com/2007/10/06/arial-versus-helvetica/>
+- Calibri: replaced Arial as default font in Windows
+- Open Sans: this one looks really nice, at least on Ubuntu
+
 games
 =====
 
