@@ -1129,6 +1129,23 @@ support vector machine (SVM)
   - eg kernel-specific params; eg poly kernel has more hyperparams than others
 - slack variables introduce soft margin
 
+bayesian optimization
+
+- not entirely clear yet how this works, but rough notes follow
+- way to globally optimize a costly-to-evaluate function
+- set prior over function and combine w evidence to get posterior
+- permits utility-based selection of next obs; considers both exploration
+  (sampling from areas of high uncertainty) and exploitation (sampling areas
+  likely to offer improvement)
+- how it works
+  - assume evaluations of a bunch of arbitrary points
+  - fit gaussian process and search for best next point (optimize an
+    "acquisition function")
+    - can be expected value + predicted variance (upper-confidence-bound
+      acqusition fn)
+    - or expected improvement
+- <http://atpassos.posterous.com/bayesian-optimization>
+
 kernels
 
 - from <http://anyall.org/blog/2011/01/please-report-your-svms-kernel/>:
