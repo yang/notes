@@ -409,6 +409,17 @@ error correcting code (ECC): usu. mean FEC
       - turbo codes: near-optimal
       - low-density parity-check (LDPC) codes: near-optimal
       - BCH codes: handles random and burst errors
+    - fountain codes aka rateless erasure codes
+      - "potentially limitless sequence of encoding symbols can be generated
+        from a given set of source symbols such that the original source
+        symbols can ideally be recovered from any subset of the encoding
+        symbols of size equal to or only slightly larger than the number of
+        source symbols"
+      - LT codes: first practical realization; simplest
+        - for each generated block, combine (xor) random sample of source
+          blocks
+        - sample size is sampled from a special distribution, the (robust)
+          soliton dist
 
 misc
 ====
