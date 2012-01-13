@@ -5,10 +5,13 @@ This is my collection of notes on computer science, research, programming, and
 industry, with a heavy focus on software systems (distributed systems, database
 systems, etc.).
 
+Watch your step. This place is really messy.
+
 Table of Contents
 -----------------
 
-- [AI]()
+- [LyX-based notes](notes.lyx): contains more math-dense stuff
+- [AI/Machine Learning]()
 - [Algorithms]()
 - [Apps]()
 - [Architecture]()
@@ -16,7 +19,7 @@ Table of Contents
 - [Complexity]()
 - [Concurrency]()
 - [DB]()
-- [Distributed]()
+- [Distributed Systems]()
 - [Graphics]()
 - [Graphs]()
 - [HCI]()
@@ -24,7 +27,7 @@ Table of Contents
 - [Hardware]()
 - [Help]()
 - [IR]()
-- [Languages]()
+- [Languages and Compilers]()
 - [Math]()
 - [Misc]()
 - [More Concurrency]()
@@ -38,8 +41,6 @@ Table of Contents
 - [Software Engineering]()
 - [Systems]()
 - [Web]()
-
-Watch your step. This place is really messy.
 
 Feeds
 -----
