@@ -1195,6 +1195,8 @@ nautilus-script-audio-convert
 Linux commands
 --------------
 
+smem # report PSS and USS for more accurate memory accounting
+
 dtrx # do the right extraction
 
 smtp-source # send test mail
