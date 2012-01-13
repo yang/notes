@@ -1320,14 +1320,17 @@
       - stack allocation
       - object eplosion
 
-  - GC: generational
-    - parallel GC: actually stop-the-world on “young generation”
+  - GCs
+    - throughput collector: generational, parallel, compacting
+      - parallel GC: actually stop-the-world on “young generation”
       - “parallel” means implemented w threads for better speed
-    - ConcurrentMarkSweep GC = “Full GC”
+    - ConcurrentMarkSweep (CMS) GC = “Full GC”
       - apart from initial mark and final cleanup phase, it is really
         concurrent, meaning that it runs in parallel to the normal process
-      - doesnt compact, prone to frag/STW pauses
-    - G1: TODO
+      - short incremental parallel STW pauses
+      - doesn't compact, prone to frag/STW pauses
+    - G1: like CMS, try to avoid STW pauses w short incremental parallel STW
+      pauses, but *does* compact to avoid frag
     - adaptive sizing policy: self-tuning
       - eg `-XX:MaxGCPauseMillis=100`, `-XX:GCTimeRatio=19`
 
