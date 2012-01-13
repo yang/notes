@@ -503,9 +503,26 @@ binary space partitioning (BSP) trees
 
 - TODO recursively partition space; apps in graphics
 - kd-tree aka $k$-dimensional tree: special case
-  - binary tree, each internal node is a hyperplane splitting some dimension
+  - organizes $k$-dim *points* (this is important)
+    - binary tree, each internal node is a hyperplane splitting some dimension
+    - remember though that each node also corresponds to a point!
+    - think decision tree recursively splitting different continuous dimensions
   - useful for range searches, NN searches
-  - various algos
+    - NN search
+      - go down tree as if inserting query point
+      - once at leaf, save it as current best
+      - walk back up tree until back at root
+        - if current node closer, update current best
+        - any points on other (sibling) subtree that could be closer? (does
+          hypersphere with radius from query to current node intersect with
+          other subtree?)
+          - if so, recurse down to leaf of other subtree
+  - various construction algos
+    - canonical construction
+      - as we move down the tree, we cycle through the dimensions; eg for 3D
+        tree, level 1 splits $x$, 2 splits $y$, 3 splits $z$, 4 splits $x$,
+        etc.
+      - split on median point
   - not efficient for high dim; number of data points $n$ should be much larger
     than $2^k$
 
