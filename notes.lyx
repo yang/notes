@@ -146,6 +146,28 @@ geometric mean
 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+eg annualizing compounding: given annual growths 
+\begin_inset Formula $a,b,c>1$
+\end_inset
+
+ and initial price 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $p_{3}=abcp_{0}=\mu^{3}p_{0}$
+\end_inset
+
+ where geometric mean 
+\begin_inset Formula $\mu=\sqrt[3]{abc}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Stirling's approx: 
 \begin_inset Formula $\ln n!=n\ln n-n+O\left(\log n\right)$
