@@ -2585,7 +2585,7 @@ Information criteria
 
 \begin_layout Itemize
 Akaike's information criterion (AIC): 
-\begin_inset Formula $-2\log\mathcal{L}+2p$
+\begin_inset Formula $-2\log\mathcal{L}+2p=\mbox{deviance}+\mbox{params}$
 \end_inset
 
 
@@ -2604,6 +2604,18 @@ Akaike's information criterion (AIC):
 \end_inset
 
  is # free params in model
+\end_layout
+
+\begin_layout Itemize
+also seen: 
+\begin_inset Formula $-2\log\frac{\mbox{RSS}}{n}+\frac{2nk}{n-k-1}$
+\end_inset
+
+ where RSS is residual sum of squares and 
+\begin_inset Formula $k$
+\end_inset
+
+ is # params
 \end_layout
 
 \begin_layout Itemize
