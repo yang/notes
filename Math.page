@@ -291,6 +291,11 @@ time series (TODO also cover math)
 - TODO filtering: Hodrick-Prescott (HP), Baxter-King, Christiano-Fitzgerald
   (all popular in finance)
 - TODO Bayesian dynamic linear models (DLM)
+- repetition
+  - seasonal aka periodic: fixed-length cycles
+  - cyclic: variable-length cycles
+- cyclic/seasonal models
+  - TODO cyclic vs seasonal vs periodic <http://robjhyndman.com/researchtips/cyclicts/>
 
 statistical inference
 
