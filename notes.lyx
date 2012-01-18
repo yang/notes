@@ -4179,6 +4179,18 @@ can work it out by writing log likelihood
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+always passes through mean of 
+\begin_inset Formula $x$
+\end_inset
+
+s and 
+\begin_inset Formula $y$
+\end_inset
+
+s
+\end_layout
+
 \end_deeper
 \begin_layout Subsection
 Multi-layer feed-forward neural networks
