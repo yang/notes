@@ -248,6 +248,12 @@ statistical tests
   - compare group against theoretical value (i.e. with-replacement; see
     binomial dist vs hypergeom dist)
 - non-parametric tests TODO: mann-whitney, wilcoxon
+  - Kolmogorov-Smirnov (K-S) test: nonparam test for equality of continuous 1D
+    prob dists; often used to test for GOF
+    - "The two-sample KS test is one of the most useful and general
+      nonparametric methods for comparing two samples, as it is sensitive to
+      differences in both location and shape of the empirical cumulative
+      distribution functions of the two samples."
 
 data
 
