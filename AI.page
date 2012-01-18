@@ -834,6 +834,11 @@ learning bayes net structures
     (MAP/MDL) approach over network hyps (prefer simpler networks)
     - usu too many structures to sum over, so sample w MCMC
 
+markov chain monte carlo (MCMC)
+
+- award-winning expository paper: <http://www.ams.org/journals/bull/2009-46-02/S0273-0979-08-01238-X/S0273-0979-08-01238-X.pdf>
+- variational bayes TODO
+
 graphical models
 
 - bayesian network aka belief network aka directed graphical model
