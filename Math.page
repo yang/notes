@@ -12,6 +12,8 @@ signals
 statistics
 ==========
 
+- TODO <http://itunes.apple.com/us/itunes-u/statistics-110-introduction/id495213607>
+
 - bootstrap hypothesis testing: for 2 groups, merge them, generate a bunch of
   bootstrap samples, and see how frequently they generate means as different as
   what's seen (the p-value)
