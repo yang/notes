@@ -659,7 +659,11 @@ Exponential: time btwn Poisson process events
 \end_layout
 
 \begin_layout Itemize
-memoryless / constant event rate 
+memoryless: 
+\begin_inset Formula $\Pr\left[X>s\mid X>t\right]=\Pr\left[X>s-t\right]$
+\end_inset
+
+ / constant event rate 
 \begin_inset Formula $\lambda$
 \end_inset
 
