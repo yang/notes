@@ -5568,6 +5568,266 @@ Choose
 
 \end_deeper
 \begin_layout Section
+Natural language processing (NLP)
+\end_layout
+
+\begin_layout Subsection
+Naive Bayes
+\end_layout
+
+\begin_layout Itemize
+NB usu uses 
+\emph on
+multi-variate Bernoulli event model
+\emph default
+: 
+\begin_inset Formula $X_{i}\sim\mbox{Bernoulli}_{c,i}$
+\end_inset
+
+ are whether dict word 
+\begin_inset Formula $i$
+\end_inset
+
+ is present (for class 
+\begin_inset Formula $c$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+multinomial event model
+\emph default
+: better for text classif; 
+\begin_inset Formula $X_{i}\sim\mbox{Multinomial}_{c}$
+\end_inset
+
+ is 
+\begin_inset Formula $i$
+\end_inset
+
+th word in doc, sampled from dict (for class 
+\begin_inset Formula $c$
+\end_inset
+
+)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+model: 
+\begin_inset Formula $\Pr\left[D\mid\vec{\theta}_{c}\right]=\frac{\left(\sum_{i}f_{i}\right)!}{\prod_{i}f_{i}!}\prod\left(\theta_{c,i}\right)^{f_{i}}$
+\end_inset
+
+ where 
+\begin_inset Formula $D$
+\end_inset
+
+ is document (this is just multinomial PMF)
+\end_layout
+
+\begin_layout Itemize
+prediction: 
+\begin_inset Formula $\arg\max_{c}\left[\log p\left(\vec{\theta}_{c}\right)+\sum_{i}f_{i}\log\theta_{c,i}\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+estimation: 
+\begin_inset Formula $\hat{\theta}_{c,i}=\frac{N_{c,i}+\alpha_{i}}{N_{c}+\alpha}$
+\end_inset
+
+ where 
+\begin_inset Formula $\alpha=\sum_{i}\alpha_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+data skew bias: sensitive to training class dist
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+fix with 
+\emph on
+complement NB
+\emph default
+: 
+\begin_inset Formula $\hat{\theta}_{\tilde{c},i}=\frac{N_{\tilde{c},i}+\alpha_{i}}{N_{\tilde{c}}+\alpha}$
+\end_inset
+
+ and 
+\begin_inset Formula $\arg\max_{c}\left[\log p\left(\vec{\theta}_{c}\right)-\sum_{i}f_{i}\log\theta_{\tilde{c},i}\right]$
+\end_inset
+
+ (notice the 
+\begin_inset Formula $-$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+note: doesn't do anything for binary; need 3+ classes
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+weight magnitude errors: deal with deps like 
+\begin_inset Quotes eld
+\end_inset
+
+San Francisco
+\begin_inset Quotes erd
+\end_inset
+
+ vs.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Boston
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+use weight normalization 
+\begin_inset Formula $\frac{\log\hat{\theta}_{c,i}}{\sum_{k}\left|\log\hat{\theta}_{c,k}\right|}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\log\hat{\theta}_{c,i}$
+\end_inset
+
+ (given without much explanation)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+transforms to model text more accurately based on empirical text dists
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+term frequency: empirical dists were heavier-tailed than predicted by multinomia
+l, more like power-law
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+eg multinomial says 
+\begin_inset Formula $\Pr\left[f_{i}=9\right]$
+\end_inset
+
+ (see a word 9 times) is tiny, but in reality pretty high (
+\begin_inset Quotes eld
+\end_inset
+
+burstiness
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+use 
+\begin_inset Formula $f_{i}'=\log\left(d+f_{i}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $d=1$
+\end_inset
+
+ (or some optimized value)
+\end_layout
+
+\begin_layout Itemize
+brings closer to the Bernoulli (0-1) model
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+document frequency
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+common words unlikely to be predictive, but random variations can create
+ fictitious correlations
+\end_layout
+
+\begin_layout Itemize
+use 
+\begin_inset Formula $f_{i}'=f_{i}\log\frac{\sum_{j}1}{\sum_{j}\delta_{i,j}}$
+\end_inset
+
+ to downweight common words where 
+\begin_inset Formula $\delta_{i,j}=1$
+\end_inset
+
+ iff word 
+\begin_inset Formula $i$
+\end_inset
+
+ in doc 
+\begin_inset Formula $j$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+document length
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+docs have strong inter-word deps; if word appears, likely to re-appear
+\end_layout
+
+\begin_layout Itemize
+longer docs have disproportionately higher empirical term freqs/heavier
+ tails; can have strong effect
+\end_layout
+
+\begin_layout Itemize
+use 
+\begin_inset Formula $f_{i}'=\frac{f_{i}}{\sqrt{\sum_{k}\left(f_{k}\right)^{2}}}$
+\end_inset
+
+; denom is doc length; discounts long docs; common in IR
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://people.csail.mit.edu/jrennie/papers/icml03-nb.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
 Problems
 \end_layout
 
