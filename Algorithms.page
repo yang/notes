@@ -198,6 +198,7 @@ linear programming
   - linear case
     - primal objective function combines $n$ vars w $m$ upper-bound constraints
     - dual function combines $m$ vars w $n$ lower-bound constraints
+  - all LP have _strong duality_: optimal values of primal & dual are equal
   - lagrange duality/lagrange multiplier: TODO
 
 priority queues
