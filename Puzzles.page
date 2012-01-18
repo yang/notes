@@ -122,6 +122,8 @@ Probability
   this for any of the 20 numbers?
 - russian roulette: load 2 adjacent chambers. spin barrel. click. before
   pulling again, want to spin?
+- newsvendor model: if goods are $3 to buy and $4 to sell, and you have uniform
+  prob of selling any number $0 \le n \le 100$, how many should you buy?
 
 Geometry
 ========
