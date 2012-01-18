@@ -1,6 +1,3 @@
-- graph theory: a branch of combinatorics
-  - eulerian circuit iff all nodes have even degrees
-  - eulerian non-circuit tour iff only 2 nodes have odd degrees
 - stanford linear systems & optimization | convex optimization I:
   http://see.stanford.edu/see/courseinfo.aspx?coll=2db7ced4-39d1-4fdb-90e8-364129597c87
 - finite element method
@@ -380,7 +377,6 @@ mathematics
   fields, modules, vector spaces, and algebras
 - topology: extension of geometry that focuses on structure
 - algebraic topology: uses abstract algebra
-- graph theory
 - topological graph theory: topology + graph theory; studies embeddings of
   graphs in surfaces
 - number theory
@@ -764,7 +760,14 @@ sequences and series
 graph theory
 ============
 
-- euler trail: visit each edge once; poly-time
+- a branch of combinatorics
+- eulerian paths
+  - eg bridges of Konigsberg
+  - poly-time algos
+  - euler trail aka eulerian path aka eulerian walk: visit each edge once;
+    iff only 2 nodes have odd degrees
+  - eulerian circuit aka eulerian cycle aka eulerian tour: also return to
+    start; iff all nodes have even degrees
 - hamiltonian path: visit each vertex once; NP-complete
 
 category theory
