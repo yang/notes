@@ -103,6 +103,20 @@ query understanding at bing
   - Especially important for tail queries
     - no metadata to guide matching and ranking
 
+implementations
+
+- sphinx: C++; mysql integration; BM25F; vik says it's nice and "tight"
+- lucene: the most widely used index; java
+- solr: search service built atop lucene
+- solrcloud: distributed solr
+- elasticsearch: solrcloud alternative (dunno if it changes lucene)
+- indextank: reuses parts of lucene 3; customizable scoring; pretty simple; not
+  sure what ranking it uses
+- vespa: yahoo's kick-ass index
+- terrier: platform from U of glasgow; engineered to TREC
+- lemur: platform from CMU; well-regarded; also engineered to TREC but then
+  made to do a bunch of other things
+
 lucene
 
 - java library
@@ -117,6 +131,8 @@ lucene
   - separate commit() flushes to disk
   - instantiating IndexReader gets a snapshot of what's on disk
 - scoring TODO
+- GSOC11 changes lucene to accomodate modern ranking like BM25, DRF and
+  separate matching/ranking
 
 sphinx
 
