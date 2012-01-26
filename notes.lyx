@@ -4599,13 +4599,29 @@ LASSO/L1: minimize
 \end_inset
 
  where 
-\begin_inset Formula $\left|\vec{\beta}\right|\le s$
+\begin_inset Formula $\norm{\vec{\beta}}_{1}\le s$
+\end_inset
+
+ and 
+\begin_inset Formula $\norm{\vec{\beta}}_{1}=\sum_{j}\left|\vec{\beta}_{j}\right|$
+\end_inset
+
+ (
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+ norm)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+equiv: minimize 
+\begin_inset Formula $\sum_{i}\frac{1}{2n}\left(\vec{\beta}\vec{x}_{i}-y_{i}\right)^{2}+\lambda\norm{\vec{\beta}}_{1}$
 \end_inset
 
 
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 more notes in AI.page
 \end_layout
@@ -4617,11 +4633,11 @@ better than L2 when many features (vs examples)
 \end_deeper
 \begin_layout Itemize
 ridge/Tikhonov: instead of 
-\begin_inset Formula $\norm{X\vec{\beta}-\vec{y}}^{2}$
+\begin_inset Formula $\norm{X\vec{\beta}-\vec{y}}_{2}^{2}$
 \end_inset
 
 , minimize 
-\begin_inset Formula $\norm{X\vec{\beta}-\vec{y}}^{2}-\norm{\Gamma\vec{\beta}}^{2}$
+\begin_inset Formula $\norm{X\vec{\beta}-\vec{y}}_{2}^{2}+\norm{\Gamma\vec{\beta}}_{2}^{2}$
 \end_inset
 
  for some suitable Tikhonov matrix 
@@ -4638,6 +4654,12 @@ L2 regularization: when
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+effect aka 
+\emph on
+shrinkage
 \end_layout
 
 \begin_layout Itemize
@@ -4661,8 +4683,42 @@ explicit solution
 
 \end_deeper
 \begin_layout Itemize
-elastic net: handles highly correlated vars; brought up as best-of-both-worlds
- alt to LASSO/ridge
+elastic net: handles highly correlated vars; balance L1 & L2
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+minimize 
+\begin_inset Formula $\frac{1}{2n}\norm{X\vec{\beta}-\vec{y}}_{2}^{2}+\lambda\alpha\norm{\vec{\beta}}_{1}+\frac{\lambda\left(1-\alpha\right)}{2}\norm{\vec{\beta}}_{2}^{2}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www-stat.stanford.edu/~owen/courses/305/Rudyregularization.pdf
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://scikit-learn.org/stable/modules/linear_model.html
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
