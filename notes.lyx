@@ -2580,6 +2580,89 @@ giants/fulltext
 \end_layout
 
 \begin_layout Section
+Optimization
+\end_layout
+
+\begin_layout Subsection
+Convex optimization
+\end_layout
+
+\begin_layout Itemize
+lin prog, quad prog
+\end_layout
+
+\begin_layout Subsection
+Linear programming
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\arg\max_{\vec{x}}\transpose{\vec{c}}\vec{x}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $A\vec{x}\le\vec{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{x}\ge0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+algo families: basis exchange (eg simplex), interior point (eg ellipsoid)
+\end_layout
+
+\begin_layout Subsection
+Quadratic programming
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\arg\min_{\vec{x}}f\left(\vec{x}\right)=\frac{1}{2}\transpose{\vec{x}}Q\vec{x}+\transpose{\vec{c}}\vec{x}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $A\vec{x}\le\vec{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $E\vec{x}=\vec{d}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+algos: interior point, active set, augmented Lagrangian, conjugate gradient,
+ simplex extensions
+\end_layout
+
+\begin_layout Itemize
+for pos-def 
+\begin_inset Formula $Q$
+\end_inset
+
+, 
+\emph on
+ellipsoid method
+\emph default
+ solves in poly time
+\end_layout
+
+\begin_layout Itemize
+for indef 
+\begin_inset Formula $Q$
+\end_inset
+
+ or if 
+\begin_inset Formula $Q$
+\end_inset
+
+ has only 1 negative eigenvalue, NP-hard
+\end_layout
+
+\begin_layout Section
 Machine Learning
 \end_layout
 
