@@ -248,6 +248,10 @@ supervised learning
 - margin infused relaxation algo (MIRA): TODO
   - <http://aria42.com/blog/?p=216>
 
+coordinate descent
+
+- no derivative needed; simply pick a direction and move along it
+
 gradient descent
 
 - better alternatives: conjugate gradient, BFGS, L-BFGS (limited-memory BFGS)
