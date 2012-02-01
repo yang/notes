@@ -320,7 +320,6 @@ statistical inference
 - kernel density estimator: basically place a small kernel everywhere you have
   a sample, resulting in somtehing much smoother than a histogram (where bins
   can make all the difference in interpretation)
-- TODO ridge regression
 
 - mean absolute percentage error (MAPE): $M = \frac{1}{n} \sum_{t=1}^n
   \left\vert \frac{A_t - F_t}{A_t} \right\vert$
