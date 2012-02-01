@@ -2,6 +2,39 @@ general
 
 - worry about search index sizes; get very big very easily
 
+IR models
+
+- vector space model (VSM): cosine similarity
+  - documents are Euclidian-normalized vectors of TF(-IDF)
+  - idf most commonly uses `log(N / df_t)`
+  - variants
+    - tf
+      - sublinear (log) scaling
+      - max tf normalization: normalize tf of all doc terms by doc's max tf
+        - `ntf(t,d) = a + (1 - a) * tf(t,d) / tf_max(d)` where `a` usu .4
+        - avoids large swings in ntf from modest changes in `tf(t,d)` (eg 1 to
+          2)
+        - unstable: change in stop word list dramatically alters weightings
+        - sensitive to outlying # occurrences
+        - doesn't distinguish ntf=1 meaning high skew or ~same as other terms
+    - SMART notation identifies doc/query weighting/normalization schemes
+    - pivoted normalized doc len: replace denom `|V(d)|` with...
+      - `a * |V(d)| + (1 - a) * piv`, or
+      - `a * u_d + (1 - a) * piv` where `u_d` is # unique terms
+- probabilistic: order by prob of relevance
+  - loss functions: 0/1 or with costs; rank by expected loss
+  - binary independence model: assume boolean term vectors
+    - many simplifying assumptions; same as multivariate naive bayes
+    - query time boils down to computing _retrieval status value (RSV)_
+    - simple MLE like NB; optional $\alpha$ backoff (MAP uniform prior)
+    - approximation yields the log IDF measure
+  - okapi BM25
+    - slightly more complex, but not that many params
+    - incorporates tf
+    - first prob model that performed very well
+  - <http://nlp.stanford.edu/IR-book/pdf/11prob.pdf>
+- only impl diff among all these is scoring fn
+
 google mustang
 
 - multi-stage ranking: first filter on each child node, send to root, rank
