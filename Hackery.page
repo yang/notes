@@ -226,18 +226,6 @@
       |0
 
 - R
-  - modeling facilities
-    - expressions: `y ~ a + b + c:d + e*f` (`c:d` means interaction, `e*f`
-      means `e + f + e:f`)
-    - lm: linear model
-    - glm
-    - nlm: nonlinear least squares, maximum likelihood
-    - lrm: logistic regression: lrm
-    - ANOVA: aov, anova
-    - descriptive tools: table, summary
-    - gbm: gradient boosting machine
-    - step: stepwise regression
-    - loess, scatter.smooth
   - packages
     - misc
       - Rserve
@@ -250,6 +238,13 @@
       - plyr: general bulk manipulation utils
       - reshape2: pivot table-like cubing/rollups
       - data.table: a better data.frame
+    - model selection
+      - leaps: stepwise/exhaustive, AIC/BIC/R2/...
+      - lars: LARS, LASSO, fwd stagewise
+        - faster than glmnet for small/sparse/wide problems:
+          <http://stats.stackexchange.com/questions/7057/glmnet-or-lars-for-computing-lasso-solutions>
+    - clustering
+      - mclust: mixture modeling, model-based clustering
     - modeling
       - randomForest
       - survival
@@ -269,9 +264,11 @@
       - tm: term document matrices
       - irlba: SVD for big data
       - arm: bayesglm
+    - assorted
       - MASS: companion to modern applied statistics with s
         - rlm: robust regression
         - boxcox
+        - stepAIC: fuller version of `step`
     - numeric
       - quadprog
     - viz
@@ -288,29 +285,44 @@
         - ci.plot: confidence interval plot
           <http://princeofslides.blogspot.com/2011/02/sab-r-metrics-basic-applied-regression.html>
   - vocab
-    - install.packages, update.packages
-    - step, leaps
-    - setwd, read.csv
-    - png, dev.off, par, dev.new
-    - cor, cov, var, mean, median
-    - summary, print, display, table
-    - predict, resid, coef, confint, rstandard, rstudent, AIC, BIC,
-      cooks.distance, diffits, influence.measures
-    - all.equal, identical
-    - sort
-    - transform, head, tail, subset, cbind, rbind, colnames
-    - abline, lines
-    - str, dput
-    - new.env, with, within, search, ls, attach, detach, get, assign, `<<-`,
-      `<-`
-    - na.*
-    - options, sessionInfo
-    - trace, traceback, stop, stopifnot
-    - match, %in% (subset), is.element, setdiff, merge
-    - paste
-    - apply, lapply, sapply, tapply
-    - rbind.fill
-    - invisible
+    - modeling facilities
+      - expressions: `y ~ a + b + c:d + e*f - b` (`c:d` means interaction,
+        `e*f` means `e + f + e:f`)
+      - linear models: lm, glm
+      - clustering: kmeans
+      - optimization: optim, nlm
+      - ANOVA: aov, anova
+      - descriptive tools: table, summary
+      - gbm: gradient boosting machine
+      - nonlinear models: loess, scatter.smooth
+      - model selection: step
+      - eval: rstandard, rstudent, AIC, BIC
+      - misc: predict, resid, coef, confint, cooks.distance, diffits,
+        influence.measures
+    - stats
+      - cor, cov, var, mean, median
+      - summary, table
+    - system
+      - install.packages, update.packages
+      - setwd, read.csv
+      - options, sessionInfo
+      - trace, traceback, stop, stopifnot
+      - png, dev.off, par, dev.new
+    - manipulation
+      - transform, head, tail, subset, cbind, rbind, colnames
+      - abline, lines
+      - str, dput
+      - all.equal, identical
+      - new.env, with, within, search, ls, attach, detach, get, assign, `<<-`,
+        `<-`
+      - sort
+      - na.*
+      - match, %in% (subset), is.element, setdiff, merge
+      - paste
+      - apply, lapply, sapply, tapply
+      - rbind.fill
+    - control
+      - invisible
   - syntax tricks
     - use backticks for non-standard names
   - to run an R file from cmd line
