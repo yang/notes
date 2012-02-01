@@ -124,6 +124,13 @@ conjugate priors
   & categorical
 - TODO
 
+non-informative priors
+
+- not nec. flat/uniform priors
+- eg for bernoulli/binomial it's `beta(.5,.5)`
+- construct according to Jeffrey's rule to minimize Fisher information
+- <http://www.amstat.org/publications/jse/v12n2/zhu.pdf>
+
 probability vs statistics
 
 - probabilists: hypothesis to data
