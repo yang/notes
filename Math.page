@@ -717,6 +717,9 @@ problems
     payout (e.g. log scale), and weight-vs-risk (why you don't play the
     lottery)
 
+- kelly criterion: optimal fraction to bet in a series of bets to maximize
+  _expected return/growth rate_ which is `log(growth rate)`
+
 game theory
 ===========
 
