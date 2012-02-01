@@ -597,3 +597,7 @@ find majority item in stream
   unknown
 - can generalize to find all $k$ items that exceed $1/k$ fraction of all items;
   useful for finding outliers in power law dist
+
+interesting problems encountered to think about
+
+- optimal BST: <http://en.wikipedia.org/wiki/Binary_search_tree#Optimal_binary_search_trees>
