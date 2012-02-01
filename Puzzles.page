@@ -87,6 +87,7 @@ Algorithms
 - Out of a thousand identical buckets of water, exactly one contains a poison
   that will kill a pig in exactly 30 minutes. What's the minimum number of pigs
   you need to determine which bucket is poisoned within an hour?
+- how to sample non-uniform discrete dist in const time? (may need handholding)
 
 Probability
 ===========
@@ -98,21 +99,10 @@ Probability
   wants to maximize the expected total number of man-hours worked per year, how
   many employees should it hire?
 - birthday problem: computable
-- hat problem: actually a very hard problem
+- hat problem/matching problem
   - setup: 1000 ppl pile their hats, then each takes one.
-  - originally asked in 6.431: what's E(X) where X is the number of ppl who
-    get back their orig hat?
-    - easy bc linearity of expectation doesn't require $X_i$ to be indep
-    - just $n E[X_i] = n (1/n) = 1$
-  - much harder: what's prob of ppl getting back their hat?
-  - solvable via inclusion-exclusion principle:
-    <http://www.mathnet.or.kr/mathnet/paper_file/Elizabethtown/Gabriela/Monmort.pdf>
-  - but why isn't P(first person gets wrong hat) P(second person gets wrong
-    hat | first person gets wrong hat) P(third person gets wrong hat | first
-    two people get wrong hats) ... = 999/1000+998/999+997/998+...+2/3+1/2 =
-    1/1000?
-  - bc eg P(second person gets wrong hat | first person gets wrong hat) is
-    not 998/999. first person may have taken second person's hat
+  - how many ppl get their hat back on avg?
+  - prob $k$ ppl get hat back?
   - harder versions: no two people get each other's hats either
 - poisson approximation can solve the above and others (prob of drunken
   walker ending at start location):
@@ -124,6 +114,8 @@ Probability
   pulling again, want to spin?
 - newsvendor model: if goods are $3 to buy and $4 to sell, and you have uniform
   prob of selling any number $0 \le n \le 100$, how many should you buy?
+- holding second-price auction. a bidder costs $10 to find. bids uniform in
+  $500-$1K. how many bidders to find?
 
 Geometry
 ========
@@ -170,3 +162,6 @@ General math
 - 3 points randomly drawn on circle; prob of them being on same semi-circle?
 - unit length broken off into 3 pieces; prob of forming triangle?
 - $\sqrt{2 + \sqrt{2 + \sqrt{2 + \dots}}}$
+- You have 5 unknown numbers. There are 10 options in selecting two out of
+  these five. Sum each of those two together, thus you have 10 numbers. You're
+  given these, find the original 5 numbers.
