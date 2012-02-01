@@ -144,7 +144,7 @@ self-balancing binary search trees
   - every simple path from any node to any descendant leaf contains same number
     of black nodes
 - AVL
-- splay
+- splay: tree-rotate ("zig-zig/zig-zag") recently accessed node to root
 
 string search
 
