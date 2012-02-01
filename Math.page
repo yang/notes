@@ -263,6 +263,9 @@ statistical tests
       nonparametric methods for comparing two samples, as it is sensitive to
       differences in both location and shape of the empirical cumulative
       distribution functions of the two samples."
+- sequential analysis: sample size isn't fixed in advance; data is evaluated
+  during collection; may conclude exp earlier
+  - alt is bayesian exp design
 
 data
 
