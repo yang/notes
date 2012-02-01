@@ -229,6 +229,8 @@ randomized
     particular elt in a set of $i$ elts)
 - weighted reservoir sampling: each elt has weight
   - maintain total seen weight and total reservoir weight
+- walker's alias method: sample non-uniform discrete dist in constant time
+  - <http://www.keithschwarz.com/darts-dice-coins/>
 
 sort
 ====
