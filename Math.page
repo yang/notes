@@ -654,6 +654,16 @@ shannon entropy
   - the fib sequence formula itself has a much lower entropy and applies to any
     length fib seq
 
+Fisher information
+
+- reflects amt of (pos) info of observer
+- depends on PDF & its first derivatives
+- FIM is the curvature of the KL divergence
+
+KL divergence
+
+- TODO
+
 probability
 ===========
 
