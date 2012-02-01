@@ -200,16 +200,21 @@ evaluation measures
   - f-measure aka F1 score aka F-score: $F = 2 \frac{PR}{P+R}$ where $P$ is
     precision, $R$ is recall
   - precision at some cutoff (precision@k aka PC): precision in the top $k$
+  - R-precision: precision@R where R is # known relevant docs; addresses
+    instability of precision@k
 - average precision (AP): considers ranking
+  - mean precision over the precision-recall curve (recall is $x$ var)
   - $\frac{1}{|\text{relevant}|} \sum_{r=1}^k P(r) \text{rel}(r)$, where
     - $P(r)$ is the precision at given cut-off rank (i.e. `relevant & retrieved
       & rank<r / r`)
     - $\text{rel}(r)$ is 1 if relevant, 0 otherwise (i.e. skip/discount terms
       for irrelevant results)
     - <http://www.slideshare.net/lindabeekeeper/calculating-precision-presentation>
+  - may use interpolated precision value to smooth out curve
 - mean avg precision (MAP): mean AP over multiple queries
 - discounted cumulative gain (DCG): uses graded relevance scale instead of bool
   - insight: penalize highly relevant documents of low rank
+  - similar spirit to precision@k and AP but for continuous relevance
   - DCG accumulated at rank p = $rel_1 + \sum_{i=2}^p \frac{rel_i}{\log_2 i}$
   - intuitively: relevance of 1 + other relevances, discounted logarithmically
 - normalized discounted cumulative gain (NDCG)
