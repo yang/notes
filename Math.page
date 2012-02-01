@@ -757,6 +757,8 @@ number theory
 misc
 ====
 
+- set is _well-ordered_ iff has total ordering and any subset has least elt
+
 - harmonic series: $\sum_{n=1}^{\infty}\frac{1}{n}=\infty$
 - for density function $f(x)$ with one hump, choose $a,b$ on opposite sides of
   the hump with $f(a) = f(b)$, then $[a, b]$ is the shortest interval with its
