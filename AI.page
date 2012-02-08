@@ -1446,3 +1446,32 @@ gmail priority inbox
 - use PA-II online passive-aggressive regression variant
 - misc
   - continuous -> binary features via ID3-style algo [?]
+
+Running Large Graph Algorithms: Evaluation of Current State-Of-the-Art and Lessons Learned (Dr. Andy Yoo, Lawrence Livermore National Laboratory, Google Tech Talk 2/18/2010)
+
+- scale-free graphs aka power-law graphs aka complex networks
+  - random graphs that can be constructed by adding vertices to highly
+    connected vertices
+  - hubs: high-deg vertices
+  - small diameter
+  - communities
+  - self-similarity: recursive structural similarities within communities as
+    overall graph structure
+- apps: internet/web, social/citations, bioinformatics (protein-protein
+  interaction)
+  - graph mining
+    - spectral graph theory: finding eigenvals/eignevecs; web mining, pagerank,
+      personalized web search, etc
+    - social network analysis: structure of the graph
+      - community detection, role finding, centrality study (who's important),
+        influence study, organization study
+      - counter-terrorism
+    - pattern analysis: apply subgraph pattern matching
+      - fraud detection, cyber security
+- big graph processing challenges
+  - big
+  - complex and hard to parallelize: even basic BFS
+  - lesser-known: large intermediate data; eg space complexity of BFS
+- used bluegene
+
+- social network analysis: <http://mlg.ucd.ie/files/summer/tutorial.pdf>
