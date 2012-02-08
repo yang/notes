@@ -1009,3 +1009,19 @@ Applications (MSR talk 2009)
   - TCP, pangolin same up to 90%; TCP latency drops considerably
   - pangolin: 90% 313 99% 313 99.9% 625
   - TCP: 90% 313 99% 1734 99.9% 3656
+
+sensor networks
+===============
+
+VanGo
+
+- linear chain of filters (nesc modules)
+- configuration says where to partition
+- built on SNACK (Sensor Network Application Construction Kit)
+
+Lewis Girod, Sevan, Ryan
+
+- using wavescope to do audio processing
+- specifically, separate signal from noise, probably using clustering of
+  spectra (using euclidian distance of their frequencies)
+
