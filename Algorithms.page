@@ -222,6 +222,8 @@ priority queues
 randomized
 ==========
 
+sampling
+
 - reservoir sampling: sample $n$ elts from stream of unknown len in 1 pass
   - keep buffer (_reservoir_) of $n$ elts, where elts are $x_i$
   - $\forall x_i, i>n$, with prob $n/i$ replace random buffered elt with $x_i$
@@ -229,8 +231,12 @@ randomized
     particular elt in a set of $i$ elts)
 - weighted reservoir sampling: each elt has weight
   - maintain total seen weight and total reservoir weight
+
+random variate generation
+
 - walker's alias method: sample non-uniform discrete dist in constant time
   - <http://www.keithschwarz.com/darts-dice-coins/>
+- optimal BST: simply use huffman coding; complexity is entropy
 
 sort
 ====
@@ -285,9 +291,12 @@ compression
   - variable length coding: more freq symbols given shorter codes
   - optimal (but not trivial to show)
   - pseudocode: build tree bottom-up
+    - $O(n)$ assuming you have symbols sorted by frequency
     - start w ea symbol having its own root node; node freq = freq of symbol
     - iterate until one root node
       - merge two nodes with min freqs; new parent freq is sum of child freqs
+  - doesn't yield ordered trees aka optimal BSTs aka alphabetic trees; need
+    hu-tucker algo for that
 - LZ77
   - sliding window compression, replacing strings with backrefs
     ((length,offset) pairs)
@@ -597,7 +606,3 @@ find majority item in stream
   unknown
 - can generalize to find all $k$ items that exceed $1/k$ fraction of all items;
   useful for finding outliers in power law dist
-
-interesting problems encountered to think about
-
-- optimal BST: <http://en.wikipedia.org/wiki/Binary_search_tree#Optimal_binary_search_trees>
