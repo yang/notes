@@ -1,9 +1,8 @@
 Welcome to Yang's Wiki
 ======================
 
-This is my collection of notes on computer science, research, programming, and
-industry, with a heavy focus on software systems (distributed systems, database
-systems, etc.).
+This is my collection of notes on computer science, math, research,
+programming, and industry.
 
 Watch your step. This place is really messy.
 
@@ -11,7 +10,7 @@ Table of Contents
 -----------------
 
 - [LyX-based notes](notes.lyx): contains more math-dense stuff
-- [AI/Machine Learning]()
+- [AI/Machine Learning](AI)
 - [Algorithms]()
 - [Apps]()
 - [Architecture]()
@@ -25,9 +24,8 @@ Table of Contents
 - [HCI]()
 - [Hackery]()
 - [Hardware]()
-- [Help]()
 - [IR]()
-- [Languages and Compilers]()
+- [Languages]()
 - [Math]()
 - [Misc]()
 - [More Concurrency]()
@@ -55,9 +53,9 @@ I wiki-fied my notes to share them via a familiar read/write web interface.
 This wiki system, [Gitit](http://gitit.net/), is powered by Git, so I've cloned
 the repository [on github](http://github.com/yang/notes).
 
-For more information about the author, see my [home page], [Google (Buzz)
-profile], or [blog].
+For more information about the author, see my [home page], [Twitter], or
+[blog].
 
 [home page]: http://yz.mit.edu/
-[Google (Buzz) profile]: http://www.google.com/profiles/yaaang
+[Twitter]: http://www.twitter.com/yaaang
 [blog]: http://yz.mit.edu/wp/
