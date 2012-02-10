@@ -241,8 +241,10 @@
     - model selection
       - leaps: stepwise/exhaustive, AIC/BIC/R2/...
       - lars: LARS, LASSO, fwd stagewise
+        - OLS only
         - faster than glmnet for small/sparse/wide problems:
           <http://stats.stackexchange.com/questions/7057/glmnet-or-lars-for-computing-lasso-solutions>
+      - lasso2: L1 for GLM
     - clustering
       - mclust: mixture modeling, model-based clustering
     - modeling
