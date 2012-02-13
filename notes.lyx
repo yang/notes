@@ -5470,16 +5470,20 @@ Decision trees
 \end_layout
 
 \begin_layout Itemize
-information gain
+information gain or entropy discretization
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-entropy is information uncertainty
+entropy 
+\begin_inset Formula $H\left(.\right)$
+\end_inset
+
+ is information uncertainty
 \end_layout
 
 \begin_layout Itemize
-ultimately need 
+in total, need 
 \begin_inset Formula $H\left(Y\right)$
 \end_inset
 
@@ -5488,20 +5492,24 @@ ultimately need
 \end_layout
 
 \begin_layout Itemize
-when branching on an attribute, remaining uncertainty is the expected uncertaint
-y down each branch: 
-\begin_inset Formula $\E_{V}\left[H\left(Y_{V}\right)\right]=\sum_{v\in V}\frac{\left|Y_{v}\right|}{\left|Y\right|}H\left(Y_{v}\right)\le H\left(Y\right)$
-\end_inset
+each branch gives some information/removes uncertainty; want to move toward
+ 0 uncertainty
+\end_layout
 
-, where 
+\begin_layout Itemize
+after branching on an attr with value dist 
 \begin_inset Formula $V$
 \end_inset
 
- is the attribute's value distribution and 
+, avg remaining uncertainty is 
+\begin_inset Formula $\E_{V}\left[H\left(Y_{V}\right)\right]\le H\left(Y\right)$
+\end_inset
+
+, where 
 \begin_inset Formula $Y_{v}$
 \end_inset
 
- is the class distribution when filtered to attribute value 
+ is class dist down branch for attr value 
 \begin_inset Formula $v$
 \end_inset
 
@@ -5509,8 +5517,42 @@ y down each branch:
 \end_layout
 
 \begin_layout Itemize
-information gain is uncertainty drop 
+choose attr w lowest remaining uncertainty, or greatest 
+\emph on
+information gain
+\emph default
+ 
 \begin_inset Formula $H\left(Y\right)-\E_{V}\left[H\left(Y_{V}\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+stopping criterion
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+AIMA suggests building full tree then prune instead of early stop (eg consider
+ learning xor), but this doesn't seem to be done elsewhere
+\end_layout
+
+\begin_layout Itemize
+AIMA suggests chi-square test
+\end_layout
+
+\begin_layout Itemize
+MDL suppose to be best-performing 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.jair.org/media/279/live-279-1538-jair.pdf
+\end_layout
+
 \end_inset
 
 
