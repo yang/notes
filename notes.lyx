@@ -1278,6 +1278,26 @@ Statistics
 \end_layout
 
 \begin_layout Subsection
+Basics
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+coefficient of variation (CV)
+\emph default
+ aka 
+\emph on
+unitized risk
+\emph default
+: 
+\begin_inset Formula $\frac{\sigma}{\mu}$
+\end_inset
+
+ (to scale/normalize SDs)
+\end_layout
+
+\begin_layout Subsection
 Fisherian tests TODO
 \end_layout
 
