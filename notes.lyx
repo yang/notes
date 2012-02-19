@@ -1947,11 +1947,15 @@ least squares: in OLS, if errors are normal, then least squares estimate
 
 \end_deeper
 \begin_layout Itemize
-maximum a posterior: 
+maximum a posteriori: 
 \begin_inset Formula $\arg\max_{\theta}\left(\Pr\left[\theta\mid X\right]=\Pr\left[X\mid\theta\right]\Pr\left[\theta\right]\right)$
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+Estimation: intervals, consistency, bias, MLE, MAP
 \end_layout
 
 \begin_deeper
