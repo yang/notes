@@ -1762,28 +1762,265 @@ Estimation
 \end_layout
 
 \begin_layout Itemize
-unbiased estimator: converges to the true value
+90% confidence interval: in repeated samplings, the computed intervals 
+\begin_inset Formula $I\left(X\right)$
+\end_inset
+
+ would contain the true param 90% of the time (0.1 miss rate); 
+\begin_inset Formula $\Pr\left[\hat{\theta}\in I\left(X\right)\right]=.9$
+\end_inset
+
+ (
+\begin_inset Formula $\theta$
+\end_inset
+
+ is const, 
+\begin_inset Formula $I\left(X\right)$
+\end_inset
+
+ is RV)
+\end_layout
+
+\begin_layout Itemize
+90% credible interval 
+\begin_inset Formula $C\left(X\right)$
+\end_inset
+
+: 
+\begin_inset Formula $\Pr\left[\theta\in C\left(X\right)\right]=.9$
+\end_inset
+
+ (
+\begin_inset Formula $\theta,C\left(X\right)$
+\end_inset
+
+ are RV); 
+\begin_inset Quotes eld
+\end_inset
+
+Bayesian confidence interval
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+consistent
+\emph default
+ estimator converges to true param as sample size increases: 
+\begin_inset Formula $\lim_{n\rightarrow\infty}\delta\left(X_{n}\right)=\theta$
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-e.g.: unbiased sample variance is 
-\begin_inset Formula $\frac{1}{n-1}\sum_{i}\left(X_{i}-\bar{X}\right)^{2}$
-\end_inset
-
-, biased is 
-\begin_inset Formula $\frac{1}{n}\sum_{i}\left(X_{i}-\bar{X}\right)^{2}$
+biased but consistent estimate of mean: 
+\begin_inset Formula $\frac{1}{n}\sum_{i}x_{i}+\frac{1}{n}$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-can be terrible; they may converge to true value but be meaningless on the
- way there
+unbiased but inconsistent estimate of mean: 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+bias: 
+\begin_inset Formula $\E\left[\hat{\theta}\right]-\theta$
+\end_inset
+
+ (expected estimate - true param)
+\end_layout
+
+\begin_layout Itemize
+unbiased estimator: converges to true param over repeatedly sampling
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+e.g.: sample variance
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+unbiased sample variance (
+\begin_inset Formula $\E\left[s^{2}\right]=\sigma^{2}$
+\end_inset
+
+) is 
+\begin_inset Formula $s^{2}=\frac{1}{n-1}\sum_{i}\left(X_{i}-\bar{X}\right)^{2}$
+\end_inset
+
+ (Bessel's correction)
+\end_layout
+
+\begin_layout Itemize
+biased is 
+\begin_inset Formula $s_{n}^{2}=\frac{1}{n}\sum_{i}\left(X_{i}-\bar{X}\right)^{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+note: 
+\begin_inset Formula $s$
+\end_inset
+
+ is 
+\emph on
+not
+\emph default
+ unbiased for SD
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+can be terrible; they may average to true value but individual estimates
+ may be ridiculous
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+e.g.
+ for Poisson 
+\begin_inset Formula $X$
+\end_inset
+
+, estimator 
+\begin_inset Formula $\delta\left(X=x\right)$
+\end_inset
+
+ of statistic 
+\begin_inset Formula $\Pr\left[X=0\right]^{2}=e^{-2\lambda}=\E\left[\delta\left(X\right)\right]$
+\end_inset
+
+ is 
+\begin_inset Formula $\left(-1\right)^{x}$
+\end_inset
+
+, which is nonsense
+\end_layout
+
+\begin_layout Itemize
+MLE is 
+\begin_inset Formula $e^{-2x}$
+\end_inset
+
+, which is always positive and has smaller MSE
+\end_layout
+
+\begin_layout Itemize
+besides bias, look also at 
+\emph on
+efficiency
+\emph default
+, the MSE of individual estimates
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+maximum likelihood: 
+\begin_inset Formula $\arg\max_{\theta}\Pr\left[X\mid\theta\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+least squares: in OLS, if errors are normal, then least squares estimate
+ is MLE
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+maximum a posterior: 
+\begin_inset Formula $\arg\max_{\theta}\left(\Pr\left[\theta\mid X\right]=\Pr\left[X\mid\theta\right]\Pr\left[\theta\right]\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+choose the single most probable 
+\begin_inset Formula $\theta$
+\end_inset
+
+ given 
+\begin_inset Formula $X$
+\end_inset
+
+ (mode of posterior)
+\end_layout
+
+\begin_layout Itemize
+note: prediction using MAP is approx to Bayes prediction using all 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and their probabilities
+\end_layout
+
+\begin_layout Itemize
+equiv: 
+\begin_inset Formula $\arg\min_{\theta}\left(-\log\Pr\left[\theta\mid X\right]=-\log\Pr\left[X\mid\theta\right]-\log\Pr\left[\theta\right]\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $-\log\Pr\left[\theta\right]$
+\end_inset
+
+ is bits to describe 
+\begin_inset Formula $\theta$
+\end_inset
+
+, 
+\begin_inset Formula $-\log\Pr\left[X\mid\theta\right]$
+\end_inset
+
+ is add'l bits to describe data
+\end_layout
+
+\begin_layout Itemize
+hence, MAP chooses 
+\begin_inset Formula $\theta$
+\end_inset
+
+ that provides max compression, or MDL
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Bayes estimation: given loss 
+\begin_inset Formula $L\left(\theta,\delta\right)$
+\end_inset
+
+ (eg sq err), minimize Bayes risk 
+\begin_inset Formula $\E\left[L\left(\theta,\delta\right)\right]$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Exponential smoothing for time series analysis
 \end_layout
