@@ -619,6 +619,13 @@
       - libraries aren't as mature (complete, battle tested, documented)
       - lots of compat breaks
       - IDE is a WIP
+      - syntax just doesn't flow very smoothly
+        - the infix operator syntax always needs to be wrapped in parens if you
+          then want to apply a unary postfix method, discouraging its use if
+          you want to avoid having to jump around to place parens
+        - the no-() method invocation fails when you want to call an apply on
+          the returned result but the orig method has an implicit param that
+          gets in the way
     - longer term
       - no javascript backend
       - no native backend
