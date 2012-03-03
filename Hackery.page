@@ -231,6 +231,7 @@
       - Rserve
       - foreach
       - parallel
+      - lubridate
     - data
       - RPostgreSQL
       - RGoogleDocs
@@ -238,6 +239,7 @@
       - plyr: general bulk manipulation utils
       - reshape2: pivot table-like cubing/rollups
       - data.table: a better data.frame
+      - xtc: builds on zoo; "unifies" the various time series pkgs
     - model selection
       - leaps: stepwise/exhaustive, AIC/BIC/R2/...
       - lars: LARS, LASSO, fwd stagewise
@@ -273,6 +275,10 @@
         - stepAIC: fuller version of `step`
     - numeric
       - quadprog
+    - eval
+      - verification: fast roc.area & other measures
+    - data
+      - discretization: mdlp same as orange.EntropyDiscretization
     - viz
       - ggplot2
       - ggExtra: `install.packages("ggExtra", repos="http://R-Forge.R-project.org")`
@@ -340,6 +346,8 @@
       data.frames
     - hard to find packages, determine best packages, etc.
     - memory management/fragmentation
+    - caret
+      - can't dynamically choose params (eg glmnet lambda, randomForest mtry)
 
 - smart cards
   - form factors: credit card, mini-SIM (most common), micro-SIM
