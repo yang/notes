@@ -356,7 +356,7 @@ misc
 pitfalls
 --------
 
-- unbiased estimators can be terrible (TODO)
+- unbiased estimators can be terrible
 - drug X results may have $p=.04$ and drug Y results may have $p=.06$ but
   difference may well NOT be significant (diff btwn sig & insig may well be
   insig)
