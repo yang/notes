@@ -575,6 +575,10 @@ Normal: mean
 Empirical rule: z-scores of 1/2/3 span 68%/95%/99.7%
 \end_layout
 
+\begin_layout Itemize
+Is its own Fourier transform
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
 Beta: density shape over 
