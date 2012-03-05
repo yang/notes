@@ -502,6 +502,111 @@ Binomial: # successes in
 
 \end_deeper
 \begin_layout Itemize
+Geometric: # trials until Bernoulli success with prob 
+\begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[X=k\right]=\left(1-p\right)^{k-1}p$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=\frac{1}{p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\frac{1-p}{p^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Hypergeom: # successes in 
+\begin_inset Formula $n$
+\end_inset
+
+ draws from population of 
+\begin_inset Formula $N$
+\end_inset
+
+ containing 
+\begin_inset Formula $m$
+\end_inset
+
+ successes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[X=k\right]=\frac{{m \choose k}{N-m \choose n-k}}{{N \choose m}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=n\frac{m}{N}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=n\frac{m}{N}\frac{\left(N-m\right)}{N}\frac{N-n}{N-1}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Negative binomial: # successes in 
+\begin_inset Formula $n$
+\end_inset
+
+ Bernoulli trials before 
+\begin_inset Formula $r$
+\end_inset
+
+ failures (generalization of geom)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\Pr\left[X=k\right]={k+r-1 \choose k}\left(1-p\right)^{r}p^{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\E\left[X\right]=\frac{pr}{1-p}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\Var\left[X\right]=\frac{pr}{\left(1-p\right)^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 Poisson: # arrivals in sliver of time (infinite-granularity binomial) assuming
  mean 
 \begin_inset Formula $\lambda$
