@@ -337,8 +337,10 @@
     - `R --vanilla "--args ${@:2}" < $1 #>/dev/null`
     - will be replaced with `Rscript`
   - GUIs: RStudio beats all the rest
-  - RF can only have categorical variables with <=32 factors
-    <http://r.789695.n4.nabble.com/randomForest-can-not-handle-categorical-predictors-with-more-than-32-categories-td3036871.html>
+  - pitfalls
+    - don't pass in logicals as `y` to `train`; use `factor(ifelse(x, 'pos', 'neg'))`
+    - RF can only have categorical variables with <=32 factors
+      <http://r.789695.n4.nabble.com/randomForest-can-not-handle-categorical-predictors-with-more-than-32-categories-td3036871.html>
   - gripes
     - syntax: can never tell when something will be evaluated, when i'm writing
       symbols or formulae or expressions, etc.
