@@ -58,7 +58,7 @@ statistics
 
 - survival function: complement of CDF
 
-- _cointegration_: statistical property of time series
+- 2 time series are _cointegrated_ if linear combo is stationary
   - 2 time series are cointegrated if they share common _stochastic drift_
   - eg drunkard and his dog: both randomly constantly moving but periodically
     error-correcting; cointegrated of order zero
@@ -68,7 +68,11 @@ statistics
   - Engle-Granger test: simplest detection approach TODO
 
 - order of integration $I(p)$: min num diffs required to obtain a stationary
-  series TODO
+  series
+  - eg 1,1,1: already stationary
+  - eg 1,2,3: diff w lag-1 is stationary
+  - eg 1,4,9,16,25: diff w lag-1 gives 3,5,7,9; second diff is stationary
+  - similar to calculus integration/differentiation
 
 - simpson's paradox: a correlation present in diff groups is reversed when
   groups are combined; often in social-/med-sciences when frequency data
