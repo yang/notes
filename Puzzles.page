@@ -40,6 +40,9 @@ Riddles
 Game theory
 ===========
 
+- dividing pizza: I'll slice, and we'll take turns picking in a circle (only
+  adj pieces), you pick first; better to have me odd or even num slices?
+
 - cannibals:
 
   A traveler gets lost on a deserted island and finds himself surrounded by a
@@ -116,6 +119,11 @@ Probability
   prob of selling any number $0 \le n \le 100$, how many should you buy?
 - holding second-price auction. a bidder costs $10 to find. bids uniform in
   $500-$1K. how many bidders to find?
+- newton-peppys: which is more likely, at least one 6 in 6 rolls, at least two
+  6s in 12 rolls, or at least three 6s in 18 rolls?
+- what is the avg # local maxima of a permutation of ${1, \dots, n}$, over all
+  perms? maxima at ends also count. (putnam problem)
+  <http://ubpdqnmathematica.wordpress.com/2012/02/26/how-many-bumps/>
 
 Geometry
 ========
@@ -137,6 +145,10 @@ Geometry
     +----+---+----+
 
   <http://mindyourdecisions.com/blog/2011/06/15/a-fun-graph-theory-puzzle/>
+
+- moat-crossing problem: in rect castle/moat where moat is 20ft wide, how to
+  cross moat w 2 19ft planks?
+  <http://mindyourdecisions.com/blog/2012/03/05/monday-puzzle-the-moat-crossing-problem/>
 
 Practical
 =========
