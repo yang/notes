@@ -1072,6 +1072,11 @@ random forests
   - rank/score features by how much its randomization affected tree accuracy
   - accumulate scores over all trees
 
+extremely randomized trees aka extra trees
+
+- same as RF but also split thresholds drawn randomly, then best chosen
+  (instead of looking for most discriminative thresh)
+
 multiclass classification
 
 - some classifiers handle it naturally
