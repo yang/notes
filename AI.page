@@ -1053,7 +1053,7 @@ collaborative filtering
 random forests
 
 - bagged ensemble of decision trees (orange uses 100 by default)
-- each decision tree uses subset of all features (sqrt of all features)
+- each decision tree uses subset of all features (param $m$)
 - each decision tree may be grown fully without pruning
 - each decision tree trained on a bootstrapped sample of the data (as per
   bagging)
