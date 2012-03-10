@@ -1234,6 +1234,28 @@ reciprocal of coefficient of variation; only sensical for positive variables
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Markov's inequality: 
+\begin_inset Formula $\Pr\left[f\left(X\right)\ge t\right]\le\E\left[f\left(X\right)\right]/t$
+\end_inset
+
+, for any non-neg function 
+\begin_inset Formula $f$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+corollary: Chebyshev's inequality, 
+\begin_inset Formula $\Pr\left[\left|X-\E\left[X\right]\right|\ge a\right]\le\frac{\Var\left[X\right]}{a^{2}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Algorithms
 \end_layout
