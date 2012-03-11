@@ -1405,16 +1405,19 @@ deep learning TODO
 
 restricted Boltzmann machines (RBMs)
 
-- a stochastic neural net w 1 hidden layer
+- a stochastic neural net w 1 hidden layer; undirected graphical model
 - essentially a binary version of factor analysis (continuous)
-- training
+- training: _contrastive divergence_, which is approximate gradient descent
   - randomly init weights (0-mean 0.1-SD Gaussian)
   - update hidden from visible
-    - activate each node with prob `sigmoid(sum of weighted activations)`
-    - set $P$ to be 
+    - activate each node with prob `p_j = sigmoid(sum of weighted activations)`
+    - set $P = x_i x_j$ or $x_i p_j$ (can use either state or prob)
   - update visible from hidden
-    - set $N$ 
+  - update hidden from visible; set $N$ same way as $P$
   - adjust by $\alpha (P - N)$ where $\alpha$ is learning rate
+  - intuition: $P$ is rooted in observations, $N$ is RBM's own tendencies
+  - when iterating, discard updated visibles; just use orig training data
+  - TODO better understand why this works (esp $-N$)
 
 gradient boosted decision trees
 
