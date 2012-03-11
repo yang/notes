@@ -1399,8 +1399,21 @@ deep learning TODO
 - learn low-level features; similar to PCA, but yields not necessarily
   orthogonal basis
 - multilayer feed-fwd neural networks using back-prop (with small hidden layer)
+- RBMs
 - <https://venefrombucharest.wordpress.com/2011/04/15/an-overview-of-dictionary-learning-terminology/>
 - <http://www.stanford.edu/class/cs294a/>
+
+restricted Boltzmann machines
+
+- a stochastic neural net w 1 hidden layer
+- training
+  - randomly init weights (0-mean 0.1-SD Gaussian)
+  - update hidden from visible
+    - activate each node with prob `sigmoid(sum of weighted activations)`
+    - set $P$ to be 
+  - update visible from hidden
+    - set $N$ 
+  - adjust by $\alpha (P - N)$ where $\alpha$ is learning rate
 
 gradient boosted decision trees
 
