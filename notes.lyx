@@ -328,6 +328,26 @@ expected # extra bits to code samples from
 \end_layout
 
 \begin_layout Itemize
+alt intuition: avg likelihood of data distributed as 
+\begin_inset Formula $P$
+\end_inset
+
+ given 
+\begin_inset Formula $Q$
+\end_inset
+
+ as model: 
+\begin_inset Formula $D_{\text{KL}}\left(P\|Q\right)=-\log\bar{L}$
+\end_inset
+
+ where 
+\begin_inset Formula $L=\Pr\left[X\sim P\mid Q\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $D_{\mbox{KL}}\left(P\parallel Q\right)=\sum_{i}P\left(i\right)\log\frac{P\left(i\right)}{Q\left(i\right)}=\sum_{i}P\left(i\right)\left(\log Q\left(i\right)-\log P\left(i\right)\right)$
 \end_inset
 
@@ -344,6 +364,28 @@ expected # extra bits to code samples from
 
  for 
 \begin_inset Formula $P=Q$
+\end_inset
+
+; asymmetric
+\end_layout
+
+\begin_layout Itemize
+mutual information 
+\begin_inset Formula $I\left(X;Y\right)=D_{\text{KL}}\left(\Pr\left[X,Y\right]\|\Pr\left[X\right]\Pr\left[Y\right]\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.snl.salk.edu/~shlens/kl.pdf
+\end_layout
+
 \end_inset
 
 
