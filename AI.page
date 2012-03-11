@@ -1124,7 +1124,7 @@ latent dirichlet allocation (LDA)
   - to generate a word:
     - topic ~ doc's multinomial of topics
     - word ~ topic's multinomial of words
-- learn with MCMC
+- learn with MCMC (collapsed Gibbs sampling)
 
 misc
 
