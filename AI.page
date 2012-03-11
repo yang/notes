@@ -1403,9 +1403,10 @@ deep learning TODO
 - <https://venefrombucharest.wordpress.com/2011/04/15/an-overview-of-dictionary-learning-terminology/>
 - <http://www.stanford.edu/class/cs294a/>
 
-restricted Boltzmann machines
+restricted Boltzmann machines (RBMs)
 
 - a stochastic neural net w 1 hidden layer
+- essentially a binary version of factor analysis (continuous)
 - training
   - randomly init weights (0-mean 0.1-SD Gaussian)
   - update hidden from visible
