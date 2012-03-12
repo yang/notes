@@ -1050,6 +1050,47 @@ collaborative filtering
 - evaluation metrics: RMSE is typical
 - TODO slope one
 
+netflix prize
+
+- <http://blog.echen.me/2011/10/24/winning-the-netflix-prize-a-summary/>
+- identifying biases/features is just as important as modeling
+  - baseline rating
+  - user-specific effect
+  - movie-specific effect
+  - time since user's first rating (harsher critic over time)
+  - time since movie's first rating by anyone (early watchers bigger fans)
+  - let user's rating depend on # ratings for movie (user may be anti-popular)
+  - let user's rating depend on movie's overall rating
+- neighborhood models
+  - problems
+    - neighbors aren't indep
+    - diff movies should use diff # neighbors
+  - so
+    - find neighbors using standard sim metric
+    - sparse linear regression: `movie rating ~ neighbors' ratings`
+- implicit data: similar to neighborhood model, learn `offset ~ whether user
+  rated neighbor (for each neighbor)`
+- matrix factorization: most important
+  - std SVD
+  - asymmetric SVD: don't maintain user factors; just use (possibly weighted)
+    sum of item factors of items she rated
+  - SVD++: use both above
+- regression: can derive predictors from PCA/MDS/SVD
+- RBMs were applied
+- temporal effects: can bin movies into buckets spanning some months, and allow
+  movie biases to change within each bin (eg Time nominated Titanic as best
+  movie ever, causing burst in glowing reviews)
+- regularization: heavily used ridge regression; lasso less effective
+- ensemble methods: winners used GBDTs to combine 500 models
+  - add some useful features for clustering
+    - # movies ea user rated
+    - # users that rated ea movie
+    - factor vectors of users and movies
+    - hidden units of an RBM
+  - Bell/Koren found using earlier ensemble method that RBMs more useful when
+    movie/user has low # ratings
+  - previous sols use linear regressions to combine models
+
 random forests
 
 - bagged ensemble of decision trees (orange uses 100 by default)
