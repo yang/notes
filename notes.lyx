@@ -1470,6 +1470,24 @@ unitized risk
  (to scale/normalize SDs)
 \end_layout
 
+\begin_layout Itemize
+
+\emph on
+(Pearson's) kurtosis
+\emph default
+: fourth standardized moment: 
+\begin_inset Formula $\frac{\mu_{4}}{\sigma^{4}}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+measure of peakedness, but it's argued this really measures heavy tails
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Fisherian tests TODO
 \end_layout
