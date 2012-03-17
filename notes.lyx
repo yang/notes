@@ -2746,6 +2746,451 @@ irreducible
 \end_layout
 
 \begin_layout Subsection
+Matrices
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Elementary matrix
+\emph default
+: matrix that differs from 
+\begin_inset Formula $I$
+\end_inset
+
+ by one elementary row op
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is 
+\emph on
+symmetric
+\emph default
+ iff 
+\begin_inset Formula $\transpose A=A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $A$
+\end_inset
+
+ be 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ over field 
+\begin_inset Formula $K$
+\end_inset
+
+ (e.g.
+ 
+\begin_inset Formula $\Re$
+\end_inset
+
+).
+ Then these are equiv:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is invertible
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is nonsingular
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is nondegenerate
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is 
+\emph on
+row-equiv
+\emph default
+ to 
+\begin_inset Formula $I$
+\end_inset
+
+ (can be changed to 
+\begin_inset Formula $I$
+\end_inset
+
+ using elementary row ops)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ is 
+\emph on
+col-equiv 
+\emph default
+to 
+\begin_inset Formula $I$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ has 
+\begin_inset Formula $n$
+\end_inset
+
+ pivot positions
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\det A\ne0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\text{rank}A=n$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Ax=0$
+\end_inset
+
+ has only one trivial sol 
+\begin_inset Formula $x=0$
+\end_inset
+
+ (i.e.
+ 
+\begin_inset Formula $\text{Null}A=\left\{ 0\right\} $
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $Ax=b$
+\end_inset
+
+ has exactly one sol for each 
+\begin_inset Formula $b\in K^{n}$
+\end_inset
+
+ (
+\begin_inset Formula $x\ne0$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+cols of 
+\begin_inset Formula $A$
+\end_inset
+
+ are lin indep
+\end_layout
+
+\begin_layout Itemize
+cols of 
+\begin_inset Formula $A$
+\end_inset
+
+ span 
+\begin_inset Formula $K^{n}$
+\end_inset
+
+ (i.e.
+ 
+\begin_inset Formula $\text{Col}A=K^{n}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+cols of 
+\begin_inset Formula $A$
+\end_inset
+
+ form a 
+\emph on
+basis
+\emph default
+ of 
+\begin_inset Formula $K^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+the linear transformation mapping 
+\begin_inset Formula $x$
+\end_inset
+
+ to 
+\begin_inset Formula $Ax$
+\end_inset
+
+ is a bijection from 
+\begin_inset Formula $K^{n}$
+\end_inset
+
+ to 
+\begin_inset Formula $K^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\transpose A$
+\end_inset
+
+ is invertible
+\end_layout
+
+\begin_layout Itemize
+0 is not an eval of 
+\begin_inset Formula $A$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $A$
+\end_inset
+
+ can be expressed as product of finitely many 
+\emph on
+elementary matrices
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+For any invertible 
+\begin_inset Formula $A$
+\end_inset
+
+, these hold:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $\left(AB\right)^{-1}=B^{-1}A^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(kA\right)^{-1}=k^{-1}A^{-1}$
+\end_inset
+
+ for 
+\begin_inset Formula $k\ne0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(\transpose A\right)^{-1}=\transpose{\left(A^{-1}\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\det\left(A^{-1}\right)=\det\left(A\right)^{-1}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Subsection
+Decomposition
+\end_layout
+
+\begin_layout Itemize
+Gaussian elim: for solving system of equations
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+phase 1, fwd elim: use elementary row ops to get 
+\emph on
+row echelon form
+\emph default
+ (pivots move to right as you move down)
+\end_layout
+
+\begin_layout Itemize
+phase 2, back-subst: solve for unknowns using simplified row echelon form
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Gaussian-Jordan elim: extension of Gaussian elim to get 
+\emph on
+reduced row echelon form
+\emph default
+ (
+\begin_inset Formula $I$
+\end_inset
+
+ on left square)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+to invert 
+\begin_inset Formula $A$
+\end_inset
+
+: 
+\begin_inset Formula $\left[AI\right]\Rightarrow\left[IA^{-1}\right]$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+LU: matrix form of Gaussian elim's fwd elim phase
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+a square matrix 
+\begin_inset Formula $A=LU$
+\end_inset
+
+ where 
+\begin_inset Formula $L,U$
+\end_inset
+
+ are lower/upper triangular matrices
+\end_layout
+
+\begin_layout Itemize
+efficient; good for 
+\begin_inset Quotes eld
+\end_inset
+
+good
+\begin_inset Quotes erd
+\end_inset
+
+ matrices
+\end_layout
+
+\begin_layout Itemize
+when solving 
+\begin_inset Formula $Ax=b$
+\end_inset
+
+, faster to reuse 
+\begin_inset Formula $LU$
+\end_inset
+
+: if know 
+\begin_inset Formula $A=LU$
+\end_inset
+
+, then can solve 
+\begin_inset Formula $LUx=b$
+\end_inset
+
+ by solving 
+\begin_inset Formula $Ly=b$
+\end_inset
+
+ for 
+\begin_inset Formula $y$
+\end_inset
+
+ then 
+\begin_inset Formula $Ux=y$
+\end_inset
+
+ for 
+\begin_inset Formula $x$
+\end_inset
+
+, with each of these done efficiently using fwd-/back-subst
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+QR: good balance btwn LU and SVD
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+any real 
+\begin_inset Formula $m\times n$
+\end_inset
+
+ matrix 
+\begin_inset Formula $A=QR$
+\end_inset
+
+ where 
+\begin_inset Formula $Q$
+\end_inset
+
+ is orthog 
+\begin_inset Formula $m\times m$
+\end_inset
+
+, 
+\begin_inset Formula $R$
+\end_inset
+
+ is upper triangular 
+\begin_inset Formula $m\times n$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+SVD: very robust
+\end_layout
+
+\begin_layout Subsection
 HITS
 \end_layout
 
