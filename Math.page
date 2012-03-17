@@ -129,7 +129,7 @@ conjugate priors
   & categorical
 - TODO
 
-non-informative priors
+non-informative aka objective priors
 
 - not nec. flat/uniform priors
 - eg for bernoulli/binomial it's `beta(.5,.5)`
