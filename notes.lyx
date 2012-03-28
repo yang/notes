@@ -1149,6 +1149,13 @@ General definitions and properties
 \end_layout
 
 \begin_layout Itemize
+\begin_inset Formula $\Pr\left[A\mid B\right]>\Pr\left[A\right]\iff\Pr\left[B\mid A\right]>\Pr\left[B\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 Linearity: 
 \begin_inset Formula $\E\left[aX+bY\right]=a\E\left[X\right]+b\E\left[Y\right]$
 \end_inset
