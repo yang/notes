@@ -1896,6 +1896,43 @@ http://www.swarthmore.edu/NatSci/echeeve1/Ref/Kalman/ScalarKalman.html
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Mahalanobis distance: similarity of a sample to a distribution
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $D_{M}=\sqrt{\transpose{\left(x-\mu\right)}S^{-1}\left(x-\mu\right)}$
+\end_inset
+
+ where 
+\begin_inset Formula $x$
+\end_inset
+
+ is new sample, 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is dist mean, 
+\begin_inset Formula $S$
+\end_inset
+
+ is covar matrix
+\end_layout
+
+\begin_layout Itemize
+same as normalized Euclidian dist if 
+\begin_inset Formula $S=I$
+\end_inset
+
+: 
+\begin_inset Formula $D_{M}=\sqrt{\sum_{i}\frac{\left(x_{i}-\mu_{i}\right)^{2}}{s_{i}^{2}}}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Subsection
 Smoothing
 \end_layout
