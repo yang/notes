@@ -450,6 +450,17 @@ feed-forward bloom filters (dga)
 - paper analysis shows high prob that there will be only few patterns in second
   array that don't get any matches
 
+cardinality estimation
+
+- linear probabilistic counter
+  - same as bloom filter with just 1 hash fn
+  - count is $-m \ln r$ where $m$ is array size, $r$ is ratio of 1s
+- hyper log log counter
+  - uses $\log \log N + O(1)$ bits where $N$ is max cardinality you'd expect
+  - $m$ observables for each substream
+  - tighter than LPC
+- <http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html>
+
 count-min sketch
 
 - similar to bloom filter, but instead of 1 array of bits, have $k$ arrays of
