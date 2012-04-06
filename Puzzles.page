@@ -89,7 +89,7 @@ Algorithms
 - how to reverse bits in an int? (hint: use xor to swap pair of bits)
 - Out of a thousand identical buckets of water, exactly one contains a poison
   that will kill a pig in exactly 30 minutes. What's the minimum number of pigs
-  you need to determine which bucket is poisoned within an hour?
+  you need to determine which bucket is poisoned in 30m? an hour?
 - how to sample non-uniform discrete dist in const time? (may need handholding)
 
 Probability
@@ -124,6 +124,13 @@ Probability
 - what is the avg # local maxima of a permutation of ${1, \dots, n}$, over all
   perms? maxima at ends also count. (putnam problem)
   <http://ubpdqnmathematica.wordpress.com/2012/02/26/how-many-bumps/>
+- One hundred people board a 100-seat airplane. The first one has lost his
+  boarding pass, so he sits in a random seat. Each subsequent passenger sits in
+  his own seat if it’s available or takes a random unoccupied seat if it’s not.
+
+  What’s the probability that the 100th passenger finds his seat occupied?
+
+  <http://www.futilitycloset.com/2012/02/29/all-aboard-5/>
 
 Geometry
 ========
