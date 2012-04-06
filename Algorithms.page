@@ -499,6 +499,11 @@ universal hash families
   - is it strongly 2-universal?
 - <http://blog.ezyang.com/2010/11/is-multiply-carry-strongly-universal/>
 
+XOR linked list
+
+- replace prev/next ptrs w a single field = prev xor next
+- starting traversal reqs knowning addrs of 2 nodes, not just 1
+
 skip lists
 
 - for storing sorted list of items, like trees, but probabilistic
