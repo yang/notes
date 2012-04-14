@@ -131,6 +131,8 @@ Probability
   What’s the probability that the 100th passenger finds his seat occupied?
 
   <http://www.futilitycloset.com/2012/02/29/all-aboard-5/>
+- If a particle starts at position $n$ and at each time $t=0,1,2,\dots$ it
+  moves up/down with prob .5 then what's prob of reaching 0 before $t=1000$?
 
 Geometry
 ========
