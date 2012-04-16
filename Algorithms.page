@@ -455,10 +455,15 @@ cardinality estimation
 - linear probabilistic counter
   - same as bloom filter with just 1 hash fn
   - count is $-m \ln r$ where $m$ is array size, $r$ is ratio of 1s
-- hyper log log counter
+  - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.79.8821>
+- (super) log log counter
+  - TODO
+  - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.79.8821>
+- hyper log log counter (Flajolet et al)
   - uses $\log \log N + O(1)$ bits where $N$ is max cardinality you'd expect
   - $m$ observables for each substream
   - tighter than LPC
+  - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.76.4286>
 - <http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html>
 
 count-min sketch
