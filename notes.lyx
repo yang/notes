@@ -392,6 +392,14 @@ http://www.snl.salk.edu/~shlens/kl.pdf
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+normalized compression distance (NCD): 
+\begin_inset Formula $NCD\left(x,y\right)=\frac{C\left(xy\right)-\min\left\{ C\left(x\right),C\left(y\right)\right\} }{\max\left\{ C\left(x\right),C\left(y\right)\right\} }$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Finance
 \end_layout
