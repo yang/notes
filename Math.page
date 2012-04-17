@@ -652,9 +652,10 @@ Fisher information
 - depends on PDF & its first derivatives
 - FIM is the curvature of the KL divergence
 
-KL divergence
+minimum description length (MDL)
 
-- TODO
+- best hyp yields best compression; occam's razor
+- minimum message length (MML) is very similar
 
 probability
 ===========
