@@ -7,6 +7,9 @@ TODO merge in notes from CS172
       - contains some easy P problems
     - eg: dnf-sat, 2sat, permanent of a matrix, number of perfect matchings for a bipartite graph
 
+- _kolmogorov complexity_ of a string is min len of computer programming (in
+  some universal lang) to output that string
+
 On Non-Computable Functions (Tibor Rado 1962)
 
 - used TMs
