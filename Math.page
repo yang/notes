@@ -385,6 +385,19 @@ regression tips
   when you’re focused on predictions, don’t spend one minute worrying about
   distributional issues such as normality or equal variance of the errors.
 
+surveys
+-------
+
+- Likert scale aka rating scale: psychometric scale (5/7-point)
+  - ordinal data, but not interval/linear data; requires nonparam tests
+
+experiments
+-----------
+
+- factorial design: 2+ factors, ea w discrete values/levels; experimental units
+  take on all combos
+  - eg compare 2 motors at 2 speeds (4 combos)
+
 combinatorics
 =============
 
