@@ -2049,41 +2049,47 @@ Bayesian confidence interval
 \end_layout
 
 \begin_layout Itemize
-
-\emph on
-consistent
-\emph default
- estimator converges to true param as sample size increases: 
-\begin_inset Formula $\lim_{n\rightarrow\infty}\delta\left(X_{n}\right)=\theta$
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-biased but consistent estimate of mean: 
-\begin_inset Formula $\frac{1}{n}\sum_{i}x_{i}+\frac{1}{n}$
+statistic: any function of data 
+\begin_inset Formula $\delta\left(X\right)$
 \end_inset
 
 
 \end_layout
 
 \begin_layout Itemize
-unbiased but inconsistent estimate of mean: 
-\begin_inset Formula $x_{1}$
+estimator: any statistic used to estimate an (unknown) param 
+\begin_inset Formula $\theta$
+\end_inset
+
+; usu denoted 
+\begin_inset Formula $\hat{\theta}=\delta\left(X\right)$
 \end_inset
 
 
 \end_layout
 
-\end_deeper
 \begin_layout Itemize
 bias: 
-\begin_inset Formula $\E\left[\hat{\theta}\right]-\theta$
+\begin_inset Formula $\E\left[\hat{\theta}-\theta\right]=\E\left[\hat{\theta}\right]-\theta$
 \end_inset
 
- (expected estimate - true param)
+ (
+\emph on
+unbiased 
+\emph default
+if 0 as 
+\begin_inset Formula $n\rightarrow\infty$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Itemize
+variance: 
+\begin_inset Formula $\Var\left[\hat{\theta}-\theta\right]$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -2175,7 +2181,41 @@ efficiency
 \end_deeper
 \end_deeper
 \begin_layout Itemize
-maximum likelihood: 
+
+\emph on
+consistent
+\emph default
+: 
+\begin_inset Formula $\lim_{n\rightarrow\infty}\delta\left(X_{n}\right)=\theta$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+bias & variance must go to 0
+\end_layout
+
+\begin_layout Itemize
+biased but consistent estimate of mean: 
+\begin_inset Formula $\frac{1}{n}\sum_{i}x_{i}+\frac{1}{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+unbiased but inconsistent estimate of mean: 
+\begin_inset Formula $x_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+maximum likelihood estimation (MLE): 
 \begin_inset Formula $\arg\max_{\theta}\Pr\left[X\mid\theta\right]$
 \end_inset
 
@@ -2184,19 +2224,80 @@ maximum likelihood:
 
 \begin_deeper
 \begin_layout Itemize
+find the peak in the likelihood function
+\end_layout
+
+\begin_layout Itemize
+Fisher popularized this by showing that typically MLE is unbiased, consistent,
+ & asymptotically the lowest variance estimator
+\end_layout
+
+\begin_layout Itemize
 least squares: in OLS, if errors are normal, then least squares estimate
  is MLE
 \end_layout
 
+\begin_layout Itemize
+now clear that MLE sometimes bad in practice, and finite sample behavior
+ not samp esa asymptotic behavior, leading to Bayesian strategies
+\end_layout
+
+\begin_layout Itemize
+disregards the uncertainty (
+\begin_inset Quotes eld
+\end_inset
+
+spread
+\begin_inset Quotes erd
+\end_inset
+
+ in the likelihood function, i.e.
+ 
+\emph on
+Fisher information
+\emph default
+)
+\end_layout
+
+\begin_layout Itemize
+property: 
+\begin_inset Formula $f\left(\hat{\theta}\right)$
+\end_inset
+
+ is MLE of 
+\begin_inset Formula $f\left(\theta\right)$
+\end_inset
+
+ for any 
+\begin_inset Formula $f$
+\end_inset
+
+
+\end_layout
+
 \end_deeper
 \begin_layout Itemize
-maximum a posteriori: 
+maximum a posteriori (MAP): 
 \begin_inset Formula $\arg\max_{\theta}\left(\Pr\left[\theta\mid X\right]=\Pr\left[X\mid\theta\right]\Pr\left[\theta\right]\right)$
 \end_inset
 
 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+the Bayesian approach
+\end_layout
+
+\begin_layout Itemize
+since we have a (posterior) prob dist over 
+\begin_inset Formula $\theta$
+\end_inset
+
+, can extract whatever we want: mean, median, mode, intervals
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Estimation: intervals, consistency, bias, MLE, MAP
 \end_layout
@@ -2263,6 +2364,20 @@ Bayes estimation: given loss
 
  (eg sq err), minimize Bayes risk 
 \begin_inset Formula $\E\left[L\left(\theta,\delta\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+https://github.com/johnmyleswhite/JAGSExamples/blob/master/slides/
+\end_layout
+
 \end_inset
 
 
