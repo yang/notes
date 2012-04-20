@@ -362,6 +362,10 @@
   - `-dbgsym` packages have debug symbols for all binaries
   - user adm is for viewing system logs; user admin is for sudo
 
+- debian
+  - apt
+    - /var/run/reboot-required: presence means need to reboot
+
 - LDAP
   - hierarchical directory of entries of KV attr pairs (defined by schema)
     - schemas define _object classes_; published at a base DN in
