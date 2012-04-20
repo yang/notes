@@ -997,6 +997,9 @@
     - like unix signals, many redundant signals can be reduced to one, and
       can't carry extra data
     - can use rules to generate
+  - on EBS, run `CREATE TABLESPACE ephemeral LOCATION '/mnt/postgresql_tmp';`
+    and config `temp_tablespaces = 'ephemeral'`
+    <http://www.chrisstucchio.com/blog/2011/speed_up_postgres_ec2.html>
 
 - DWARF2
   - unwind tables
