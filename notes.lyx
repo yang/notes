@@ -1157,6 +1157,22 @@ General definitions and properties
 \end_layout
 
 \begin_layout Itemize
+Union bound aka Boole's inequality: 
+\begin_inset Formula $\Pr\left[A\cup B\right]\le\Pr\left[A\right]+\Pr\left[B\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Bonferroni's inequality: 
+\begin_inset Formula $\Pr\left[A\cap B\right]\ge\Pr\left[A\right]+\Pr\left[B\right]-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 \begin_inset Formula $\Pr\left[A\mid B\right]>\Pr\left[A\right]\iff\Pr\left[B\mid A\right]>\Pr\left[B\right]$
 \end_inset
 
