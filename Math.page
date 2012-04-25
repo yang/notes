@@ -208,6 +208,9 @@ statistical significance
   prior
   - Fisher violently opposes the concept of an alt hyp
 - many different and widespread interpretation pitfalls
+- quantile regression: estimate median or other quantile instead of mean
+  - good for risk models
+  - uses linear programming
 - robust/resistant statistics: around for 20+ yrs; not widely used; p-values
   reign for many non-ideal real-world reasons
 
