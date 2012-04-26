@@ -6844,6 +6844,263 @@ Choose
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Infinite Mixture Models with Nonparametric Bayes and the Dirichlet Process
+\end_layout
+
+\begin_layout Itemize
+nonparametric: params can change w data
+\end_layout
+
+\begin_layout Itemize
+in the following
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $n$
+\end_inset
+
+ is # diners, 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is 
+\emph on
+dispersion param
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $G_{0}$
+\end_inset
+
+ is base dist
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Chinese restaurant process
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+each new diner sits at new table w prob 
+\begin_inset Formula $\frac{\alpha}{n+a}$
+\end_inset
+
+ or table 
+\begin_inset Formula $k$
+\end_inset
+
+ w prob 
+\begin_inset Formula $\frac{n_{k}}{n+\alpha}$
+\end_inset
+
+; call table assignments 
+\begin_inset Formula $g_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+table 
+\begin_inset Formula $k$
+\end_inset
+
+ serves some set of food parameterized by 
+\begin_inset Formula $\phi_{k}\sim G_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+generate data points 
+\begin_inset Formula $p_{i}\sim F\left(\phi_{g_{i}}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Polya urn model
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+start w urn containing 
+\begin_inset Formula $\alpha G_{0}\left(\phi_{k}\right)$
+\end_inset
+
+ balls of 
+\begin_inset Quotes eld
+\end_inset
+
+color
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+, for ea possible color 
+\begin_inset Formula $\phi_{k}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+draw ball, note color 
+\begin_inset Formula $\phi_{i}$
+\end_inset
+
+, put back orig ball & new ball of same color
+\end_layout
+
+\begin_layout Itemize
+generate data points 
+\begin_inset Formula $p_{i}\sim F\left(\phi_{g_{i}}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+stick-breaking process
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+start w stick of length 1
+\end_layout
+
+\begin_layout Itemize
+sample 
+\begin_inset Formula $\beta_{1}\sim\text{Beta}\left(1,\alpha\right)$
+\end_inset
+
+; 
+\begin_inset Formula $w_{1}=\beta_{1}$
+\end_inset
+
+ is the eventual proportion of customers at table 1
+\end_layout
+
+\begin_layout Itemize
+sample 
+\begin_inset Formula $\beta_{2}\sim\text{Beta}\left(1,\alpha\right)$
+\end_inset
+
+; 
+\begin_inset Formula $w_{2}=\left(1-\beta_{1}\right)\beta_{2}$
+\end_inset
+
+ is eventual prop of customers at table 2
+\end_layout
+
+\begin_layout Itemize
+generate group assignments 
+\begin_inset Formula $g_{i}\sim\text{Multinomial}\left(w_{1},\dots,w_{\infty}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+generate data points 
+\begin_inset Formula $p_{i}\sim F\left(\phi_{g_{i}}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Dirichlet process
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+generate a dist 
+\begin_inset Formula $G\sim DP\left(G_{0},\alpha\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+generate group-level params 
+\begin_inset Formula $x_{i}\sim G$
+\end_inset
+
+, where 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ is group param for 
+\begin_inset Formula $i$
+\end_inset
+
+th data point
+\end_layout
+
+\begin_layout Itemize
+generate each data point 
+\begin_inset Formula $p_{i}\sim F\left(x_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+inference: Gibbs sampling
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+randomly init group assignments
+\end_layout
+
+\begin_layout Itemize
+pick a point; fix assignments of other points; assign point to most likely
+ group (existing or new)
+\end_layout
+
+\begin_layout Itemize
+repeat till convergence
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Indian buffet process: customers belong to multiple tables instead of just
+ 1
+\end_layout
+
+\begin_layout Itemize
+CRP, Polya, sticks: sequential; DP: parallel
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://blog.echen.me/2012/03/20/infinite-mixture-models-with-nonparametric-bayes-a
+nd-the-dirichlet-process/
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Natural language processing (NLP)
 \end_layout
