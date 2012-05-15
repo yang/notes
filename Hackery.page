@@ -1299,8 +1299,15 @@
   - exceptions much faster than on CLR:
     <http://weblog.ikvm.net/PermaLink.aspx?guid=c84a5b22-d633-4eeb-a8e1-244ff66161a2>
 
-  - objects 64-bit aligned, have 2-word header (word = native ptr size)
+  - object layouts
+    - objects 64-bit aligned, have 2-word header (word = native ptr size);
+      other VMs may have 3
     - fields word-aligned
+    - headers
+      - objs: class ptr, flags
+      - arrays: class ptr, flags, size
+      - flags: incl hash, GC
+      - <http://java.sun.com/developer/technicalArticles/Networking/HotSpot/>
 
   - useful flags
     - `-verbosegc`
