@@ -304,6 +304,7 @@ time series (TODO also cover math)
   function of previous samples
 - autoregressive (AR) model: random process used to model natural phenomena; a
   type of linear prediction formula
+- vector autoregressive (VAR) model: popular in econometrics
 - Dickey Fuller test: whether unit root is present in autoregressive model
 - TODO: (partial) autocorrelation plots, ARMA, ARIMA, Ljung-Box for zero
   autocorr, unit root test for coint, Granger-causality, whiteness (iid-ness) &
