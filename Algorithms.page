@@ -647,3 +647,9 @@ find majority item in stream
   unknown
 - can generalize to find all $k$ items that exceed $1/k$ fraction of all items;
   useful for finding outliers in power law dist
+
+automatic differentiation
+
+- not symbolic (slow)/numeric (approximate); differentiates at specific points
+- add _infinitesimal_ $e$ similar to imaginary $i$ but $e^2=0$
+- <http://code.google.com/p/ceres-solver/source/browse/include/ceres/jet.h>
