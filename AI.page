@@ -1539,3 +1539,12 @@ Running Large Graph Algorithms: Evaluation of Current State-Of-the-Art and Lesso
 - used bluegene
 
 - social network analysis: <http://mlg.ucd.ie/files/summer/tutorial.pdf>
+
+Google ML Infrastructure
+
+- SmartASS: adwords, adsense, doubleclick; worked on by topcoder ppl
+- SETI: general ML infra; simon tong (acclaimed scientist, google sets)
+- S___: content ads
+- Prediction API: much smaller
+- learn to rank not really used in ranking algo; want explainable/tweakable
+  results
