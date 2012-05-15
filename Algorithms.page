@@ -461,7 +461,10 @@ cardinality estimation
   - count is $-m \ln r$ where $m$ is array size, $r$ is ratio of 1s
   - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.79.8821>
 - (super) log log counter
-  - TODO
+  - assume uniform hash space dist; est the density
+  - if $r$ is max rank, then $2^r$ is cardinality est
+    - rank is # leading zeros; a fully dense set will have max rank (min hash)
+      be 000...001
   - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.79.8821>
 - hyper log log counter (Flajolet et al)
   - uses $\log \log N + O(1)$ bits where $N$ is max cardinality you'd expect
@@ -469,6 +472,7 @@ cardinality estimation
   - tighter than LPC
   - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.76.4286>
 - <http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html>
+- <http://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/>
 
 count-min sketch
 
@@ -485,6 +489,17 @@ count-min sketch
   - but decrement operation is no longer valid
 - simple descrip / used in statistical counting of passwords in MSR paper
   <http://research.microsoft.com/pubs/132859/popularityISeverything.pdf>
+
+count-mean-min sketch
+
+- count-min: good for high skew, bad at low/med skew (many collisions)
+- use more careful correction/estimation from same data structure TODO
+- <http://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/>
+
+stream-summary
+
+- TODO
+- <http://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/>
 
 universal hash families
 
