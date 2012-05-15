@@ -103,6 +103,9 @@ hash functions
 - _rotating hashes_: for open addressing, avoid computing a bunch of different
   hash functions; just compute one long hash value and apply sliding window on
   it to get a bunch of shorter hash values
+- implementations
+  - second-generation: murmurhash
+  - third-generation: cityhash, spookyhash; faster, greater ILP
 
 bloom filter
 
