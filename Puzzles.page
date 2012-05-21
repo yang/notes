@@ -133,6 +133,10 @@ Probability
   <http://www.futilitycloset.com/2012/02/29/all-aboard-5/>
 - If a particle starts at position $n$ and at each time $t=0,1,2,\dots$ it
   moves up/down with prob .5 then what's prob of reaching 0 before $t=1000$?
+- drawing 2 cards at a time from deck.  if both red, you keep pair;  if both
+  black, i keep pair.  if mixed, discard.  you win $10 if you end w more pairs.
+  what's a fair game entry price?
+  <http://mindyourdecisions.com/blog/2012/04/23/monday-puzzle-pairs-of-cards/>
 
 Geometry
 ========
