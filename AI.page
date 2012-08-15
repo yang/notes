@@ -839,6 +839,64 @@ learning bayes net structures
     (MAP/MDL) approach over network hyps (prefer simpler networks)
     - usu too many structures to sum over, so sample w MCMC
 
+posterior simulation (TODO)
+
+- objective: evaluate integrals over density $p(x)$
+  - eg estimate expected value
+- direct sampling methods
+  - generally given an un-normalized density $p*(x) = c p(x)$
+  - uniform: grid search; $$ prohibitively many samples req'd for high dims
+  - importance: uniform w sampler density $q(x)$
+    - $q$ should be simple enough to be sampled
+    - hope that $q*$ is reasonable approx to $p*$
+    - adjust est by weighting "importance" of each sample
+    - hard to choose good $q$, esp in high dims
+  - rejection: like importance but proposal density strictly bounds target
+    density: $c q*(x) > p*(x)$
+    - sample $x$ from $q*(x)$, 
+    - $c$ often too big for poor choice of $q$ or high dims
+- MCMC
+  - BUGS, JAGS, etc use M-H not Gibbs; by Gibbs they mean one-var-at-a-time
+    - <http://stats.stackexchange.com/questions/4191/gibbs-sampling-where-do-the-full-conditionals-come-from>
+  - metropolis-hastings
+    - use local density $q(x'; x^{(t)})$, dep on current state $x^{(t)}$
+    - build markov chain through state space, converging to target density
+      $P*(x)$
+    - $Q$ doesn't need to closely approx $P$
+    - at time $t$, generate tentative state $x'$ from $Q$
+    - eval $a = \dots$
+  - gibbs
+    - inappropriate if any deterministic nodes (transition prob 1) or
+      non-ergodic (disconnected components)
+    - one pseudocode (for discrete dists, from <http://dclib.hg.sourceforge.net/hgweb/dclib/dclib/file/474a3c84a175/dlib/bayes_utils/bayes_utils.h>)
+
+        iterate
+          for node in nodes
+            if node is evidence, skip
+            compute dist P(node | neighbors) = normalize(
+              for value in node.values
+                P(node=value | node.parents) *
+                prod(P(child | child.parents (incl node=value))
+                     for child in node.children)
+            )
+            node.currvalue = sample from dist
+
+- refs
+  - <http://jakehofman.com/talks/nyc_rmeetup_20090709_jmh.pdf>
+  - gelman. bayesian data analysis.
+
+sampling
+
+- fwd sampling
+  - for bayesian networks
+  - topological order
+- queries w evidence: est $P(Y = y \mid E = e)$
+  - rejection sampling: fwd sampling, discard where $E \ne e$
+    - $P(E = e)$ usu prohibitively small; too many samples required
+  - fwd sampling generally infeasible for markov networks; no "roots"
+- markov chain: probabilistic state machine
+- TODO
+
 markov chain monte carlo (MCMC)
 
 - award-winning expository paper: <http://www.ams.org/journals/bull/2009-46-02/S0273-0979-08-01238-X/S0273-0979-08-01238-X.pdf>
