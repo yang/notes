@@ -69,7 +69,13 @@ companies
     netezza's zone maps)
     - tried this out since it seemed like most promising free c-store; suffers
       from mysql row size limit (no large tables, which is common in OLAP!)
+    - varchar 8000 max
   - infobright: wants multicore queries, ACID
+    - also column store, competes with infinidb
+    - tried this out; not the fastest but pretty good sql support out of box
+    - no CREATE TABLE AS
+  - luciddb, monetdb: supposed to be slower/less mature than
+    infinidb/infobright
   - netezza: row-based db hw with compression, clustering; acquired by ibm
     - compression: prefix compression, huffman coding
     - clustering: multi-dimensional simultaneous partitioning w space-filling hilbert curve
