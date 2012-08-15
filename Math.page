@@ -276,6 +276,10 @@ statistical tests
 - sequential analysis: sample size isn't fixed in advance; data is evaluated
   during collection; may conclude exp earlier
   - alt is bayesian exp design
+- Mann-Whitney-Wilcoxon RankSum test: useful to determine if 2 distributions
+  are significantly different or not. Unlike the t-test, the RankSum test does
+  not assume that the data are normally distributed, potentially providing a
+  more accurate assessment of the data sets.
 
 data
 
