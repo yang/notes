@@ -2,6 +2,7 @@ TODO Nemesis: Preventing Authentication & Access Control Vulnerabilities in Web 
 
 resources
 
+- magic string from skipfish: `-->">'>'"<sfi000142v524891>`
 - <http://www.cs.berkeley.edu/~daw/teaching/cs261-f08/>
 
 everything you need to know about cryptography in 1 hour (talk by collin
