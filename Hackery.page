@@ -1379,6 +1379,38 @@
     - adaptive sizing policy: self-tuning
       - eg `-XX:MaxGCPauseMillis=100`, `-XX:GCTimeRatio=19`
 
+  - monitoring, management, instrumentation
+    - no startup flags: no cpu sampling possible
+    - remote apps: no mem sampling possible
+    - startup flags (default JDWP port 1044):
+
+        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044
+
+    - startup flags (default JMX port is 9090):
+
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.port=3000
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+
+    - JVMTI: replaces JVMPI, JVMDI
+    - JPDA
+    - JDWP
+    - JDI
+    - jdb uses ?
+    - JDWPI
+    - JConsole
+    - VisualVM
+    - jstat
+    - JMX
+      - MBeans
+      - JMX:MBeans::SNMP:MIB
+      - <http://blogs.oracle.com/jmxetc/entry/simple_is_not_easy>
+  - architectural map: <http://download.oracle.com/javase/7/docs/>
+  - servers
+    - tomcat: servelt, JSP
+    - full JEE app servers: jboss, websphere, glassfish
+
 - alignment
 
   - `posix_memalign`: useful for aligning to cache line sizes
