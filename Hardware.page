@@ -5,3 +5,24 @@ disks
   - also used in SSDs but for a reverse purpose: because the SSDs experience
     latency in the CPU; this allows for a batch of operations to be issued
   - obsoletes PATA tagged command queueing (TCQ), which was CPU intensive
+
+Wireless NICs for Linux
+=======================
+
+work out of box:
+
+- trendnet tew-424ub/a 3.1r (RTL8187B; version matters---see
+  <https://help.ubuntu.com/community/HardwareSupportComponentsWirelessNetworkCardsTrendnet#USB>)
+
+- also possibly good is medialink wireless n usb adapter
+  <http://www.amazon.com/Medialink-Wireless-Adapter-802-11n-Compatible/dp/B002RM08RE/ref=sr_1_1?ie=UTF8&qid=1345158256&sr=8-1&keywords=medialink+usb>
+  (lots of reviews, including reviews saying it works great on ubuntu)
+
+avoid:
+
+- sabrent usb-a11n (RTL8188CUS, 12.04 defaults to RTL8192CU)
+
+- asus usb-n13 (RT3072, 10.04 works if correct drivers)
+
+- trendnet tew-423pi (RTL8185L, 10.04 defaults to something else and still sees
+  disconnects if correct drivers, 12.04 works)
