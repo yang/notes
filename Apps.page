@@ -1687,3 +1687,22 @@ Ubuntu 11.10 / Unity
 - skype tray icon not showing up; have to pkill
 - various bugs/quirks in unity
 - vlc icon showing up to the left of the resource monitor applet
+
+Ubuntu 12.04 / Unity
+--------------------
+
+- alt key too easy to hit; had to change that to double-alt
+- menu at the top really doesn't work for apps like gimp
+- invisible scroll bar: not a fan; you have to be to the left of it and within
+  a certain distance for it to appear
+
+Problems
+========
+
+Ubuntu 12.04
+------------
+
+- went through tons of wireless NICs (USB and others) before finding one that
+  works out of box
+- <http://askubuntu.com/questions/131508/12-04-and-nvidia-card-problem-with-nvidia-geforce-7025>
+- <https://bugs.launchpad.net/ubuntu/+source/gnome-settings-daemon/+bug/969359>
