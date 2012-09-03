@@ -122,11 +122,16 @@ bayesians vs frequentists
   - frequentist: ask what's $P(H=h)$ given that null hyp that true odds are .5
   - bayesian: estimate $P(\theta=.5)$ vs $P(\theta\ne.5)$ given #H & prior
 - frequentist
-  - believes pop mean is real, but unknown and unknowable; must be estimated
-    from data; constructs confidence interval centered at sample mean
-  - can't say "95% prob that true mean is in interval"; must say "95% of
-    similar intervals would contain the true mean, if each interval were
-    constructed from a different random sample like this one"
+  - believes pop mean is real, but unknown and unknowable
+- frequentist estimator
+  - find sample mean; construct confidence interval around it
+  - can't say "95% prob that true mean is in interval"; must say "95% prob over
+    intervals that an interval contains true mean", i.e. "if we were to
+    repeatedly sample data, find mean, and construct confidence interval, 95%
+    of intervals would contain the true mean"
+- frequentist tester
+  - form hypothesis: "mean is blah"
+  - accept or reject hypothesis with test to significance level
 - bayesian
   - only data is real; pop mean is an abstraction; construct a credible
     interval, centered near the sample mean and tempered by prior beliefs
