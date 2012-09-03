@@ -213,6 +213,7 @@ statistical significance
   - uses linear programming
 - robust/resistant statistics: around for 20+ yrs; not widely used; p-values
   reign for many non-ideal real-world reasons
+- z-test: appropriate only if you have a SD, else use t-test
 
 statistical tests
 
