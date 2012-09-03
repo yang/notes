@@ -1383,6 +1383,9 @@ ack-grep
 Packages
 ========
 
+- video
+  - get-flash-video
+  - ffmpeg
 - java fast primitive collections
   - fastutil
   - trove: not as comprehensive as fastutil, e.g. no SortedSets
