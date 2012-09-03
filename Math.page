@@ -47,12 +47,25 @@ statistics
   experiment yielded a sample that contains the true pop param
   - "Were this procedure to be repeated on multiple samples, the calculated
     confidence interval (which would differ for each sample) would encompass
-    the true population parameter 90% of the time."
+    the true population parameter 95% of the time."
   - *not* for predicting prob of true pop param being in interval; pop param
     has actual value, not a prob dist
+  - instead, indicates *reliability of estimate*
+  - find *lowest* value of param (e.g. population mean or population binomial
+    proportion) such that estimate (e.g. sample mean or sample binomial
+    proportion) is still in innermost 95% of the sampling distribution of the
+    estimate
+    - innermost means excluding lowest/highest 2.5%
+    - sampling distribution:
+      - for normal data $~ N(\mu, \sigma)$, it's $~ N(\mu, \sigma / \sqrt{n})$,
+        where $\mu$ is unknown
+      - for bernoulli data $~ Bern(p)$, it's $~ Bin(n,p)$, where $p$ is unknown
+    - do the same for *highest* such value of param
   - closely related to significance testing: testing null hyp $\theta=0$ can be
     done by seeing if confidence interval for $\theta$ includes 0 (w confidence
     level $y=1-\alpha$)
+  - intervals calculated from (functions of) sample, so they're statistics,
+    functions of RVs, hence RVs themselves
   - margin of error: radius (half) of confidence interval
 - statistical error: deviation of a sample from unobservable true/theoretical
   value (eg person's height vs population mean)
