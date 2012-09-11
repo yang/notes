@@ -787,9 +787,10 @@ Linux
   mplayer -vo null -vc dummy -ao pcm:file=OUTPUT.wav INPUT.wma
   mplayer -vo null -vc dummy -af resample=44100 -ao pcm:waveheader:file=OUTPUT.wav INPUT.wma
 
-  # convert flv to mp3
+  # convert flv to mp3 / extract audio from video
   # from http://ubuntuforums.org/archive/index.php/t-327331.html
-  ffmpeg -i in.flv -f mp3 -vn -acodec copy out.mp3
+  ffmpeg -i in.flv -acodec copy out.mp3
+  # ffmpeg -i in.flv -f mp3 -vn -acodec copy out.mp3
 
   # disable pc speakers/system beep
   sudo rmmod pcskrs
