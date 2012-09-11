@@ -1314,6 +1314,9 @@ cpuid
 (monitoring tools)
 exmap # monitors mem usage accurately (takes into account sharing)
 htop
+nmon
+atop
+glances
 xload
 xosview
 uptime
