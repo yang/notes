@@ -1384,6 +1384,11 @@ jpegtran
 multitail
 ack-grep
 
+(text)
+shuf
+rev
+tac
+
 Packages
 ========
 
