@@ -1329,6 +1329,25 @@ corollary: Chebyshev's inequality,
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Hoeffding's inequality: upper bound on prob that sum of RVs deviates from
+ expected value
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+for Bernoullis (important special case): 
+\begin_inset Formula $\Pr\left[\sum_{i}X_{i}\le\left(p-\epsilon\right)n\right]\le\E\left[-2\epsilon^{2}n\right]$
+\end_inset
+
+ where 
+\begin_inset Formula $X_{i}\sim\mbox{Bernoulli}\left(p\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Algorithms
 \end_layout
