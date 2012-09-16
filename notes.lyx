@@ -3793,7 +3793,11 @@ Akaike's information criterion (AIC):
 \end_layout
 
 \begin_layout Itemize
-also seen: 
+also seen (TODO resolve?)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
 \begin_inset Formula $-2\log\frac{\mbox{RSS}}{n}+\frac{2nk}{n-k-1}$
 \end_inset
 
@@ -3804,6 +3808,25 @@ also seen:
  is # params
 \end_layout
 
+\begin_layout Itemize
+\begin_inset Formula $-2\log\mathcal{L}+2p+\frac{2p\left(p+1\right)}{n-p-1}$
+\end_inset
+
+ 
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://scott.fortmann-roe.com/docs/MeasuringError.html
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 asymptotically, minimizing AIC equiv to minimizing CV value
 \end_layout
