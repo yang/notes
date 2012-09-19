@@ -474,6 +474,16 @@ cardinality estimation
 - <http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html>
 - <http://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/>
 
+cardinality estimation: $k$ minimum values (KMV) sketch
+
+- simple & intuitive: remember just $k$ minimum hashes and extrapolate
+  cardinality from interval between hashes
+- can do set unions/intersects; eg hyper log log doesn't support intersects
+- compression: can discard high order bits (state shrinks as set grows)
+- expansion to multisets (counts duplicates): AKMV
+  - add counter to each hash; eg hyper log log doesn't support these
+- <http://blog.aggregateknowledge.com/2012/07/09/sketch-of-the-day-k-minimum-values/>
+
 count-min sketch
 
 - similar to bloom filter, but instead of 1 array of bits, have $k$ arrays of
