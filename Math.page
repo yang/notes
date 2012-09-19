@@ -757,7 +757,7 @@ problems
 game theory
 ===========
 
-- shaply shubik power index: measure power of players in weighted voting game
+- shapley shubik power index: measure power of players in weighted voting game
   - of all possible permutations, when votes in favor happen in order, which
     player tilts the vote? rank them by the frequency this applies
 - pareto efficiency aka pareto optimality: a possibly local optimum
