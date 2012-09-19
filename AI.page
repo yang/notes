@@ -1546,6 +1546,15 @@ gradient boosted decision trees
 - variations
   - initialized GB: init $F_0$ is output of random forest
 
+bayesian blocks
+
+- nonparametric unsupervised discretization
+- flexible piecewise shapes & fitness functions
+- cute DP algo
+- refs
+  - <http://jakevdp.github.com/blog/2012/09/12/dynamic-programming-in-python/>
+  - <http://arxiv.org/pdf/1207.5578v3.pdf>
+
 systems/applications
 ====================
 
