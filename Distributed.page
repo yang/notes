@@ -1326,6 +1326,34 @@ source depot
 distributed oltp databases
 ==========================
 
+spanner
+
+- multi-version, global, sync-repl, "externally consistent" txns
+- novel time API exposes clock uncertainty for external consistency
+- non-blocking reads in past, lock-free read-only txns, atomic schema changes
+- auto partition across paxos RSMs
+- trillions of rows
+- relational data model, SQL-like query lang
+- configurable repl
+- architectural hierarchy
+  - universe: eg production, dev
+    - universe master: display status of all zones
+    - placement driver: manages data xfer across zones
+    - zone: administrative unit; single location
+      - zonemaster: assigns data to spanservers
+      - location proxy: helps clients locate spanservers that house the data
+      - spanserver: controls 100-1K tablets
+        - tablet: bag of `(key:string, timestamp -> string)`
+- tablet data stored in ~B-trees & WALs on colossus (new GFS)
+- paxos replica group per tablet
+  - leader also does CC w lock table
+  - 2PC across leaders for dist txns
+- directory: keys w common prefix; unit of data placement; ~50MB
+  - all data in dir have same (geo-)replication config
+  - move data btwn paxos groups in dir-wise manner (TODO huh?); not txn'l (or
+    blocks txns for few secs)
+- spanner layers a bucketing abstraction
+
 bigtable
 
 - in-memory memtable LSM for holding pending writes
