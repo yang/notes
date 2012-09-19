@@ -938,7 +938,7 @@ Linux
   # instead of a cert request)
   openssl req -new -x509 -days 365 -key ca.key -out ca.crt # also might call it ca.pem
 
-  # generate a private key for the server
+  # generate a private key for the server (-des3 requests encryption passphrase)
   openssl genrsa -des3 -out server.key 4096
   # generate a cert signing request for the server; most clients will insist that
   # the Common Name field match the hostname
