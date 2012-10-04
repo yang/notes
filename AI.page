@@ -1,5 +1,8 @@
 TODO
 
+- perplexity <http://en.wikipedia.org/wiki/Perplexity#Perplexity_of_a_probability_model>
+- generalized additive models (GAM) <http://www.win-vector.com/blog/2011/02/the-cranky-guide-to-trying-r-packages/>
+- "linearizing" variables: <http://www.win-vector.com/blog/2012/07/modeling-trick-masked-variables/>
 - adaptive lasso aka iterated reweighted l1 (see also iterated l2)
 - merge in notes from CS182, 6.867
 - Why do kernel smoothers divide the norm by λ before applying the weight fn? Isn't it dealt with in the summation in the estimator fn?
@@ -957,6 +960,7 @@ GLM
     intervals
   - beta and Dirichlet: for dists over probs
   - many more...
+- residual deviance, null deviance TODO
 
 maximum entropy
 
@@ -1245,7 +1249,7 @@ support vector machine (SVM)
   - eg kernel-specific params; eg poly kernel has more hyperparams than others
 - slack variables introduce soft margin
 
-bayesian optimization
+bayesian optimization TODO
 
 - not entirely clear yet how this works, but rough notes follow
 - way to globally optimize a costly-to-evaluate function
@@ -1260,6 +1264,7 @@ bayesian optimization
     - can be expected value + predicted variance (upper-confidence-bound
       acqusition fn)
     - or expected improvement
+- <http://hboa.deg511.com/boa.pdf>
 - <http://atpassos.posterous.com/bayesian-optimization>
 
 kernels
