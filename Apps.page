@@ -729,6 +729,9 @@ Linux
   # resumable scp: http://www.commandlinefu.com/commands/view/1818/resume-scp-of-a-big-file
   rsync --partial --progress --rsh=ssh $file_source $user@$host:$destination_file
 
+  # mirror from local to remote (--dry-run, --include/exclude)
+  rsync -avzr --progress --delete my-www/ yz.mit.edu:/var/www/
+
   # add new PPA repo
   sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com \
       67265eb522bdd6b1c69e66ed7fb8bee0a1f196a8
