@@ -392,6 +392,33 @@ clustering
   infinity norm, hamming, inner product/cosine similarity
 - many clustering algos require number of clusters as input; 
 
+mean shift
+
+- "non-param" in that # modes gives # clusters, but still need kernel fn (eg
+  bandwidth $h$)
+- given data points in $k$-dim space, there's a KDE PDF; find its modes
+- algo: given kernel fn & data pts, do for each data pt:
+  - start w window centered at data pt
+  - until convergence, find kernel-weighted mean over data pts in window (eg
+    hypersphere, an approximation of where kernel is non-zero) and update
+    window center
+  - clustering: assign data pt to the basin it falls into
+- theory: this actually is just ascent of gradient of KDE
+- used in CV: segmentation, tracking
+  - tracking: create confidence map in new img based on color histogram of obj
+    in prev img; use mean shift to find peaks of confidence map
+  - segmentation: use _discontinuity preserving smoothing_
+    - combine spatial and range (color) values into $x = [ x_s x_r ]$ (5-dim)
+    - use special $K(x) = c K(x_s / h_s) K(x_r / h_r)$
+    - filtered pixel uses orig spatial vector but new range vector of
+      convergence pt
+- slow; some optimizations:
+  - sampling: sample KDE to get pts for new ("reduced") KDE, and run over these
+    pts, then simply associate each pt to closest
+  - adaptive mean shift: vary bandwidth for ea pt: let $h$ be dist to nearest
+    neighbor (that's L1 norm, can also use L2)
+  - actually move each data pt at each iteration
+
 v-measure cluster evaluation measure
 
 - "conditional entropy-based external cluster evaluation measure"
