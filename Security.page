@@ -622,6 +622,7 @@ public key crypto
 - elliptic curve
   - attractive for mobile/wireless env's
   - vs RSA: equiv security with smaller key sizes (faster, less resources)
+    - use ECDSA
 
 secure ciphers
 
@@ -684,11 +685,16 @@ block ciphers
 security status of cryptographic tools
 
 - insecure: MD5, SHA1
-- secure: AES, RSA, SHA-256
+- secure: AES, RSA, SHA-2 (SHA-256, SHA-512), SHA-3
+- note eg HMAC-MD5 not vuln to MD5 vulns
+  - HMAC strength depends on secret key len
+  - brute force is most common attack; less affected by collisions than
+    underlying hash fns alone
 
 cryptographic hash fns
 
 - SHA: NIST-approved
+  - SHA-3: SHA-3-512
 - blowfish: bruce shneier
   - expensive key setup phase
 
