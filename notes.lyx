@@ -169,6 +169,84 @@ eg annualizing compounding: given annual growths
 
 \end_deeper
 \begin_layout Itemize
+harmonic mean 
+\begin_inset Formula $\left(\frac{1}{n}\sum_{i=1}^{n}x_{i}^{-1}\right)^{-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+if 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ subject to (arithmetic-)mean-preserving spread, harmonic mean decreases
+\end_layout
+
+\begin_layout Itemize
+preferable way to avg multiples, e.g.
+ P/E ratio
+\end_layout
+
+\begin_layout Itemize
+vs arith mean
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+A travels 20mph for 1h then 30mph for 1h, avg speed is arith mean
+\end_layout
+
+\begin_layout Itemize
+A travels 20mph for 1mi then 30mph for 1mi, avg speed is harmonic mean
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+F-1 score is harmonic mean of precision & recall
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+power mean 
+\begin_inset Formula $M^{r}\left(\left\{ x_{i}\right\} \right)=\left(\frac{1}{n}\sum_{i}x_{i}^{r}\right)^{\frac{1}{r}}$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $r=-1$
+\end_inset
+
+ harmonic, 
+\begin_inset Formula $r=0$
+\end_inset
+
+ geom, 
+\begin_inset Formula $r=1$
+\end_inset
+
+ arith, 
+\begin_inset Formula $r=2$
+\end_inset
+
+ quadratic (root mean square), 
+\begin_inset Formula $r=-\infty$
+\end_inset
+
+ min, 
+\begin_inset Formula $r=\infty$
+\end_inset
+
+ max
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 Stirling's approx: 
 \begin_inset Formula $\ln n!=n\ln n-n+O\left(\log n\right)$
 \end_inset
