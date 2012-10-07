@@ -465,14 +465,31 @@ cardinality estimation
   - if $r$ is max rank, then $2^r$ is cardinality est
     - rank is # leading zeros; a fully dense set will have max rank (min hash)
       be 000...001
+  - but this gives us at best a power-of-2 cardinality
+  - very space efficient: only need 5 bits to record max # 0s in 32-bit nums
+    - hence name, need $\log \log N$ bits where $N$ is max cardinality (eg
+      $2^32$)
+  - improvements
+    - use multiple indep hash fns, but slow
+    - equiv but faster: stochastic avging
+      - use part of its output to split vals into many buckets, each to get an
+        indep estimate
+      - eg for 1024 estimates, use first 10 bits, rest to count leading 0s
+      - avg the estimates from all buckets
+      - avg error for $m$ buckets is $1.3/\sqrt{m}$; for 1024 buckets, ~4%
   - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.79.8821>
+- super log log
+  - discard outliers by discarding 30% buckets w largest values
+    - avg error down to $1.05/\sqrt{m}$
 - hyper log log counter (Flajolet et al)
-  - uses $\log \log N + O(1)$ bits where $N$ is max cardinality you'd expect
-  - $m$ observables for each substream
-  - tighter than LPC
+  - use harmonic mean instead of geometric
+    - avg error down to $1.04/\sqrt{m}$
+  - complete algo a bit more complex
   - <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.76.4286>
+- log log algo buckets are parallelizable
 - <http://highscalability.com/blog/2012/4/5/big-data-counting-how-to-count-a-billion-distinct-objects-us.html>
 - <http://highlyscalable.wordpress.com/2012/05/01/probabilistic-structures-web-analytics-data-mining/>
+- <http://blog.notdot.net/2012/09/Dam-Cool-Algorithms-Cardinality-Estimation>
 
 cardinality estimation: $k$ minimum values (KMV) sketch
 
