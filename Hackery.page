@@ -329,6 +329,7 @@
       - paste
       - apply, lapply, sapply, tapply
       - rbind.fill
+      - cut
     - control
       - invisible
   - syntax tricks
