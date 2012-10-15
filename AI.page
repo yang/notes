@@ -41,6 +41,9 @@ TODO
 - https://sites.google.com/site/icml2011sparsity/
 - http://2010.ladisworkshop.org/node/10#keynote1
 - PLSR
+- self organizing maps
+- belief networks (90s; DAGs of hidden/visible), RBMs, stacked RBMs
+  into DBNs
 - from quora:
 
   > Compressed Sensing and Dictionary learning: These algorithms both exploit sparsely-activating (few ones in a zero-one vector) signals that appear in many real-world contexts Although sparsity-inducing algorithms have been around for a long time (in the form of "basis pursuit" and lasso" they've exploded recently, with many new advances (largely initiated by Donoho and Tao's proof of effectiveness). So far, these have touched MRI, radar and computer vision, and lead to an enormous amount of cross-talk between signal processing, statistics and machine learning. Watch for future advances.

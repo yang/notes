@@ -1353,6 +1353,7 @@ spanner
   - move data btwn paxos groups in dir-wise manner (TODO huh?); not txn'l (or
     blocks txns for few secs)
 - spanner layers a bucketing abstraction
+- TODO wound-wait truetime 2px+paxos 2pl
 
 bigtable
 
