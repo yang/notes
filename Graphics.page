@@ -41,6 +41,25 @@ Definitions
 
 - texel: pixel in a texture
 
+FastInvSqrt
+
+- code:
+
+    float FastInvSqrt(float x) {
+      float xhalf = 0.5f * x;
+      int i = *(int*)&x;         // evil floating point bit level hacking
+      i = 0x5f3759df - (i >> 1);  // what the fuck?
+      x = *(float*)&i;
+      x = x*(1.5f-(xhalf*x*x));
+      return x;
+    }
+
+- make first guess, then one iteration of newton's method
+- money line: divide exponent by two & flip sign, preserve mantissa, more
+- math derivation is actually quite clear
+- <http://betterexplained.com/articles/understanding-quakes-fast-inverse-square-root/>
+- <http://blog.quenta.org/2012/09/0x5f3759df.html>
+
 "Post-processing" techniques
 
 - anti-aliasing: techniques include hyper sampling, subdividing pixels, random sampling, ...
