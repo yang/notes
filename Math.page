@@ -13,6 +13,21 @@ signals
 statistics
 ==========
 
+- frequentist statistics
+  - Point estimates trade off bias and variance
+  - Interval estimates have the goal of achieving nominal coverage and the goal
+    of being informative
+  - Tests have the goals of calibration and power
+- frequentists express prior info not in dist but in choice of methods---may
+  still be too restrictive
+
+- prospective vs retrospective studies
+  - prospective: cohort is random sample of population; watch them; may be very
+    skewed (eg if studying rare disease)
+  - retrospective: already know cases & controls; sample both evenly
+
+- ascertainment: just means sampling (ascertainment bias, ascertainment method)
+
 - TODO mixed effects
 
 - characteristic function = fourier transform
