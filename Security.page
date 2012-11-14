@@ -912,6 +912,25 @@ vx32 (bryan ford, russ cox, TR 2008)
 
 - x86, linux/freebsd
 
+linux containers (lxc)
+
+- can evade lxc as root in lxc by eg sysfs <http://blog.bofh.it/debian/id_413>
+  - will be fixed upon support for labeling files with user namespaces
+- user namespaces: allow normal user to unshare namespaces
+- The most glaring reason is that user namespaces are not yet being enforced at
+  most user id comparisons, including at file system.  That means that user id
+  X in one user namespace will be deemed owner of a file created by user id X
+  in another user namespace. Toss in root and virtual filesystems like /proc
+  and /sys, and root in a container can do what he likes with the host. MAC can
+  help mitigate this, but user namespaces are still being developed to provide
+  the real solution.
+- Another reason, fwiw, is simply that it shares the same kernel as the host.
+  So any exploits in any system calls can likely be exploited by the container
+  to gain privilege and escape the host. The worst offenses are usually in
+  newer system calls, so some hope is being placed in seccomp2 to mitigate this
+  concern.
+- <http://s3hh.wordpress.com/2011/05/31/escaping-chroots/>
+
 engineering
 -----------
 
