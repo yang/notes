@@ -1,0 +1,6 @@
+typography
+
+- resolution (DPI)
+- font hinting method
+- font rasterization: anti-aliasing strength, RGBA anti-aliasing
+- subpixel rendering
