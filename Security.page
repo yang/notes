@@ -478,7 +478,9 @@ PKI
       Dummy-Header: GET /index.jsp HTTP/1.0
       Cookie: sessionCookie=Token
 
-- MAC: integrity and authenticity; TODO
+MAC and Hashes
+
+- MAC: integrity and authenticity; protect against chosen-plaintext attacks
 - message authentication code (MAC): keyed hash; TODO
 - message integrity code (MIC): TODO
 - hash-based MAC (HMAC)
@@ -498,6 +500,18 @@ PKI
   - followed shortly by RSA
 - secure remote password (SRP)
   - structurally similar to D-H
+
+authentication encryption
+
+- middle option is the only secure one:
+  - Encrypt and MAC: encrypt the plaintext, compute the MAC of the plaintext,
+    and append the MAC of the pltaintext to the ciphertext
+  - Encrypt then MAC: encrypt the plaintext, compute the MAC of the ciphertext,
+    and append the MAC of the ciphertext to the ciphertext
+  - MAC then Encrypt: MAC the plaintext, append the MAC to the plaintext, then
+    encrypt the plaintext and the MAC
+- <http://tonyarcieri.com/all-the-crypto-code-youve-ever-written-is-probably-broken>
+- <http://www.daemonology.net/blog/2009-06-24-encrypt-then-mac.html>
 
 - salting: decorating a password (eg prefix/suffix) and hashing that as the
   "password" (for storage/comparison); similar to nonce
@@ -722,7 +736,14 @@ block cipher modes
   - use this if msg authenticity is not an issue
 - authenticated encryption (AE): simultaneously protect confidentiality and
   integrity
+  - AE with associated data (AEAD): block cipher modes
   - CCM, CWC, OCB, EAX, GCM
+
+programming
+
+- don't use expert interfaces: OpenSSL, Crypto++, CommonCrypto, CryptoAPI, etc
+- use NACL, keyczar if you really need crypto
+- otherwise try using PGP/GPG for data-at-rest or TLS for data-in-motion
 
 VPNs
 
