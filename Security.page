@@ -983,7 +983,48 @@ engineering
   - isolating single-source xforms
     - eg jpegtopnm: after jailing, attacker can only produce any img he wants,
       but he could've done this in the first place
+    - sandbox recipe
+      - Prohibit new ﬁles, new sockets, etc., by setting the current and
+        maximum RLIMIT_NOFILE limits to 0.
+      - Prohibit ﬁlesystem access: chdir and chroot to an empty directory.
+      - Choose a uid dedicated to this process ID. This can be as simple as
+        adding the process ID to a base uid, as long as other
+        system-administration tools stay away from the same uid range.
+      - Ensure that nothing is running under the uid: fork a child to run
+        setuid(targetuid), kill(-1,SIGKILL), and _exit(0), and then check that
+        the child exited normally.
+      - Prohibit kill(), ptrace(), etc., by setting gid and uid to the target
+        uid.
+      - Prohibit fork(), by setting the current and maximum RLIMIT_NPROC limits
+        to 0.
+      - Set the desired limits on memory allocation and other resource
+        allocation.
+      - Run the rest of the program
   - delaying multi-source merges (like XSS)
+
+practical sandboxing
+
+- chroot etc
+  - can escape as root, or else re-chroot, inject modules, ptrace non-chrooted
+    procs, etc
+  - sensitive to TOCTTOU
+    - disallow clone() with CLONE_VM, prevent creating writeable MAP_SHARED mem
+      maps (or at least track them)
+    - alternatively SIGSTOP/SIGCONT all processes in traced group
+    - <http://stackoverflow.com/questions/4414605/how-can-linux-ptrace-be-unsafe-or-contain-a-race-condition>
+- ptrace (systrace, sydbox, pinktrace, libsandbox, etc)
+- lxc: a better/more general chroot
+  - (until user namespaces implemented) can escape as root
+  - new namespaces: pid, network, ...
+- resource limits
+- seccomp: too restrictive (can't even alloc mem)
+- seccomp-bpf: can't deref ptrs, only raw syscall args
+- lsm: don't stack
+  - selinux/apparmor: administrative, heavyweight
+  - smack: simpler, uses hybrid inode/path identification
+- privsep: use diff processes, UIDs, w min privs
+- openvz: not avail in stock ubuntu 12.04
+- <https://www.cr0.org/paper/jt-ce-sid_linux.pdf>
 
 web
 ---
@@ -1461,9 +1502,61 @@ Security In-Depth for Linux Software: Preventing and Mitigating Security Bugs (J
   - update strategy
 - sandbox designs
   - ptrace
-  - setuid
+    - slow
+    - nacl paper reports many CVEs; very buggy area
+    - many pitfalls (TOCTTOU)
+    - highly sensitive to exact kernel/glibc version/arch
+  - setuid helper: use root to chroot, set resources, preven ptrace/signals
+    - require administratively defined pool of UIDs/GIDs (no /etc/passwd
+      entries)
+    - on invoke, switch to unused UID/GID (atomically; use RLIMIT_NPROC to make
+      setuid fail if uid alraedy used)
+      - partition the pool among UIDs to prevent user from exhausting pool
+      - UID switching alone not enough: /tmp, setuid binaries
+    - to execve after chroot
+      - naive: mustn't give CAP_SYS_CHROOT
+      - realistic: don't use execve, mmap the code; inconvenient/dangerous but
+        realistic
+      - optimistic: give another proc the priv to chroot us to empty dir
+        - routine
+          - sandbox proc A spawns B
+          - use clone w CLONE_FS so A & B share a root dir, cwd, etc
+          - A drop privs, B waits for msg from A
+          - when A wants to chroot, send msg
+          - B chroot to empty dir, which also affects A
+        - a root proc B shares FS w untrusted proc A; scary, drugged deputy?
+        - mitigations: B can drop caps too, all but CAP_SYS_CHROOT, set
+          RLIMIT_NOFILE to 0,0
+    - drop UID/GID pool range?
+      - not changing UID & switching to a single common GID
+        - prevent ptrace from a sandboxed proc to another proc
+        - PR_SET_DUMPABLE prevent ptrace among sandboxed proc
+        - signals?
+      - using a new PID namespace (CLONE_NEWPID)
+        - solves many problems
+        - how secure?
+    - drop net access
+      - use RLIMIT_NOFILE, but what if need new FDs? share (using CLONE_FILES)
+        w a broker proc
+      - CLONE_NEWNET: cut access completely
+    - conclusion: chromium renderer runs in this sandbox (first-level sandbox)
   - SECCOMP
+    - read, write, exit, sigreturn
+    - too limited: no mem alloc (mmap, brk), no new FDs (recvmsg)
+    - trusted thread: each seccomp'd thread has trusted helper thread for
+      syscalls
+    - trusted code in RX only mem
+    - prevent trusted code from accessing volatile mem by...
+      - use pure asm, can't use stack
+      - but some syscalls pass ptrs to volatile mem (open)
+    - for access to volatile mem, use sep trusted proc that shares pages (TT
+      can only read)
+    - high potential to isolate kernel but still WIP, perf issues, disabled
   - other
+    - rely on a MAC
+    - lack of discretionary priv dropping facilities
+    - recent efforts: LSMSB, selinux type boundaries, ftrace
+    - virtualization
   - attack surface eval
 
 Xax (MSR)
