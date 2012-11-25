@@ -91,6 +91,7 @@ Algorithms
   that will kill a pig in exactly 30 minutes. What's the minimum number of pigs
   you need to determine which bucket is poisoned in 30m? an hour?
 - how to sample non-uniform discrete dist in const time? (may need handholding)
+- find # pairs of isomorphic words given set of words
 
 Probability
 ===========
@@ -171,6 +172,12 @@ Geometry
 - divvy up equilateral triangle by letting A then B pick points; they're given
   all area closer to their point; who has advantage?
   <http://mindyourdecisions.com/blog/2012/04/17/a-location-game-on-a-triangle/>
+
+- A group of 10 people sits down at a wedding table.  Only after sitting do
+  they realize the seats had name tags, and no one was sitting in the correct
+  seat.  Prove that there is a way to rotate the seating order so that at least
+  2 people will be in their correct seats.
+  <http://mindyourdecisions.com/blog/2012/10/29/monday-puzzle-wedding-seating-arrangement/>
 
 Practical
 =========
