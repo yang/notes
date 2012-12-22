@@ -292,6 +292,10 @@
       - HH
         - ci.plot: confidence interval plot
           <http://princeofslides.blogspot.com/2011/02/sab-r-metrics-basic-applied-regression.html>
+    - finance
+      - quantmod
+      - quantstrat
+      - BurStFin
   - vocab
     - modeling facilities
       - expressions: `y ~ a + b + c:d + e*f - b` (`c:d` means interaction,
