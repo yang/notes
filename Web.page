@@ -55,6 +55,15 @@ HTTP
   - so, know when done receiving whole body; Content-Length unneeded
   - in 1.1
 
+
+HTTP session flash msg
+
+- The flash scope should only be used to transport success/error messages on
+  simple non-Ajax applications. As the data are just kept for the next request
+  and because there are no guarantees to ensure the request order in a complex
+  Web application, the Flash scope is subject to race conditions.
+- <http://www.playframework.org/documentation/2.0.1/JavaSessionFlash>
+
 flash RTFMP
 
 - udp only (RTMP is the tcp-based one)
