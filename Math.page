@@ -316,6 +316,9 @@ statistical tests
   are significantly different or not. Unlike the t-test, the RankSum test does
   not assume that the data are normally distributed, potentially providing a
   more accurate assessment of the data sets.
+- Chow test: whether 2 linear regressions on diff data sets are equal
+  - also (in econometrics) for whether 2 time series over different times
+    exhibit a structural break
 
 data
 
