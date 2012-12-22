@@ -82,7 +82,7 @@ Algorithms
   substrings of y
 - come up with a $O(n \log n)$ algo for computing kendall-tau
 - distance-maximizing problem: given an array $A$ of integers, find the maximum
-  $j-i$ where $A_i<A_j$ (hard: in $O(n)$!)
+  $j-i$ where $A_i<A_j$ (harder: in $O(n)$!)
 - find the *majority* element in a stream
 - longest palindromic substring: brute force, then in $O(n^2)$ time/space, then
   in $O(1)$ space, then in $O(n)$ time/space (hard)
@@ -92,6 +92,9 @@ Algorithms
   you need to determine which bucket is poisoned in 30m? an hour?
 - how to sample non-uniform discrete dist in const time? (may need handholding)
 - find # pairs of isomorphic words given set of words
+- how to find sliding window max over list? (harder: in $O(n)$!)
+- with a dict, segment a string without spaces into words
+  (<http://thenoisychannel.com/2011/08/08/retiring-a-great-interview-problem/>)
 
 Probability
 ===========
