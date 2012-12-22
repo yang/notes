@@ -95,6 +95,9 @@ Algorithms
 - how to find sliding window max over list? (harder: in $O(n)$!)
 - with a dict, segment a string without spaces into words
   (<http://thenoisychannel.com/2011/08/08/retiring-a-great-interview-problem/>)
+- (similar to above) given a phone number, a function from digits to
+  characters, and a function from dict words to scores, what's the max-score
+  word it spells?  what's the max-score phrase it spells?
 
 Probability
 ===========
