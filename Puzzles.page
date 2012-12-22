@@ -212,3 +212,13 @@ General math
 - You have 5 unknown numbers. There are 10 options in selecting two out of
   these five. Sum each of those two together, thus you have 10 numbers. You're
   given these, find the original 5 numbers.
+- Given two vectors $x,y$ of $N$ elements where first $M$ are numbers and
+  remaining are letters from an alphabet, want to find:
+
+  `distance(x,y) = l1_distance(x[1..M], y[1..M]) + hamming_distance(x[M+1..N], y[M+1..N])`
+
+  E.g., `hamming_distance([a,b,c], [a,a,c]) = 1`
+
+  What $f$ will let us compute this using just L1 distance?
+
+  `distance(x,y) = l1_distance(f(x), f(y))`
