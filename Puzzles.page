@@ -29,6 +29,32 @@ Riddles
   enough time?
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
+- A pile of 1,000 coins is split into two piles x and y. Multiply those
+  together to get a number x*y.
+
+  Subdivide each of the two piles further and get a number for each pile. (Say
+  you divide x to get the number x1*x2, and y to get the number y1*y2)
+
+  Repeat the process until there are 1,000 piles, each with 1 coin.
+
+  Add all of the numbers together. What is the sum??
+
+  Does the answer change depending on how you split the pile?
+
+  Bonus question: You have a line segment of length 1. You divide it into two
+  pieces x and y to get the number xy. Divide each smaller piece and repeat the
+  process. If you add up all the numbers, what is the limit?
+
+- Every man in a village of 100 married couples has cheated on his wife. Every
+  wife in the village instantly knows when a man other than her husband has
+  cheated, but does not know when her own husband has. The village has a law
+  that does not allow for adultery. Any wife who can prove that her husband is
+  unfaithful must kill him that very day. The women of the village would never
+  disobey this law. One day, the queen of the village visits and announces that
+  at least one husband has been unfaithful. What happens?
+
+- if prob of seeing car on highway in 30m is .95, prob of seeing car in 10m?
+
 - Fitch Cheney's 5-card trick:
 
   The question concerns a "magic trick" involving playing cards, a standard 52-card deck.  There are two magicians, and they are working together.
