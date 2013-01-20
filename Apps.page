@@ -406,6 +406,9 @@ Windows
 Linux
 -----
 
+  # expose a dir somewhere else (bind mount) but w diff perms
+  sudo bindfs --perms=a+rx /media/yang/shared/ /mnt/shared/
+
   # force ddclient to update
   ddclient -force -daemon=0
 
