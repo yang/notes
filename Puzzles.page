@@ -109,6 +109,7 @@ Algorithms
 - come up with a $O(n \log n)$ algo for computing kendall-tau
 - distance-maximizing problem: given an array $A$ of integers, find the maximum
   $j-i$ where $A_i<A_j$ (harder: in $O(n)$!)
+- find max-sum sub-array
 - find the *majority* element in a stream
 - longest palindromic substring: brute force, then in $O(n^2)$ time/space, then
   in $O(1)$ space, then in $O(n)$ time/space (hard)
@@ -124,6 +125,10 @@ Algorithms
 - (similar to above) given a phone number, a function from digits to
   characters, and a function from dict words to scores, what's the max-score
   word it spells?  what's the max-score phrase it spells?
+- shuffle an array
+- given axis-aligned rects, find overlapping pairs
+- given unsorted array of ints where each int appears twice, except for one int
+  that appears once. find this int. O(n) time & O(1) space!
 
 Probability
 ===========
@@ -248,3 +253,5 @@ General math
   What $f$ will let us compute this using just L1 distance?
 
   `distance(x,y) = l1_distance(f(x), f(y))`
+
+- how many 0s are there in 100!?
