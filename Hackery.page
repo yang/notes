@@ -268,6 +268,7 @@
       - tm: term document matrices
       - irlba: SVD for big data
       - arm: bayesglm
+      - forecast: AR, ARIMA, exponential smoothing, etc. (hyndman)
     - assorted
       - MASS: companion to modern applied statistics with s
         - rlm: robust regression
@@ -277,6 +278,7 @@
       - quadprog
     - eval
       - verification: fast roc.area & other measures
+      - qcc: quality control charts, ROCs, etc.
     - data
       - discretization: mdlp same as orange.EntropyDiscretization
     - viz
