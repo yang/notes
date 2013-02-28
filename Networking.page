@@ -337,9 +337,15 @@ nat TODO
 - ICE: direct connection with another peer
   - written for SIP; fall back on TURN
 
+tun/tap
+
+- virtual network devices backed by software; mainly for VPNs
+- tun is IP (L3); tap is ethernet (L2); usu want tun, more efficient
+- but tap will let remote hosts coexist on same subnet; no routing table changes
+
 vpn
 
-- the main use of ipsec
+- L2TP: the main use of ipsec (L2TP:ipsec::HTTP:TLS)
 - ipsec expects key distribution to have been solve (public keys to have been
   exchanged already); this is reasonable for vpn's
 - vpn creates a new interface backed by the vpn software daemon (which does
