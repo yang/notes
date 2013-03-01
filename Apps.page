@@ -931,8 +931,11 @@ Linux
   # burn cd
   k3b
 
-  # enable and disable startup services
+  # enable and disable startup services on debian systems
   update-rc.d apache2 [enable|disable]
+  # same on redhat systems
+  chkconfig httpd [on|off]
+  chkconfig --list httpd # see state
 
   #
   # To work with certificates
