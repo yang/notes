@@ -1727,3 +1727,43 @@ Ubuntu 12.04
   works out of box
 - <http://askubuntu.com/questions/131508/12-04-and-nvidia-card-problem-with-nvidia-geforce-7025>
 - <https://bugs.launchpad.net/ubuntu/+source/gnome-settings-daemon/+bug/969359>
+
+Howtos
+======
+
+OpenVPN
+-------
+
+- Follow <https://help.ubuntu.com/12.04/serverguide/openvpn.html> for server
+  and client config but remove `auth-user-pass` from the client config and
+  uncomment the following `push` lines in the default server config, per
+  <http://blog.wains.be/2008/07/18/openvpn-routing-all-traffic-through-the-vpn-tunnel/>.
+
+    # If enabled, this directive will configure
+    # all clients to redirect their default
+    # network gateway through the VPN, causing
+    # all IP traffic such as web browsing and
+    # and DNS lookups to go through the VPN
+    # (The OpenVPN server machine may need to NAT
+    # or bridge the TUN/TAP interface to the internet
+    # in order for this to work properly).
+    push "redirect-gateway def1 bypass-dhcp"
+
+    # Certain Windows-specific network settings
+    # can be pushed to clients, such as DNS
+    # or WINS server addresses.  CAVEAT:
+    # http://openvpn.net/faq.html#dhcpcaveats
+    # The addresses below refer to the public
+    # DNS servers provided by opendns.com.
+    push "dhcp-option DNS 208.67.222.222"
+    push "dhcp-option DNS 208.67.220.220"
+
+- Set DEFAULT_FORWARD_POLICY="ACCEPT" in /etc/default/ufw and run:
+
+    ufw disable
+    ufw enable
+    ufw allow 1194
+
+- Allow NATing, where 10.8.0.0 should be the newly created tun0 subnet:
+
+    iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
