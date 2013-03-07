@@ -468,6 +468,17 @@ PKI
   - p12: PKCS12, may contain both public and private keys; published by RSA
     - protected with password-based symmetric key
     - successor to PFX from MS, criticized for complexity
+
+SSL/TLS
+
+- use 2kbit keys; 1kbit weak, 4kbit waste cpu
+- SSL2 insecure, SSL3/TLS1 mostly OK with care, TLS1.1/1.2 no known issues
+- use cipher suites providing auth & enc of 128+ bits
+  - don't use ADH (no auth), NULL (no enc), export key exchange suites (weak
+    auth), suites with weak ciphers, usu of 40 and 56 bits (weak enc)
+- disable renego, prioritize RC4 to mitigate BEAST
+- performance: enable session resumption
+- use secure cookies, use HSTS
 - renego vulnerabilities: when upgrading an insecure connection to a secure one
   (e.g. STARTTLS) already-buffered plaintext data can slip through
   - attacker can inject prefixes into the data stream
@@ -477,6 +488,9 @@ PKI
       GET /path/to/resource.jsp HTTP/1.0
       Dummy-Header: GET /index.jsp HTTP/1.0
       Cookie: sessionCookie=Token
+- BEAST, CRIME: TODO
+- advanced: pubkey pinning, fwd secrecy
+- https://www.ssllabs.com/downloads/SSL_TLS_Deployment_Best_Practices_1.0.pdf
 
 MAC and Hashes
 
