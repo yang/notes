@@ -4,6 +4,17 @@ resources
 
 - magic string from skipfish: `-->">'>'"<sfi000142v524891>`
 - <http://www.cs.berkeley.edu/~daw/teaching/cs261-f08/>
+- 20 Critical Security Controls: A very good list of control areas that are
+  considered most “important”.  If you don’t already have an existing security
+  program, this would be a good starting point.
+  http://www.sans.org/critical-security-controls/
+- US Government Configuration Baseline: Provides baseline configuration
+  standards for different platforms.  It’s used by most government agencies..
+  http://usgcb.nist.gov/usgcb_faq.html#usgcbfaq_usgcbfdcc
+- Center for Internet Security: Provides baseline configuration standards for
+  many different devices / platforms.  They even have a cloud infrastructure
+  benchmark. http://benchmarks.cisecurity.org/
+- OWASP ASVS
 
 everything you need to know about cryptography in 1 hour (talk by collin
 percival)
