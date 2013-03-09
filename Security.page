@@ -127,6 +127,30 @@ pen-testing firms
   - accuvant: has a bunch of good sec guys; do review/pentests
 - book well in advance for reasonable discounts
 
+certifications
+
+- SOC
+  - Numbers
+    - SOC 1 aka SSAE 16
+    - SOC 2: full detailed report - most enterprise customers demand this
+    - SOC 3: same as SOC 2 but only a summary
+  - Principles
+    - Available: security, confidentiality (deeper), privacy (deepest),
+      availability, process integrity (correctness)
+    - Recommended for us: security and confidentiality
+  - Type 1 vs Type 2 reports
+    - Type 1: point-in-time; much weaker
+    - Type 2: over a period of time
+      - Most enterprise companies demand this
+      - Min 3 months but most companies want 6+
+      - Can look back historically or start from this point in time out
+      - Companies want annual reports; not just a one time thing
+- ISO 27001: much deeper/harder
+  - firms can do ISO-like assurance instead
+  - ISO is a superset of SOC 2
+- firms: Brightline, Linford Co, Big 4
+- PCI
+
 vulnerability databases
 
 - MITRE Common Vulnerabilities and Exposures (CVE)
