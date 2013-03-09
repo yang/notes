@@ -76,6 +76,57 @@ industry
   - application: $750M to secure $64.4B assets (1.2%)
   - <http://jeremiahgrossman.blogspot.com/2010/02/infrastructure-vs-application-security.html>
 
+pen-testing firms
+
+- iSEC
+  - research shared with isec, ngs, intrepidus, matasano
+  - lend people to each other if short of specialization
+  - 40-50 consultants
+  - hit rate? >90%
+  - reference customers? MS (most large products), google (early android),
+    salesforce
+  - start with interviews, then maybe email every couple days
+  - better bang for the buck
+
+- Matasano
+  - very well known, probably one of best
+  - known expensive: $10k for a week ($2k/day)
+  - code auditing: interviews with developers, etc.
+  - can also do architectural/infrastructure review, or network pen test
+  - 20-something consultants
+  - no social engineering unless there’s a signed contract, but usu just assume
+    infrastructure, OS, etc. are safe
+- stach & liu aka bishop fox
+  - 30-40 emps
+  - pen testing and/or network architecture review
+  - code auditing either fully thorough or done with "candidate point
+    analysis": review guided by scanning; find potential issues with regexps
+    and patterns
+  - hit rate: near 100%
+  - also do compliance prep
+- IO Active
+  - vuln scan: mostly Nessus
+  - pen test: more hands on (75% manual)
+  - suite at RSA conference at St Regis Tue/Wed 10-8p (happy hour Wed)
+  - compliance: PCI DSS, ISO 27001
+  - very large, do lots of outsourcing
+  - $9-18.5k for 1-2 weeks/small pen test
+- Mandiant
+  - $14k/week ($350/h)
+  - interview devs, figure out work, see code, pen test
+  - mostly incident response/forensics
+- other recommended options
+  - gotham digital science
+  - core security
+  - include security: small firm, intentionally no employees and all on-demand
+    contractors
+  - immunitysec.com: Dave Aitel and his team are good at security reviews/tests.
+    They've done a lot of different things though they are most famous for their
+    Windows expertise
+  - offensive security: specialize in pen testing
+  - accuvant: has a bunch of good sec guys; do review/pentests
+- book well in advance for reasonable discounts
+
 vulnerability databases
 
 - MITRE Common Vulnerabilities and Exposures (CVE)
