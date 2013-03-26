@@ -2278,6 +2278,11 @@
     - <http://coolerq.livejournal.com/89739.html>
     - <http://clusterlabs.org/wiki/FAQ>
 
+- javascript
+  - tons of crap
+  - objects aren't maps: <http://www.devthought.com/2012/01/18/an-object-is-not-a-hash/>
+    - can use `Object.create(null)` to create an "unpolluted" map
+
 - python
   - things i want in py3k
     - resumable pdb ctrl-c: <http://bugs.python.org/issue7245>
