@@ -1734,29 +1734,66 @@ Howtos
 OpenVPN
 -------
 
+- The official HOWTO is pretty good:
+  <http://openvpn.net/index.php/open-source/documentation/howto.html>
+
 - Follow <https://help.ubuntu.com/12.04/serverguide/openvpn.html> for server
-  and client config but remove `auth-user-pass` from the client config and
-  uncomment the following `push` lines in the default server config, per
-  <http://blog.wains.be/2008/07/18/openvpn-routing-all-traffic-through-the-vpn-tunnel/>.
+  and client config but remove `auth-user-pass` from the client config.  Should
+  look like:
 
-    # If enabled, this directive will configure
-    # all clients to redirect their default
-    # network gateway through the VPN, causing
-    # all IP traffic such as web browsing and
-    # and DNS lookups to go through the VPN
-    # (The OpenVPN server machine may need to NAT
-    # or bridge the TUN/TAP interface to the internet
-    # in order for this to work properly).
-    push "redirect-gateway def1 bypass-dhcp"
+    client
+    remote vpn.slice-data.com
+    port 1194
+    proto udp
+    dev tun
+    dev-type tun
+    ns-cert-type server
+    reneg-sec 86400
+    auth-user-pass
+    auth-nocache
+    auth-retry interact
+    comp-lzo yes
+    verb 3
+    ca ca.crt
+    cert yang-xps410n-win7vm.crt
+    key yang-xps410n-win7vm.key
 
-    # Certain Windows-specific network settings
-    # can be pushed to clients, such as DNS
-    # or WINS server addresses.  CAVEAT:
-    # http://openvpn.net/faq.html#dhcpcaveats
-    # The addresses below refer to the public
-    # DNS servers provided by opendns.com.
-    push "dhcp-option DNS 208.67.222.222"
-    push "dhcp-option DNS 208.67.220.220"
+- Change the `server` line if necessary to avoid conflicts with the client
+  network spaces.  Basically choose a specific space within 10.0.0.0/16 or /24
+  that is unlikely to be covered.
+
+- Modify your server config
+
+  - If you want to redirect all traffic, uncomment:
+
+      # If enabled, this directive will configure
+      # all clients to redirect their default
+      # network gateway through the VPN, causing
+      # all IP traffic such as web browsing and
+      # and DNS lookups to go through the VPN
+      # (The OpenVPN server machine may need to NAT
+      # or bridge the TUN/TAP interface to the internet
+      # in order for this to work properly).
+      push "redirect-gateway def1 bypass-dhcp"
+
+  - If you want to do split tunenling, uncomment (and make sure this doesn't
+    overlap with the `server` directive, i.e. don't assign the client an IP in
+    the tunneled space):
+
+      push "route "
+
+  - You may also want to modify the DNS server, but I've found that Tunnelblick
+    chokes on this and Windows does fine without it; only necessary if you want
+    to control DNS.
+
+      # Certain Windows-specific network settings
+      # can be pushed to clients, such as DNS
+      # or WINS server addresses.  CAVEAT:
+      # http://openvpn.net/faq.html#dhcpcaveats
+      # The addresses below refer to the public
+      # DNS servers provided by opendns.com.
+      push "dhcp-option DNS 208.67.222.222"
+      push "dhcp-option DNS 208.67.220.220"
 
 - Set DEFAULT_FORWARD_POLICY="ACCEPT" in /etc/default/ufw and run:
 
@@ -1767,3 +1804,11 @@ OpenVPN
 - Allow NATing, where 10.8.0.0 should be the newly created tun0 subnet:
 
     iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+
+- To enable 2FA, add /etc/pam.d/openvpn:
+
+    auth [user_unknown=ignore success=ok ignore=ignore default=bad] pam_securetty.so
+    auth       required     pam_google_authenticator.so forward_pass
+    auth       include      system-auth
+    account    include      system-auth
+    password   include      system-auth
