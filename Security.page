@@ -1814,3 +1814,27 @@ MODERN EXPLOITATION AND MEMORY PROTECTION (alexander sotirov)
 - DEP: off by default for compat reasons (eg JVM)
   - IE8 finally turned on DEP for plugins
   - return oriented shellcode (ret2libc): DEP w/o ASLR is completely useless
+
+Auth systems
+============
+
+- Atlassian on-premise suite: accepts LDAP dirs; no SAML; serves OpenID
+  - uses own Seraph lib
+  - reports of success with CAS, JOSSO, KRB
+- Google Apps: OAuth, OpenID, SAML2 client
+- SFDC: SAML1.1, custom SOAP API ("delegated auth"), auth providers
+- JASIG CAS: SAML2 server as plugin
+- Shibboleth, ZXID, JOSSO: SAML servers
+
+SSO protocols
+=============
+
+- SAML: flexible choice of binding mechanism
+  - redir to ident provider then back, supplying auth token
+- SAML2 vs OpenID (TODO)
+  - SAML2 supports signout
+  - OpenID has dynamic discovery protocol; user usu supplies OpenID provider
+- CAS: underlying model is compat w SAML (https://wiki.jasig.org/display/CAS/Shawn+CAS+and+SAML)
+  - unlike CAS, confirmation of association btwn ticket & svc is responsibility
+    of web app, not of CAS
+- KRB
