@@ -846,6 +846,15 @@ Linux
   # reformat a partition
   sudo mkfs -t ext3 /dev/sdb1
 
+  # from <http://www.ghacks.net/2010/08/11/convert-ext23-to-ext4/>
+  # change ext2 to ext4
+  tune2fs -O extents,uninit_bg,dir_index,has_journal /dev/sda1
+  # change ext3 to ext4
+  tune2fs -O extents,uninit_bg,dir_index /dev/sda1
+
+  # check and repair an ext fs
+  e2fsck -pf /dev/sda1
+
   # open/close/eject CD/DVD drive
   eject -t
   eject -t cdrom
