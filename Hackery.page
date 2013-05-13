@@ -808,6 +808,8 @@
       - simple setup, stmt-based, sync, global txids, cross-dbms
       - supports mysql, oracle, jdbc; future: postgresql, others
     - <http://www.wikivs.com/wiki/MySQL_vs_PostgreSQL#Replication_and_High_Availability>
+  - examples of why postgresql > sql server
+    - <http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/>
   - examples of why mysql blows vs postgresql
     - ref: <http://now.eloqua.com/e/er.aspx?s=400&lid=235&elq=008b3ac42ba641fb851200ffd6633d90>
     - <http://news.ycombinator.com/item?id=2176062>
