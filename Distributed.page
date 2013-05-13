@@ -3,6 +3,7 @@ TODO merge in notes from CS192, 6.829
 TODO comparison of database replication techniques based on total order broadcast
 TODO http://bytepawn.com/readings-in-distributed-systems/
 TODO http://www.cs.jhu.edu/~jak/docs/paxos_for_system_builders.pdf
+TODO Availability in Globally Distributed Storage Systems
 
 comparisons
 
