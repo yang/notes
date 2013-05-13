@@ -1214,6 +1214,8 @@ nautilus-script-audio-convert
 Linux commands
 --------------
 
+gcp # cp with progressbar
+
 unp # extract files of any format
 
 smem # report PSS and USS for more accurate memory accounting
