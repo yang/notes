@@ -149,6 +149,17 @@ storage
 - PCI, SAS (serial-attached SCSI), SATA
   - PCI has biggest pipe and lowest CPU overhead; no need for block layer
 
+RAID
+
+- RAID0: striping
+- RAID1: mirroring
+- RAID5: rotating storage of parity; req 3+ disks
+- RAID6: tolerates 2 failed disks
+- RAID01: mirror of stripes
+- RAID10: stripe of mirrors
+- RAID50: 6+ disks
+- RAID-Z: ZFS RAID5
+
 AWS
 
 - EBS: .1-.5% AFR per 20GB; 10x better than HDs at ~4%
