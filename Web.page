@@ -258,6 +258,48 @@ meta tags
 - `x-ua-compatible`: implemented by IE8; aka "version targeting"
   - eg `content="IE=EmulateIE7" causese IE8 to behavior like older version
 
+js module systems
+
+- chaotic landscape
+- commonjs: "synchronous" `require()` calls; simpler, flatter
+  - server side impls: node
+  - client side impls: browserify (npm), ender (npm), onejs (npm), component,
+    cpm, hem
+    - component: pkg mgr & build tool
+    - ender: pkg mgr
+    - browserify: buggy, other problems; prefer onejs
+      <http://stackoverflow.com/questions/10556013/pros-and-cons-of-using-requirejs-or-onejs>
+- AMD: requires nesting & evaluates body as callback to support async
+  - supports loading non-JS resources via plugins
+  - client side impls: requirejs, curl.js, jam
+- ES6: has `module mymod { export var foo = 0; } import * from mymod;`
+- opinions
+  - slightly prefer commonjs since it's simpler; compiling server-side anyway
+  - prefer component since it's client side specific; can't just use node
+- misc
+  - bower: simply fetches files; agnostic to module system
+  - volo: supports both AMD & CJS
+- refs
+  - <http://addyosmani.com/writing-modular-js/>
+  - <http://wibblycode.wordpress.com/2013/01/01/the-state-of-javascript-package-management/>
+
+js testing systems
+
+- frameworks
+  - qunit: very easy to start
+  - jasmine: BDD; easier to start than mocha; can use pavlov for BDD
+  - mocha: more flexible; can use chai as BDD/TDD assertion lib, sinon as test
+    spy
+  - buster: seems promising/nice; feels cleaner than mocha/chai
+  - refs
+    - <https://github.com/yeoman/yeoman/issues/117>
+    - <http://stackoverflow.com/questions/9676155/what-is-the-best-node-js-test-framework>
+- runners
+  - karma (formerly testacular): actually in-browser
+  - testem: similar to karma; curses interface
+  - <http://zachlendon.github.io/blog/2013/03/26/quick-thoughts-on-testem-vs-testacular-karma/>
+- commonly use phantomjs or node packages dom and vm
+
 misc
 ====
 
