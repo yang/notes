@@ -237,6 +237,10 @@ Practical
 General math
 ============
 
+- in evenland, only even numbers exist.  primes are numbers that cannot be
+  represented as a product of two smaller numbers.  in our world, numbers have
+  a unique prime factorization; in evenland, numbers can have multiple prime
+  factorizations.  what's the smallest such number?
 - find $x$ if $x^{x^{x^\dots}} = 2$
 - find all real/complex roots of $x^6 = 64$
 - hour/minute hands of clock meet at 12:00; when will they first meet again?
