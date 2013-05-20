@@ -129,6 +129,9 @@ Algorithms
 - given axis-aligned rects, find overlapping pairs
 - given unsorted array of ints where each int appears twice, except for one int
   that appears once. find this int. O(n) time & O(1) space!
+- how many ints in $[x,y]$ are palindrome & square of palindrome? (up to 10^100)
+- given array of length $n$ containing ints in $[1,n-1]$, find the duplicate in
+  $O(n)$ time and $O(\log n)$ space
 
 Probability
 ===========
