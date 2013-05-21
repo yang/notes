@@ -286,17 +286,23 @@ js module systems
 js testing systems
 
 - frameworks
-  - qunit: very easy to start
-  - jasmine: BDD; easier to start than mocha; can use pavlov for BDD
+  - qunit: very easy to start; can use pavlov for BDD (unmaintained; 100+ stars
+    as of 2013-05)
+  - jasmine: BDD; easier to start than mocha; not tightly maintained; by
+    pivotal; 5k stars as of 2013-05
   - mocha: more flexible; can use chai as BDD/TDD assertion lib, sinon as test
-    spy
-  - buster: seems promising/nice; feels cleaner than mocha/chai
+    spy; has 2800+ stars as of 2013-05
+    - chai has 600 as of 2013-05; allows funky syntax:
+      `expect(x).should.be.equal(y)` (vs `expect(x).shouldBe(y)`
+  - buster: seems promising/nice; feels cleaner than mocha/chai; has 200+ stars
+    as of 2013-05
   - refs
     - <https://github.com/yeoman/yeoman/issues/117>
     - <http://stackoverflow.com/questions/9676155/what-is-the-best-node-js-test-framework>
 - runners
   - karma (formerly testacular): actually in-browser
-  - testem: similar to karma; curses interface
+  - testem: similar to karma; curses interface; overtaken in popularity
+  - buster
   - <http://zachlendon.github.io/blog/2013/03/26/quick-thoughts-on-testem-vs-testacular-karma/>
 - commonly use phantomjs or node packages dom and vm
 
