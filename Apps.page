@@ -484,7 +484,7 @@ Linux
 
   # tweak kernel settings
   sysctl kernel.shmmax # show
-  sysctl -w kernel.shmmax= # update
+  sysctl -w kernel.shmmax=$((8<<30)) # update
   cat /proc/sys/kernel/shmmax # raw
   vim /etc/sysctl.conf # permanent changes
 
