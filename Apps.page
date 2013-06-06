@@ -770,6 +770,12 @@ Linux
   # mirror from local to remote (--dry-run, --include/exclude)
   rsync -avzr --progress --delete my-www/ yz.mit.edu:/var/www/
 
+  # mirror with full relative paths
+  rsync -vv -rlpR cabal-dev/bin/gitit cabal-dev/share/ /tmp/dest/
+
+  # mirror filter rules example
+  rsync -vv -rlp --include /share/ --include '/share/**' --include /bin/ --include /bin/gitit --exclude \* ./ /tmp/dest/
+
   # add new PPA repo
   sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com \
       67265eb522bdd6b1c69e66ed7fb8bee0a1f196a8
