@@ -1938,3 +1938,51 @@ Haskell setup
   cabal-dev install FOOBAR
 
 From <http://bob.ippoli.to/archives/2013/01/11/getting-started-with-haskell/>
+
+SFTP-only accounts
+------------------
+
+Want user chrooted into her own upload directory.
+
+Make user belong to an sftponly group, which is the group on which ssh will
+enforce chroots.  We also have for each user a root-owned chroot target (since
+chroot targets must be root-owned) named after the user, containing an "upload"
+subdirectory which is actually writable.
+
+One-time:
+
+  sudo groupadd sftponly
+
+And add to /etc/ssh/sshd_config:
+
+  Match Group sftponly
+    ChrootDirectory /mnt/upload/%u
+    X11Forwarding no
+    AllowTcpForwarding no
+    AllowAgentForwarding no
+    PermitRootLogin no
+    ForceCommand internal-sftp
+
+Reload the config:
+
+  sudo service ssh reload
+
+On prod, per user (replace KEY with user's public key):
+
+  user=joe
+  sudo useradd -m $user
+  home=~joe
+  sudo adduser $user sftponly
+
+  sudo chsh -s /usr/lib/sftp-server $user
+
+  sudo -u $user mkdir -p $home/.ssh/
+  echo KEY | sudo -u $user tee -a $home/.ssh/authorized_keys
+
+  sudo mkdir -p /mnt/upload/$user/upload/
+  sudo chown $user /mnt/upload/$user/upload/
+
+Test it out---verify that you cannot cd out of this tree and that files you
+write show up on dev:
+
+  sftp joe@server.com
