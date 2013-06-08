@@ -1,3 +1,23 @@
+Media Centers
+=============
+
+- xbmc
+  - cross platform
+  - FLOSS
+  - for HTPCs; plays discs, supports remotes
+  - dlna often doesn't work
+- mythtv
+  - cross platform
+  - FLOSS
+  - general streaming
+  - dvr
+  - dlna
+- plex
+  - cross platform
+  - more of a server that streams to clients
+  - $5 client apps
+  - forked from xbmc
+
 Opinions
 ========
 
