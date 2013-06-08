@@ -26,3 +26,30 @@ avoid:
 
 - trendnet tew-423pi (RTL8185L, 10.04 defaults to something else and still sees
   disconnects if correct drivers, 12.04 works)
+
+Media Players
+=============
+
+- sony bdp-s3100
+  - blu-ray
+  - netflix hulu+ amazon pandora
+  - tv sideview (stream from android/ios app)
+  - dlna client
+  - released 1/2013
+  - $118
+  - audio issue: losing audio occasionally for couple secs
+- apple tv 3rd generation
+  - $100
+- xbox one
+  - blu-ray
+  - many apps, games
+  - incl kinect
+  - $400
+- roku 3
+  - many apps, dlna
+  - no disc
+  - $100
+- boxee
+  - can stream to devices
+  - cloud DVR
+  - $100
