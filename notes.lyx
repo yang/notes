@@ -61,27 +61,27 @@
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\newcommand{\Var}{\text{Var}}
+\renewcommand{\Var}{\text{Var}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\E}{\text{E}}
+\renewcommand{\E}{\text{E}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\norm}[1]{\left\Vert #1\right\Vert }
+\renewcommand{\norm}[1]{\left\Vert #1\right\Vert }
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\transpose}[1]{#1^{\text{T}}}
+\renewcommand{\transpose}[1]{{#1}^{\text{T}}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\newcommand{\Cov}{\text{Cov}}
+\renewcommand{\Cov}{\text{Cov}}
 \end_inset
 
 
