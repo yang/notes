@@ -97,6 +97,16 @@ hash tables
   - much faster than chained hashing for small, cache-resident hash tables on
     modern processors
   - $n$-way buckets faster than conventional methods for large tables
+- robin hood hashing: open addressed hashing w linear probing but where, when
+  you probe for a position to insert a new element, if the probe length for the
+  existing element is less than the current probe length for the element being
+  inserted, swap the two elements and keep going; that way elements that were
+  inserted early and thus “lucked out” on their probe lengths, will gradually
+  be moved away from their preferred slot as new elements come in that could
+  make better use of that place in the table (hence the name – the insertion
+  “takes from the rich”, i.e. the elements with low probe counts). It leads to
+  an “evening out” of the probe lengths.
+  <http://sebastiansylvan.com/2013/05/08/robin-hood-hashing-should-be-your-default-hash-table-implementation/>
 
 hash functions
 
