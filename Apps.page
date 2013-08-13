@@ -1986,3 +1986,78 @@ Test it out---verify that you cannot cd out of this tree and that files you
 write show up on dev:
 
   sftp joe@server.com
+
+Ruby
+----
+
+- <https://gist.github.com/MicahElliott/2407918>
+
+Backups
+-------
+
+### One-Time
+
+On yz.mit.edu:
+
+  sudo ufw allow 11123/tcp
+  ssh -fNL0.0.0.0:11123:localhost:1123 localhost
+
+On nuthouse:
+
+  ssh -fNR1123:localhost:22 yz.mit.edu # TODO this is getting killed!
+  mkvirtualenv bup
+  git clone git://github.com/bup/bup
+  cd bup/
+  git checkout bup-0.25-rc2
+  make test
+
+### Per Client
+
+On client .ssh/config (replacing username):
+
+  ServerAliveInterval=300
+  TCPKeepAlive=yes
+
+  Host bup
+    HostName yz.mit.edu
+    Port 11123
+    User yang-bup
+    IdentityFile ~/.ssh/bup
+
+On client:
+
+  ssh-keygen -f ~/.ssh/bup # can be passphraseless
+
+On nuthouse (replacing username):
+
+  adduser --system --shell /bin/bash yang-bup
+
+On nuthouse as user (replacing bup path and ssh key):
+
+  mkdir ~/.ssh/
+  cat > ~yang-bup/.ssh/config
+  command="BUP_DEBUG=0 BUP_FORCE_TTY=3 /.../bup server",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa AAAA...
+
+  # the above was from https://groups.google.com/forum/#!msg/bup-list/ELicUqxeouo/rpFaCMaiHRcJ
+
+On client, install bup (ensure same version as server):
+
+  git clone git://github.com/bup/bup
+  cd bup/
+  git checkout bup-0.25-rc2
+  make test
+
+On client, test it out:
+
+  ssh bup # ctrl-C
+  ./bup index -u ~/Documents/
+  ./bup save -n test -r bup: ~/Documents/
+  ./bup ls -a
+
+On client, install bup-runner:
+
+  git clone ...
+
+On client, install crontab:
+
+  * * * * * yang     python .../mac.py
