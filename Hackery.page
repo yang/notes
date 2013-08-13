@@ -2002,6 +2002,9 @@
     - `\centerline`, `center` env
     - `\hfill`
     - `\vskip`
+  - references: algorithm2e.pdf geometry.pdf source2e.pdf algorithmicx.pdf
+    grfguide.pdf texbook.pdf algorithms.pdf impatient.pdf texbytopic-letter.pdf
+    amsldoc.pdf listings.pdf usrguide.pdf fancyvrb.pdf lshort.pdf visualFAQ.pdf
 
 - ps/pdf
   - conversion to pdf
