@@ -1,5 +1,8 @@
+Comparisons
+===========
+
 Media Centers
-=============
+-------------
 
 - xbmc
   - cross platform
@@ -17,6 +20,18 @@ Media Centers
   - more of a server that streams to clients
   - $5 client apps
   - forked from xbmc
+
+Backup Systems
+--------------
+
+- duplicity: compressions, rdiff, encryption; posix only
+- bup: smartest dedup, compression, rdiff; posix only, no encryption
+  - even has ftp, http, fuse view over old data
+  - no way to prune old data?
+- obnam: compression, rdiff, encryption, block dedup; slow, posix only
+- duplicati: win-friendly duplicity, easy to use; mono winforms on os x is
+  unusable (web UI is WIP)
+  - can browse files
 
 Opinions
 ========
