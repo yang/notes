@@ -2575,6 +2575,22 @@
     - kernels (aki's): only amazon/selected vendors can create
     - user selectable kernels useful for keeping inst up to date w security
       fixes & updates
+  - ebs-optimized, provisioned IOPS
+    - PIOPS is for good, predictable random access
+    - from <https://forums.aws.amazon.com/thread.jspa?messageID=369668>:
+
+      > At a certain point, bandwidth will become the bottleneck between your
+      > volumes and EC2 instance. EBS-Optimized instances, depending on the
+      > instance type used, deliver additional network throughput dedicated to
+      > EBS, with options between 500 Mbps and 1000 Mbps. 
+      >
+      > Assuming a 16K block size and 1000 IOPS volumes, we recommend scaling
+      > to:
+      >
+      > - 7 volumes: m2.4xlarge, c1.4xlarge, m1.xlarge, CC instances (total of
+      >   7000 IOPS or 875 Mbps)
+      > - 3 volumes: m2.2xlarge, m1.large (total of 3000 IOPS or 375 Mbps)
+      > - 1 volume: m2.xlarge, c1.med (total of 1000 IOPS or 125 Mbps)
 
 - svn
   - `svn:externals`: foreign repo (fixed commit or HEAD-tracking) linked to
