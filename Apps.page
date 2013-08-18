@@ -776,6 +776,9 @@ Linux
   # mirror filter rules example
   rsync -vv -rlp --include /share/ --include '/share/**' --include /bin/ --include /bin/gitit --exclude \* ./ /tmp/dest/
 
+  # mirror without permission/ownership and excluding vim files
+  rsync -nrltv --delete --exclude '.*.swp' . HOST:/PATH
+
   # add new PPA repo
   sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com \
       67265eb522bdd6b1c69e66ed7fb8bee0a1f196a8
