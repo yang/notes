@@ -1868,6 +1868,8 @@ OpenVPN
 Ruby setup
 ----------
 
+Use rbenv, ruby-build, rbenv-gemset, bundler.
+
 From <https://gist.github.com/MicahElliott/2407918>:
 
   # Ensure system is in ship-shape.
