@@ -1,6 +1,9 @@
 Riddles
 =======
 
+- in a room with a line of off lights, first person toggles every light, second
+  person toggles every other light, 3rd person toggles every 3 lights, etc.
+  which lights are on?  (harder) how many lights will light $n$ be toggled?
 - given two ropes that burn in 60m (non-uniformly), measure 15m
 - with 2 eggs, what's min # steps to find the floor in a 100-fl bldg at which
   dropping eggs breaks the eggs?
