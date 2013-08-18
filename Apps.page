@@ -1200,6 +1200,10 @@ Linux
   # rip stream
   streamripper "http://..." -r localhost:8000 -d OUTDIR -L PLAYLIST -o never -T
 
+  # restrict ssh commands by authorized_keys entries (also excludes sftp)
+  command="/usr/bin/...",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EA...cBYAwXd3L user@host
+  command="BUP_DEBUG=0 BUP_FORCE_TTY=3 bup server",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EA...cBYAwXd3L user@host
+
 Software
 ========
 
