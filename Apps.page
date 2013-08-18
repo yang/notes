@@ -1914,3 +1914,9 @@ From <https://gist.github.com/MicahElliott/2407918>:
   rbenv rehash
   rbenv gemset list
 
+Node setup
+----------
+
+- `nodeenv ~/.node/foo` for managing node environments
+- `npm init`
+- `npm install connect --save` or `--save-dev` (or some other pkg)
