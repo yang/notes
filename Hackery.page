@@ -2355,6 +2355,9 @@
   - LJ1: faster than V8 by quite a bit, and smaller to boot
   - LJ2: approaches C speeds
 
+- V8
+  - <40 bytes per closure (determined by experimentation)
+
 - freedesktop: formerly known as the x desktop group (XDG)
 
 - freebsd
