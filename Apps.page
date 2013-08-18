@@ -1920,3 +1920,13 @@ Node setup
 - `nodeenv ~/.node/foo` for managing node environments
 - `npm init`
 - `npm install connect --save` or `--save-dev` (or some other pkg)
+
+Haskell setup
+-------------
+
+  sudo aptitude install haskell-platform
+  cabal update
+  cabal install cabal-dev
+  cabal-dev install FOOBAR
+
+From <http://bob.ippoli.to/archives/2013/01/11/getting-started-with-haskell/>
