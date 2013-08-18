@@ -1864,3 +1864,53 @@ OpenVPN
     auth       include      system-auth
     account    include      system-auth
     password   include      system-auth
+
+Ruby setup
+----------
+
+From <https://gist.github.com/MicahElliott/2407918>:
+
+  # Ensure system is in ship-shape.
+  aptitude install git zsh libssl-dev zlib1g-dev libreadline-dev libyaml-dev
+
+  # Install rbenv for managing enabling of multiple rubies.
+  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+  echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+  echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+  exec $SHELL
+
+  # Install the ruby-build plugin for easy building of rubies.
+  mkdir -p ~/.rbenv/plugins
+  cd !$
+  git clone git://github.com/sstephenson/ruby-build.git
+  cd where/ever
+
+  # Install a couple rubies
+  rbenv install 1.8.7-p358
+  rbenv install 1.9.3-p125
+  rbenv rehash
+  # Try out a ruby.
+  rbenv shell 1.9.3-p125
+  # Enable a newly installed ruby, persistently, globally.
+  rbenv global 1.9.3-p125
+  # Enable a ruby persistently just for this directory.
+  rbenv local 1.8.7-p358
+  rbenv rehash
+
+  # Install bundler, create a Gemfile, install to project.
+  gem install bundler
+  >Gemfile <<<'gem "ronn"'
+  bundle install --path vendor
+  bundle exec gem env
+
+  # (OPTIONAL: for those who maintain gems or have myriad projects)
+  # Install rbenv-gemset, create a gemset, install a gem, use it.
+  cd ~/.rbenv/plugins
+  git clone git://github.com/jamis/rbenv-gemset.git
+  rbenv gemset create 1.9.3-p125 helloset
+  >.rbenv-gemsets <<<helloset
+  rbenv gemset active
+  gem install ronn
+  rbenv rehash
+  rbenv gemset list
+
