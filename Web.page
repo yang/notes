@@ -104,6 +104,61 @@ techniques
 - css spriting: combining multiple images into one (reducing requests) and
   cutting pieces out using css
 
+css architecture
+
+- avoid
+  - overriding styles based on context (with parent selectors): `#sidebar
+    .widget`, etc.
+  - complex deep selections (tied strongly to html structure)
+  - very generic class names: `title`, `content`, `action`, etc.
+  - both layout & style in a rule
+- do
+  - simple flat selectors; don't allow for styling unwanted elements based on
+    html structure
+  - separate layout & style concerns; don't have a class do both
+  - namespace classes: `widget__title`, `widget__content`, etc.
+  - adjust components with modifier classes: `widget--sidebar`, etc.
+  - organize rules into 5 categories: base, layout, state, templates (abstract
+    reusable pieces for components), and components
+  - use classes for styling only; don't use for JS hooks, feature detection,
+    testing, etc. (or at least identify with prefixes, e.g. `.js-`)
+  - semantic naming scheme/punctuation:
+
+      /* Templates Rules (using Sass placeholders) */
+      %template-name
+      %template-name--modifier-name
+      %template-name__sub-object
+      %template-name__sub-object--modifier-name
+
+      /* Component Rules */
+      .component-name
+      .component-name--modifier-name
+      .component-name__sub-object
+      .component-name__sub-object--modifier-name
+
+      /* Layout Rules */
+      .l-layout-method
+      .grid
+
+      /* State Rules */
+      .is-state-type
+
+      /* Non-styled JavaScript Hooks */
+      .js-action-name
+
+- tools
+  - when using preprocessors like Sass:
+    - don't nest
+    - don't use mixins without args; always better to use as templates to extend with
+    - don't use `@extend` on a selector that isn't a single class, or else bloat
+    - don't use `@extend` in modifier rules; e.g., don't make `button--primary`
+      extend `button`, or else JS can't select all `button`s
+  - css lint
+  - html inspector
+
+- http://engineering.appfolio.com/2012/11/16/css-architecture/
+- http://smacss.com/book/
+
 browser plugins
 
 - plugins like flash can be windowed for perf, or windowless (opaque or transparent)
