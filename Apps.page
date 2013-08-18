@@ -1213,6 +1213,10 @@ Linux
   command="/usr/bin/...",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EA...cBYAwXd3L user@host
   command="BUP_DEBUG=0 BUP_FORCE_TTY=3 bup server",no-port-forwarding,no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EA...cBYAwXd3L user@host
 
+  # use NFS
+  showmount -e 192.168.0.50 # list all the mounts available for export
+  mount -t nfs [-o resvport] 192.168.0.50:/YGD_Repository /mnt/... # resvport for Mac if "operation not permitted"
+
 Software
 ========
 
