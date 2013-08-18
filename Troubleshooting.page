@@ -1,0 +1,9 @@
+Mac keyboard/mouse don't respond after suspend/resume
+=====================================================
+
+Solution: remove or be more selective with USB device filters in VirtualBox
+
+Resources:
+
+- <https://discussions.apple.com/thread/3882236?start=0&tstart=0>
+- <https://forums.virtualbox.org/viewtopic.php?f=8&t=53947>
