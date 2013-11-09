@@ -2068,3 +2068,17 @@ On client, install bup-runner:
 On client, install crontab:
 
   * * * * * yang     python .../mac.py
+
+FreeDesktop Spec Trash Setup
+----------------------------
+
+If you get the following:
+
+  $ trash-put a
+  trash-put: cannot trash regular file `a'
+
+You can probably fix it with:
+
+  sudo mkdir --mode=1777 "$(df -P file/goes/here | tail -1 | cut -d' ' -f 1)/.Trash/"
+
+(From <https://code.google.com/p/trash-cli/issues/detail?id=63> and <http://stackoverflow.com/questions/3274354/how-to-find-out-mount-partition-a-directory-or-file-is-on-linux-server>)
