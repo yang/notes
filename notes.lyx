@@ -61,27 +61,27 @@
 
 \begin_layout Standard
 \begin_inset FormulaMacro
-\renewcommand{\Var}{\text{Var}}
+\newcommand{\Var}{\text{Var}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\renewcommand{\E}{\text{E}}
+\newcommand{\E}{\text{E}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\renewcommand{\norm}[1]{\left\Vert #1\right\Vert }
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert }
 \end_inset
 
 
 \begin_inset FormulaMacro
-\renewcommand{\transpose}[1]{{#1}^{\text{T}}}
+\newcommand{\transpose}[1]{{#1}^{\text{T}}}
 \end_inset
 
 
 \begin_inset FormulaMacro
-\renewcommand{\Cov}{\text{Cov}}
+\newcommand{\Cov}{\text{Cov}}
 \end_inset
 
 
@@ -5479,6 +5479,29 @@ s
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Neural networks
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\tanh$
+\end_inset
+
+ is just a rescaled logistic sigmoid (
+\begin_inset Formula $\tanh x=2g\left(2x\right)-1$
+\end_inset
+
+ where 
+\begin_inset Formula $g\left(x\right)=\frac{e^{x}}{1+e^{x}}$
+\end_inset
+
+) and is useful in NNs because its range is 
+\begin_inset Formula $\left[-1,1\right]$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Multi-layer feed-forward neural networks
 \end_layout
