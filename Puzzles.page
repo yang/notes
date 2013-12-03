@@ -132,9 +132,20 @@ Algorithms
 - given axis-aligned rects, find overlapping pairs
 - given unsorted array of ints where each int appears twice, except for one int
   that appears once. find this int. O(n) time & O(1) space!
+- given unsorted array of ints where each int appears thrice, except for one
+  int that appears once. find this int. O(n) time & O(1) space!
 - how many ints in $[x,y]$ are palindrome & square of palindrome? (up to 10^100)
 - given array of length $n$ containing ints in $[1,n-1]$, find the duplicate in
   $O(n)$ time and $O(\log n)$ space
+- given $k$ sorted arrays, find smallest value range s.t. each array has 1+
+  element in that range ($O(k n \log n)$)
+- given array of 0/1, find longest subarray with same # of 0 & 1
+- given an array of integers, concatenate all numbers in some order so that the
+  combined string is lexicological smallest. e.g., {3,32,321}, solution is
+  321323.
+- how many times does $x$ appear in sorted array?
+- given set of ints, find longest sequence of consecutive ints
+- how many out-of-order pairs in a totally orderable list?
 
 Probability
 ===========
