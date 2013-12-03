@@ -6,6 +6,25 @@ disks
     latency in the CPU; this allows for a batch of operations to be issued
   - obsoletes PATA tagged command queueing (TCQ), which was CPU intensive
 
+System Building
+===============
+
+Chipsets
+--------
+
+- <http://www.gamersnexus.net/guides/1132-intel-haswell-chipset-comparison>
+- Intel Hxx vs Zxx chipsets (eg H87 vs Z87): Z means overclockable
+  - Z can also do triple SLI/Crossfire
+- Intel K CPUs (eg i5-3570K): K means overclockable
+- eg doesn't make sense to get Z mobo without K
+
+CPUs
+----
+
+- Intel naming: eg i5-4430, i5-3570K
+  - format is `iX-G###` where `G` is generation, `###` is speed
+  - 4th gen is focused more on mobile/power; 3570 better than 4430
+
 Wireless NICs for Linux
 =======================
 
