@@ -642,6 +642,11 @@ Linux
   # generate hashes for a word list
   ./genkeys -r wordlist -f words.hashes -n words.index
 
+  # spoof MAC address on Mac/OS X
+  # from <http://osxdaily.com/2012/03/01/change-mac-address-os-x/>
+  openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//'
+  sudo ifconfig en0 ether xx:xx:xx:xx:xx:xx
+
   #
   # hijack HTTP/HTTPS traffic
   # <http://blog.ksplice.com/2010/09/hijacking-http-traffic-on-your-home-subnet-using-arp-and-iptables/>
