@@ -221,6 +221,7 @@ Bottom-up parsing
     - tomita's parsing algo is best
   - GLL aka generalized LL (2009)
     - RD-like but uses tomita-style algo
+    - i like this one a lot
 
 compiler optimizations
 
