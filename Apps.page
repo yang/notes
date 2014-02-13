@@ -2088,3 +2088,70 @@ You can probably fix it with:
   sudo mkdir --mode=1777 "$(df -P file/goes/here | tail -1 | cut -d' ' -f 1)/.Trash/"
 
 (From <https://code.google.com/p/trash-cli/issues/detail?id=63> and <http://stackoverflow.com/questions/3274354/how-to-find-out-mount-partition-a-directory-or-file-is-on-linux-server>)
+
+Install Vertica
+---------------
+
+For Ubuntu, temporarily append line "6.0.1" to /etc/debian_version.
+
+(From <https://community.vertica.com/vertica/topics/how_to_install_vertica_on_an_ubuntu_box>)
+
+Then install ODBC prereqs:
+
+  sudo aptitude install odbcinst unixodbc{,-dev}
+
+Create /etc/odbc.ini:
+
+  [vertica_prod01]
+  Driver = /usr/local/lib64/libverticaodbc.so
+  Servername = localhost
+  Database = pod
+  Port = 5433
+  UserName = dbadmin
+  Password = ...
+
+(From <http://vertica-forums.com/viewtopic.php?t=62>)
+
+Create /etc/vertica.ini:
+
+  [Driver]
+  DriverManagerEncoding=UTF-16
+  ODBCInstLib=/usr/lib/x86_64-linux-gnu/libodbcinst.so
+  ErrorMessagesPath=/opt/vertica/lib64
+  LogLevel=4
+  LogPath=/tmp/vlog
+
+(From <http://stackoverflow.com/questions/9778033/unixodbc-giving-error-while-running-isql-vertica> and <http://vertica-forums.com/viewtopic.php?t=287>)
+
+Test with:
+
+  isql -v vertica_prod01
+
+To get up and running with Python:
+
+  pip install pyodbc sqlalchemy
+
+(Seems to only work with more recent versions of sqlalchemy.)
+
+This PyPI package is broken:
+
+  git clone https://github.com/jamescasbon/vertica-sqlalchemy.git
+
+False starts:
+
+- vertica-python
+- pyvertica
+
+To load data with Vertica's COPY command, you need to write in a delimited
+format that pleases it.  It's quite picky and unfortunately there doesn't seem
+to be a clean/safe way of extracting data directly in this format using psql or
+Postgresql's COPY.  The format can't handle CSV and doesn't grok special escape
+literal chars like \n or \N (null), requiring e.g. \ followed by a literal
+newline, but still using \ to escape delimiters, quotes, and \ itself.  PG
+doesn't natively support producing data in this format.
+
+There are some tools in /opt/vertica/sdk/examples/ which can make importing
+CSVs easier but there were some compilation issues
+(http://gcc.gnu.org/bugzilla/show_bug.cgi?id=56403) and it's unclear whether
+they can distinguish NULLs from empty strings (which PG can distinguish in its
+output, with the absence or presence of quotes).
