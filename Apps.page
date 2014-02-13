@@ -776,6 +776,12 @@ Linux
   # mirror filter rules example
   rsync -vv -rlp --include /share/ --include '/share/**' --include /bin/ --include /bin/gitit --exclude \* ./ /tmp/dest/
 
+  # mirror only .py files (but may create extra dirs)
+  rsync -r --include '*/' --include '*.py' --exclude '*' SRC DST
+
+  # mirror only .py files (with minimal new dirs)
+  rsync -r --files-from <( cd SRC; find . -name '*.py' ) SRC DST
+
   # mirror without permission/ownership and excluding vim files
   rsync -nrltv --delete --exclude '.*.swp' . HOST:/PATH
 
