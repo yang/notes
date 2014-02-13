@@ -1,3 +1,8 @@
+- good systems blogs (that I no longer subscribe to - interest drift)
+  - Sutter's Mill
+  - LLVM blog
+  - LWN.net
+
 - distributed tracing
   - zipkin: heavyweight, uses Cassandra/Zookeeper/Finagle/Flume/Thrift
   - X-Trace: unmaintained
