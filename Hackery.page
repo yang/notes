@@ -1,3 +1,11 @@
+- distributed tracing
+  - zipkin: heavyweight, uses Cassandra/Zookeeper/Finagle/Flume/Thrift
+  - X-Trace: unmaintained
+
+- python profilers
+  - statprof: sampling but only works on main thread, and no blocking IO
+  - lsprof/cProfile: built-in but instrumenting and no line info
+
 - ZFS
   - caveats: <http://nex7.blogspot.com/2013/03/readme1st.html>
 
