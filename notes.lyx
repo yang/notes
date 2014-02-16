@@ -272,6 +272,61 @@ Or,
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Taylor series: represent function using derivatives at some point 
+\begin_inset Formula $a$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $f\left(x\right)=f\left(a\right)+\frac{f'\left(a\right)}{1!}\left(x-a\right)+\frac{f''\left(a\right)}{2!}\left(x-a\right)^{2}+\frac{f^{\left(3\right)}\left(a\right)}{3!}\left(x-a\right)^{3}+\dots=\sum_{n=0}^{\infty}\frac{f^{\left(n\right)}\left(a\right)}{n!}\left(x-a\right)^{n}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Maclaurin series is Taylor series at 
+\begin_inset Formula $a=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+common Maclaurin series
+\end_layout
+
+\begin_layout Itemize
+of polynomial is the polynomial
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $\left(1-x\right)^{-1}=1+x+x^{2}+x^{3}+\dots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Integral of above is 
+\begin_inset Formula $\log\left(1-x\right)=-x-\frac{1}{2}x^{2}-\frac{1}{3}x^{3}-\dots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $e^{x}=1+x+\frac{x^{2}}{2!}+\frac{x^{3}}{3!}+\dots$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Information Theory
 \end_layout
