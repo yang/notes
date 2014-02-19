@@ -268,6 +268,23 @@ raytracing techniques
 
 - photon-mapping
 
+lighting
+
+- local illumination: for each pixel, find the object surface point it
+  corresponds to, the normal, its optical properties, the
+  position/intensity/color of any light sources, and optionally any shadow
+  casting
+  - but you have more control; GI doesn't compromise on realism
+- global illumination: account for light bouncing of all objects in scene
+  - radiosity: compute GI and store with the geom, then use to generate img
+    from diff viewpoints wo recalculating
+    - unlike MC algos like path tracing, only account for paths which leave a
+      light source and are reflected diffusely some # times before hitting the
+      eye
+  - path tracing: raytracing w GI
+
+rendering engines
+
 opengl
 
 - pipeline
