@@ -48,6 +48,7 @@ TODO
   into DBNs
 - bayesian smoothing: generalization of kalman filters
 - from quora:
+- mixed models
 
   > Compressed Sensing and Dictionary learning: These algorithms both exploit sparsely-activating (few ones in a zero-one vector) signals that appear in many real-world contexts Although sparsity-inducing algorithms have been around for a long time (in the form of "basis pursuit" and lasso" they've exploded recently, with many new advances (largely initiated by Donoho and Tao's proof of effectiveness). So far, these have touched MRI, radar and computer vision, and lead to an enormous amount of cross-talk between signal processing, statistics and machine learning. Watch for future advances.
   > 
@@ -938,6 +939,7 @@ sampling
 
 markov chain monte carlo (MCMC)
 
+- TODO taxonomy: <http://brenocon.com/blog/2013/04/monte-carlo-algorithm-inputs/>
 - award-winning expository paper: <http://www.ams.org/journals/bull/2009-46-02/S0273-0979-08-01238-X/S0273-0979-08-01238-X.pdf>
 - variational bayes TODO
   - deterministic
