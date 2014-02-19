@@ -21,6 +21,13 @@ Riddles
   to maximize prob of accepting the best person?
 - 25 racehorses, 5 tracks, fewest # races to find top 3
 - num ways to climb $n$ steps if you take 1-2 steps at a time?
+- A king demands a tax of 1,000 gold sovereigns from each of 10 regions of his
+  nation. The tax collectors for each region bring him the requested bag of
+  gold coins at year end. An informant tells the king that one tax collector is
+  cheating and giving coins that are consistently 10% lighter than they should
+  be, but he does not know which collector is cheating. The king knows that
+  each coin should weigh exactly one ounce. How can the king identify the cheat
+  by using a weighing device exactly once?
 - min # balance weighings to find heavier ball of 8? of 13? of $n$?
 - 3 black hats, 2 white hats, 3 men in a line facing forward (can't see
   behind), each wearing a hat. they guess at their own hats. man in back says
@@ -40,6 +47,12 @@ Riddles
   <http://mindyourdecisions.com/blog/2014/04/14/monday-puzzle-cards-on-a-square/#.U3giG61dXSo>
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
+- 2 people face to face. black/white hat placed on heads. can't see own but can
+  see other's. both must guess own hat. monster eats if both guess wrong.
+  strat?
+- 10 people lined up facing fwd so first person sees others, etc. black/white
+  hat placed on heads. monster asks each person to guess own hat, starting w
+  first person. if wrong, eat that person. strat?
 - A pile of 1,000 coins is split into two piles x and y. Multiply those
   together to get a number x*y.
 
@@ -208,6 +221,11 @@ Probability
   black, i keep pair.  if mixed, discard.  you win $10 if you end w more pairs.
   what's a fair game entry price?
   <http://mindyourdecisions.com/blog/2012/04/23/monday-puzzle-pairs-of-cards/>
+- prob of A&B meeting in an elimination tournament tree of $2^n$ players?
+- roll die 1-100. either cash out current roll in $ or pay $1 to re-roll.
+  optimal strat?
+- $n$ people, prob disease $p$. can test each person's blood but costly.
+  instead, pool blood of every $k$ ppl. best $k$ to minimize expected # tests?
 
 Geometry
 ========
