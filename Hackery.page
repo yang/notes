@@ -2,6 +2,10 @@
   - Sutter's Mill
   - LLVM blog
   - LWN.net
+  - ACM Queue
+  - Schneier on Security
+  - A VC
+  - A VC
 
 - distributed tracing
   - zipkin: heavyweight, uses Cassandra/Zookeeper/Finagle/Flume/Thrift
