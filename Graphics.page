@@ -34,6 +34,12 @@ Basics
   - game-oriented solvers (physx, havok) not accurate enough for film
   - bullet physics: FLOSS, fast, handles soft/rigid/cloth
 - shading/rendering
+- graphics rendering modes
+  - retained mode: calls don't actually render anything, but instead update an
+    internal model, allowing platform to optimize when actual rendering takes
+    place along with processing of related objects
+  - immediate mode: calls directly render objects; doesn't preclude use of
+    double-buffering
 - <http://arstechnica.com/apple/guides/2009/12/intro-to-3d-part-1.ars>
 - <http://arstechnica.com/apple/guides/2010/09/an-intro-to-3d-on-the-mac-part-ii-animation-and-rendering.ars>
 
