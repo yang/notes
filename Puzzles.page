@@ -30,6 +30,14 @@ Riddles
 - A princess lives in a row of 17 rooms. Each day, she moves to adjacent room.
   Prince has 30 days to find her and can check one room per day.  Does he have
   enough time?
+- create five rects out of lengths 1-10, eg 1x3, 2x4, 5x7, 6x8, 9x10.  how many
+  diff sets possible?  what are max & min total areas?
+  <http://wordplay.blogs.nytimes.com/2014/04/14/rectangle/>
+- four cards on corners of square lazy susan turntable in dark room.  you don't
+  know which are up/down.  you want to get all to be up or down.  each turn,
+  you can flip any card(s) - if all up/down, game ends, else rotate random #
+  90-deg turns and next turn.  can you end the game (how)?
+  <http://mindyourdecisions.com/blog/2014/04/14/monday-puzzle-cards-on-a-square/#.U3giG61dXSo>
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
 - A pile of 1,000 coins is split into two piles x and y. Multiply those
