@@ -154,6 +154,14 @@ Algorithms
 - how many times does $x$ appear in sorted array?
 - given set of ints, find longest sequence of consecutive ints
 - how many out-of-order pairs in a totally orderable list?
+- given 2 ints a,b, return a/b in decimal, with repeating decimals in parens, e.g.:
+
+  - 1/2 = 0.5
+  - 4/3 = 1.(3)
+  - 1/7 = 0.(142857)
+  - 1/30 = 0.0(3)
+
+  extension: generalize it to take in a and b in an arbitrary base N
 
 Probability
 ===========
@@ -241,6 +249,11 @@ Geometry
   2 people will be in their correct seats.
   <http://mindyourdecisions.com/blog/2012/10/29/monday-puzzle-wedding-seating-arrangement/>
 
+- given isosceles triangle of base width 10 and sides 13, with circles
+  circumscribed starting from filling the base and all the way up (each circle
+  getting smaller & smaller), what is the sum of circumferences?
+  <http://mindyourdecisions.com/blog/2014/08/11/monday-puzzle-circles-in-an-isosceles-triangle/>
+
 Practical
 =========
 
@@ -284,3 +297,5 @@ General math
   `distance(x,y) = l1_distance(f(x), f(y))`
 
 - how many 0s are there in 100!?
+- (hard) what's the longest sequence of numbers where any 7 consecutive numbers
+  have a positive sum and any 11 consecutive numbers have a negative sum?
