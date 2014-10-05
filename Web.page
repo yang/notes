@@ -361,6 +361,12 @@ js testing systems
   - <http://zachlendon.github.io/blog/2013/03/26/quick-thoughts-on-testem-vs-testacular-karma/>
 - commonly use phantomjs or node packages dom and vm
 
+angular
+
+- issues
+  - no built-in support for:
+    - nested routing
+
 misc
 ====
 
