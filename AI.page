@@ -646,12 +646,15 @@ decision tree learning algorithms
   - usu. use MSE instead of mutual information (pick attr to split where
     partitions have minimal variance, as opposed to greatest information gain)
   - <http://www.stat.cmu.edu/~cshalizi/350-2006/lecture-10.pdf>
+- entropy for discrete, gini for continuous
+  - may not matter
 - ID3
 - C4.5
 - M5
 - M5P
   - at leaves, train linear regressors
   - <http://www.opentox.org/dev/documentation/components/m5p>
+- <http://www.garysieling.com/blog/sklearn-gini-vs-entropy-criteria>
 
 advice for applying ML (CS229)
 
