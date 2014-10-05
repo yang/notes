@@ -1481,6 +1481,213 @@ for Bernoullis (important special case):
 \end_layout
 
 \end_deeper
+\begin_layout Subsection
+Betting
+\end_layout
+
+\begin_layout Itemize
+Kelly criterion
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+problem: in even odds, fixed-fraction betting (win/lose full bet) where
+ 
+\begin_inset Formula $p=\Pr\left[\mbox{win}\right]$
+\end_inset
+
+, 
+\begin_inset Formula $q=\Pr\left[\mbox{loss}\right]=1-p$
+\end_inset
+
+, and start with 
+\begin_inset Formula $V_{0}$
+\end_inset
+
+, how much to bet (fraction 
+\begin_inset Formula $\ell$
+\end_inset
+
+)?
+\end_layout
+
+\begin_layout Itemize
+betting everything (
+\begin_inset Formula $\ell=1$
+\end_inset
+
+) maximizes expected outcome after some finite 
+\begin_inset Formula $N$
+\end_inset
+
+ steps (
+\begin_inset Formula $\E\left[V_{N}\right]$
+\end_inset
+
+), but this is skewed by rare all-win streak: 
+\begin_inset Formula $V_{N}=\left(2q\right)^{N}V_{0}$
+\end_inset
+
+; with 
+\begin_inset Formula $N\rightarrow\infty$
+\end_inset
+
+, will hit zero at some point (short- vs long-term); 
+\begin_inset Formula $\lim_{N\rightarrow\infty}q^{N}=\lim_{N\rightarrow\infty}V_{N}=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+instead, how much to bet such that as 
+\begin_inset Formula $N\rightarrow\infty$
+\end_inset
+
+, will make more than any other bet?
+\end_layout
+
+\begin_layout Itemize
+outcome after 
+\begin_inset Formula $W$
+\end_inset
+
+ wins and 
+\begin_inset Formula $L$
+\end_inset
+
+ losses: 
+\begin_inset Formula $V_{N}=\left(1+\ell\right)^{W}\left(1-\ell\right)^{L}V_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+maximize 
+\emph on
+rate of growth
+\emph default
+ 
+\begin_inset Formula $G=\lim_{N\rightarrow\infty}\frac{1}{N}\log\frac{V_{N}}{V_{0}}$
+\end_inset
+
+ (log geometric mean 
+\begin_inset Formula $\left(\frac{V_{N}}{V_{0}}\right)^{\frac{1}{N}}$
+\end_inset
+
+) aka avg return per step over all time
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $G=\lim_{N\rightarrow\infty}\left[\frac{W}{N}\log\left(1+\ell\right)+\frac{L}{N}\log\left(1-\ell\right)\right]=q\log\left(1+\ell\right)+p\log\left(1-\ell\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+maximizing 
+\begin_inset Formula $G$
+\end_inset
+
+ yields 
+\begin_inset Formula $\ell=2p+1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+more generally for continuous non-binary returns: let 
+\begin_inset Formula $X_{i}\sim X$
+\end_inset
+
+ be returns for year 
+\begin_inset Formula $i$
+\end_inset
+
+, then 
+\begin_inset Formula $V_{N}=V_{0}\prod_{i=1}^{N}\left(1+X_{i}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $G=\lim_{N\rightarrow\infty}\frac{1}{N}\left[\sum_{i=1}^{N}\log\left(1+X_{i}\right)\right]=\E\left[\log\left(1+X\right)\right]$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+setting to constant return 
+\begin_inset Formula $\left(1+r\right)^{N}$
+\end_inset
+
+ we get 
+\begin_inset Formula $r=\exp\left(\E\left[\log\left(1+X\right)\right]\right)-1$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+more involved proof to show maximizing 
+\begin_inset Formula $G$
+\end_inset
+
+ maximizes 
+\begin_inset Formula $V_{\infty}$
+\end_inset
+
+ more than any other strategy (fixed-fraction or not)
+\end_layout
+
+\begin_layout Itemize
+general formula for uneven odds 
+\begin_inset Formula $b$
+\end_inset
+
+-to-1: 
+\begin_inset Formula $\ell=\frac{\mbox{edge}}{\mbox{odds}}=\frac{p-mp}{1-mp}=\frac{\mbox{expected net winnings}}{\mbox{net winnings if you win}}=\frac{bp-q}{b}$
+\end_inset
+
+ (TODO)
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.lucent.com/bstj/vol35-1956/articles/bstj35-4-917.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Flex URL
+status collapsed
+
+\begin_layout Plain Layout
+
+http://www.stat.berkeley.edu/~aldous/157/Writeups/finance1.pdf
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Algorithms
 \end_layout
