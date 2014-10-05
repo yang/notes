@@ -2642,6 +2642,8 @@
       - <http://www.imperialviolet.org/2010/05/03/woff.html>
 
 - css
+  - inline-block better than float:
+    <https://stackoverflow.com/questions/15172520/drawback-of-css-displayinline-block-vs-floatleft>
   - designed for horizontal layout/flow layout, not vertical
   - specificity: id = 100, class = 10, else = 1; add up
   - @ rules: import, media, charset, font-face (custom fonts), page
