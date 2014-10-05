@@ -1477,6 +1477,10 @@ tac
 Packages
 ========
 
+- torrent
+  - qbittorrent: using; supports streaming; ugly
+  - transmission: using; simple, nice interface, but no streaming yet
+  - vuze: once was good, no longer
 - video
   - get-flash-video
   - ffmpeg
