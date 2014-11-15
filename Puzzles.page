@@ -272,6 +272,8 @@ Geometry
   getting smaller & smaller), what is the sum of circumferences?
   <http://mindyourdecisions.com/blog/2014/08/11/monday-puzzle-circles-in-an-isosceles-triangle/>
 
+- If you break a stick at 2 random points, what’s the probability the 3 lengths can make a triangle? <http://mindyourdecisions.com/blog/2014/09/29/monday-puzzle-probability-of-forming-a-triangle/#.VE9NbovF8rY>
+
 Practical
 =========
 
@@ -317,3 +319,5 @@ General math
 - how many 0s are there in 100!?
 - (hard) what's the longest sequence of numbers where any 7 consecutive numbers
   have a positive sum and any 11 consecutive numbers have a negative sum?
+- airport conveyer belt: takes 172s to walk to other side WITH belt and 5x that
+  to AGAINST. how long if standing still? if walking without belt?
