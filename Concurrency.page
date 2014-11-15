@@ -223,12 +223,14 @@ Bugs
 Serializability and linearizability
 
 - serializability aka atomicity
+  - multi-op, multi-obj, arbitrary total order
   - history: ordering of operations (aka schedules, orderings)
   - history equivalence: final states are identical given any initial states
   - serializability: history has equivalent serial history
   - deciding history equivalence: tractable
   - deciding history serializability: NP complete (many possible interleavings)
 - linearizability (aka sequential consistency or atomic consistency)
+  - single-op, single-obj, real-time order
   - history: ordering of operations on object
   - sequential history: one in which each invocation is followed by a response
   - linearizability: history has equivalent sequential history
@@ -239,8 +241,11 @@ Serializability and linearizability
     serializability does
   - serializability does not require consistency of the partial and total
     orders, which linearizability does ???
+  - serializability does not require real-time order
+- strict serializability gives both
 - [great ref with
   examples](http://www.cs.rochester.edu/~scott/458/notes/10-fault_tolerance)
+- <http://www.bailis.org/blog/linearizability-versus-serializability/>
 
 Consistency TODO
 
