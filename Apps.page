@@ -2167,3 +2167,8 @@ CSVs easier but there were some compilation issues
 (http://gcc.gnu.org/bugzilla/show_bug.cgi?id=56403) and it's unclear whether
 they can distinguish NULLs from empty strings (which PG can distinguish in its
 output, with the absence or presence of quotes).
+
+Spotlight on Mac stops finding Applications
+-------------------------------------------
+
+Solution: <https://discussions.apple.com/thread/2733345?tstart=0>
