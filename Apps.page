@@ -1767,6 +1767,9 @@ Packages
 - shell tools
   - pv: pipe viewer
   - parallel: using
+- SSL terminators
+  - stunnel
+  - stud: higher perf than stunnel
 
 Opinions
 ========
