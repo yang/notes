@@ -1538,6 +1538,27 @@ chrome/chromium
 - CLONE_NEWPID and CLONE_NEWNET: prevent sending signals, network access
 - <http://scarybeastsecurity.blogspot.com/2009/10/chromium-and-linux-sandboxing.html>
 
+Internal Access Controls: Trust But Verify (Google, 2014)
+
+- <https://queue.acm.org/detail.cfm?id=2697395>
+- core:
+  - regular automated monitoring/verifying of access configs
+  - auditing user access to data
+- granularity: users too fine/tedious, RBAC can be too coarse (union of diff
+  roles = too much access); must accept imperfection
+- monitoring: specify invariants, tests auto-verify
+  - catch diffs btwn static and live configs
+  - verify config is behaving as expected
+  - tripwire: notify people of changes
+  - catch drifts e.g. gradual increases in # authorized people
+  - verify that separation of perms holds (eg 1 user having both code change
+    and push perms)
+- auditing: do routinely
+  - catch inappropriate access
+  - can find/prune unused perms
+  - good tools should only flag unusual patterns for manual review
+  - no substitute for good access controls
+
 Security In-Depth for Linux Software: Preventing and Mitigating Security Bugs (Julien Tinnes, Chris Evans, Google, Hack in the Box 10/2009)
 
 - examples: chromium, vsftpd
