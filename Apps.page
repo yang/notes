@@ -2168,7 +2168,20 @@ CSVs easier but there were some compilation issues
 they can distinguish NULLs from empty strings (which PG can distinguish in its
 output, with the absence or presence of quotes).
 
-Spotlight on Mac stops finding Applications
--------------------------------------------
+Flash Android 5.0 Factory Image
+-------------------------------
+
+- followed <https://developers.google.com/android/nexus/images>
+- ran into <https://code.google.com/p/android/issues/detail?id=82944>
+- also, when waiting too long at the bootloader screen, fastboot will lose it
+
+Spotlight on Mac OS X stops finding Applications
+------------------------------------------------
 
 Solution: <https://discussions.apple.com/thread/2733345?tstart=0>
+
+Instructions:
+
+  sudo rm -R /.Spotlight-V100*
+  sudo mdutil -i on /*
+  sudo mduitl -E /*
