@@ -379,6 +379,7 @@ clustering
       - repeat for more bits
     - min-hash, sim-hash are instances of this
     - min-hash: <http://knol.google.com/k/simple-simhashing>
+    - TODO (gaussian/kernelized) random projections; see eg sklearn's impl
     - sim-hash
 
         pick hash size, eg 32 bits
