@@ -1477,6 +1477,8 @@ tac
 Packages
 ========
 
+- network
+  - ss: replaces netstat
 - torrent
   - qbittorrent: using; supports streaming; ugly
   - transmission: using; simple, nice interface, but no streaming yet
