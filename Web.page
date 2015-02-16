@@ -367,6 +367,20 @@ angular
   - no built-in support for:
     - nested routing
 
+react relay
+
+- `node(...)` or `viewer()` specify what 'root' data to load
+- can specify query params
+- specify fields/related objects in json-like format
+- pagination: `.after(ID).first(N)`; usu. eg `N` is a query param
+- composition: each object specifies own queries, but queries are merged, and
+  fetches are batched
+- component not rendered till all `required` data loaded
+- single central store/cache for all data
+- supports optimistic mutations
+- <https://gist.github.com/wincent/598fa75e22bdfa44cf47>
+- <https://www.youtube.com/watch?v=9sc8Pyc51uU>
+
 misc
 ====
 
