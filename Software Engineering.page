@@ -82,3 +82,9 @@ linux
 - maintainers
   - david miller, greg kroah-hartman, andrew morton, ingo molnar
   - stats: <http://lwn.net/Articles/385949/>
+
+formal methods
+--------------
+
+- TLA/TLA+
+  - amazon's use: <http://research.microsoft.com/en-us/um/people/lamport/tla/amazon.html>
