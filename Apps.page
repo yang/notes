@@ -2196,16 +2196,20 @@ Geotagging Photos from your DSLR Camera
 - Run:
 
     sudo port install p5-image-exiftool
+    sudo ln -s `which exiftool-5.16` /opt/local/bin/exiftool
     svn co http://gpicsync.googlecode.com/svn/trunk gpicsync
     cd gpicsync
-    python gpicsync.py -g PATH.gpx -d PHOTOSDIR
+    pip install pytz
+    python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific
+    # if your camera's time is slow by an 01h15m
+    python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --tgps 01:15:00
 
 Find the App Stealing Focus on Mac OS X
 ---------------------------------------
 
 http://apple.stackexchange.com/questions/123730/is-there-a-way-to-detect-what-program-is-stealing-focus-on-my-mac
 
-  #!/usr/bin/python                                                                                                       
+  #!/usr/bin/python
 
   try:
       from AppKit import NSWorkspace
