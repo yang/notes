@@ -2187,3 +2187,15 @@ Instructions:
   sudo rm -R /.Spotlight-V100*
   sudo mdutil -i on /*
   sudo mduitl -E /*
+
+Geotagging Photos from your DSLR Camera
+---------------------------------------
+
+- Use Google Takeout to export your location history (based on your phone) as a KML file
+- Use GPSBabelFE to convert the KML to GPX
+- Run:
+
+    sudo port install p5-image-exiftool
+    svn co http://gpicsync.googlecode.com/svn/trunk gpicsync
+    cd gpicsync
+    python gpicsync.py -g PATH.gpx -d PHOTOSDIR
