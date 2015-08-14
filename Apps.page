@@ -627,15 +627,15 @@ Linux
   # check whether HD supports SMART
   smartctl -i /dev/sda
   # enable SMART
-  smartctl -s on /dev/sda 
+  smartctl -s on /dev/sda
   # estimate testing time
-  smartctl -c /dev/sda 
+  smartctl -c /dev/sda
   # extended test
-  smartctl -t long /dev/sda 
+  smartctl -t long /dev/sda
   # view test stats
-  smartctl -l selftest /dev/sda 
+  smartctl -l selftest /dev/sda
   # view detailed SMART info for IDE
-  sudo smartctl -a /dev/hda 
+  sudo smartctl -a /dev/hda
   # view detailed SMART info for SATA
   sudo smartctl -a -d ata /dev/sda
 
@@ -1175,7 +1175,7 @@ Linux
     PID TTY      STAT   TIME COMMAND
    1668 pts/0    S      0:00 login -- jfink
    1669 pts/0    S      0:00 -bash TERM=ansi REMOTEHOST=172.16.14.102 HOME=/home/j
-   1754 pts/0    R      0:00 ps ae LESSOPEN=|/usr/bin/lesspipe.sh %s 
+   1754 pts/0    R      0:00 ps ae LESSOPEN=|/usr/bin/lesspipe.sh %s
   # find out nameservers
   cat /etc/resolv.conf
   should be something like:
@@ -1548,7 +1548,7 @@ Packages
   - jahob
 - c++ static analysis tools
   - treehydra: gcc plugin for low level js binding to gcc's GIMPLE AST; built on dehydra (that bootstraps this)
-  - dehydra: gcc plugin for letting js interact with gcc - 
+  - dehydra: gcc plugin for letting js interact with gcc -
   - oink: c++ static analysis suite by karl chen et al at cal built on elsa; includes cqual++
   - pork: c++ parsing and rewriting toolchain; based on elsa/elkhound/oink
   - cqual: adds type qualifiers to C
