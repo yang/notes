@@ -1,5 +1,9 @@
 mark pilgrim: google's html5 evangelist
 
+CSS layout
+
+- `height:auto` inherits height from parent
+
 safe fonts
 
 - sans-serif
