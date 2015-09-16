@@ -2232,3 +2232,19 @@ http://apple.stackexchange.com/questions/123730/is-there-a-way-to-detect-what-pr
               active_app['NSApplicationPath']
           )
       sleep(1)
+
+Create initial from-scratch Alembic revision
+--------------------------------------------
+
+It's hygienic to always create such a revision before creating any other Alembic revisions.
+
+    sudo -u postgres psql
+    > alter database myapp rename to myapp_orig;
+    > create database myapp owner myuser;
+
+    alembic revision --autogenerate -m 'Initial from-scratch revision'
+    alembic stamp head
+
+    sudo -u postgres psql
+    > drop database myapp;
+    > alter database myapp_orig rename to myapp;
