@@ -2248,3 +2248,14 @@ It's hygienic to always create such a revision before creating any other Alembic
     sudo -u postgres psql
     > drop database myapp;
     > alter database myapp_orig rename to myapp;
+
+Fix "missing Java" on OS X
+--------------------------
+
+"No Java runtime present, requesting install."
+
+Initially encountered this trying to `import boilerpipe` in Python.
+
+There are various other solutions including installing the Apple-provided JRE 6, but the best solution IMO is tweaking Java 8 settings:
+
+https://stackoverflow.com/questions/19563766/eclipse-kepler-for-os-x-mavericks-request-java-se-6/19594116#19594116
