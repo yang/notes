@@ -2259,3 +2259,35 @@ Initially encountered this trying to `import boilerpipe` in Python.
 There are various other solutions including installing the Apple-provided JRE 6, but the best solution IMO is tweaking Java 8 settings:
 
 https://stackoverflow.com/questions/19563766/eclipse-kepler-for-os-x-mavericks-request-java-se-6/19594116#19594116
+
+OS X Setup
+----------
+
+Run:
+
+    sudo port install \
+      coreutils ffmpeg git-core ncdu osxutils py-virtualenvwrapper postgresql95 \
+      postgresql95-server python27 the_silver_searcher wget youtube-dl \
+      vim +huge +universal +cscope +python27 +python34 \
+      macvim +huge +universal +cscope +python27 +python34
+
+Install Karabiner and tweak the key repeat settings (200ms/25ms) and load your
+custom private.xml.
+
+TODO merge with your Migrations GDoc.
+
+Dev Setup
+---------
+
+Install bash-it and run:
+
+    for i in git grunt npm pip ; do bash-it enable completion $i; done
+    for i in general git osx vim ; do bash-it enable alias $i; done
+
+Install bling dotvim.
+
+Use your custom dotfiles (in personal-cm/roles/primary).
+
+<!--
+vim: ft=markdown
+-->
