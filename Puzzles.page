@@ -347,3 +347,7 @@ General math
   have a positive sum and any 11 consecutive numbers have a negative sum?
 - airport conveyer belt: takes 172s to walk to other side WITH belt and 5x that
   to AGAINST. how long if standing still? if walking without belt?
+
+<!--
+vim: ft=markdown
+-->

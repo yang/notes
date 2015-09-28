@@ -89,3 +89,7 @@ NLP at Google (Katja Filippova)
   - constraint: path must contain a verb
   - use google news' clusters as dataset
 - <http://videolectures.net/russir2010_filippova_nlp/>
+
+<!--
+vim: ft=markdown
+-->

@@ -414,3 +414,7 @@ sync kit (marcua, edbenson, www10)
 - perf eval: higher tput, competitive (slightly better) latency
   - higher tput from network-bound workloads
   - latency comes from client-side processing + local db queries
+
+<!--
+vim: ft=markdown
+-->

@@ -291,3 +291,7 @@ inline caching
   can be recorded at same call site
 - megamorphic: if see too many types; same as uninitialized but never
   mono-/polymorphic again
+
+<!--
+vim: ft=markdown
+-->

@@ -473,3 +473,7 @@ Brawny cores still beat wimpy cores, most of the time (Urs Holzle, Google)
     use more local heuristics that are sloppier and more conservative, doing
     more work than necessary
 - <http://research.google.com/pubs/archive/36448.pdf>
+
+<!--
+vim: ft=markdown
+-->

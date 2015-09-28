@@ -1754,3 +1754,7 @@ gizzard (twitter)
 - handles migrations by applying WriteOnly shard in front of new node and
   replicating ops to both
 - <http://engineering.twitter.com/2010/04/introducing-gizzard-framework-for.html>
+
+<!--
+vim: ft=markdown
+-->

@@ -1033,3 +1033,7 @@ Lewis Girod, Sevan, Ryan
 - specifically, separate signal from noise, probably using clustering of
   spectra (using euclidian distance of their frequencies)
 
+
+<!--
+vim: ft=markdown
+-->

@@ -1859,3 +1859,7 @@ SSO protocols
   - unlike CAS, confirmation of association btwn ticket & svc is responsibility
     of web app, not of CAS
 - KRB
+
+<!--
+vim: ft=markdown
+-->

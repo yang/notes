@@ -1018,3 +1018,7 @@ category theory
     - $F(1_A) = 1_{F(A)} \forall A \in C1$
     - $F(g \ocirc f) = F(g) \ocirc F(f) \forall f: A \rightarrow B, g: B
       \rightarrow C$ where $A,B,C \in C1$
+
+<!--
+vim: ft=markdown
+-->

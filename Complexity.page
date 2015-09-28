@@ -30,3 +30,7 @@ Computer Studies of Turing Machine Problems (Rado, Shen Lin, 1965)
 - proved $\Sigma(1) = 1, S(1) = 1, \Sigma(2) = 4, S(2) = 6$
 - Lin's PhD thesis: $\Sigma(3) = 6, S(3) = 21$
 - Allen Brady, 1983: $\Sigma(4) = 13, S(4) = 107$
+
+<!--
+vim: ft=markdown
+-->

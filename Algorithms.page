@@ -695,3 +695,7 @@ automatic differentiation
 - not symbolic (slow)/numeric (approximate); differentiates at specific points
 - add _infinitesimal_ $e$ similar to imaginary $i$ but $e^2=0$
 - <http://code.google.com/p/ceres-solver/source/browse/include/ceres/jet.h>
+
+<!--
+vim: ft=markdown
+-->

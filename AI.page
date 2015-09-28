@@ -1660,3 +1660,7 @@ Google ML Infrastructure
 - Prediction API: much smaller
 - learn to rank not really used in ranking algo; want explainable/tweakable
   results
+
+<!--
+vim: ft=markdown
+-->

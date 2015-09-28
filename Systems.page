@@ -1227,3 +1227,7 @@ scripts.mit.edu (SIPB cluedump 08/10/28)
   - to mark all files as exe (phasing out)
 - quilt: for applying patchsets
 - hacked up krb
+
+<!--
+vim: ft=markdown
+-->
