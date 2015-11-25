@@ -2267,7 +2267,7 @@ Run:
 
     sudo port install \
       coreutils ffmpeg git-core ncdu osxutils py-virtualenvwrapper postgresql95 \
-      postgresql95-server python27 the_silver_searcher wget youtube-dl \
+      postgresql95-server python27 realpath the_silver_searcher wget youtube-dl \
       vim +huge +universal +cscope +python27 +python34 \
       macvim +huge +universal +cscope +python27 +python34
 
