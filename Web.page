@@ -2,7 +2,27 @@ mark pilgrim: google's html5 evangelist
 
 CSS layout
 
+- see also your google doc on this at <https://docs.google.com/document/d/1PFX_eQ7wcld5Uy-xvAYQZ2K3WDXKu1rs822HNxIQqoY/edit>
 - `height:auto` inherits height from parent
+- property combos: <http://bitsofco.de/how-positioning-css-properties-interact/>
+
+    typicalDisplay()
+      if display:block, display:inline, ...
+        display:block
+      else if display:inline-table
+        display:table
+      else
+        display:as specified
+
+    if display:none
+      override/ignore everything else
+    else if position:absolute/fixed
+      float:none
+      typicalDisplay()
+    else if float:left/right
+      typicalDisplay()
+    else if position:static
+      offsets:ignored
 
 safe fonts
 
@@ -384,6 +404,17 @@ react relay
 - supports optimistic mutations
 - <https://gist.github.com/wincent/598fa75e22bdfa44cf47>
 - <https://www.youtube.com/watch?v=9sc8Pyc51uU>
+
+JS languages
+
+- coffeescript
+  - crazy global variable scoping
+  - no support for `for...of`
+  - no es6 module system
+- es6 (babel)
+  - es6 module system: supports cyclic dependencies
+- scala.js
+  - very slowly trying to get to "usable" state
 
 misc
 ====
