@@ -240,6 +240,40 @@ real-time ray-tracing software
 - industry working on RTRT: intel, nvidia
 - nvidia iray runs on GPGPUs
 
+rendering techniques
+
+- rasterization
+  - scanline
+- ray casting: similar to ray tracing but no secondary rays; obsolete
+- ray tracing
+  - all approximate solutions to rendering equation
+  - path tracing, photon mapping, metropolis light transport
+- radiosity: finite element methods; assumes perfectly diffuse surfaces (big
+  limitation); not as common
+- "Radiosity does not account for specular reflections (i.e. it only handles
+  diffuse reflections). Whitted's ray-tracing only considers glossy or diffuse
+  reflection, possibly mirror-reflected. And finally, Kajiya's path-tracing is
+  the most general one [2], handling any number of diffuse, glossy and specular
+  reflections." <https://computergraphics.stackexchange.com/questions/337/radiosity-vs-ray-tracing>
+
+rendering equation
+
+- TODO
+- classification of light scattering events
+- `L(S|D)*E`
+- "L" stands for luminaire, "D" for diffuse reflection, "S" for specular
+  reflection or refraction, "E" for eye, and the symbols "*", "|", "()", "[]"
+  come from regular expressions notation and denote "zero or more", "or",
+  "grouping", "one of", respectively. Veach [3] extended the notation in his
+  famous dissertation by "D" for Lambertian, "S" for specular and "G" for
+  glossy reflection, and "T" for transmission.
+- OpenGL shading: `EDL`
+- Appel's ray-casting: `E(D|G)L`
+- Whitted's ray-tracing: `E[S*](D|G)L`
+- Kajiya's path-tracing: `E[(D|G|S)+(D|G)]L`
+- Golar's radiosity: `ED*L`
+- <https://computergraphics.stackexchange.com/questions/337/radiosity-vs-ray-tracing>
+
 raytracing vs rasterization
 
 - rasterization: each triangle is independently analyzed, plotted, colored,
@@ -267,6 +301,7 @@ raytracing features
 raytracing techniques
 
 - photon-mapping
+- path tracing: unbiased
 
 lighting
 
@@ -282,6 +317,7 @@ lighting
       light source and are reflected diffusely some # times before hitting the
       eye
   - path tracing: raytracing w GI
+  - also various other ray tracing algos
 
 rendering engines
 
