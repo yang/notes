@@ -2191,8 +2191,10 @@ Instructions:
 Geotagging Photos from your DSLR Camera
 ---------------------------------------
 
-- Use Google Takeout to export your location history (based on your phone) as a KML file
-- Use GPSBabelFE to convert the KML to GPX
+- Use Google Takeout to export your location history (based on your phone) as a
+  KML file (not the default JSON)
+- Use GPSBabelFE to convert the KML ("Google Earth (Keyhole) Markup Language")
+  to GPX XML
 - Run:
 
     sudo port install p5-image-exiftool
