@@ -2,8 +2,13 @@ Riddles
 =======
 
 - 100 people in line looking forward. white/black hats placed on head. don't
-  know own hat. each person guesses own hat from rear to front---die if wrong.
-  strategy to maximize expected lives? e.g. all black yields 50.
+  know own hat. each person guesses own hat from rear to front---person dies if
+  wrong.  strategy to maximize expected lives? e.g. all black yields 50.
+  - extension: instead of white and black hats, you have n colors of hats
+  - extension: instead of 100 people, you have a countable infinite nuber of
+    people (there is a "first person" who can see down the whole line but not a
+    "last person". Assume perfect eyesight). In this case, the victory
+    condition is "can you save all except finitely many prisoners"?
 - in a room with a line of off lights, first person toggles every light, second
   person toggles every other light, 3rd person toggles every 3 lights, etc.
   which lights are on?  (harder) how many lights will light $n$ be toggled?
@@ -51,11 +56,8 @@ Riddles
 - <http://www.tanyakhovanova.com/Puzzles/>
 - <http://www.ocf.berkeley.edu/~wwu/riddles/intro.shtml>
 - 2 people face to face. black/white hat placed on heads. can't see own but can
-  see other's. both must guess own hat. monster eats if both guess wrong.
-  strat?
-- 10 people lined up facing fwd so first person sees others, etc. black/white
-  hat placed on heads. monster asks each person to guess own hat, starting w
-  first person. if wrong, eat that person. strat?
+  see other's. both must guess own hat simultaneously. monster eats if both
+  guess wrong.  strat? <http://wordplay.blogs.nytimes.com/2014/01/20/hats-2/>
 - A pile of 1,000 coins is split into two piles x and y. Multiply those
   together to get a number x*y.
 
