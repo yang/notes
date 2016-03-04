@@ -1,6 +1,9 @@
 Riddles
 =======
 
+- 100 people in line looking forward. white/black hats placed on head. don't
+  know own hat. each person guesses own hat from rear to front---die if wrong.
+  strategy to maximize expected lives? e.g. all black yields 50.
 - in a room with a line of off lights, first person toggles every light, second
   person toggles every other light, 3rd person toggles every 3 lights, etc.
   which lights are on?  (harder) how many lights will light $n$ be toggled?
