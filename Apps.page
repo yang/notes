@@ -2290,6 +2290,22 @@ Install bling dotvim.
 
 Use your custom dotfiles (in personal-cm/roles/primary).
 
+Compare Feedly and raw versions of AudioLizard feed
+---------------------------------------------------
+
+- In feedly, go to AudioLizard feed
+- View unread
+- Scroll down a bunch to load enough items
+- Run the "Feedly dump feed items (to compare with AudioLizard source)" snippet
+- Run `copy(__toCopy)` in the console
+- Paste into some file
+- On nuthouse, run:
+
+    psql -h localhost -U webreader webreader -Atc 'select url from articles where converted is not null order by created desc' > /tmp/audiolizard.feed
+
+- Copy that file to localhost
+- Diff the two files
+
 <!--
 vim: ft=markdown
 -->
