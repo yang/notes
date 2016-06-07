@@ -21,6 +21,12 @@
 - chef, puppet
   - http://news.ycombinator.com/item?id=3090800
 
+- virtual memory
+
+  "Google generally does not use virtual memory for anything in the cloud, because it leads to unpredictable, massive delays which can cause cascading failures in services."
+
+  https://news.ycombinator.com/item?id=11065769
+
 - android internals
   - apps: bundles of components
   - each app in a linux process; can be killed any time
