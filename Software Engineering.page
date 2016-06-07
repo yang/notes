@@ -67,6 +67,28 @@ facebook software engineering
 - user:dev ratio is ~1.1M
 - <http://cacm.acm.org/blogs/blog-cacm/51564-extreme-agility-at-facebook/fulltext>
 
+facebook release engineering (chuck rossi)
+
+- releng team has 2-3 ppl
+- no QA team
+- push 2x/day
+- fb used svn (now hg)
+- branches: commit to trunk.  on sun, trunk -> latest.  on tue, latest ->
+  release.
+- dogfooding: all fb employees forced to use latest
+- each weekday has different volume/nature of pushes (i assume meaning into
+  release branch).  this seems cultural.  enforced using his feedback/karma
+  system.
+  - mon: few pushes
+  - tue: big release push
+  - wed: many pushes (fixing up tue things)
+  - thu: med pushes
+  - fri: few pushes (weekend approaching)
+- tries to prevent multiple large changes from going in the same time.
+- tools: gatekeeper, bittorrent
+- <http://www.infoq.com/presentations/Facebook-Release-Process>
+- <https://vimeo.com/56362484>
+
 google chrome
 
 - trybot farms; can submit your changelists
