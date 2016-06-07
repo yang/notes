@@ -790,6 +790,9 @@ Linux
   # mirror without permission/ownership and excluding vim files
   rsync -nrltv --delete --exclude '.*.swp' . HOST:/PATH
 
+  # compare two dirs
+  rsync -rvnc --delete LOCALPATH/ HOST:/PATH/
+
   # add new PPA repo
   sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com \
       67265eb522bdd6b1c69e66ed7fb8bee0a1f196a8
