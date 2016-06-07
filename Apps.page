@@ -2201,13 +2201,24 @@ Geotagging Photos from your DSLR Camera
 - Run:
 
     sudo port install p5-image-exiftool
-    sudo ln -s `which exiftool-5.16` /opt/local/bin/exiftool
-    svn co http://gpicsync.googlecode.com/svn/trunk gpicsync
-    cd gpicsync
     pip install pytz
+    sudo ln -s `which exiftool-5.16` /opt/local/bin/exiftool
+
+    git clone git@github.com:yang/GPicSync.git
+    cd GPicSync/src
+
     python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific
     # if your camera's time is slow by an 01h15m
     python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --tgps 01:15:00
+
+- Review the results in GeoTag.  If any are still missing, that may be due to
+  sparsity in your location data.  gpicsync only takes locations within an hour
+  of the photo's timestamp - you can relax this tolerance from 3600s to (say)
+  36000s using --time-range 36000
+  - Location History doesn't poll at a fixed frequency and considers a
+    multitude of factors.  I have seen holes on the order of a day.
+  - Backitude is an app that should allow for regular location updates and
+    eliminate this problem.
 
 Find the App Stealing Focus on Mac OS X
 ---------------------------------------
