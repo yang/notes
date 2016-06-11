@@ -1,3 +1,17 @@
+- js testing
+  - <https://medium.com/javascript-and-opinions/state-of-the-art-javascript-in-2016-ab67fc68eb0b>
+  - "You can’t really go wrong with Jasmine, Mocha or Tape"
+  - my ideals:
+    - fast DOM testing without requiring real DOM
+    - testable in browser (best debugging experience, see DOM)
+  - jest
+    - can't run in browser <https://github.com/facebook/jest/issues/139>
+    - is automock too much magic?  not sure how it interacts with various
+      things (coffeescript classes?)
+    - "auto-mocking isn’t nearly as nice as it sounds, and is very slow anyway"
+  - jsdom
+    - fast
+
 - good systems blogs (that I no longer subscribe to - interest drift)
   - Sutter's Mill
   - LLVM blog
