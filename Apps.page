@@ -2328,6 +2328,16 @@ IntelliJ PyCharm Remote Debugging Slow
 This turned out to be due to a stale project.  Deleting it and creating a new
 project over the original sources fixed this.
 
+Make Chrome Remote Desktop work on Ubuntu
+-----------------------------------------
+
+This solves two problems:
+
+- Not the same session as the local (non-remote) desktop session
+- Not loading any window manager, preventing window manipulation
+
+<https://superuser.com/questions/778028/configuring-chrome-remote-desktop-with-ubuntu-gnome-14-04>
+
 <!--
 vim: ft=markdown
 -->
