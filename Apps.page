@@ -2322,6 +2322,12 @@ Compare Feedly and raw versions of AudioLizard feed
 - Copy that file to localhost
 - Diff the two files
 
+IntelliJ PyCharm Remote Debugging Slow
+--------------------------------------
+
+This turned out to be due to a stale project.  Deleting it and creating a new
+project over the original sources fixed this.
+
 <!--
 vim: ft=markdown
 -->
