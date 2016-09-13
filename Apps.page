@@ -2208,6 +2208,8 @@ Geotagging Photos from your DSLR Camera
     cd GPicSync/src
 
     python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific
+    # compare camera and real time
+    python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --tcam 07:04:00 --tgps 07:10:00
     # if your camera's time is slow by an 01h15m
     python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --tgps 01:15:00
 
