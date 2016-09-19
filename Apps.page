@@ -44,6 +44,16 @@ Opinions
   continuous backup, and doesn't consume excessive tmp local resources like
   duplicity
 
+Excel
+=====
+
+- ^d on cells
+- tables
+- RC mode
+- indexing into named ranges
+- `index(values, match(keys, keys))` (but use strict match)
+- goal seek
+
 Emacs
 =====
 
