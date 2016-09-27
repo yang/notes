@@ -2348,6 +2348,19 @@ This solves two problems:
 
 <https://superuser.com/questions/778028/configuring-chrome-remote-desktop-with-ubuntu-gnome-14-04>
 
+Mount a LUKS-encrypted partition
+--------------------------------
+
+If you try mounting directly, you'll see:
+
+    yang@partycat:~$ sudo mount /dev/sdb1 /media/store
+    mount: unknown filesystem type 'crypto_LUKS'
+
+From <https://askubuntu.com/questions/63594/mount-encrypted-volumes-from-command-line>:
+
+    sudo cryptsetup luksOpen /dev/sdb1 my_encrypted_volume
+    sudo mount /dev/mapper/my_encrypted_volume /media/store
+
 <!--
 vim: ft=markdown
 -->
