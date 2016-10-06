@@ -2361,6 +2361,28 @@ From <https://askubuntu.com/questions/63594/mount-encrypted-volumes-from-command
     sudo cryptsetup luksOpen /dev/sdb1 my_encrypted_volume
     sudo mount /dev/mapper/my_encrypted_volume /media/store
 
+Install Realtek Wi-Fi drivers on Ubuntu 16.04
+---------------------------------------------
+
+Bought [this 802.11ac AC1200 wireless USB adapter][adapter] from Central
+Computers (product WN688A2), but it doesn't just work out of the box on Ubuntu
+16.04.
+
+IIRC it didn't on 12.04 either, but simply downloading the [drivers] from the
+manufacturer's website running `install.sh` within the
+`RTL8812AU_linux_v4.2.4_9390.20131023` dir seemed to work, although not
+entirely reliably (the adapter would just disconnect from the Wi-Fi after many
+hours and then require disconnecting and reconnecting the physical adapter to
+work again).
+
+Anyway, after some brief Googling for that Realtek chipset/driver (RTL8812AU),
+this [top hit] on Google worked.  For whatever reason, Realtek's official
+website doesn't have any associated drivers available.
+
+[adapter]: https://www.centralcomputers.com/p-248649-ws-wn688a2-ac1200-wireless-dual-band-usb-adapterproduct.aspx
+[drivers]: http://www.win-star.com/eshop/article.php?id=41
+[top hit]: <https://github.com/diederikdehaas/rtl8812AU>
+
 <!--
 vim: ft=markdown
 -->
