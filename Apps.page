@@ -2210,18 +2210,17 @@ Geotagging Photos from your DSLR Camera
   to GPX XML
 - Run:
 
+    # one-time
     sudo port install p5-image-exiftool
     pip install pytz
     sudo ln -s `which exiftool-5.16` /opt/local/bin/exiftool
-
     git clone git@github.com:yang/GPicSync.git
-    cd GPicSync/src
 
-    python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific
-    # compare camera and real time
-    python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --tcam 07:04:00 --tgps 07:10:00
-    # if your camera's time is slow by an 01h15m
-    python gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --tgps 01:15:00
+    cd ~/Pictures/...
+    # check current time on camera and your phone.  if camera and GPS times are the same (or very close):
+    python ~/proj/GPicSync/src/gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --time-range 36000
+    # if they're different, then specify both camera and GPS times, and it will calculate the difference
+    python ~/proj/GPicSync/src/gpicsync.py -g PATH.gpx -d PHOTOSDIR -z US/Pacific --time-range 36000 --tcam 07:04:00 --tgps 07:10:00
 
 - Review the results in GeoTag.  If any are still missing, that may be due to
   sparsity in your location data.  gpicsync only takes locations within an hour
