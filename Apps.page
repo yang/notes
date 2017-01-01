@@ -2204,6 +2204,9 @@ Instructions:
 Geotagging Photos from your DSLR Camera
 ---------------------------------------
 
+- (Assuming your home base is Pacific) Configure your camera to be in the
+  Pacific timezone (and adjust the time to match).  Do this even if you're
+  about to travel.
 - Use Google Takeout to export your location history (based on your phone) as a
   KML file (not the default JSON)
 - Use GPSBabelFE to convert the KML ("Google Earth (Keyhole) Markup Language")
@@ -2230,6 +2233,16 @@ Geotagging Photos from your DSLR Camera
     multitude of factors.  I have seen holes on the order of a day.
   - Backitude is an app that should allow for regular location updates and
     eliminate this problem.
+- If you traveled outside of the Pacific timezone, then also shift the time
+  zones of the EXIF timestamps.  (Background: EXIF timestamps can't specify
+  timezone, so Google Photos interprets them in the timezone of the geotag
+  ([source]).)  Run the following, replacing `HOURS` and possibly replacing the
+  `+` with a `-`:
+
+    exiftool '-DateTimeOriginal+=0:0:0 HOURS:00:0' .
+    exiftool '-CreateDate+=0:0:0 HOURS:00:0' .
+
+[source]: https://productforums.google.com/forum/#!topic/photos/0O8ZI3hkL00;context-place=topicsearchin/photos/timezone
 
 Find the App Stealing Focus on Mac OS X
 ---------------------------------------
