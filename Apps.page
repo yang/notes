@@ -1337,6 +1337,14 @@ ffmpeg -i asdf.flv -ab 56 -ar 22050 -b 500 -s 320×240 asdf.mpg
   -ar sample rate: set the audio samplerate in Hz (default = 44100 Hz)
   -s size: set frame size. The format is WxH (default 160×128 )
 
+# slice an audio/video file starting at 10s duration 60s
+ffmpeg -i input.m4a -ss 10 -t 60 -codec copy output.m4a
+
+# add audio to video, either with direct copy or (if it complains) then specifying a transcoding
+# more at <https://stackoverflow.com/questions/11779490/how-to-add-a-new-audio-not-mixing-into-a-video-using-ffmpeg>
+ffmpeg -i input.webm -i input.m4a -c copy -shortest combined.webm
+ffmpeg -i input.webm -i input.m4a -c:v copy -c:a libvorbis -shortest combined.webm
+
 od # octal dump
 hd # hex dump
 
