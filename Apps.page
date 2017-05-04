@@ -2403,6 +2403,25 @@ website doesn't have any associated drivers available.
 [drivers]: http://www.win-star.com/eshop/article.php?id=41
 [top hit]: <https://github.com/diederikdehaas/rtl8812AU>
 
+Sharing in LastPass
+-------------------
+
+Without a Premium account, updates to secrets don't get synced to people you
+previously shared it with.  So you need to reshare.  You just enter the email
+address again.  Exactly the saved copy as of that time gets shared.
+
+Move subtitles to top of screen in VLC
+--------------------------------------
+
+- Preferences > Show All > Video > Subtitles / OSD
+- Set Force Subitle Position to 600 (positive means up)
+- Restart VLC!  Can't just restart video.
+
+Delay / Adjust subtitle timing in VLC
+-------------------------------------
+
+- Play around with `h` and `g` keys
+
 <!--
 vim: ft=markdown
 -->
