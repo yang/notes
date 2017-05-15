@@ -320,22 +320,28 @@ misc
 - flow table
   - uses: ACL in firewalls, NAT, QoS, ...
 
-nat TODO
+nat traversal
 
-- types
-  - full cone: once internal addr (iaddr:iport) is mapped to external addr (eaddr:eport), pkts from iaddr:iport go through eaddr:eport, and pkts to eaddr:eport go to iaddr:iport
-  - (address) restricted cone: only accept pkts previously sent to host:anyport
-  - port-restricted cone: accept only pkts 
-  - symmetric
-- nat-t
-- simple traversal of udp through nat (STUN)
-  - UDP
+- nat types
+  - direct mapping btwn internal host:port and external host:port / no
+    dependency on remote host/port
+    - full cone: once internal addr (iaddr:iport) is mapped to external addr
+      (eaddr:eport), pkts from iaddr:iport go through eaddr:eport, and pkts to
+      eaddr:eport go to iaddr:iport
+    - (address) restricted cone: accept pkts on any port from a host if already
+      sent pkts to that host on any port
+    - port-restricted cone: accept pkts on any port if from a host and port if
+      already sent pkts there
+  - symmetric: sending packets creates distinct external ports for each
+    distinct host:port; *does* depend on remote host:port, not just internal
+    host:port; impossible to relay this info
+- simple traversal of udp through nat (STUN): relays just the port info but
+  doesn't work for symmetric NAT
 - traversal using relay nat/traversal using relays around nat (TURN)
-  - use intermediate server; written for SIP; introduces lag
-  - TCP/UDP
-  - proxy: 
+  - traverses symmetric NAT but uses intermediate server for all
+    data/bandwidth; written for SIP
 - ICE: direct connection with another peer
-  - written for SIP; fall back on TURN
+  - written for SIP; tries STUN first, then falls back on TURN
 
 tun/tap
 
