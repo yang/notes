@@ -800,7 +800,7 @@ Linux
   # mirror without permission/ownership and excluding vim files
   rsync -nrltv --delete --exclude '.*.swp' . HOST:/PATH
 
-  # compare two dirs
+  # compare two dirs (must include the trailing /!)
   rsync -rvnc --delete LOCALPATH/ HOST:/PATH/
 
   # add new PPA repo
@@ -2421,6 +2421,19 @@ Delay / Adjust subtitle timing in VLC
 -------------------------------------
 
 - Play around with `h` and `g` keys
+
+Create Ubuntu boot USB for PC on Mac
+------------------------------------
+
+<https://computers.tutsplus.com/tutorials/how-to-create-a-bootable-ubuntu-usb-drive-for-pc-on-a-mac--cms-21187>
+
+    hdiutil convert -format UDRW -o ~/path/to/target.img ~/path/to/ubuntu.iso
+    diskutil list
+    diskutil unmountDisk /dev/diskN
+    sudo dd if=/path/to/ubuntu-14.04-desktop-i386.dmg of=/dev/rdiskN bs=1m
+    # DO NOT RESPOND TO DIALOG BOX WITH Initialize, Ignore, Eject
+    diskutil eject /dev/diskN
+    # NOW you can click Ignore
 
 <!--
 vim: ft=markdown
