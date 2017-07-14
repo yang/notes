@@ -2435,6 +2435,11 @@ Create Ubuntu boot USB for PC on Mac
     diskutil eject /dev/diskN
     # NOW you can click Ignore
 
+Download Youtube playlist with indexes in filename
+--------------------------------------------------
+
+    youtube-dl -o "%(playlist_index)s-%(title)s-%(id)s.%(ext)s" <playlist-url>
+
 <!--
 vim: ft=markdown
 -->
