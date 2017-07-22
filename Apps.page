@@ -2368,6 +2368,8 @@ This solves two problems:
 
 <https://superuser.com/questions/778028/configuring-chrome-remote-desktop-with-ubuntu-gnome-14-04>
 
+Then to ensure it starts at startup, enable auto-login in Ubuntu.
+
 Mount a LUKS-encrypted partition
 --------------------------------
 
